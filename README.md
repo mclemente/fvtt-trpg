@@ -23,6 +23,11 @@ If you wish to manually install the system, you must clone or extract it into th
 may do this by cloning the repository or downloading a zip archive from the
 [Releases Page](https://gitlab.com/foundrynet/dnd5e/-/releases).
 
+## Attribution
+
+This system is a fork of the [DnD5e](https://gitlab.com/foundrynet/dnd5e) system.
+This system uses code of the [Bonus Die](https://github.com/HadaIonut/Foundry-BonusDie) module with HadaIonut's permission.
+
 ## Community Contribution
 
 Code and content contributions are accepted. Please feel free to submit issues to the issue tracker or submit merge

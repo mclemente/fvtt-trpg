@@ -26,7 +26,7 @@ export default class ShortRestDialog extends Dialog {
   /** @override */
 	static get defaultOptions() {
 	  return mergeObject(super.defaultOptions, {
-	    template: "systems/dnd5e/templates/apps/short-rest.html",
+	    template: "systems/tormentarpg/templates/apps/short-rest.html",
       classes: ["dnd5e", "dialog"]
     });
   }
@@ -51,8 +51,8 @@ export default class ShortRestDialog extends Dialog {
     data.denomination = this._denom;
 
     // Determine rest type
-    const variant = game.settings.get("dnd5e", "restVariant");
-    data.promptNewDay = variant !== "epic";     // It's never a new day when only resting 1 minute
+    // const variant = game.settings.get("tormentarpg", "restVariant");
+    // data.promptNewDay = variant !== "epic";     // It's never a new day when only resting 1 minute
     data.newDay = false;                        // It may be a new day, but not by default
     return data;
   }
@@ -100,8 +100,8 @@ export default class ShortRestDialog extends Dialog {
             label: "Rest",
             callback: html => {
               let newDay = false;
-              if (game.settings.get("dnd5e", "restVariant") === "gritty")
-                newDay = html.find('input[name="newDay"]')[0].checked;
+              // if (game.settings.get("dnd5e", "restVariant") === "gritty")
+                // newDay = html.find('input[name="newDay"]')[0].checked;
               resolve(newDay);
             }
           },

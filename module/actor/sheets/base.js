@@ -56,8 +56,8 @@ export default class ActorSheet5e extends ActorSheet {
 
   /** @override */
   get template() {
-    if ( !game.user.isGM && this.actor.limited ) return "systems/dnd5e/templates/actors/limited-sheet.html";
-    return `systems/dnd5e/templates/actors/${this.actor.data.type}-sheet.html`;
+    if ( !game.user.isGM && this.actor.limited ) return "systems/tormentarpg/templates/actors/limited-sheet.html";
+    return `systems/tormentarpg/templates/actors/${this.actor.data.type}-sheet.html`;
   }
 
   /* -------------------------------------------- */
@@ -102,6 +102,13 @@ export default class ActorSheet5e extends ActorSheet {
       abl.icon = this._getProficiencyIcon(abl.proficient);
       abl.hover = CONFIG.DND5E.proficiencyLevels[abl.proficient];
       abl.label = CONFIG.DND5E.abilities[a];
+    }
+
+    // Saving Throws
+    for ( let [a, save] of Object.entries(actorData.data.saves)) {
+      save.icon = this._getProficiencyIcon(save.proficient);
+      save.hover = CONFIG.DND5E.proficiencyLevels[save.proficient];
+      save.label = CONFIG.DND5E.abilities[a];
     }
 
     // Skills
@@ -422,8 +429,8 @@ export default class ActorSheet5e extends ActorSheet {
       inputs.focus(ev => ev.currentTarget.select());
       inputs.addBack().find('[data-dtype="Number"]').change(this._onChangeInputDelta.bind(this));
 
-      // Ability Proficiency
-      html.find('.ability-proficiency').click(this._onToggleAbilityProficiency.bind(this));
+      // Saving Throw Proficiency
+      html.find('.save-proficiency').click(this._onToggleSaveProficiency.bind(this));
 
       // Toggle Skill Proficiency
       html.find('.skill-proficiency').on("click contextmenu", this._onCycleSkillProficiency.bind(this));
@@ -449,6 +456,9 @@ export default class ActorSheet5e extends ActorSheet {
 
       // Ability Checks
       html.find('.ability-name').click(this._onRollAbilityTest.bind(this));
+
+      //Saving Throw
+      html.find('.save-name').click(this._onRollSaveTest.bind(this));
 
       // Roll Skill Checks
       html.find('.skill-name').click(this._onRollSkillCheck.bind(this));
@@ -545,15 +555,10 @@ export default class ActorSheet5e extends ActorSheet {
 
     // Get the current level and the array of levels
     const level = parseFloat(field.val());
-    const levels = [0, 1, 0.5, 2];
+    const levels = [0, 1];
     let idx = levels.indexOf(level);
 
-    // Toggle next level - forward on click, backwards on right
-    if ( event.type === "click" ) {
-      field.val(levels[(idx === levels.length - 1) ? 0 : idx + 1]);
-    } else if ( event.type === "contextmenu" ) {
-      field.val(levels[(idx === 0) ? levels.length - 1 : idx - 1]);
-    }
+    field.val(levels[(idx === levels.length - 1) ? 0 : idx + 1]);
 
     // Update the field value and save the form
     this._onSubmit(event);
@@ -563,7 +568,7 @@ export default class ActorSheet5e extends ActorSheet {
 
   /** @override */
   async _onDropActor(event, data) {
-    const canPolymorph = game.user.isGM || (this.actor.isOwner && game.settings.get('dnd5e', 'allowPolymorphing'));
+    const canPolymorph = game.user.isGM || (this.actor.isOwner && game.settings.get("tormentarpg", 'allowPolymorphing'));
     if ( !canPolymorph ) return false;
 
     // Get the target actor
@@ -582,8 +587,8 @@ export default class ActorSheet5e extends ActorSheet {
       html.find('input').each((i, el) => {
         options[el.name] = el.checked;
       });
-      const settings = mergeObject(game.settings.get('dnd5e', 'polymorphSettings') || {}, options);
-      game.settings.set('dnd5e', 'polymorphSettings', settings);
+      const settings = mergeObject(game.settings.get("tormentarpg", 'polymorphSettings') || {}, options);
+      game.settings.set("tormentarpg", 'polymorphSettings', settings);
       return settings;
     };
 
@@ -591,7 +596,7 @@ export default class ActorSheet5e extends ActorSheet {
     return new Dialog({
       title: game.i18n.localize('DND5E.PolymorphPromptTitle'),
       content: {
-        options: game.settings.get('dnd5e', 'polymorphSettings'),
+        options: game.settings.get("tormentarpg", 'polymorphSettings'),
         i18n: DND5E.polymorphSettings,
         isToken: this.actor.isToken
       },
@@ -629,7 +634,7 @@ export default class ActorSheet5e extends ActorSheet {
     }, {
       classes: ['dialog', 'dnd5e'],
       width: 600,
-      template: 'systems/dnd5e/templates/apps/polymorph-prompt.html'
+      template: 'systems/tormentarpg/templates/apps/polymorph-prompt.html'
     }).render(true);
   }
 
@@ -834,6 +839,19 @@ export default class ActorSheet5e extends ActorSheet {
   }
 
   /* -------------------------------------------- */
+  
+  /**
+   * Handle rolling an Ability check, either a test or a saving throw
+   * @param {Event} event   The originating click event
+   * @private
+   */
+  _onRollSaveTest(event) {
+    event.preventDefault();
+    let save = event.currentTarget.parentElement.dataset.save;
+    return this.actor.rollAbilitySave(save, {event: event});
+  }
+
+  /* -------------------------------------------- */
 
   /**
    * Handle rolling a Skill check
@@ -849,11 +867,11 @@ export default class ActorSheet5e extends ActorSheet {
   /* -------------------------------------------- */
 
   /**
-   * Handle toggling Ability score proficiency level
+   * Handle toggling Saving Throw proficiency level
    * @param {Event} event     The originating click event
    * @private
    */
-  _onToggleAbilityProficiency(event) {
+  _onToggleSaveProficiency(event) {
     event.preventDefault();
     const field = event.currentTarget.previousElementSibling;
     return this.actor.update({[field.name]: 1 - parseInt(field.value)});

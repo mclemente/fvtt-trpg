@@ -52,7 +52,7 @@ export default class AbilityUseDialog extends Dialog {
     if ( item.data.type === "spell" ) this._getSpellData(actorData, itemData, data);
 
     // Render the ability usage template
-    const html = await renderTemplate("systems/dnd5e/templates/apps/ability-use.html", data);
+    const html = await renderTemplate("systems/tormentarpg/templates/apps/ability-use.html", data);
 
     // Create the Dialog and return data as a Promise
     const icon = data.isSpell ? "fa-magic" : "fa-fist-raised";

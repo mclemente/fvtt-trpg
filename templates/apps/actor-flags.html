@@ -11,6 +11,14 @@
             <p class="notes">{{localize "DND5E.ClassMakeOriginalHint"}}</p>
         </div>
 
+        {{#unless hasSpells}}
+        <h3 class="form-header">Spellbook</h3>
+        <div class="form-group">
+            <label>Show Spellbook</label>
+            <input type="checkbox" name="data.details.showSpells" data-dtype="Boolean" {{checked actor.data.data.details.showSpells}} />
+        </div>
+        {{/unless}}
+
         {{#each flags as |fs section|}}
         <h3 class="form-header">{{localize section}}</h3>
         {{#each fs as |flag key|}}

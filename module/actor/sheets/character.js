@@ -30,11 +30,14 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
 
     // Temporary HP
     let hp = sheetData.data.attributes.hp;
+    let mp = sheetData.data.attributes.mp;
     if (hp.temp === 0) delete hp.temp;
     if (hp.tempmax === 0) delete hp.tempmax;
+    if (mp.temp === 0) delete mp.temp;
+    if (mp.tempmax === 0) delete mp.tempmax;
 
     // Resources
-    sheetData["resources"] = ["primary", "secondary", "tertiary"].reduce((arr, r) => {
+    sheetData["resources"] = ["primary", "secondary"].reduce((arr, r) => {
       const res = sheetData.data.resources[r] || {};
       res.name = r;
       res.placeholder = game.i18n.localize("DND5E.Resource"+r.titleCase());
@@ -44,7 +47,7 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
     }, []);
 
     // Experience Tracking
-    sheetData["disableExperience"] = game.settings.get("dnd5e", "disableExperienceTracking");
+    sheetData["disableExperience"] = game.settings.get("tormentarpg", "disableExperienceTracking");
     sheetData["classLabels"] = this.actor.itemTypes.class.map(c => c.name).join(", ");
     sheetData["multiclassLabels"] = this.actor.itemTypes.class.map(c => {
       return [c.data.data.subclass, c.name, c.data.data.levels].filterJoin(' ')

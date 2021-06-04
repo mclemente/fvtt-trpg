@@ -76,6 +76,16 @@
                 </div>
             </div>
 
+            {{!-- BAB --}}
+            <div class="form-group">
+                <label>BBA</label>
+                <div class="form-fields">
+                    <select name="data.bab">
+                        {{selectOptions config.bab selected=data.bab localize=true}}
+                    </select>
+                </div>
+            </div>
+
             {{!-- Spellcasting --}}
             <div class="form-group">
                 <label>{{localize 'DND5E.SpellProgression'}}</label>

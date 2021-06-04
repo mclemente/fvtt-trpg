@@ -11,6 +11,10 @@ export class TokenDocument5e extends TokenDocument {
       data.value += parseInt(getProperty(this.actor.data, "data.attributes.hp.temp") || 0);
       data.max += parseInt(getProperty(this.actor.data, "data.attributes.hp.tempmax") || 0);
     }
+    else if ( data && (data.attribute === "attributes.mp") ) {
+      data.value += parseInt(getProperty(this.actor.data, "data.attributes.mp.temp") || 0);
+      data.max += parseInt(getProperty(this.actor.data, "data.attributes.mp.tempmax") || 0);
+    }
     return data;
   }
 }

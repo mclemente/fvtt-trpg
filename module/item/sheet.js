@@ -34,7 +34,7 @@ export default class ItemSheet5e extends ItemSheet {
 
   /** @inheritdoc */
   get template() {
-    const path = "systems/dnd5e/templates/items/";
+    const path = "systems/tormentarpg/templates/items/";
     return `${path}/${this.item.data.type}.html`;
   }
 

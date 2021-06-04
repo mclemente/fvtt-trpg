@@ -1,0 +1,15 @@
+/* Bonus Die */
+.BonusDie-button-container {
+  flex:0.4;
+  display:flex;
+  flex-direction:row;
+  justify-content:space-around;
+}
+
+#players {
+  width:250px;
+}
+
+#hotbar {
+  left:270px;
+}

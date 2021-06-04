@@ -42,7 +42,7 @@ export default class Actor5e extends Actor {
    * @type {boolean}
    */
   get isPolymorphed() {
-    return this.getFlag("dnd5e", "isPolymorphed") || false;
+    return this.getFlag("tormentarpg", "isPolymorphed") || false;
   }
 
   /* -------------------------------------------- */
@@ -84,8 +84,8 @@ export default class Actor5e extends Actor {
     let originalSaves = null;
     let originalSkills = null;
     if (this.isPolymorphed) {
-      const transformOptions = this.getFlag('dnd5e', 'transformOptions');
-      const original = game.actors?.get(this.getFlag('dnd5e', 'originalActor'));
+      const transformOptions = this.getFlag("tormentarpg", 'transformOptions');
+      const original = game.actors?.get(this.getFlag("tormentarpg", 'originalActor'));
       if (original) {
         if (transformOptions.mergeSaves) {
           originalSaves = original.data.data.abilities;
@@ -96,18 +96,28 @@ export default class Actor5e extends Actor {
       }
     }
 
-    // Ability modifiers and saves
+    // Ability modifiers
     const dcBonus = Number.isNumeric(data.bonuses?.spell?.dc) ? parseInt(data.bonuses.spell.dc) : 0;
     const saveBonus = Number.isNumeric(bonuses.save) ? parseInt(bonuses.save) : 0;
     const checkBonus = Number.isNumeric(bonuses.check) ? parseInt(bonuses.check) : 0;
     for (let [id, abl] of Object.entries(data.abilities)) {
-      if ( flags.diamondSoul ) abl.proficient = 1;  // Diamond Soul is proficient in all saves
       abl.mod = Math.floor((abl.value - 10) / 2);
-      abl.prof = (abl.proficient || 0) * data.attributes.prof;
-      abl.saveBonus = saveBonus;
       abl.checkBonus = checkBonus;
-      abl.save = abl.mod + abl.prof + abl.saveBonus;
       abl.dc = 8 + abl.mod + data.attributes.prof + dcBonus;
+
+      // If we merged saves when transforming, take the highest bonus here.
+      if (originalSaves && abl.proficient) {
+        abl.save = Math.max(abl.save, originalSaves[id].save);
+      }
+    }
+
+    // Saves
+    for (let [id, abl] of Object.entries(data.saves)) {
+      if ( flags.diamondSoul ) abl.proficient = 1;  // Diamond Soul is proficient in all saves
+      abl.mod = Math.floor((data.abilities[abl.ability].value - 10) / 2);
+      abl.prof = abl.proficient ? 3 + data.details.level : Math.floor(data.details.level/2);
+      abl.saveBonus = saveBonus;
+      abl.save = abl.mod + abl.prof + abl.saveBonus;
 
       // If we merged saves when transforming, take the highest bonus here.
       if (originalSaves && abl.proficient) {
@@ -128,13 +138,6 @@ export default class Actor5e extends Actor {
     const init = data.attributes.init;
     const athlete = flags.remarkableAthlete;
     const joat = flags.jackOfAllTrades;
-    init.mod = data.abilities.dex.mod;
-    if ( joat ) init.prof = Math.floor(0.5 * data.attributes.prof);
-    else if ( athlete ) init.prof = Math.ceil(0.5 * data.attributes.prof);
-    else init.prof = 0;
-    init.value = init.value ?? 0;
-    init.bonus = init.value + (flags.initiativeAlert ? 5 : 0);
-    init.total = init.mod + init.prof + init.bonus;
 
     // Cache labels
     this.labels = {};
@@ -166,8 +169,7 @@ export default class Actor5e extends Actor {
    * @return {Number}       The amount of experience granted per kill
    */
   getCRExp(cr) {
-    if (cr < 1.0) return Math.max(200 * cr, 10);
-    return CONFIG.DND5E.CR_EXP_LEVELS[cr];
+    return cr * 300;
   }
 
   /* -------------------------------------------- */
@@ -287,16 +289,19 @@ export default class Actor5e extends Actor {
     const data = actorData.data;
 
     // Determine character level and available hit dice based on owned Class items
-    const [level, hd] = this.items.reduce((arr, item) => {
+    const [level, hd, babTotal] = this.items.reduce((arr, item) => {
       if ( item.type === "class" ) {
         const classLevels = parseInt(item.data.data.levels) || 1;
         arr[0] += classLevels;
         arr[1] += classLevels - (parseInt(item.data.data.hitDiceUsed) || 0);
+        arr[2] += Math.floor(classLevels * CONFIG.DND5E.classBABFormulas[item.data.data.bab]);
       }
       return arr;
-    }, [0, 0]);
+    }, [0, 0, 0]);
     data.details.level = level;
     data.attributes.hd = hd;
+    data.attributes.bab.value = babTotal;
+    data.attributes.bab.total = babTotal;
 
     // Character proficiency bonus
     data.attributes.prof = Math.floor((level + 7) / 4);
@@ -320,6 +325,8 @@ export default class Actor5e extends Actor {
 
     // Kill Experience
     data.details.xp.value = this.getCRExp(data.details.cr);
+
+    data.details.level = Math.clamped(data.details.level, 0, 20)
 
     // Proficiency
     data.attributes.prof = Math.floor((Math.max(data.details.cr, 1) + 7) / 4);
@@ -363,12 +370,10 @@ export default class Actor5e extends Actor {
     const skillBonus = Number.isNumeric(bonuses.skill) ? parseInt(bonuses.skill) :  0;
     for (let [id, skl] of Object.entries(data.skills)) {
       skl.value = Math.clamped(Number(skl.value).toNearest(0.5), 0, 2) ?? 0;
-      let round = Math.floor;
 
       // Remarkable
       if ( athlete && (skl.value < 0.5) && feats.remarkableAthlete.abilities.includes(skl.ability) ) {
         skl.value = 0.5;
-        round = Math.ceil;
       }
 
       // Jack of All Trades
@@ -384,12 +389,12 @@ export default class Actor5e extends Actor {
       // Compute modifier
       skl.bonus = checkBonus + skillBonus;
       skl.mod = data.abilities[skl.ability].mod;
-      skl.prof = round(skl.value * data.attributes.prof);
+      skl.prof = skl.value ? 3 + data.details.level : Math.floor(data.details.level/2);
       skl.total = skl.mod + skl.prof + skl.bonus;
 
       // Compute passive bonus
-      const passive = observant && (feats.observantFeat.skills.includes(id)) ? 5 : 0;
-      skl.passive = 10 + skl.total + passive;
+      // const passive = observant && (feats.observantFeat.skills.includes(id)) ? 5 : 0;
+      // skl.passive = 10 + skl.total + passive;
     }
   }
 
@@ -504,10 +509,10 @@ export default class Actor5e extends Actor {
     }, 0);
 
     // [Optional] add Currency Weight (for non-transformed actors)
-    if ( game.settings.get("dnd5e", "currencyWeight") && actorData.data.currency ) {
+    if ( game.settings.get("tormentarpg", "currencyWeight") && actorData.data.currency ) {
       const currency = actorData.data.currency;
       const numCoins = Object.values(currency).reduce((val, denom) => val += Math.max(denom, 0), 0);
-      weight += numCoins / CONFIG.DND5E.encumbrance.currencyPerWeight;
+      weight += (numCoins * CONFIG.DND5E.encumbrance.currencyPerWeight) / 100;
     }
 
     // Determine the encumbrance size class
@@ -519,13 +524,13 @@ export default class Actor5e extends Actor {
       huge: 4,
       grg: 8
     }[actorData.data.traits.size] || 1;
-    if ( this.getFlag("dnd5e", "powerfulBuild") ) mod = Math.min(mod * 2, 8);
+    if ( this.getFlag("tormentarpg", "powerfulBuild") ) mod = Math.min(mod * 2, 8);
 
     // Compute Encumbrance percentage
     weight = weight.toNearest(0.1);
     const max = actorData.data.abilities.str.value * CONFIG.DND5E.encumbrance.strMultiplier * mod;
     const pct = Math.clamped((weight * 100) / max, 0, 100);
-    return { value: weight.toNearest(0.1), max, pct, encumbered: pct > (2/3) };
+    return { value: weight.toNearest(0.1), max, pct, encumbered: pct > (0.3) };
   }
 
   /* -------------------------------------------- */
@@ -589,7 +594,7 @@ export default class Actor5e extends Actor {
 
   /** @override */
   async modifyTokenAttribute(attribute, value, isDelta, isBar) {
-    if ( attribute === "attributes.hp" ) {
+    if ( attribute === "attributes.hp" || attribute === "attributes.mp" ) {
       const hp = getProperty(this.data.data, attribute);
       const delta = isDelta ? (-1 * value) : (hp.value + hp.temp) - value;
       return this.applyDamage(delta);
@@ -669,14 +674,14 @@ export default class Actor5e extends Actor {
     }
 
     // Reliable Talent applies to any skill check we have full or better proficiency in
-    const reliableTalent = (skl.value >= 1 && this.getFlag("dnd5e", "reliableTalent"));
+    const reliableTalent = (skl.value >= 1 && this.getFlag("tormentarpg", "reliableTalent"));
 
     // Roll and return
     const rollData = foundry.utils.mergeObject(options, {
       parts: parts,
       data: data,
       title: game.i18n.format("DND5E.SkillPromptTitle", {skill: CONFIG.DND5E.skills[skillId]}),
-      halflingLucky: this.getFlag("dnd5e", "halflingLucky"),
+      halflingLucky: this.getFlag("tormentarpg", "halflingLucky"),
       reliableTalent: reliableTalent,
       messageData: {
         speaker: options.speaker || ChatMessage.getSpeaker({actor: this}),
@@ -696,20 +701,21 @@ export default class Actor5e extends Actor {
    */
   rollAbility(abilityId, options={}) {
     const label = CONFIG.DND5E.abilities[abilityId];
-    new Dialog({
-      title: game.i18n.format("DND5E.AbilityPromptTitle", {ability: label}),
-      content: `<p>${game.i18n.format("DND5E.AbilityPromptText", {ability: label})}</p>`,
-      buttons: {
-        test: {
-          label: game.i18n.localize("DND5E.ActionAbil"),
-          callback: () => this.rollAbilityTest(abilityId, options)
-        },
-        save: {
-          label: game.i18n.localize("DND5E.ActionSave"),
-          callback: () => this.rollAbilitySave(abilityId, options)
-        }
-      }
-    }).render(true);
+    this.rollAbilityTest(abilityId, options)
+    // new Dialog({
+    //   title: game.i18n.format("DND5E.AbilityPromptTitle", {ability: label}),
+    //   content: `<p>${game.i18n.format("DND5E.AbilityPromptText", {ability: label})}</p>`,
+    //   buttons: {
+    //     test: {
+    //       label: game.i18n.localize("DND5E.ActionAbil"),
+    //       callback: () => this.rollAbilityTest(abilityId, options)
+    //     },
+    //     save: {
+    //       label: game.i18n.localize("DND5E.ActionSave"),
+    //       callback: () => this.rollAbilitySave(abilityId, options)
+    //     }
+    //   }
+    // }).render(true);
   }
 
   /* -------------------------------------------- */
@@ -776,8 +782,8 @@ export default class Actor5e extends Actor {
    * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
    */
   rollAbilitySave(abilityId, options={}) {
-    const label = CONFIG.DND5E.abilities[abilityId];
-    const abl = this.data.data.abilities[abilityId];
+    const label = CONFIG.DND5E.saves[abilityId];
+    const abl = this.data.data.saves[abilityId];
 
     // Construct parts
     const parts = ["@mod"];
@@ -806,7 +812,7 @@ export default class Actor5e extends Actor {
       parts: parts,
       data: data,
       title: game.i18n.format("DND5E.SavePromptTitle", {ability: label}),
-      halflingLucky: this.getFlag("dnd5e", "halflingLucky"),
+      halflingLucky: this.getFlag("tormentarpg", "halflingLucky"),
       messageData: {
         speaker: options.speaker || ChatMessage.getSpeaker({actor: this}),
         "flags.dnd5e.roll": {type: "save", abilityId }
@@ -836,7 +842,7 @@ export default class Actor5e extends Actor {
     const data = {};
 
     // Diamond Soul adds proficiency
-    if ( this.getFlag("dnd5e", "diamondSoul") ) {
+    if ( this.getFlag("tormentarpg", "diamondSoul") ) {
       parts.push("@prof");
       data.prof = this.data.data.attributes.prof;
     }
@@ -853,7 +859,7 @@ export default class Actor5e extends Actor {
       parts: parts,
       data: data,
       title: game.i18n.localize("DND5E.DeathSavingThrow"),
-      halflingLucky: this.getFlag("dnd5e", "halflingLucky"),
+      halflingLucky: this.getFlag("tormentarpg", "halflingLucky"),
       targetValue: 10,
       messageData: {
         speaker: options.speaker || ChatMessage.getSpeaker({actor: this}),
@@ -1122,11 +1128,12 @@ export default class Actor5e extends Actor {
     let restFlavor, message;
 
     // Summarize the rest duration
-    switch (game.settings.get("dnd5e", "restVariant")) {
-      case 'normal': restFlavor = (longRest && newDay) ? "DND5E.LongRestOvernight" : `DND5E.${length}RestNormal`; break;
-      case 'gritty': restFlavor = (!longRest && newDay) ? "DND5E.ShortRestOvernight" : `DND5E.${length}RestGritty`; break;
-      case 'epic':  restFlavor = `DND5E.${length}RestEpic`; break;
-    }
+    // switch (game.settings.get("tormentarpg", "restVariant")) {
+    //   case 'normal': restFlavor = (longRest && newDay) ? "DND5E.LongRestOvernight" : `DND5E.${length}RestNormal`; break;
+    //   case 'gritty': restFlavor = (!longRest && newDay) ? "DND5E.ShortRestOvernight" : `DND5E.${length}RestGritty`; break;
+    //   case 'epic':  restFlavor = `DND5E.${length}RestEpic`; break;
+    // }
+    restFlavor = (longRest && newDay) ? "DND5E.LongRestOvernight" : `DND5E.${length}RestNormal`;
 
     // Determine the chat message to display
     if ( diceRestored && healthRestored ) message = `DND5E.${length}RestResult`;
@@ -1357,7 +1364,7 @@ export default class Actor5e extends Actor {
     keepItems=false, keepBio=false, keepVision=false, transformTokens=true}={}) {
 
     // Ensure the player is allowed to polymorph
-    const allowed = game.settings.get("dnd5e", "allowPolymorphing");
+    const allowed = game.settings.get("tormentarpg", "allowPolymorphing");
     if ( !allowed && !game.user.isGM ) {
       return ui.notifications.warn(game.i18n.localize("DND5E.PolymorphWarn"));
     }
@@ -1414,8 +1421,14 @@ export default class Actor5e extends Actor {
       const prof = abilities[k].proficient;
       if ( keepPhysical && ["str", "dex", "con"].includes(k) ) abilities[k] = oa;
       else if ( keepMental && ["int", "wis", "cha"].includes(k) ) abilities[k] = oa;
-      if ( keepSaves ) abilities[k].proficient = oa.proficient;
-      else if ( mergeSaves ) abilities[k].proficient = Math.max(prof, oa.proficient);
+    }
+
+    const saves = d.data.saves;
+    for ( let k of Object.keys(saves) ) {
+      const oa = o.data.saves[k];
+      const prof = saves[k].proficient;
+      if ( keepSaves ) saves[k].proficient = oa.proficient;
+      else if ( mergeSaves ) saves[k].proficient = Math.max(prof, oa.proficient);
     }
 
     // Transfer skills
@@ -1507,7 +1520,7 @@ export default class Actor5e extends Actor {
     }
 
     // Obtain a reference to the original actor
-    const original = game.actors.get(this.getFlag('dnd5e', 'originalActor'));
+    const original = game.actors.get(this.getFlag("tormentarpg", 'originalActor'));
     if ( !original ) return;
 
     // Get the Tokens which represent this actor
@@ -1546,7 +1559,7 @@ export default class Actor5e extends Actor {
         return actor.revertOriginalForm();
       },
       condition: li => {
-        const allowed = game.settings.get("dnd5e", "allowPolymorphing");
+        const allowed = game.settings.get("tormentarpg", "allowPolymorphing");
         if ( !allowed && !game.user.isGM ) return false;
         const actor = game.actors.get(li.data('entityId'));
         return actor && actor.isPolymorphed;

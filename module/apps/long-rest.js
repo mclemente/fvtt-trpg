@@ -13,7 +13,7 @@ export default class LongRestDialog extends Dialog {
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      template: "systems/dnd5e/templates/apps/long-rest.html",
+      template: "systems/tormentarpg/templates/apps/long-rest.html",
       classes: ["dnd5e", "dialog"]
     });
   }
@@ -23,9 +23,10 @@ export default class LongRestDialog extends Dialog {
   /** @override */
   getData() {
     const data = super.getData();
-    const variant = game.settings.get("dnd5e", "restVariant");
-    data.promptNewDay = variant !== "gritty";     // It's always a new day when resting 1 week
-    data.newDay = variant === "normal";           // It's probably a new day when resting normally (8 hours)
+    // const variant = game.settings.get("tormentarpg", "restVariant");
+    // data.promptNewDay = variant !== "gritty";     // It's always a new day when resting 1 week
+    // data.newDay = variant === "normal";           // It's probably a new day when resting normally (8 hours)
+    data.newDay = true;
     return data;
   }
 
@@ -47,7 +48,7 @@ export default class LongRestDialog extends Dialog {
             label: "Rest",
             callback: html => {
               let newDay = true;
-              if (game.settings.get("dnd5e", "restVariant") !== "gritty")
+              // if (game.settings.get("tormentarpg", "restVariant") !== "gritty")
                 newDay = html.find('input[name="newDay"]')[0].checked;
               resolve(newDay);
             }

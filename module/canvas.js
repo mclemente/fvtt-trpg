@@ -20,19 +20,26 @@ export const measureDistances = function(segments, options={}) {
     let ns = Math.abs(ny - nx);
     nDiagonal += nd;
 
+    // 5e movement
+    // if (rule === "555") {
+    //   return (ns + nd) * canvas.scene.data.gridDistance;
+    // }
+
     // Alternative DMG Movement
-    if (rule === "5105") {
-      let nd10 = Math.floor(nDiagonal / 2) - Math.floor((nDiagonal - nd) / 2);
-      let spaces = (nd10 * 2) + (nd - nd10) + ns;
-      return spaces * canvas.dimensions.distance;
-    }
+    // else if (rule === "5105") {
+    //   let nd10 = Math.floor(nDiagonal / 2) - Math.floor((nDiagonal - nd) / 2);
+    //   let spaces = (nd10 * 2) + (nd - nd10) + ns;
+    //   return spaces * canvas.dimensions.distance;
+    // }
 
     // Euclidean Measurement
-    else if (rule === "EUCL") {
-      return Math.round(Math.hypot(nx, ny) * canvas.scene.data.gridDistance);
-    }
+    // else if (rule === "EUCL") {
+    //   return Math.round(Math.hypot(nx, ny) * canvas.scene.data.gridDistance);
+    // }
 
-    // Standard PHB Movement
-    else return (ns + nd) * canvas.scene.data.gridDistance;
+    // Standard
+    let nd10 = Math.floor(nDiagonal / 2) - Math.floor((nDiagonal - nd) / 2);
+    let spaces = (nd10 * 2) + (nd - nd10) + ns;
+    return spaces * canvas.dimensions.distance;
   });
 };

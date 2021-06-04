@@ -33,6 +33,10 @@ import TraitSelector from "./module/apps/trait-selector.js";
 import ActorMovementConfig from "./module/apps/movement-config.js";
 import ActorSensesConfig from "./module/apps/senses-config.js";
 
+// Bonus Dice
+import { handle } from "./module/apps/BonusDice/BonusDice.js";
+import { socketsHandle } from "./module/apps/BonusDice/socketsHandler.js";
+
 // Import Helpers
 import * as chat from "./module/chat.js";
 import * as dice from "./module/dice.js";
@@ -94,7 +98,7 @@ Hooks.once("init", function() {
   registerSystemSettings();
 
   // Patch Core Functions
-  CONFIG.Combat.initiative.formula = "1d20 + @attributes.init.mod + @attributes.init.prof + @attributes.init.bonus";
+  CONFIG.Combat.initiative.formula = "1d20 + @skills.ini.mod + @skills.ini.prof + @bonus";
   Combatant.prototype._getInitiativeFormula = _getInitiativeFormula;
 
   // Register Roll Extensions
@@ -103,27 +107,27 @@ Hooks.once("init", function() {
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("dnd5e", ActorSheet5eCharacter, {
+  Actors.registerSheet("tormentarpg", ActorSheet5eCharacter, {
     types: ["character"],
     makeDefault: true,
     label: "DND5E.SheetClassCharacter"
   });
-  Actors.registerSheet("dnd5e", ActorSheet5eNPC, {
+  Actors.registerSheet("tormentarpg", ActorSheet5eNPC, {
     types: ["npc"],
     makeDefault: true,
     label: "DND5E.SheetClassNPC"
   });
-  Actors.registerSheet('dnd5e', ActorSheet5eVehicle, {
+  Actors.registerSheet("tormentarpg", ActorSheet5eVehicle, {
     types: ['vehicle'],
     makeDefault: true,
     label: "DND5E.SheetClassVehicle"
   });
   Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("dnd5e", ItemSheet5e, {
+  Items.registerSheet("tormentarpg", ItemSheet5e, {
     makeDefault: true,
     label: "DND5E.SheetClassItem"
   });
-
+	
   // Preload Handlebars Templates
   return preloadHandlebarsTemplates();
 });
@@ -141,9 +145,9 @@ Hooks.once("setup", function() {
   // Localize CONFIG objects once up-front
   const toLocalize = [
     "abilities", "abilityAbbreviations", "abilityActivationTypes", "abilityConsumptionTypes", "actorSizes", "alignments",
-    "armorProficiencies", "conditionTypes", "consumableTypes", "cover", "currencies", "damageResistanceTypes",
+    "armorProficiencies", "bab", "conditionTypes", "consumableTypes", "cover", "currencies", "damageResistanceTypes",
     "damageTypes", "distanceUnits", "equipmentTypes", "healingTypes", "itemActionTypes", "languages",
-    "limitedUsePeriods", "movementTypes", "movementUnits", "polymorphSettings", "proficiencyLevels", "senses", "skills",
+    "limitedUsePeriods", "movementTypes", "movementUnits", "polymorphSettings", "proficiencyLevels", "saves", "senses", "skills",
     "spellComponents", "spellLevels", "spellPreparationModes", "spellScalingModes", "spellSchools", "targetTypes",
     "timePeriods", "toolProficiencies", "weaponProficiencies", "weaponProperties", "weaponTypes"
   ];
@@ -176,11 +180,14 @@ Hooks.once("ready", function() {
 
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => macros.create5eMacro(data, slot));
+	
+	//Bonus Dice
+	game.socket.on('module.BonusDie', socketsHandle());
 
   // Determine whether a system migration is required and feasible
   if ( !game.user.isGM ) return;
-  const currentVersion = game.settings.get("dnd5e", "systemMigrationVersion");
-  if ( !currentVersion ) return game.settings.set('dnd5e', 'systemMigrationVersion', game.system.data.version);
+  const currentVersion = game.settings.get("tormentarpg", "systemMigrationVersion");
+  if ( !currentVersion ) return game.settings.set("tormentarpg", 'systemMigrationVersion', game.system.data.version);
   const NEEDS_MIGRATION_VERSION = "1.3.0";
   const COMPATIBLE_MIGRATION_VERSION = 0.80;
   const needsMigration = currentVersion && isNewerVersion(NEEDS_MIGRATION_VERSION, currentVersion);
@@ -200,7 +207,7 @@ Hooks.once("ready", function() {
 
 Hooks.on("canvasInit", function() {
   // Extend Diagonal Measurement
-  canvas.grid.diagonalRule = game.settings.get("dnd5e", "diagonalMovement");
+  canvas.grid.diagonalRule = game.settings.get("tormentarpg", "diagonalMovement");
   SquareGrid.prototype.measureDistances = measureDistances;
 });
 
@@ -218,11 +225,13 @@ Hooks.on("renderChatMessage", (app, html, data) => {
   chat.highlightCriticalSuccessFailure(app, html, data);
 
   // Optionally collapse the content
-  if (game.settings.get("dnd5e", "autoCollapseItemCards")) html.find(".card-content").hide();
+  if (game.settings.get("tormentarpg", "autoCollapseItemCards")) html.find(".card-content").hide();
 });
 Hooks.on("getChatLogEntryContext", chat.addChatMessageContextOptions);
 Hooks.on("renderChatLog", (app, html, data) => Item5e.chatListeners(html));
 Hooks.on("renderChatPopout", (app, html, data) => Item5e.chatListeners(html));
+//Bonus Dice
+Hooks.on("renderPlayerList", (playerList, $playerList, players) => $playerList.find('ol').children().each(handle(players)));
 Hooks.on('getActorDirectoryEntryContext', Actor5e.addDirectoryContextOptions);
 
 // FIXME: This helper is needed for the vehicle sheet. It should probably be refactored.

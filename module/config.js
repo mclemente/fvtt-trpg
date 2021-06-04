@@ -307,8 +307,8 @@ DND5E.creatureTypes = {
 DND5E.itemActionTypes = {
   "mwak": "DND5E.ActionMWAK",
   "rwak": "DND5E.ActionRWAK",
-  "msak": "DND5E.ActionMSAK",
-  "rsak": "DND5E.ActionRSAK",
+  // "msak": "DND5E.ActionMSAK",
+  // "rsak": "DND5E.ActionRSAK",
   "save": "DND5E.ActionSave",
   "heal": "DND5E.ActionHeal",
   "abil": "DND5E.ActionAbil",
@@ -330,7 +330,7 @@ DND5E.itemCapacityTypes = {
  * @type {Object}
  */
 DND5E.limitedUsePeriods = {
-  "sr": "DND5E.ShortRest",
+  // "sr": "DND5E.ShortRest",
   "lr": "DND5E.LongRest",
   "day": "DND5E.Day",
   "charges": "DND5E.Charges"
@@ -460,8 +460,9 @@ DND5E.movementTypes = {
  * @type {Object<string,string>}
  */
 DND5E.movementUnits = {
-  "ft": "DND5E.DistFt",
-  "mi": "DND5E.DistMi"
+  "m": "TRPG.DistM",
+  // "ft": "DND5E.DistFt",
+  // "mi": "DND5E.DistMi"
 };
 
 /**
@@ -488,8 +489,8 @@ for ( let [k, v] of Object.entries(DND5E.movementUnits) ) {
  * @type {Object}
  */
 DND5E.encumbrance = {
-  currencyPerWeight: 50,
-  strMultiplier: 15,
+  currencyPerWeight: 1, //10 grams
+  strMultiplier: 10, //Strength value * 10
   vehicleWeightMultiplier: 2000 // 2000 lbs in a ton
 };
 
@@ -572,29 +573,56 @@ DND5E.senses = {
 
 /* -------------------------------------------- */
 
+DND5E.saves = {
+	"fortitude": "TRPG.SavesFortitude",
+	"reflex": "TRPG.SavesReflex",
+	"will": "TRPG.SavesWill"
+}
+
+DND5E.bab = {
+  "low": "TRPG.Low",
+  "med": "TRPG.Medium",
+  "high": "TRPG.High"
+};
+
+DND5E.classBABFormulas = {
+  "low": 0.5,
+  "med": 0.75,
+  "high": 1
+};
+
 /**
  * The set of skill which can be trained
  * @type {Object}
  */
 DND5E.skills = {
-  "acr": "DND5E.SkillAcr",
-  "ani": "DND5E.SkillAni",
-  "arc": "DND5E.SkillArc",
-  "ath": "DND5E.SkillAth",
-  "dec": "DND5E.SkillDec",
-  "his": "DND5E.SkillHis",
-  "ins": "DND5E.SkillIns",
-  "itm": "DND5E.SkillItm",
-  "inv": "DND5E.SkillInv",
-  "med": "DND5E.SkillMed",
-  "nat": "DND5E.SkillNat",
-  "prc": "DND5E.SkillPrc",
-  "prf": "DND5E.SkillPrf",
-  "per": "DND5E.SkillPer",
-  "rel": "DND5E.SkillRel",
-  "slt": "DND5E.SkillSlt",
-  "ste": "DND5E.SkillSte",
-  "sur": "DND5E.SkillSur"
+  "acr": "DND5E.SkillAcr", //Acrobacia
+  "ani": "DND5E.SkillAni", //Adestrar Animais
+  "prf": "DND5E.SkillPrf", //Atuação
+  "ath": "DND5E.SkillAth", //Atletismo
+  //Cavalgar
+  //Conhecimento
+  "med": "DND5E.SkillMed", //Cura
+  "per": "DND5E.SkillPer", //Diplomacia
+  "dec": "DND5E.SkillDec", //Enganação
+  "ste": "DND5E.SkillSte", //Furtividade
+  //Identificar Magia
+  //Iniciativa
+  "ins": "DND5E.SkillIns", //Intuição
+  "itm": "DND5E.SkillItm", //Intimidação
+  "prc": "DND5E.SkillPrc", //Percepção
+  "slt": "DND5E.SkillSlt", //Ladinagem
+  //Obter Informação
+  //Ofício
+  "sur": "DND5E.SkillSur", //Sobrevivência
+  
+
+  //REMOVER
+  "arc": "DND5E.SkillArc", //Conhecimento: Arcano
+  "his": "DND5E.SkillHis", //Conhecimento: História
+  "inv": "DND5E.SkillInv", //Investigação
+  "nat": "DND5E.SkillNat", //Conhecimento: Natureza
+  "rel": "DND5E.SkillRel" //Conhecimento: Religião
 };
 
 
@@ -859,8 +887,8 @@ DND5E.languages = {
 
 // Character Level XP Requirements
 DND5E.CHARACTER_EXP_LEVELS =  [
-  0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000,
-  120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000]
+  0, 1000, 3000, 6000, 10000, 15000, 21000, 28000, 36000, 45000, 55000, 66000,
+  78000, 91000, 105000, 120000, 136000, 153000, 171000, 190000]
 ;
 
 // Challenge Rating XP Levels
@@ -869,73 +897,75 @@ DND5E.CR_EXP_LEVELS = [
   20000, 22000, 25000, 33000, 41000, 50000, 62000, 75000, 90000, 105000, 120000, 135000, 155000
 ];
 
+
+
 // Character Features Per Class And Level
 DND5E.classFeatures = ClassFeatures;
 
 // Configure Optional Character Flags
 DND5E.characterFlags = {
-  "diamondSoul": {
-    name: "DND5E.FlagsDiamondSoul",
-    hint: "DND5E.FlagsDiamondSoulHint",
-    section: "Feats",
-    type: Boolean
-  },
-  "elvenAccuracy": {
-    name: "DND5E.FlagsElvenAccuracy",
-    hint: "DND5E.FlagsElvenAccuracyHint",
-    section: "Racial Traits",
-    type: Boolean
-  },
-  "halflingLucky": {
-    name: "DND5E.FlagsHalflingLucky",
-    hint: "DND5E.FlagsHalflingLuckyHint",
-    section: "Racial Traits",
-    type: Boolean
-  },
-  "initiativeAdv": {
-    name: "DND5E.FlagsInitiativeAdv",
-    hint: "DND5E.FlagsInitiativeAdvHint",
-    section: "Feats",
-    type: Boolean
-  },
-  "initiativeAlert": {
-    name: "DND5E.FlagsAlert",
-    hint: "DND5E.FlagsAlertHint",
-    section: "Feats",
-    type: Boolean
-  },
-  "jackOfAllTrades": {
-    name: "DND5E.FlagsJOAT",
-    hint: "DND5E.FlagsJOATHint",
-    section: "Feats",
-    type: Boolean
-  },
-  "observantFeat": {
-    name: "DND5E.FlagsObservant",
-    hint: "DND5E.FlagsObservantHint",
-    skills: ['prc','inv'],
-    section: "Feats",
-    type: Boolean
-  },
-  "powerfulBuild": {
-    name: "DND5E.FlagsPowerfulBuild",
-    hint: "DND5E.FlagsPowerfulBuildHint",
-    section: "Racial Traits",
-    type: Boolean
-  },
-  "reliableTalent": {
-    name: "DND5E.FlagsReliableTalent",
-    hint: "DND5E.FlagsReliableTalentHint",
-    section: "Feats",
-    type: Boolean
-  },
-  "remarkableAthlete": {
-    name: "DND5E.FlagsRemarkableAthlete",
-    hint: "DND5E.FlagsRemarkableAthleteHint",
-    abilities: ['str','dex','con'],
-    section: "Feats",
-    type: Boolean
-  },
+  // "diamondSoul": {
+  //   name: "DND5E.FlagsDiamondSoul",
+  //   hint: "DND5E.FlagsDiamondSoulHint",
+  //   section: "Feats",
+  //   type: Boolean
+  // },
+  // "elvenAccuracy": {
+  //   name: "DND5E.FlagsElvenAccuracy",
+  //   hint: "DND5E.FlagsElvenAccuracyHint",
+  //   section: "Racial Traits",
+  //   type: Boolean
+  // },
+  // "halflingLucky": {
+  //   name: "DND5E.FlagsHalflingLucky",
+  //   hint: "DND5E.FlagsHalflingLuckyHint",
+  //   section: "Racial Traits",
+  //   type: Boolean
+  // },
+  // "initiativeAdv": {
+  //   name: "DND5E.FlagsInitiativeAdv",
+  //   hint: "DND5E.FlagsInitiativeAdvHint",
+  //   section: "Feats",
+  //   type: Boolean
+  // },
+  // "initiativeAlert": {
+  //   name: "DND5E.FlagsAlert",
+  //   hint: "DND5E.FlagsAlertHint",
+  //   section: "Feats",
+  //   type: Boolean
+  // },
+  // "jackOfAllTrades": {
+  //   name: "DND5E.FlagsJOAT",
+  //   hint: "DND5E.FlagsJOATHint",
+  //   section: "Feats",
+  //   type: Boolean
+  // },
+  // "observantFeat": {
+  //   name: "DND5E.FlagsObservant",
+  //   hint: "DND5E.FlagsObservantHint",
+  //   skills: ['prc','inv'],
+  //   section: "Feats",
+  //   type: Boolean
+  // },
+  // "powerfulBuild": {
+  //   name: "DND5E.FlagsPowerfulBuild",
+  //   hint: "DND5E.FlagsPowerfulBuildHint",
+  //   section: "Racial Traits",
+  //   type: Boolean
+  // },
+  // "reliableTalent": {
+  //   name: "DND5E.FlagsReliableTalent",
+  //   hint: "DND5E.FlagsReliableTalentHint",
+  //   section: "Feats",
+  //   type: Boolean
+  // },
+  // "remarkableAthlete": {
+  //   name: "DND5E.FlagsRemarkableAthlete",
+  //   hint: "DND5E.FlagsRemarkableAthleteHint",
+  //   abilities: ['str','dex','con'],
+  //   section: "Feats",
+  //   type: Boolean
+  // },
   "weaponCriticalThreshold": {
     name: "DND5E.FlagsWeaponCritThreshold",
     hint: "DND5E.FlagsWeaponCritThresholdHint",

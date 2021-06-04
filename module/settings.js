@@ -3,7 +3,7 @@ export const registerSystemSettings = function() {
   /**
    * Track the system version upon which point a migration was last applied
    */
-  game.settings.register("dnd5e", "systemMigrationVersion", {
+  game.settings.register("tormentarpg", "systemMigrationVersion", {
     name: "System Migration Version",
     scope: "world",
     config: false,
@@ -14,7 +14,7 @@ export const registerSystemSettings = function() {
   /**
    * Register resting variants
    */
-  game.settings.register("dnd5e", "restVariant", {
+  game.settings.register("tormentarpg", "restVariant", {
     name: "SETTINGS.5eRestN",
     hint: "SETTINGS.5eRestL",
     scope: "world",
@@ -31,25 +31,26 @@ export const registerSystemSettings = function() {
   /**
    * Register diagonal movement rule setting
    */
-  game.settings.register("dnd5e", "diagonalMovement", {
-    name: "SETTINGS.5eDiagN",
-    hint: "SETTINGS.5eDiagL",
-    scope: "world",
-    config: true,
-    default: "555",
-    type: String,
-    choices: {
-      "555": "SETTINGS.5eDiagPHB",
-      "5105": "SETTINGS.5eDiagDMG",
-      "EUCL": "SETTINGS.5eDiagEuclidean",
-    },
-    onChange: rule => canvas.grid.diagonalRule = rule
-  });
+  // game.settings.register("tormentarpg", "diagonalMovement", {
+  //   name: "SETTINGS.5eDiagN",
+  //   hint: "SETTINGS.5eDiagL",
+  //   scope: "world",
+  //   config: true,
+  //   default: "MANH",
+  //   type: String,
+  //   choices: {
+	// 		"MANH": "Manhattan",
+  //     "555": "SETTINGS.5eDiagPHB",
+  //     "5105": "SETTINGS.5eDiagDMG",
+  //     "EUCL": "SETTINGS.5eDiagEuclidean",
+  //   },
+  //   onChange: rule => canvas.grid.diagonalRule = rule
+  // });
 
   /**
    * Register Initiative formula setting
    */
-  game.settings.register("dnd5e", "initiativeDexTiebreaker", {
+  game.settings.register("tormentarpg", "initiativeDexTiebreaker", {
     name: "SETTINGS.5eInitTBN",
     hint: "SETTINGS.5eInitTBL",
     scope: "world",
@@ -61,7 +62,7 @@ export const registerSystemSettings = function() {
   /**
    * Require Currency Carrying Weight
    */
-  game.settings.register("dnd5e", "currencyWeight", {
+  game.settings.register("tormentarpg", "currencyWeight", {
     name: "SETTINGS.5eCurWtN",
     hint: "SETTINGS.5eCurWtL",
     scope: "world",
@@ -73,7 +74,7 @@ export const registerSystemSettings = function() {
   /**
    * Option to disable XP bar for session-based or story-based advancement.
    */
-  game.settings.register("dnd5e", "disableExperienceTracking", {
+  game.settings.register("tormentarpg", "disableExperienceTracking", {
     name: "SETTINGS.5eNoExpN",
     hint: "SETTINGS.5eNoExpL",
     scope: "world",
@@ -85,7 +86,7 @@ export const registerSystemSettings = function() {
   /**
    * Option to automatically collapse Item Card descriptions
    */
-  game.settings.register("dnd5e", "autoCollapseItemCards", {
+  game.settings.register("tormentarpg", "autoCollapseItemCards", {
     name: "SETTINGS.5eAutoCollapseCardN",
     hint: "SETTINGS.5eAutoCollapseCardL",
     scope: "client",
@@ -100,7 +101,7 @@ export const registerSystemSettings = function() {
   /**
    * Option to allow GMs to restrict polymorphing to GMs only.
    */
-  game.settings.register('dnd5e', 'allowPolymorphing', {
+  game.settings.register("tormentarpg", 'allowPolymorphing', {
     name: 'SETTINGS.5eAllowPolymorphingN',
     hint: 'SETTINGS.5eAllowPolymorphingL',
     scope: 'world',
@@ -112,7 +113,7 @@ export const registerSystemSettings = function() {
   /**
    * Remember last-used polymorph settings.
    */
-  game.settings.register('dnd5e', 'polymorphSettings', {
+  game.settings.register("tormentarpg", 'polymorphSettings', {
     scope: 'client',
     default: {
       keepPhysical: false,
@@ -130,4 +131,13 @@ export const registerSystemSettings = function() {
       transformTokens: true
     }
   });
+	
+	//Bonus Dice
+	game.settings.register("tormentarpg", "pontoDeAcao", {
+		type: Object,
+		default: {},
+		scope: "world",
+		config: false,
+		restricted: false
+	});
 };

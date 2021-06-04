@@ -10,7 +10,7 @@ export default class ActorTypeConfig extends FormApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["dnd5e", "actor-type", "trait-selector"],
-      template: "systems/dnd5e/templates/apps/actor-type.html",
+      template: "systems/tormentarpg/templates/apps/actor-type.html",
       title: "DND5E.CreatureTypeTitle",
       width: 280,
       height: "auto",

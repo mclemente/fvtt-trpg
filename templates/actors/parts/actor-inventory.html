@@ -4,9 +4,9 @@
     <ol class="currency flexrow">
         <h3>
             {{localize "DND5E.Currency"}}
-            <a class="currency-convert rollable" data-action="convertCurrency" title="Convert Currency">
+            <!-- <a class="currency-convert rollable" data-action="convertCurrency" title="Convert Currency">
                 <i class="fas fa-coins"></i>
-            </a>
+            </a> -->
         </h3>
         {{#each data.currency as |v k|}}
         <label class="denomination {{k}}">{{ lookup ../config.currencies k }}</label>
@@ -137,8 +137,8 @@
     <span class="encumbrance-label">{{value}} / {{max}}</span>
     <i class="encumbrance-breakpoint encumbrance-33 arrow-up"></i>
     <i class="encumbrance-breakpoint encumbrance-33 arrow-down"></i>
-    <i class="encumbrance-breakpoint encumbrance-66 arrow-up"></i>
-    <i class="encumbrance-breakpoint encumbrance-66 arrow-down"></i>
+    <!-- <i class="encumbrance-breakpoint encumbrance-66 arrow-up"></i> -->
+    <!-- <i class="encumbrance-breakpoint encumbrance-66 arrow-down"></i> -->
 </div>
 {{/with}}
 {{/unless}}

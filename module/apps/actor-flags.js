@@ -7,7 +7,7 @@ export default class ActorSheetFlags extends DocumentSheet {
     return foundry.utils.mergeObject(super.defaultOptions, {
       id: "actor-flags",
 	    classes: ["dnd5e"],
-      template: "systems/dnd5e/templates/apps/actor-flags.html",
+      template: "systems/tormentarpg/templates/apps/actor-flags.html",
       width: 500,
       closeOnSubmit: true
     });
@@ -27,6 +27,7 @@ export default class ActorSheetFlags extends DocumentSheet {
     const data = {};
     data.actor = this.object;
     data.classes = this._getClasses();
+    data.hasSpells = this._getSpells();
     data.flags = this._getFlags();
     data.bonuses = this._getBonuses();
     return data;
@@ -45,6 +46,11 @@ export default class ActorSheetFlags extends DocumentSheet {
       obj[i.id] = i.name;
       return obj;
     }, {});
+  }
+
+  _getSpells() {
+    const spells = this.object.items.filter(i => i.type === "spell");
+    return spells.length;
   }
 
   /* -------------------------------------------- */
@@ -93,7 +99,7 @@ export default class ActorSheetFlags extends DocumentSheet {
       {name: "data.bonuses.spell.dc", label: "DND5E.BonusSpellDC"}
     ];
     for ( let b of bonuses ) {
-      b.value = getProperty(this.object._data, b.name) || "";
+      b.value = getProperty(this.object.data._source, b.name) || "";
     }
     return bonuses;
   }
@@ -111,7 +117,7 @@ export default class ActorSheetFlags extends DocumentSheet {
     for ( let [k, v] of Object.entries(flags) ) {
       if ( [undefined, null, "", false, 0].includes(v) ) {
         delete flags[k];
-        if ( hasProperty(actor._data.flags, `dnd5e.${k}`) ) {
+        if ( hasProperty(actor.data._source.flags, `dnd5e.${k}`) ) {
           unset = true;
           flags[`-=${k}`] = null;
         }
