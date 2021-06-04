@@ -3,7 +3,7 @@ export const registerSystemSettings = function() {
   /**
    * Track the system version upon which point a migration was last applied
    */
-  game.settings.register("tormentarpg", "systemMigrationVersion", {
+  game.settings.register("trpg", "systemMigrationVersion", {
     name: "System Migration Version",
     scope: "world",
     config: false,
@@ -14,7 +14,7 @@ export const registerSystemSettings = function() {
   /**
    * Register resting variants
    */
-  game.settings.register("tormentarpg", "restVariant", {
+  game.settings.register("trpg", "restVariant", {
     name: "SETTINGS.5eRestN",
     hint: "SETTINGS.5eRestL",
     scope: "world",
@@ -31,7 +31,7 @@ export const registerSystemSettings = function() {
   /**
    * Register diagonal movement rule setting
    */
-  // game.settings.register("tormentarpg", "diagonalMovement", {
+  // game.settings.register("trpg", "diagonalMovement", {
   //   name: "SETTINGS.5eDiagN",
   //   hint: "SETTINGS.5eDiagL",
   //   scope: "world",
@@ -50,7 +50,7 @@ export const registerSystemSettings = function() {
   /**
    * Register Initiative formula setting
    */
-  game.settings.register("tormentarpg", "initiativeDexTiebreaker", {
+  game.settings.register("trpg", "initiativeDexTiebreaker", {
     name: "SETTINGS.5eInitTBN",
     hint: "SETTINGS.5eInitTBL",
     scope: "world",
@@ -62,7 +62,7 @@ export const registerSystemSettings = function() {
   /**
    * Require Currency Carrying Weight
    */
-  game.settings.register("tormentarpg", "currencyWeight", {
+  game.settings.register("trpg", "currencyWeight", {
     name: "SETTINGS.5eCurWtN",
     hint: "SETTINGS.5eCurWtL",
     scope: "world",
@@ -74,7 +74,7 @@ export const registerSystemSettings = function() {
   /**
    * Option to disable XP bar for session-based or story-based advancement.
    */
-  game.settings.register("tormentarpg", "disableExperienceTracking", {
+  game.settings.register("trpg", "disableExperienceTracking", {
     name: "SETTINGS.5eNoExpN",
     hint: "SETTINGS.5eNoExpL",
     scope: "world",
@@ -86,7 +86,7 @@ export const registerSystemSettings = function() {
   /**
    * Option to automatically collapse Item Card descriptions
    */
-  game.settings.register("tormentarpg", "autoCollapseItemCards", {
+  game.settings.register("trpg", "autoCollapseItemCards", {
     name: "SETTINGS.5eAutoCollapseCardN",
     hint: "SETTINGS.5eAutoCollapseCardL",
     scope: "client",
@@ -101,7 +101,7 @@ export const registerSystemSettings = function() {
   /**
    * Option to allow GMs to restrict polymorphing to GMs only.
    */
-  game.settings.register("tormentarpg", 'allowPolymorphing', {
+  game.settings.register("trpg", 'allowPolymorphing', {
     name: 'SETTINGS.5eAllowPolymorphingN',
     hint: 'SETTINGS.5eAllowPolymorphingL',
     scope: 'world',
@@ -113,7 +113,7 @@ export const registerSystemSettings = function() {
   /**
    * Remember last-used polymorph settings.
    */
-  game.settings.register("tormentarpg", 'polymorphSettings', {
+  game.settings.register("trpg", 'polymorphSettings', {
     scope: 'client',
     default: {
       keepPhysical: false,
@@ -133,7 +133,7 @@ export const registerSystemSettings = function() {
   });
 	
 	//Bonus Dice
-	game.settings.register("tormentarpg", "pontoDeAcao", {
+	game.settings.register("trpg", "pontoDeAcao", {
 		type: Object,
 		default: {},
 		scope: "world",

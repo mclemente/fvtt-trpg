@@ -10,7 +10,7 @@ export default class TraitSelector extends DocumentSheet {
 	    id: "trait-selector",
       classes: ["dnd5e", "trait-selector", "subconfig"],
       title: "Actor Trait Selection",
-      template: "systems/tormentarpg/templates/apps/trait-selector.html",
+      template: "systems/trpg/templates/apps/trait-selector.html",
       width: 320,
       height: "auto",
       choices: {},

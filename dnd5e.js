@@ -107,23 +107,23 @@ Hooks.once("init", function() {
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("tormentarpg", ActorSheet5eCharacter, {
+  Actors.registerSheet("trpg", ActorSheet5eCharacter, {
     types: ["character"],
     makeDefault: true,
     label: "DND5E.SheetClassCharacter"
   });
-  Actors.registerSheet("tormentarpg", ActorSheet5eNPC, {
+  Actors.registerSheet("trpg", ActorSheet5eNPC, {
     types: ["npc"],
     makeDefault: true,
     label: "DND5E.SheetClassNPC"
   });
-  Actors.registerSheet("tormentarpg", ActorSheet5eVehicle, {
+  Actors.registerSheet("trpg", ActorSheet5eVehicle, {
     types: ['vehicle'],
     makeDefault: true,
     label: "DND5E.SheetClassVehicle"
   });
   Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("tormentarpg", ItemSheet5e, {
+  Items.registerSheet("trpg", ItemSheet5e, {
     makeDefault: true,
     label: "DND5E.SheetClassItem"
   });
@@ -186,8 +186,8 @@ Hooks.once("ready", function() {
 
   // Determine whether a system migration is required and feasible
   if ( !game.user.isGM ) return;
-  const currentVersion = game.settings.get("tormentarpg", "systemMigrationVersion");
-  if ( !currentVersion ) return game.settings.set("tormentarpg", 'systemMigrationVersion', game.system.data.version);
+  const currentVersion = game.settings.get("trpg", "systemMigrationVersion");
+  if ( !currentVersion ) return game.settings.set("trpg", 'systemMigrationVersion', game.system.data.version);
   const NEEDS_MIGRATION_VERSION = "1.3.0";
   const COMPATIBLE_MIGRATION_VERSION = 0.80;
   const needsMigration = currentVersion && isNewerVersion(NEEDS_MIGRATION_VERSION, currentVersion);
@@ -207,7 +207,7 @@ Hooks.once("ready", function() {
 
 Hooks.on("canvasInit", function() {
   // Extend Diagonal Measurement
-  canvas.grid.diagonalRule = game.settings.get("tormentarpg", "diagonalMovement");
+  canvas.grid.diagonalRule = game.settings.get("trpg", "diagonalMovement");
   SquareGrid.prototype.measureDistances = measureDistances;
 });
 
@@ -225,7 +225,7 @@ Hooks.on("renderChatMessage", (app, html, data) => {
   chat.highlightCriticalSuccessFailure(app, html, data);
 
   // Optionally collapse the content
-  if (game.settings.get("tormentarpg", "autoCollapseItemCards")) html.find(".card-content").hide();
+  if (game.settings.get("trpg", "autoCollapseItemCards")) html.find(".card-content").hide();
 });
 Hooks.on("getChatLogEntryContext", chat.addChatMessageContextOptions);
 Hooks.on("renderChatLog", (app, html, data) => Item5e.chatListeners(html));

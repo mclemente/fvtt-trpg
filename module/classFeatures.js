@@ -13,10 +13,10 @@ export const ClassFeatures = {
        "label": "Path of the Berserker",
        "source": "PHB pg. 49",
        "features": {
-         "3": ["Compendium.tormentarpg.classfeatures.CkbbAckeCtyHXEnL"],
-         "6": ["Compendium.tormentarpg.classfeatures.0Jgf8fYY2ExwgQpN"],
-         "10": ["Compendium.tormentarpg.classfeatures.M6VSMzVtKPhh8B0i"],
-         "14": ["Compendium.tormentarpg.classfeatures.xzD9zlRP6dUxCtCl"]
+         "3": ["Compendium.trpg.classfeatures.CkbbAckeCtyHXEnL"],
+         "6": ["Compendium.trpg.classfeatures.0Jgf8fYY2ExwgQpN"],
+         "10": ["Compendium.trpg.classfeatures.M6VSMzVtKPhh8B0i"],
+         "14": ["Compendium.trpg.classfeatures.xzD9zlRP6dUxCtCl"]
        }
      },
      "path-of-the-juggernaut": {
@@ -37,16 +37,16 @@ export const ClassFeatures = {
      }
    },
    "features": {
-     "1": ["Compendium.tormentarpg.classfeatures.VoR0SUrNX5EJVPIO", "Compendium.tormentarpg.classfeatures.SZbsNbaxFFGwBpNK"],
-     "2": ["Compendium.tormentarpg.classfeatures.SCVjqRdlZ9cvHVSR", "Compendium.tormentarpg.classfeatures.vt31lWAULygEl7yk"],
-     "3": ["Compendium.tormentarpg.classfeatures.TH1QAf6YNGSeBVjT"],
-     "5": ["Compendium.tormentarpg.classfeatures.XogoBnFWmCAHXppo", "Compendium.tormentarpg.classfeatures.Kl6zifJ5OmdHlOi2"],
-     "7": ["Compendium.tormentarpg.classfeatures.NlXslw4yAqmKZWtN"],
-     "9": ["Compendium.tormentarpg.classfeatures.L94gyvNpUhUe0rwh"],
-     "11": ["Compendium.tormentarpg.classfeatures.FqfmbPgxiyrWzhYk"],
-     "15": ["Compendium.tormentarpg.classfeatures.l8tUhZ5Pecm9wz7I"],
-     "18": ["Compendium.tormentarpg.classfeatures.Q1exex5ALteprrPo"],
-     "20": ["Compendium.tormentarpg.classfeatures.jVU4AgqfrFaqgXns"]
+     "1": ["Compendium.trpg.classfeatures.VoR0SUrNX5EJVPIO", "Compendium.trpg.classfeatures.SZbsNbaxFFGwBpNK"],
+     "2": ["Compendium.trpg.classfeatures.SCVjqRdlZ9cvHVSR", "Compendium.trpg.classfeatures.vt31lWAULygEl7yk"],
+     "3": ["Compendium.trpg.classfeatures.TH1QAf6YNGSeBVjT"],
+     "5": ["Compendium.trpg.classfeatures.XogoBnFWmCAHXppo", "Compendium.trpg.classfeatures.Kl6zifJ5OmdHlOi2"],
+     "7": ["Compendium.trpg.classfeatures.NlXslw4yAqmKZWtN"],
+     "9": ["Compendium.trpg.classfeatures.L94gyvNpUhUe0rwh"],
+     "11": ["Compendium.trpg.classfeatures.FqfmbPgxiyrWzhYk"],
+     "15": ["Compendium.trpg.classfeatures.l8tUhZ5Pecm9wz7I"],
+     "18": ["Compendium.trpg.classfeatures.Q1exex5ALteprrPo"],
+     "20": ["Compendium.trpg.classfeatures.jVU4AgqfrFaqgXns"]
    }
  },
  "bard": {
@@ -60,9 +60,9 @@ export const ClassFeatures = {
        "label": "College of Lore",
        "source": "PHB pg. 54",
        "features": {
-         "3": ["Compendium.tormentarpg.classfeatures.5zPmHPQUne7RDfaU"],
-         "6": ["Compendium.tormentarpg.classfeatures.myBu3zi5eYvQIcuy"],
-         "14": ["Compendium.tormentarpg.classfeatures.pquwueEMweRhiWaq"]
+         "3": ["Compendium.trpg.classfeatures.5zPmHPQUne7RDfaU"],
+         "6": ["Compendium.trpg.classfeatures.myBu3zi5eYvQIcuy"],
+         "14": ["Compendium.trpg.classfeatures.pquwueEMweRhiWaq"]
        }
      },
      "college-of-swords": {
@@ -82,13 +82,13 @@ export const ClassFeatures = {
      }
    },
    "features": {
-     "1": ["Compendium.tormentarpg.classfeatures.hpLNiGq7y67d2EHA", "Compendium.tormentarpg.classfeatures.u4NLajXETJhJU31v"],
-     "2": ["Compendium.tormentarpg.classfeatures.ezWijmCnlnQ9ZRX2", "Compendium.tormentarpg.classfeatures.he8RpPXwSl2lVSIk"],
-     "3": ["Compendium.tormentarpg.classfeatures.ILhzFHiRrqgQ9dFJ", "Compendium.tormentarpg.classfeatures.aQLg7BWdRnm4Hr9S"],
-     "5": ["Compendium.tormentarpg.classfeatures.3VDZGs5Ug3hIE322"],
-     "6": ["Compendium.tormentarpg.classfeatures.SEJmsjkEhdAZ90ki"],
-     "10": ["Compendium.tormentarpg.classfeatures.aonJ2YjkqkYB9WYB"],
-     "20": ["Compendium.tormentarpg.classfeatures.GBYN5rH4nh1ocRlY"]
+     "1": ["Compendium.trpg.classfeatures.hpLNiGq7y67d2EHA", "Compendium.trpg.classfeatures.u4NLajXETJhJU31v"],
+     "2": ["Compendium.trpg.classfeatures.ezWijmCnlnQ9ZRX2", "Compendium.trpg.classfeatures.he8RpPXwSl2lVSIk"],
+     "3": ["Compendium.trpg.classfeatures.ILhzFHiRrqgQ9dFJ", "Compendium.trpg.classfeatures.aQLg7BWdRnm4Hr9S"],
+     "5": ["Compendium.trpg.classfeatures.3VDZGs5Ug3hIE322"],
+     "6": ["Compendium.trpg.classfeatures.SEJmsjkEhdAZ90ki"],
+     "10": ["Compendium.trpg.classfeatures.aonJ2YjkqkYB9WYB"],
+     "20": ["Compendium.trpg.classfeatures.GBYN5rH4nh1ocRlY"]
    }
  },
  "cleric": {
@@ -132,15 +132,15 @@ export const ClassFeatures = {
        "label": "Life Domain",
        "source": "PHB pg. 60",
        "features": {
-         "1": ["Compendium.tormentarpg.classfeatures.68bYIOvx6rIqnlOW", "Compendium.tormentarpg.classfeatures.jF8AFfEMICIJnAkR", "Compendium.tormentarpg.spells.8dzaICjGy6mTUaUr", "Compendium.tormentarpg.spells.uUWb1wZgtMou0TVP"],
-         "2": ["Compendium.tormentarpg.classfeatures.hEymt45rICi4f9eL"],
-         "3": ["Compendium.tormentarpg.spells.F0GsG0SJzsIOacwV", "Compendium.tormentarpg.spells.JbxsYXxSOTZbf9I0"],
-         "5": ["Compendium.tormentarpg.spells.ZU9d6woBdUP8pIPt", "Compendium.tormentarpg.spells.LmRHHMtplpxr9fX6"],
-         "6": ["Compendium.tormentarpg.classfeatures.yv49QN6Bzqs0ecCs"],
-         "7": ["Compendium.tormentarpg.spells.VtCXMdyM6mAdIJZb", "Compendium.tormentarpg.spells.TgHsuhNasPbhu8MO"],
-         "8": ["Compendium.tormentarpg.classfeatures.T6u5z8ZTX6UftXqE"],
-         "9": ["Compendium.tormentarpg.spells.Pyzmm8R7rVsNAPsd", "Compendium.tormentarpg.spells.AGFMPAmuzwWO6Dfz"],
-         "17": ["Compendium.tormentarpg.classfeatures.4UOgxzr83vFuUash"]
+         "1": ["Compendium.trpg.classfeatures.68bYIOvx6rIqnlOW", "Compendium.trpg.classfeatures.jF8AFfEMICIJnAkR", "Compendium.trpg.spells.8dzaICjGy6mTUaUr", "Compendium.trpg.spells.uUWb1wZgtMou0TVP"],
+         "2": ["Compendium.trpg.classfeatures.hEymt45rICi4f9eL"],
+         "3": ["Compendium.trpg.spells.F0GsG0SJzsIOacwV", "Compendium.trpg.spells.JbxsYXxSOTZbf9I0"],
+         "5": ["Compendium.trpg.spells.ZU9d6woBdUP8pIPt", "Compendium.trpg.spells.LmRHHMtplpxr9fX6"],
+         "6": ["Compendium.trpg.classfeatures.yv49QN6Bzqs0ecCs"],
+         "7": ["Compendium.trpg.spells.VtCXMdyM6mAdIJZb", "Compendium.trpg.spells.TgHsuhNasPbhu8MO"],
+         "8": ["Compendium.trpg.classfeatures.T6u5z8ZTX6UftXqE"],
+         "9": ["Compendium.trpg.spells.Pyzmm8R7rVsNAPsd", "Compendium.trpg.spells.AGFMPAmuzwWO6Dfz"],
+         "17": ["Compendium.trpg.classfeatures.4UOgxzr83vFuUash"]
        }
      },
      "light-domain": {
@@ -190,10 +190,10 @@ export const ClassFeatures = {
      }
    },
    "features": {
-     "1": ["Compendium.tormentarpg.classfeatures.x637K2Icp2ZFM1TB", "Compendium.tormentarpg.classfeatures.v4gKwLhAq9vuqza7"],
-     "2": ["Compendium.tormentarpg.classfeatures.YpiLQEKGalROn7iJ"],
-     "5": ["Compendium.tormentarpg.classfeatures.NMy4piwXIpLjYbRE"],
-     "10": ["Compendium.tormentarpg.classfeatures.eVXqHn0ojWrEuYGU"]
+     "1": ["Compendium.trpg.classfeatures.x637K2Icp2ZFM1TB", "Compendium.trpg.classfeatures.v4gKwLhAq9vuqza7"],
+     "2": ["Compendium.trpg.classfeatures.YpiLQEKGalROn7iJ"],
+     "5": ["Compendium.trpg.classfeatures.NMy4piwXIpLjYbRE"],
+     "10": ["Compendium.trpg.classfeatures.eVXqHn0ojWrEuYGU"]
    },
  },
  "druid": {
@@ -207,11 +207,11 @@ export const ClassFeatures = {
        "label": "Circle of the Land",
        "source": "PHB pg. 68",
        "features": {
-         "2": ["Compendium.tormentarpg.classfeatures.lT8GsPOPgRzDC3QJ", "Compendium.tormentarpg.classfeatures.wKdRtFsvGfMKQHLY"],
-         "3": ["Compendium.tormentarpg.classfeatures.YiK59gWSlcQ6Mbdz"],
-         "6": ["Compendium.tormentarpg.classfeatures.3FB25qKxmkmxcxuC"],
-         "10": ["Compendium.tormentarpg.classfeatures.OTvrJSJSUgAwXrWX"],
-         "14": ["Compendium.tormentarpg.classfeatures.EuX1kJNIw1F68yus"]
+         "2": ["Compendium.trpg.classfeatures.lT8GsPOPgRzDC3QJ", "Compendium.trpg.classfeatures.wKdRtFsvGfMKQHLY"],
+         "3": ["Compendium.trpg.classfeatures.YiK59gWSlcQ6Mbdz"],
+         "6": ["Compendium.trpg.classfeatures.3FB25qKxmkmxcxuC"],
+         "10": ["Compendium.trpg.classfeatures.OTvrJSJSUgAwXrWX"],
+         "14": ["Compendium.trpg.classfeatures.EuX1kJNIw1F68yus"]
        }
      },
      "circle-of-the-moon": {
@@ -231,10 +231,10 @@ export const ClassFeatures = {
      }
    },
    "features": {
-     "1": ["Compendium.tormentarpg.classfeatures.LzJ5ayHt0OlSVGxi", "Compendium.tormentarpg.classfeatures.i6tPm3FNK13Ftc9v"],
-     "2": ["Compendium.tormentarpg.classfeatures.swK0r5TOIxredxWS", "Compendium.tormentarpg.classfeatures.u6Du2P9s81SWuGbi"],
-     "18": ["Compendium.tormentarpg.classfeatures.cVDEQo0ow1WJT7Wl", "Compendium.tormentarpg.classfeatures.xvgPu1O57DgXCM86"],
-     "20": ["Compendium.tormentarpg.classfeatures.ip4bvmGoz3qkoqes"]
+     "1": ["Compendium.trpg.classfeatures.LzJ5ayHt0OlSVGxi", "Compendium.trpg.classfeatures.i6tPm3FNK13Ftc9v"],
+     "2": ["Compendium.trpg.classfeatures.swK0r5TOIxredxWS", "Compendium.trpg.classfeatures.u6Du2P9s81SWuGbi"],
+     "18": ["Compendium.trpg.classfeatures.cVDEQo0ow1WJT7Wl", "Compendium.trpg.classfeatures.xvgPu1O57DgXCM86"],
+     "20": ["Compendium.trpg.classfeatures.ip4bvmGoz3qkoqes"]
    },
  },
  "fighter": {
@@ -263,11 +263,11 @@ export const ClassFeatures = {
        "label": "Champion",
        "source": "PHB pg. 72",
        "features": {
-         "3": ["Compendium.tormentarpg.classfeatures.YgLQV1O849wE5TgM"],
-         "7": ["Compendium.tormentarpg.classfeatures.dHu1yzIjD38BvGGd"],
-         "11": ["Compendium.tormentarpg.classfeatures.kYJsED0rqqqUcgKz"],
-         "15": ["Compendium.tormentarpg.classfeatures.aVKH6TLn1AG9hPSA"],
-         "18": ["Compendium.tormentarpg.classfeatures.ipG5yx1tRNmeJfSH"]
+         "3": ["Compendium.trpg.classfeatures.YgLQV1O849wE5TgM"],
+         "7": ["Compendium.trpg.classfeatures.dHu1yzIjD38BvGGd"],
+         "11": ["Compendium.trpg.classfeatures.kYJsED0rqqqUcgKz"],
+         "15": ["Compendium.trpg.classfeatures.aVKH6TLn1AG9hPSA"],
+         "18": ["Compendium.trpg.classfeatures.ipG5yx1tRNmeJfSH"]
        }
      },
      "echo-knight": {
@@ -287,11 +287,11 @@ export const ClassFeatures = {
      }
    },
    "features": {
-     "1": ["Compendium.tormentarpg.classfeatures.fbExzwNwEAl2kW9c", "Compendium.tormentarpg.classfeatures.nTjmWbyHweXuIqwc"],
-     "2": ["Compendium.tormentarpg.classfeatures.xF1VTcJ3AdkbTsdQ"],
-     "3": ["Compendium.tormentarpg.classfeatures.ax8M0X0q1GGWM26j"],
-     "5": ["Compendium.tormentarpg.classfeatures.q9g1MLXuLZyxjQMg"],
-     "9": ["Compendium.tormentarpg.classfeatures.653ZHbNcmm7ZGXbw"]
+     "1": ["Compendium.trpg.classfeatures.fbExzwNwEAl2kW9c", "Compendium.trpg.classfeatures.nTjmWbyHweXuIqwc"],
+     "2": ["Compendium.trpg.classfeatures.xF1VTcJ3AdkbTsdQ"],
+     "3": ["Compendium.trpg.classfeatures.ax8M0X0q1GGWM26j"],
+     "5": ["Compendium.trpg.classfeatures.q9g1MLXuLZyxjQMg"],
+     "9": ["Compendium.trpg.classfeatures.653ZHbNcmm7ZGXbw"]
    },
  },
  "monk": {
@@ -325,10 +325,10 @@ export const ClassFeatures = {
        "label": "Way of the Open Hand",
        "source": "PHB pg. 79",
        "features": {
-         "3": ["Compendium.tormentarpg.classfeatures.iQxLNydNLlCHNKbp"],
-         "6": ["Compendium.tormentarpg.classfeatures.Q7mOdk4b1lgjcptF"],
-         "11": ["Compendium.tormentarpg.classfeatures.rBDZLatuoolT2FUW"],
-         "17": ["Compendium.tormentarpg.classfeatures.h1gM8SH3BNRtFevE"]
+         "3": ["Compendium.trpg.classfeatures.iQxLNydNLlCHNKbp"],
+         "6": ["Compendium.trpg.classfeatures.Q7mOdk4b1lgjcptF"],
+         "11": ["Compendium.trpg.classfeatures.rBDZLatuoolT2FUW"],
+         "17": ["Compendium.trpg.classfeatures.h1gM8SH3BNRtFevE"]
        }
      },
      "way-of-the-shadow": {
@@ -343,19 +343,19 @@ export const ClassFeatures = {
      }
    },
    "features": {
-     "1": ["Compendium.tormentarpg.classfeatures.UAvV7N7T4zJhxdfI", "Compendium.tormentarpg.classfeatures.l50hjTxO2r0iecKw"],
-     "2": ["Compendium.tormentarpg.classfeatures.10b6z2W1txNkrGP7", "Compendium.tormentarpg.classfeatures.7vSrGc0MP5Vzm9Ac"],
-     "3": ["Compendium.tormentarpg.classfeatures.rtpQdX77dYWbDIOH", "Compendium.tormentarpg.classfeatures.mzweVbnsJPQiVkAe"],
-     "4": ["Compendium.tormentarpg.classfeatures.KQz9bqxVkXjDl8gK"],
-     "5": ["Compendium.tormentarpg.classfeatures.XogoBnFWmCAHXppo", "Compendium.tormentarpg.classfeatures.pvRc6GAu1ok6zihC"],
-     "6": ["Compendium.tormentarpg.classfeatures.7flZKruSSu6dHg6D"],
-     "7": ["Compendium.tormentarpg.classfeatures.a4P4DNMmH8CqSNkC", "Compendium.tormentarpg.classfeatures.ZmC31XKS4YNENnoc"],
-     "10": ["Compendium.tormentarpg.classfeatures.bqWA7t9pDELbNRkp"],
-     "13": ["Compendium.tormentarpg.classfeatures.XjuGBeB8Y0C3A5D4"],
-     "14": ["Compendium.tormentarpg.classfeatures.7D2EkLdISwShEDlN"],
-     "15": ["Compendium.tormentarpg.classfeatures.gDH8PMrKvLHaNmEI"],
-     "18": ["Compendium.tormentarpg.classfeatures.3jwFt3hSqDswBlOH"],
-     "20": ["Compendium.tormentarpg.classfeatures.mQNPg89YIs7g5tG4"]
+     "1": ["Compendium.trpg.classfeatures.UAvV7N7T4zJhxdfI", "Compendium.trpg.classfeatures.l50hjTxO2r0iecKw"],
+     "2": ["Compendium.trpg.classfeatures.10b6z2W1txNkrGP7", "Compendium.trpg.classfeatures.7vSrGc0MP5Vzm9Ac"],
+     "3": ["Compendium.trpg.classfeatures.rtpQdX77dYWbDIOH", "Compendium.trpg.classfeatures.mzweVbnsJPQiVkAe"],
+     "4": ["Compendium.trpg.classfeatures.KQz9bqxVkXjDl8gK"],
+     "5": ["Compendium.trpg.classfeatures.XogoBnFWmCAHXppo", "Compendium.trpg.classfeatures.pvRc6GAu1ok6zihC"],
+     "6": ["Compendium.trpg.classfeatures.7flZKruSSu6dHg6D"],
+     "7": ["Compendium.trpg.classfeatures.a4P4DNMmH8CqSNkC", "Compendium.trpg.classfeatures.ZmC31XKS4YNENnoc"],
+     "10": ["Compendium.trpg.classfeatures.bqWA7t9pDELbNRkp"],
+     "13": ["Compendium.trpg.classfeatures.XjuGBeB8Y0C3A5D4"],
+     "14": ["Compendium.trpg.classfeatures.7D2EkLdISwShEDlN"],
+     "15": ["Compendium.trpg.classfeatures.gDH8PMrKvLHaNmEI"],
+     "18": ["Compendium.trpg.classfeatures.3jwFt3hSqDswBlOH"],
+     "20": ["Compendium.trpg.classfeatures.mQNPg89YIs7g5tG4"]
    },
  },
  "paladin": {
@@ -379,11 +379,11 @@ export const ClassFeatures = {
        "label": "Oath of Devotion",
        "source": "PHB pg. 85",
        "features": {
-         "3": ["Compendium.tormentarpg.spells.xmDBqZhRVrtLP8h2", "Compendium.tormentarpg.spells.gvdA9nPuWLck4tBl"],
-         "5": ["Compendium.tormentarpg.spells.F0GsG0SJzsIOacwV", "Compendium.tormentarpg.spells.CylBa7jR8DSbo8Z3"],
-         "9": ["Compendium.tormentarpg.spells.ZU9d6woBdUP8pIPt", "Compendium.tormentarpg.spells.15Fa6q1nH27XfbR8"],
-         "13": ["Compendium.tormentarpg.spells.da0a1t2FqaTjRZGT", "Compendium.tormentarpg.spells.TgHsuhNasPbhu8MO"],
-         "17": ["Compendium.tormentarpg.spells.d54VDyFulD9xxY7J", "Compendium.tormentarpg.spells.5e1xTohkzqFqbYH4"]
+         "3": ["Compendium.trpg.spells.xmDBqZhRVrtLP8h2", "Compendium.trpg.spells.gvdA9nPuWLck4tBl"],
+         "5": ["Compendium.trpg.spells.F0GsG0SJzsIOacwV", "Compendium.trpg.spells.CylBa7jR8DSbo8Z3"],
+         "9": ["Compendium.trpg.spells.ZU9d6woBdUP8pIPt", "Compendium.trpg.spells.15Fa6q1nH27XfbR8"],
+         "13": ["Compendium.trpg.spells.da0a1t2FqaTjRZGT", "Compendium.trpg.spells.TgHsuhNasPbhu8MO"],
+         "17": ["Compendium.trpg.spells.d54VDyFulD9xxY7J", "Compendium.trpg.spells.5e1xTohkzqFqbYH4"]
        }
      },
      "oathbreaker": {
@@ -403,14 +403,14 @@ export const ClassFeatures = {
      }
    },
    "features": {
-     "1": ["Compendium.tormentarpg.classfeatures.E8ozg8avUVOX9N7u", "Compendium.tormentarpg.classfeatures.OdrvL3afwLOPeuYZ"],
-     "2": ["Compendium.tormentarpg.classfeatures.ySMPQ6zNSlvkrl2f", "Compendium.tormentarpg.classfeatures.fbExzwNwEAl2kW9c", "Compendium.tormentarpg.classfeatures.ihoQHsmVZlyDbPhX"],
-     "3": ["Compendium.tormentarpg.classfeatures.dY9yrqkyEDuF0CG2", "Compendium.tormentarpg.classfeatures.olAqNsUTIef9x8xC"],
-     "5": ["Compendium.tormentarpg.classfeatures.XogoBnFWmCAHXppo"],
-     "6": ["Compendium.tormentarpg.classfeatures.carGDhkIdoduTC0I"],
-     "10": ["Compendium.tormentarpg.classfeatures.nahSkBO6LH4HkpaT"],
-     "11": ["Compendium.tormentarpg.classfeatures.FAk41RPCTcvCk6KI"],
-     "14": ["Compendium.tormentarpg.classfeatures.U7BIPVPsptBmwsnV"]
+     "1": ["Compendium.trpg.classfeatures.E8ozg8avUVOX9N7u", "Compendium.trpg.classfeatures.OdrvL3afwLOPeuYZ"],
+     "2": ["Compendium.trpg.classfeatures.ySMPQ6zNSlvkrl2f", "Compendium.trpg.classfeatures.fbExzwNwEAl2kW9c", "Compendium.trpg.classfeatures.ihoQHsmVZlyDbPhX"],
+     "3": ["Compendium.trpg.classfeatures.dY9yrqkyEDuF0CG2", "Compendium.trpg.classfeatures.olAqNsUTIef9x8xC"],
+     "5": ["Compendium.trpg.classfeatures.XogoBnFWmCAHXppo"],
+     "6": ["Compendium.trpg.classfeatures.carGDhkIdoduTC0I"],
+     "10": ["Compendium.trpg.classfeatures.nahSkBO6LH4HkpaT"],
+     "11": ["Compendium.trpg.classfeatures.FAk41RPCTcvCk6KI"],
+     "14": ["Compendium.trpg.classfeatures.U7BIPVPsptBmwsnV"]
    },
  },
  "ranger": {
@@ -434,10 +434,10 @@ export const ClassFeatures = {
        "label": "Hunter",
        "source": "PHB pg. 93",
        "features": {
-         "3": ["Compendium.tormentarpg.classfeatures.wrxIW5sDfmGr3u5s"],
-         "7": ["Compendium.tormentarpg.classfeatures.WgQrqjmeyMqDzVt3"],
-         "11": ["Compendium.tormentarpg.classfeatures.7zlTRRXT1vWSBGjX"],
-         "15": ["Compendium.tormentarpg.classfeatures.a0Sq88dgnREcIMfl"]
+         "3": ["Compendium.trpg.classfeatures.wrxIW5sDfmGr3u5s"],
+         "7": ["Compendium.trpg.classfeatures.WgQrqjmeyMqDzVt3"],
+         "11": ["Compendium.trpg.classfeatures.7zlTRRXT1vWSBGjX"],
+         "15": ["Compendium.trpg.classfeatures.a0Sq88dgnREcIMfl"]
        }
      },
      "monster-slayer": {
@@ -447,15 +447,15 @@ export const ClassFeatures = {
      }
    },
    "features": {
-     "1": ["Compendium.tormentarpg.classfeatures.4Vpj9vCOB37GtXk6", "Compendium.tormentarpg.classfeatures.8fbZt2Qh7ZttwIan"],
-     "2": ["Compendium.tormentarpg.classfeatures.fbExzwNwEAl2kW9c", "Compendium.tormentarpg.classfeatures.u6xV3Ki3TXRrD7zg"],
-     "3": ["Compendium.tormentarpg.classfeatures.1dJHU48yNqn3lcfx", "Compendium.tormentarpg.classfeatures.kaHcUGiwi8AtfZIm"],
-     "5": ["Compendium.tormentarpg.classfeatures.XogoBnFWmCAHXppo"],
-     "8": ["Compendium.tormentarpg.classfeatures.C5fzaOBc6HxyOWRn"],
-     "10": ["Compendium.tormentarpg.classfeatures.r0unvWK0lPsDthDx"],
-     "14": ["Compendium.tormentarpg.classfeatures.DhU2dWCNnX78TstR"],
-     "18": ["Compendium.tormentarpg.classfeatures.QBVmY56RMQuh6C8h"],
-     "20": ["Compendium.tormentarpg.classfeatures.3CaP1vFHVR8LgHjx"]
+     "1": ["Compendium.trpg.classfeatures.4Vpj9vCOB37GtXk6", "Compendium.trpg.classfeatures.8fbZt2Qh7ZttwIan"],
+     "2": ["Compendium.trpg.classfeatures.fbExzwNwEAl2kW9c", "Compendium.trpg.classfeatures.u6xV3Ki3TXRrD7zg"],
+     "3": ["Compendium.trpg.classfeatures.1dJHU48yNqn3lcfx", "Compendium.trpg.classfeatures.kaHcUGiwi8AtfZIm"],
+     "5": ["Compendium.trpg.classfeatures.XogoBnFWmCAHXppo"],
+     "8": ["Compendium.trpg.classfeatures.C5fzaOBc6HxyOWRn"],
+     "10": ["Compendium.trpg.classfeatures.r0unvWK0lPsDthDx"],
+     "14": ["Compendium.trpg.classfeatures.DhU2dWCNnX78TstR"],
+     "18": ["Compendium.trpg.classfeatures.QBVmY56RMQuh6C8h"],
+     "20": ["Compendium.trpg.classfeatures.3CaP1vFHVR8LgHjx"]
    },
  },
  "rogue": {
@@ -494,24 +494,24 @@ export const ClassFeatures = {
        "label": "Thief",
        "source": "PHB pg. 97",
        "features": {
-         "3": ["Compendium.tormentarpg.classfeatures.ga3dt2zrCn2MHK8R", "Compendium.tormentarpg.classfeatures.FGrbXs6Ku5qxFK5G"],
-         "9": ["Compendium.tormentarpg.classfeatures.Ei1Oh4UAA2E30jcD"],
-         "13": ["Compendium.tormentarpg.classfeatures.NqWyHE7Rpw9lyKWu"],
-         "17": ["Compendium.tormentarpg.classfeatures.LhRm1EeUMvp2EWhV"]
+         "3": ["Compendium.trpg.classfeatures.ga3dt2zrCn2MHK8R", "Compendium.trpg.classfeatures.FGrbXs6Ku5qxFK5G"],
+         "9": ["Compendium.trpg.classfeatures.Ei1Oh4UAA2E30jcD"],
+         "13": ["Compendium.trpg.classfeatures.NqWyHE7Rpw9lyKWu"],
+         "17": ["Compendium.trpg.classfeatures.LhRm1EeUMvp2EWhV"]
        }
      }
    },
    "features": {
-     "1": ["Compendium.tormentarpg.classfeatures.3sYPftQKnbbVnHrh", "Compendium.tormentarpg.classfeatures.DPN2Gfk8yi1Z5wp7", "Compendium.tormentarpg.classfeatures.ohwfuwnvuoBWlSQr"],
-     "2": ["Compendium.tormentarpg.classfeatures.01pcLg6PRu5zGrsb"],
-     "3": ["Compendium.tormentarpg.classfeatures.80USV8ZFPIahpLd0"],
-     "5": ["Compendium.tormentarpg.classfeatures.Mm64SKAHJWYecgXS"],
-     "7": ["Compendium.tormentarpg.classfeatures.a4P4DNMmH8CqSNkC"],
-     "11": ["Compendium.tormentarpg.classfeatures.YN9xm6MCvse4Y60u"],
-     "14": ["Compendium.tormentarpg.classfeatures.fjsBk7zxoAbLf8ZI"],
-     "15": ["Compendium.tormentarpg.classfeatures.V4pwFxlwHtNeB4w9"],
-     "18": ["Compendium.tormentarpg.classfeatures.L7nJSRosos8sHJH9"],
-     "20": ["Compendium.tormentarpg.classfeatures.rQhWDaMHMn7iU4f2"]
+     "1": ["Compendium.trpg.classfeatures.3sYPftQKnbbVnHrh", "Compendium.trpg.classfeatures.DPN2Gfk8yi1Z5wp7", "Compendium.trpg.classfeatures.ohwfuwnvuoBWlSQr"],
+     "2": ["Compendium.trpg.classfeatures.01pcLg6PRu5zGrsb"],
+     "3": ["Compendium.trpg.classfeatures.80USV8ZFPIahpLd0"],
+     "5": ["Compendium.trpg.classfeatures.Mm64SKAHJWYecgXS"],
+     "7": ["Compendium.trpg.classfeatures.a4P4DNMmH8CqSNkC"],
+     "11": ["Compendium.trpg.classfeatures.YN9xm6MCvse4Y60u"],
+     "14": ["Compendium.trpg.classfeatures.fjsBk7zxoAbLf8ZI"],
+     "15": ["Compendium.trpg.classfeatures.V4pwFxlwHtNeB4w9"],
+     "18": ["Compendium.trpg.classfeatures.L7nJSRosos8sHJH9"],
+     "20": ["Compendium.trpg.classfeatures.rQhWDaMHMn7iU4f2"]
    },
  },
  "sorcerer": {
@@ -520,10 +520,10 @@ export const ClassFeatures = {
        "label": "Draconic Bloodline",
        "source": "PHB pg. 102",
        "features": {
-         "1": ["Compendium.tormentarpg.classfeatures.EZsonMThTNLZq35j", "Compendium.tormentarpg.classfeatures.MW1ExvBLm8Hg82aA"],
-         "6": ["Compendium.tormentarpg.classfeatures.x6eEZ9GUsuOcEa3G"],
-         "14": ["Compendium.tormentarpg.classfeatures.3647zjKSE9zFwOXc"],
-         "18": ["Compendium.tormentarpg.classfeatures.Gsha4bl0apxqspFy"]
+         "1": ["Compendium.trpg.classfeatures.EZsonMThTNLZq35j", "Compendium.trpg.classfeatures.MW1ExvBLm8Hg82aA"],
+         "6": ["Compendium.trpg.classfeatures.x6eEZ9GUsuOcEa3G"],
+         "14": ["Compendium.trpg.classfeatures.3647zjKSE9zFwOXc"],
+         "18": ["Compendium.trpg.classfeatures.Gsha4bl0apxqspFy"]
        }
      },
      "divine-soul": {
@@ -558,10 +558,10 @@ export const ClassFeatures = {
      }
    },
    "features": {
-     "1": ["Compendium.tormentarpg.classfeatures.cmRCL9T9UgRYOj1c", "Compendium.tormentarpg.classfeatures.oygRF3ZjTv2T7z0Y"],
-     "2": ["Compendium.tormentarpg.classfeatures.LBKChJY5n02Afhnq"],
-     "3": ["Compendium.tormentarpg.classfeatures.9Uh7uTDNZ04oTJsL"],
-     "20": ["Compendium.tormentarpg.classfeatures.F2lEKSmOY0NUruzY"]
+     "1": ["Compendium.trpg.classfeatures.cmRCL9T9UgRYOj1c", "Compendium.trpg.classfeatures.oygRF3ZjTv2T7z0Y"],
+     "2": ["Compendium.trpg.classfeatures.LBKChJY5n02Afhnq"],
+     "3": ["Compendium.trpg.classfeatures.9Uh7uTDNZ04oTJsL"],
+     "20": ["Compendium.trpg.classfeatures.F2lEKSmOY0NUruzY"]
    },
  },
  "warlock": {
@@ -580,10 +580,10 @@ export const ClassFeatures = {
        "label": "The Fiend",
        "source": "PHB pg. 109",
        "features": {
-         "1": ["Compendium.tormentarpg.classfeatures.Jv0zu4BtUi8bFCqJ"],
-         "6": ["Compendium.tormentarpg.classfeatures.OQSb0bO1yDI4aiMx"],
-         "10": ["Compendium.tormentarpg.classfeatures.9UZ2WjUF2k58CQug"],
-         "14": ["Compendium.tormentarpg.classfeatures.aCUmlnHlUPHS0rdu"]
+         "1": ["Compendium.trpg.classfeatures.Jv0zu4BtUi8bFCqJ"],
+         "6": ["Compendium.trpg.classfeatures.OQSb0bO1yDI4aiMx"],
+         "10": ["Compendium.trpg.classfeatures.9UZ2WjUF2k58CQug"],
+         "14": ["Compendium.trpg.classfeatures.aCUmlnHlUPHS0rdu"]
        }
      },
      "the-hexblade": {
@@ -603,14 +603,14 @@ export const ClassFeatures = {
      }
    },
    "features": {
-     "1": ["Compendium.tormentarpg.classfeatures.jTXHaK0vvT5DV3uO", "Compendium.tormentarpg.classfeatures.x6IJZwr6f0SGral7"],
-     "2": ["Compendium.tormentarpg.classfeatures.8MlxM2nEfE3Q0EVk"],
-     "3": ["Compendium.tormentarpg.classfeatures.QwgfIpCN8VWfoUtX"],
-     "11": ["Compendium.tormentarpg.classfeatures.zB77V8BcCJvWVxck"],
-     "13": ["Compendium.tormentarpg.classfeatures.HBn6FXLz7Eiudz0V"],
-     "15": ["Compendium.tormentarpg.classfeatures.knDZR4l4QfLTKinm"],
-     "17": ["Compendium.tormentarpg.classfeatures.vMxJQEKeK6WwZFaF"],
-     "20": ["Compendium.tormentarpg.classfeatures.0C04rwyvoknvFYiy"]
+     "1": ["Compendium.trpg.classfeatures.jTXHaK0vvT5DV3uO", "Compendium.trpg.classfeatures.x6IJZwr6f0SGral7"],
+     "2": ["Compendium.trpg.classfeatures.8MlxM2nEfE3Q0EVk"],
+     "3": ["Compendium.trpg.classfeatures.QwgfIpCN8VWfoUtX"],
+     "11": ["Compendium.trpg.classfeatures.zB77V8BcCJvWVxck"],
+     "13": ["Compendium.trpg.classfeatures.HBn6FXLz7Eiudz0V"],
+     "15": ["Compendium.trpg.classfeatures.knDZR4l4QfLTKinm"],
+     "17": ["Compendium.trpg.classfeatures.vMxJQEKeK6WwZFaF"],
+     "20": ["Compendium.trpg.classfeatures.0C04rwyvoknvFYiy"]
    },
  },
  "wizard": {
@@ -649,10 +649,10 @@ export const ClassFeatures = {
        "label": "School of Evocation",
        "source": "PHB pg. 117",
        "features": {
-         "2": ["Compendium.tormentarpg.classfeatures.7uzJ2JkmsdRGLra3", "Compendium.tormentarpg.classfeatures.6VBXkjjBgjSpNElh"],
-         "6": ["Compendium.tormentarpg.classfeatures.evEWCpE5MYgr5RRW"],
-         "10": ["Compendium.tormentarpg.classfeatures.7O85kj6uDEG5NzUE"],
-         "14": ["Compendium.tormentarpg.classfeatures.VUtSLeCzFubGXmGx"]
+         "2": ["Compendium.trpg.classfeatures.7uzJ2JkmsdRGLra3", "Compendium.trpg.classfeatures.6VBXkjjBgjSpNElh"],
+         "6": ["Compendium.trpg.classfeatures.evEWCpE5MYgr5RRW"],
+         "10": ["Compendium.trpg.classfeatures.7O85kj6uDEG5NzUE"],
+         "14": ["Compendium.trpg.classfeatures.VUtSLeCzFubGXmGx"]
        }
      },
      "school-of-graviturgy-magic": {
@@ -682,10 +682,10 @@ export const ClassFeatures = {
      }
    },
    "features": {
-     "1": ["Compendium.tormentarpg.classfeatures.gbNo5eVPaqr8IVKL", "Compendium.tormentarpg.classfeatures.e0uTcFPpgxjIyUW9"],
-     "2": ["Compendium.tormentarpg.classfeatures.AEWr9EMxy5gj4ZFT"],
-     "18": ["Compendium.tormentarpg.classfeatures.JfFfHTeIszx1hNRx"],
-     "20": ["Compendium.tormentarpg.classfeatures.nUrZDi6QN1YjwAr6", "Compendium.tormentarpg.classfeatures.31bKbWe9ZGVLEns6"]
+     "1": ["Compendium.trpg.classfeatures.gbNo5eVPaqr8IVKL", "Compendium.trpg.classfeatures.e0uTcFPpgxjIyUW9"],
+     "2": ["Compendium.trpg.classfeatures.AEWr9EMxy5gj4ZFT"],
+     "18": ["Compendium.trpg.classfeatures.JfFfHTeIszx1hNRx"],
+     "20": ["Compendium.trpg.classfeatures.nUrZDi6QN1YjwAr6", "Compendium.trpg.classfeatures.31bKbWe9ZGVLEns6"]
    },
  }
 };

@@ -58,7 +58,7 @@ export const migrateWorld = async function() {
   }
 
   // Set the migration as complete
-  game.settings.set("tormentarpg", "systemMigrationVersion", game.system.data.version);
+  game.settings.set("trpg", "systemMigrationVersion", game.system.data.version);
   ui.notifications.info(`DnD5E System Migration to version ${game.system.data.version} completed!`, {permanent: true});
 };
 

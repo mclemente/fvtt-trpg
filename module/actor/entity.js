@@ -42,7 +42,7 @@ export default class Actor5e extends Actor {
    * @type {boolean}
    */
   get isPolymorphed() {
-    return this.getFlag("tormentarpg", "isPolymorphed") || false;
+    return this.getFlag("trpg", "isPolymorphed") || false;
   }
 
   /* -------------------------------------------- */
@@ -84,8 +84,8 @@ export default class Actor5e extends Actor {
     let originalSaves = null;
     let originalSkills = null;
     if (this.isPolymorphed) {
-      const transformOptions = this.getFlag("tormentarpg", 'transformOptions');
-      const original = game.actors?.get(this.getFlag("tormentarpg", 'originalActor'));
+      const transformOptions = this.getFlag("trpg", 'transformOptions');
+      const original = game.actors?.get(this.getFlag("trpg", 'originalActor'));
       if (original) {
         if (transformOptions.mergeSaves) {
           originalSaves = original.data.data.abilities;
@@ -509,7 +509,7 @@ export default class Actor5e extends Actor {
     }, 0);
 
     // [Optional] add Currency Weight (for non-transformed actors)
-    if ( game.settings.get("tormentarpg", "currencyWeight") && actorData.data.currency ) {
+    if ( game.settings.get("trpg", "currencyWeight") && actorData.data.currency ) {
       const currency = actorData.data.currency;
       const numCoins = Object.values(currency).reduce((val, denom) => val += Math.max(denom, 0), 0);
       weight += (numCoins * CONFIG.DND5E.encumbrance.currencyPerWeight) / 100;
@@ -524,7 +524,7 @@ export default class Actor5e extends Actor {
       huge: 4,
       grg: 8
     }[actorData.data.traits.size] || 1;
-    if ( this.getFlag("tormentarpg", "powerfulBuild") ) mod = Math.min(mod * 2, 8);
+    if ( this.getFlag("trpg", "powerfulBuild") ) mod = Math.min(mod * 2, 8);
 
     // Compute Encumbrance percentage
     weight = weight.toNearest(0.1);
@@ -674,14 +674,14 @@ export default class Actor5e extends Actor {
     }
 
     // Reliable Talent applies to any skill check we have full or better proficiency in
-    const reliableTalent = (skl.value >= 1 && this.getFlag("tormentarpg", "reliableTalent"));
+    const reliableTalent = (skl.value >= 1 && this.getFlag("trpg", "reliableTalent"));
 
     // Roll and return
     const rollData = foundry.utils.mergeObject(options, {
       parts: parts,
       data: data,
       title: game.i18n.format("DND5E.SkillPromptTitle", {skill: CONFIG.DND5E.skills[skillId]}),
-      halflingLucky: this.getFlag("tormentarpg", "halflingLucky"),
+      halflingLucky: this.getFlag("trpg", "halflingLucky"),
       reliableTalent: reliableTalent,
       messageData: {
         speaker: options.speaker || ChatMessage.getSpeaker({actor: this}),
@@ -812,7 +812,7 @@ export default class Actor5e extends Actor {
       parts: parts,
       data: data,
       title: game.i18n.format("DND5E.SavePromptTitle", {ability: label}),
-      halflingLucky: this.getFlag("tormentarpg", "halflingLucky"),
+      halflingLucky: this.getFlag("trpg", "halflingLucky"),
       messageData: {
         speaker: options.speaker || ChatMessage.getSpeaker({actor: this}),
         "flags.dnd5e.roll": {type: "save", abilityId }
@@ -842,7 +842,7 @@ export default class Actor5e extends Actor {
     const data = {};
 
     // Diamond Soul adds proficiency
-    if ( this.getFlag("tormentarpg", "diamondSoul") ) {
+    if ( this.getFlag("trpg", "diamondSoul") ) {
       parts.push("@prof");
       data.prof = this.data.data.attributes.prof;
     }
@@ -859,7 +859,7 @@ export default class Actor5e extends Actor {
       parts: parts,
       data: data,
       title: game.i18n.localize("DND5E.DeathSavingThrow"),
-      halflingLucky: this.getFlag("tormentarpg", "halflingLucky"),
+      halflingLucky: this.getFlag("trpg", "halflingLucky"),
       targetValue: 10,
       messageData: {
         speaker: options.speaker || ChatMessage.getSpeaker({actor: this}),
@@ -1128,7 +1128,7 @@ export default class Actor5e extends Actor {
     let restFlavor, message;
 
     // Summarize the rest duration
-    // switch (game.settings.get("tormentarpg", "restVariant")) {
+    // switch (game.settings.get("trpg", "restVariant")) {
     //   case 'normal': restFlavor = (longRest && newDay) ? "DND5E.LongRestOvernight" : `DND5E.${length}RestNormal`; break;
     //   case 'gritty': restFlavor = (!longRest && newDay) ? "DND5E.ShortRestOvernight" : `DND5E.${length}RestGritty`; break;
     //   case 'epic':  restFlavor = `DND5E.${length}RestEpic`; break;
@@ -1364,7 +1364,7 @@ export default class Actor5e extends Actor {
     keepItems=false, keepBio=false, keepVision=false, transformTokens=true}={}) {
 
     // Ensure the player is allowed to polymorph
-    const allowed = game.settings.get("tormentarpg", "allowPolymorphing");
+    const allowed = game.settings.get("trpg", "allowPolymorphing");
     if ( !allowed && !game.user.isGM ) {
       return ui.notifications.warn(game.i18n.localize("DND5E.PolymorphWarn"));
     }
@@ -1520,7 +1520,7 @@ export default class Actor5e extends Actor {
     }
 
     // Obtain a reference to the original actor
-    const original = game.actors.get(this.getFlag("tormentarpg", 'originalActor'));
+    const original = game.actors.get(this.getFlag("trpg", 'originalActor'));
     if ( !original ) return;
 
     // Get the Tokens which represent this actor
@@ -1559,7 +1559,7 @@ export default class Actor5e extends Actor {
         return actor.revertOriginalForm();
       },
       condition: li => {
-        const allowed = game.settings.get("tormentarpg", "allowPolymorphing");
+        const allowed = game.settings.get("trpg", "allowPolymorphing");
         if ( !allowed && !game.user.isGM ) return false;
         const actor = game.actors.get(li.data('entityId'));
         return actor && actor.isPolymorphed;

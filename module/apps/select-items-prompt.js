@@ -37,7 +37,7 @@ export default class SelectItemsPrompt extends Dialog {
     hint
   }) {
     // Render the ability usage template
-    const html = await renderTemplate("systems/tormentarpg/templates/apps/select-items-prompt.html", {items, hint});
+    const html = await renderTemplate("systems/trpg/templates/apps/select-items-prompt.html", {items, hint});
 
     return new Promise((resolve) => {
       const dlg = new this(items, {

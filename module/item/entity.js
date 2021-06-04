@@ -681,7 +681,7 @@ export default class Item5e extends Item {
       hasAreaTarget: this.hasAreaTarget,
       isTool: this.data.type === "tool"
     };
-    const html = await renderTemplate("systems/tormentarpg/templates/chat/item-card.html", templateData);
+    const html = await renderTemplate("systems/trpg/templates/chat/item-card.html", templateData);
 
     // Create the ChatMessage data object
     const chatData = {
@@ -1006,7 +1006,7 @@ export default class Item5e extends Item {
 
     // Scale melee critical hit damage
     if ( itemData.actionType === "mwak" ) {
-      rollConfig.criticalBonusDice = this.actor.getFlag("tormentarpg", "meleeCriticalDamageDice") ?? 0;
+      rollConfig.criticalBonusDice = this.actor.getFlag("trpg", "meleeCriticalDamageDice") ?? 0;
     }
 
     // Call the roll helper utility
@@ -1167,8 +1167,8 @@ export default class Item5e extends Item {
         left: window.innerWidth - 710,
       },
       chooseModifier: true,
-      halflingLucky: this.actor.getFlag("tormentarpg", "halflingLucky" ) || false,
-      reliableTalent: (this.data.data.proficient >= 1) && this.actor.getFlag("tormentarpg", "reliableTalent"),
+      halflingLucky: this.actor.getFlag("trpg", "halflingLucky" ) || false,
+      reliableTalent: (this.data.data.proficient >= 1) && this.actor.getFlag("trpg", "reliableTalent"),
       messageData: {"flags.dnd5e.roll": {type: "tool", itemId: this.id }}
     }, options);
     rollConfig.event = options.event;
@@ -1238,7 +1238,7 @@ export default class Item5e extends Item {
     if ( !actor ) return;
 
     // Get the Item from stored flag data or by the item ID on the Actor
-    const storedData = message.getFlag("tormentarpg", "itemData");
+    const storedData = message.getFlag("trpg", "itemData");
     const item = storedData ? new this(storedData, {parent: actor}) : actor.items.get(card.dataset.itemId);
     if ( !item ) {
       return ui.notifications.error(game.i18n.format("DND5E.ActionWarningNoItem", {item: card.dataset.itemId, name: actor.name}))

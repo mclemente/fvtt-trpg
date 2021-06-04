@@ -56,8 +56,8 @@ export default class ActorSheet5e extends ActorSheet {
 
   /** @override */
   get template() {
-    if ( !game.user.isGM && this.actor.limited ) return "systems/tormentarpg/templates/actors/limited-sheet.html";
-    return `systems/tormentarpg/templates/actors/${this.actor.data.type}-sheet.html`;
+    if ( !game.user.isGM && this.actor.limited ) return "systems/trpg/templates/actors/limited-sheet.html";
+    return `systems/trpg/templates/actors/${this.actor.data.type}-sheet.html`;
   }
 
   /* -------------------------------------------- */
@@ -568,7 +568,7 @@ export default class ActorSheet5e extends ActorSheet {
 
   /** @override */
   async _onDropActor(event, data) {
-    const canPolymorph = game.user.isGM || (this.actor.isOwner && game.settings.get("tormentarpg", 'allowPolymorphing'));
+    const canPolymorph = game.user.isGM || (this.actor.isOwner && game.settings.get("trpg", 'allowPolymorphing'));
     if ( !canPolymorph ) return false;
 
     // Get the target actor
@@ -587,8 +587,8 @@ export default class ActorSheet5e extends ActorSheet {
       html.find('input').each((i, el) => {
         options[el.name] = el.checked;
       });
-      const settings = mergeObject(game.settings.get("tormentarpg", 'polymorphSettings') || {}, options);
-      game.settings.set("tormentarpg", 'polymorphSettings', settings);
+      const settings = mergeObject(game.settings.get("trpg", 'polymorphSettings') || {}, options);
+      game.settings.set("trpg", 'polymorphSettings', settings);
       return settings;
     };
 
@@ -596,7 +596,7 @@ export default class ActorSheet5e extends ActorSheet {
     return new Dialog({
       title: game.i18n.localize('DND5E.PolymorphPromptTitle'),
       content: {
-        options: game.settings.get("tormentarpg", 'polymorphSettings'),
+        options: game.settings.get("trpg", 'polymorphSettings'),
         i18n: DND5E.polymorphSettings,
         isToken: this.actor.isToken
       },
@@ -634,7 +634,7 @@ export default class ActorSheet5e extends ActorSheet {
     }, {
       classes: ['dialog', 'dnd5e'],
       width: 600,
-      template: 'systems/tormentarpg/templates/apps/polymorph-prompt.html'
+      template: 'systems/trpg/templates/apps/polymorph-prompt.html'
     }).render(true);
   }
 

@@ -13,15 +13,15 @@ export const _getInitiativeFormula = function() {
   // Construct initiative formula parts
   let nd = 1;
   let mods = "";
-  if (actor.getFlag("tormentarpg", "halflingLucky")) mods += "r1=1";
-  if (actor.getFlag("tormentarpg", "initiativeAdv")) {
+  if (actor.getFlag("trpg", "halflingLucky")) mods += "r1=1";
+  if (actor.getFlag("trpg", "initiativeAdv")) {
     nd = 2;
     mods += "kh";
   }
   const parts = [`${nd}d20${mods}`, init.mod, (init.prof !== 0) ? init.prof : null, (init.bonus !== 0) ? init.bonus : null];
 
   // Optionally apply Dexterity tiebreaker
-  const tiebreaker = game.settings.get("tormentarpg", "initiativeDexTiebreaker");
+  const tiebreaker = game.settings.get("trpg", "initiativeDexTiebreaker");
   if ( tiebreaker ) parts.push(actor.data.data.abilities.dex.value / 100);
   return parts.filter(p => p !== null).join(" + ");
 };
