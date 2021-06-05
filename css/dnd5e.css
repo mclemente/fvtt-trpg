@@ -771,7 +771,7 @@
 }
 .dnd5e.sheet.actor ul.skills-list {
   flex: 0 0 180px;
-  height: 440px;
+  height: 554px;
   list-style: none;
   margin: 0 5px 0;
   padding: 3px 0 2px;
@@ -1411,7 +1411,7 @@
 /* ----------------------------------------- */
 .dnd5e.sheet.actor.character {
   min-width: 720px;
-  min-height: 680px;
+  min-height: 790px;
   /* ----------------------------------------- */
   /*  Sheet Header                             */
   /* ----------------------------------------- */

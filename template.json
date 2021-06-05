@@ -140,7 +140,39 @@
             "value": 0,
             "ability": "wis"
           },
-          "arc": {
+          "conArc": {
+            "value": 0,
+            "ability": "int"
+          },
+          "conGeo": {
+            "value": 0,
+            "ability": "int"
+          },
+          "conHis": {
+            "value": 0,
+            "ability": "int"
+          },
+          "conNat": {
+            "value": 0,
+            "ability": "int"
+          },
+          "conRel": {
+            "value": 0,
+            "ability": "int"
+          },
+          "conTor": {
+            "value": 0,
+            "ability": "int"
+          },
+          "ide": {
+            "value": 0,
+            "ability": "int"
+          },
+          "obinf": {
+            "value": 0,
+            "ability": "int"
+          },
+          "ofi": {
             "value": 0,
             "ability": "int"
           },
@@ -148,55 +180,43 @@
             "value": 0,
             "ability": "str"
           },
-          "dec": {
+          "cav": {
+            "value": 0,
+            "ability": "dex"
+          },
+          "eng": {
             "value": 0,
             "ability": "cha"
           },
-          "his": {
-            "value": 0,
-            "ability": "int"
-          },
-          "ins": {
+          "intu": {
             "value": 0,
             "ability": "wis"
           },
-          "itm": {
+          "inti": {
             "value": 0,
             "ability": "cha"
           },
-          "inv": {
-            "value": 0,
-            "ability": "int"
-          },
-          "med": {
+          "cur": {
             "value": 0,
             "ability": "wis"
-          },
-          "nat": {
-            "value": 0,
-            "ability": "int"
           },
           "prc": {
             "value": 0,
             "ability": "wis"
           },
-          "prf": {
+          "atu": {
             "value": 0,
             "ability": "cha"
           },
-          "per": {
+          "dip": {
             "value": 0,
             "ability": "cha"
           },
-          "rel": {
-            "value": 0,
-            "ability": "int"
-          },
-          "slt": {
+          "lad": {
             "value": 0,
             "ability": "dex"
           },
-          "ste": {
+          "fur": {
             "value": 0,
             "ability": "dex"
           },

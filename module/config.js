@@ -396,7 +396,7 @@ DND5E.consumableTypes = {
 DND5E.currencies = {
   "pp": "DND5E.CurrencyPP",
   "gp": "DND5E.CurrencyGP",
-  "ep": "DND5E.CurrencyEP",
+  // "ep": "DND5E.CurrencyEP",
   "sp": "DND5E.CurrencySP",
   "cp": "DND5E.CurrencyCP",
 };
@@ -408,8 +408,8 @@ DND5E.currencies = {
  */
 DND5E.currencyConversion = {
   cp: {into: "sp", each: 10},
-  sp: {into: "ep", each: 5 },
-  ep: {into: "gp", each: 2 },
+  sp: {into: "gp", each: 10},
+  // ep: {into: "gp", each: 2 },
   gp: {into: "pp", each: 10}
 };
 
@@ -598,31 +598,28 @@ DND5E.classBABFormulas = {
 DND5E.skills = {
   "acr": "DND5E.SkillAcr", //Acrobacia
   "ani": "DND5E.SkillAni", //Adestrar Animais
-  "prf": "DND5E.SkillPrf", //Atuação
   "ath": "DND5E.SkillAth", //Atletismo
-  //Cavalgar
-  //Conhecimento
-  "med": "DND5E.SkillMed", //Cura
-  "per": "DND5E.SkillPer", //Diplomacia
-  "dec": "DND5E.SkillDec", //Enganação
-  "ste": "DND5E.SkillSte", //Furtividade
-  //Identificar Magia
-  //Iniciativa
-  "ins": "DND5E.SkillIns", //Intuição
-  "itm": "DND5E.SkillItm", //Intimidação
-  "prc": "DND5E.SkillPrc", //Percepção
-  "slt": "DND5E.SkillSlt", //Ladinagem
-  //Obter Informação
-  //Ofício
-  "sur": "DND5E.SkillSur", //Sobrevivência
-  
-
-  //REMOVER
-  "arc": "DND5E.SkillArc", //Conhecimento: Arcano
-  "his": "DND5E.SkillHis", //Conhecimento: História
-  "inv": "DND5E.SkillInv", //Investigação
-  "nat": "DND5E.SkillNat", //Conhecimento: Natureza
-  "rel": "DND5E.SkillRel" //Conhecimento: Religião
+	"atu": "TRPG.SkillAtu", //Atuação
+  "cav": "TRPG.SkilLCav", //Cavalgar
+  "conArc": "TRPG.SkillArc", //Arcanismo
+  "conGeo": "TRPG.SkillGeo", //Geografia
+  "conHis": "TRPG.SkillHis", //História
+  "conNat": "TRPG.SkillNat", //Natureza
+  "conRel": "TRPG.SkillRel", //Religião
+  "conTor": "TRPG.SkillTor", //Tormenta
+  "cur": "TRPG.SkillCur", //Cura
+	"dip": "TRPG.SkillDip", //Diplomacia
+	"eng": "TRPG.SkillEng", //Enganação
+  "fur": "TRPG.SkillFur", //Furtividade
+  "ide": "TRPG.SkillIde", //Identificar Magia
+  "ini": "TRPG.SkillIni", //Iniciativa
+  "inti": "TRPG.SkillInti", //Intimidação
+  "intu": "TRPG.SkillIntu", //Intuição
+  "lad": "TRPG.SkillLad", //Ladinagem
+  "obinf": "TRPG.SkillObinf", //Obter Informação
+	"ofi": "TRPG.SkillOfi", //Ofício
+  "prc": "TRPG.SkillPrc", //Percepção
+  "sur": "TRPG.SkillSur" //Sobrevivência
 };
 
 
@@ -858,20 +855,15 @@ DND5E.conditionTypes = {
 
 // Languages
 DND5E.languages = {
-  "common": "DND5E.LanguagesCommon",
-  "aarakocra": "DND5E.LanguagesAarakocra",
-  "abyssal": "DND5E.LanguagesAbyssal",
+  "common": "TRPG.LanguagesCommon",
+  "abyssal": "TRPG.LanguagesAbyssal",
+  "dwarvish": "TRPG.LanguagesDwarvish",
   "aquan": "DND5E.LanguagesAquan",
   "auran": "DND5E.LanguagesAuran",
   "celestial": "DND5E.LanguagesCelestial",
-  "deep": "DND5E.LanguagesDeepSpeech",
   "draconic": "DND5E.LanguagesDraconic",
-  "druidic": "DND5E.LanguagesDruidic",
-  "dwarvish": "DND5E.LanguagesDwarvish",
-  "elvish": "DND5E.LanguagesElvish",
-  "giant": "DND5E.LanguagesGiant",
-  "gith": "DND5E.LanguagesGith",
-  "gnomish": "DND5E.LanguagesGnomish",
+  "elvish": "TRPG.LanguagesElvish",
+  "giant": "TRPG.LanguagesGiant",
   "goblin": "DND5E.LanguagesGoblin",
   "gnoll": "DND5E.LanguagesGnoll",
   "halfling": "DND5E.LanguagesHalfling",
@@ -880,9 +872,8 @@ DND5E.languages = {
   "orc": "DND5E.LanguagesOrc",
   "primordial": "DND5E.LanguagesPrimordial",
   "sylvan": "DND5E.LanguagesSylvan",
-  "terran": "DND5E.LanguagesTerran",
-  "cant": "DND5E.LanguagesThievesCant",
-  "undercommon": "DND5E.LanguagesUndercommon"
+  "taurico": "TRPG.LanguagesTaurico",
+  "terran": "DND5E.LanguagesTerran"
 };
 
 // Character Level XP Requirements
@@ -890,14 +881,6 @@ DND5E.CHARACTER_EXP_LEVELS =  [
   0, 1000, 3000, 6000, 10000, 15000, 21000, 28000, 36000, 45000, 55000, 66000,
   78000, 91000, 105000, 120000, 136000, 153000, 171000, 190000]
 ;
-
-// Challenge Rating XP Levels
-DND5E.CR_EXP_LEVELS = [
-  10, 200, 450, 700, 1100, 1800, 2300, 2900, 3900, 5000, 5900, 7200, 8400, 10000, 11500, 13000, 15000, 18000,
-  20000, 22000, 25000, 33000, 41000, 50000, 62000, 75000, 90000, 105000, 120000, 135000, 155000
-];
-
-
 
 // Character Features Per Class And Level
 DND5E.classFeatures = ClassFeatures;
