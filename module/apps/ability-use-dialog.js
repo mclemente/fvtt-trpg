@@ -39,7 +39,7 @@ export default class AbilityUseDialog extends Dialog {
     // Prepare dialog form data
     const data = {
       item: item.data,
-      title: game.i18n.format("DND5E.AbilityUseHint", item.data),
+      title: game.i18n.format("TRPG.AbilityUseHint", item.data),
       note: this._getAbilityUseNote(item.data, uses, recharge),
       consumeSpellSlot: false,
       consumeRecharge: recharges,
@@ -56,7 +56,7 @@ export default class AbilityUseDialog extends Dialog {
 
     // Create the Dialog and return data as a Promise
     const icon = data.isSpell ? "fa-magic" : "fa-fist-raised";
-    const label = game.i18n.localize("DND5E.AbilityUse" + (data.isSpell ? "Cast" : "Use"));
+    const label = game.i18n.localize("TRPG.AbilityUse" + (data.isSpell ? "Cast" : "Use"));
     return new Promise((resolve) => {
       const dlg = new this(item, {
         title: `${item.name}: Usage Configuration`,
@@ -90,7 +90,7 @@ export default class AbilityUseDialog extends Dialog {
 
     // Determine whether the spell may be up-cast
     const lvl = itemData.level;
-    const consumeSpellSlot = (lvl > 0) && CONFIG.DND5E.spellUpcastModes.includes(itemData.preparation.mode);
+    const consumeSpellSlot = (lvl > 0) && CONFIG.TRPG.spellUpcastModes.includes(itemData.preparation.mode);
 
     // If can't upcast, return early and don't bother calculating available spell slots
     if (!consumeSpellSlot) {
@@ -102,14 +102,14 @@ export default class AbilityUseDialog extends Dialog {
     let lmax = 0;
     const spellLevels = Array.fromRange(10).reduce((arr, i) => {
       if ( i < lvl ) return arr;
-      const label = CONFIG.DND5E.spellLevels[i];
+      const label = CONFIG.TRPG.spellLevels[i];
       const l = actorData.spells["spell"+i] || {max: 0, override: null};
       let max = parseInt(l.override || l.max || 0);
       let slots = Math.clamped(parseInt(l.value || 0), 0, max);
       if ( max > 0 ) lmax = i;
       arr.push({
         level: i,
-        label: i > 0 ? game.i18n.format('DND5E.SpellLevelSlot', {level: label, n: slots}) : label,
+        label: i > 0 ? game.i18n.format('TRPG.SpellLevelSlot', {level: label, n: slots}) : label,
         canCast: max > 0,
         hasSlots: slots > 0
       });
@@ -121,14 +121,14 @@ export default class AbilityUseDialog extends Dialog {
     if (pact.level >= lvl) {
       spellLevels.push({
         level: 'pact',
-        label: `${game.i18n.format('DND5E.SpellLevelPact', {level: pact.level, n: pact.value})}`,
+        label: `${game.i18n.format('TRPG.SpellLevelPact', {level: pact.level, n: pact.value})}`,
         canCast: true,
         hasSlots: pact.value > 0
       });
     }
     const canCast = spellLevels.some(l => l.hasSlots);
-    if ( !canCast ) data.errors.push(game.i18n.format("DND5E.SpellCastNoSlots", {
-      level: CONFIG.DND5E.spellLevels[lvl],
+    if ( !canCast ) data.errors.push(game.i18n.format("TRPG.SpellCastNoSlots", {
+      level: CONFIG.TRPG.spellLevels[lvl],
       name: data.item.name
     }));
 
@@ -146,11 +146,11 @@ export default class AbilityUseDialog extends Dialog {
 
     // Zero quantity
     const quantity = item.data.quantity;
-    if ( quantity <= 0 ) return game.i18n.localize("DND5E.AbilityUseUnavailableHint");
+    if ( quantity <= 0 ) return game.i18n.localize("TRPG.AbilityUseUnavailableHint");
 
     // Abilities which use Recharge
     if ( !!recharge.value ) {
-      return game.i18n.format(recharge.charged ? "DND5E.AbilityUseChargedHint" : "DND5E.AbilityUseRechargeHint", {
+      return game.i18n.format(recharge.charged ? "TRPG.AbilityUseChargedHint" : "TRPG.AbilityUseRechargeHint", {
         type: item.type,
       })
     }
@@ -160,26 +160,26 @@ export default class AbilityUseDialog extends Dialog {
 
     // Consumables
     if ( item.type === "consumable" ) {
-      let str = "DND5E.AbilityUseNormalHint";
-      if ( uses.value > 1 ) str = "DND5E.AbilityUseConsumableChargeHint";
-      else if ( item.data.quantity === 1 && uses.autoDestroy ) str = "DND5E.AbilityUseConsumableDestroyHint";
-      else if ( item.data.quantity > 1 ) str = "DND5E.AbilityUseConsumableQuantityHint";
+      let str = "TRPG.AbilityUseNormalHint";
+      if ( uses.value > 1 ) str = "TRPG.AbilityUseConsumableChargeHint";
+      else if ( item.data.quantity === 1 && uses.autoDestroy ) str = "TRPG.AbilityUseConsumableDestroyHint";
+      else if ( item.data.quantity > 1 ) str = "TRPG.AbilityUseConsumableQuantityHint";
       return game.i18n.format(str, {
         type: item.data.consumableType,
         value: uses.value,
         quantity: item.data.quantity,
         max: uses.max,
-        per: CONFIG.DND5E.limitedUsePeriods[uses.per]
+        per: CONFIG.TRPG.limitedUsePeriods[uses.per]
       });
     }
 
     // Other Items
     else {
-      return game.i18n.format("DND5E.AbilityUseNormalHint", {
+      return game.i18n.format("TRPG.AbilityUseNormalHint", {
         type: item.type,
         value: uses.value,
         max: uses.max,
-        per: CONFIG.DND5E.limitedUsePeriods[uses.per]
+        per: CONFIG.TRPG.limitedUsePeriods[uses.per]
       });
     }
   }

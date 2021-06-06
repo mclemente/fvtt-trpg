@@ -11,7 +11,7 @@ export default class ActorTypeConfig extends FormApplication {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["dnd5e", "actor-type", "trait-selector"],
       template: "systems/trpg/templates/apps/actor-type.html",
-      title: "DND5E.CreatureTypeTitle",
+      title: "TRPG.CreatureTypeTitle",
       width: 280,
       height: "auto",
       choices: {},
@@ -36,7 +36,7 @@ export default class ActorTypeConfig extends FormApplication {
     // Get current value or new default
     let attr = foundry.utils.getProperty(this.object.data.data, 'details.type');
     if ( foundry.utils.getType(attr) !== "Object" ) attr = {
-      value: (attr in CONFIG.DND5E.creatureTypes) ? attr : "humanoid",
+      value: (attr in CONFIG.TRPG.creatureTypes) ? attr : "humanoid",
       subtype: "",
       swarm: "",
       custom: ""
@@ -44,7 +44,7 @@ export default class ActorTypeConfig extends FormApplication {
 
     // Populate choices
     const types = {};
-    for ( let [k, v] of Object.entries(CONFIG.DND5E.creatureTypes) ) {
+    for ( let [k, v] of Object.entries(CONFIG.TRPG.creatureTypes) ) {
       types[k] = {
         label: game.i18n.localize(v),
         chosen: attr.value === k
@@ -56,12 +56,12 @@ export default class ActorTypeConfig extends FormApplication {
       types: types,
       custom: {
         value: attr.custom,
-        label: game.i18n.localize("DND5E.CreatureTypeSelectorCustom"),
+        label: game.i18n.localize("TRPG.CreatureTypeSelectorCustom"),
         chosen: attr.value === "custom"
       },
       subtype: attr.subtype,
       swarm: attr.swarm,
-      sizes: Array.from(Object.entries(CONFIG.DND5E.actorSizes)).reverse().reduce((obj, e) => {
+      sizes: Array.from(Object.entries(CONFIG.TRPG.actorSizes)).reverse().reduce((obj, e) => {
         obj[e[0]] = e[1];
         return obj;
       }, {}),

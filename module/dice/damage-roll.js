@@ -79,7 +79,7 @@ export default class DamageRoll extends Roll {
     // Add powerful critical bonus
     if ( this.options.powerfulCritical && (flatBonus > 0) ) {
       this.terms.push(new OperatorTerm({operator: "+"}));
-      this.terms.push(new NumericTerm({number: flatBonus}, {flavor: game.i18n.localize("DND5E.PowerfulCritical")}));
+      this.terms.push(new NumericTerm({number: flatBonus}, {flavor: game.i18n.localize("TRPG.PowerfulCritical")}));
     }
 
     // Re-compile the underlying formula
@@ -92,7 +92,7 @@ export default class DamageRoll extends Roll {
   toMessage(messageData={}, options={}) {
     messageData.flavor = messageData.flavor || this.options.flavor;
     if ( this.isCritical ) {
-      const label = game.i18n.localize("DND5E.CriticalHit");
+      const label = game.i18n.localize("TRPG.CriticalHit");
       messageData.flavor = messageData.flavor ? `${messageData.flavor} (${label})` : label;
     }
     options.rollMode = options.rollMode ?? this.options.rollMode;
@@ -131,11 +131,11 @@ export default class DamageRoll extends Roll {
         buttons: {
           critical: {
             condition: allowCritical,
-            label: game.i18n.localize("DND5E.CriticalHit"),
+            label: game.i18n.localize("TRPG.CriticalHit"),
             callback: html => resolve(this._onDialogSubmit(html, true))
           },
           normal: {
-            label: game.i18n.localize(allowCritical ? "DND5E.Normal" : "DND5E.Roll"),
+            label: game.i18n.localize(allowCritical ? "TRPG.Normal" : "TRPG.Roll"),
             callback: html => resolve(this._onDialogSubmit(html, false))
           }
         },

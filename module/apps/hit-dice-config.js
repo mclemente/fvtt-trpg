@@ -18,7 +18,7 @@ export default class ActorHitDiceConfig extends DocumentSheet {
 
     /** @override */
     get title() {
-        return `${game.i18n.localize("DND5E.HitDiceConfig")}: ${this.object.name}`;
+        return `${game.i18n.localize("TRPG.HitDiceConfig")}: ${this.object.name}`;
     }
 
     /* -------------------------------------------- */

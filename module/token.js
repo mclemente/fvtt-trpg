@@ -63,7 +63,7 @@ export class Token5e extends Token {
     // Determine colors to use
     const blk = 0x000000;
     const hpColor = PIXI.utils.rgb2hex([(1-(colorPct/2)), colorPct, 0]);
-    const c = CONFIG.DND5E.tokenHPColors;
+    const c = CONFIG.TRPG.tokenHPColors;
 
     // Determine the container size (logic borrowed from core)
     const w = this.w;

@@ -41,12 +41,12 @@ export default class SelectItemsPrompt extends Dialog {
 
     return new Promise((resolve) => {
       const dlg = new this(items, {
-        title: game.i18n.localize('DND5E.SelectItemsPromptTitle'),
+        title: game.i18n.localize('TRPG.SelectItemsPromptTitle'),
         content: html,
         buttons: {
           apply: {
             icon: `<i class="fas fa-user-plus"></i>`,
-            label: game.i18n.localize('DND5E.Apply'),
+            label: game.i18n.localize('TRPG.Apply'),
             callback: html => {
               const fd = new FormDataExtended(html[0].querySelector("form")).toObject();
               const selectedIds = Object.keys(fd).filter(itemId => fd[itemId]);
@@ -55,7 +55,7 @@ export default class SelectItemsPrompt extends Dialog {
           },
           cancel: {
             icon: '<i class="fas fa-forward"></i>',
-            label: game.i18n.localize('DND5E.Skip'),
+            label: game.i18n.localize('TRPG.Skip'),
             callback: () => resolve([])
           }
         },

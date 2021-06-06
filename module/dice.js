@@ -168,7 +168,7 @@ export async function d20Roll({
  * @returns {{isFF: boolean, advantageMode: number}}  Whether the roll is fast-forward, and its advantage mode
  */
 function _determineAdvantageMode({event, advantage=false, disadvantage=false, fastForward=false}={}) {
-  const isFF = fastForward || (event && (event.shiftKey || event.altKey || event.ctrlKey || event.metaKey));
+  const isFF = fastForward || (event && (!event.shiftKey || event.altKey || event.ctrlKey || event.metaKey));
   let advantageMode = CONFIG.Dice.D20Roll.ADV_MODE.NORMAL;
   if ( advantage || event?.altKey ) advantageMode = CONFIG.Dice.D20Roll.ADV_MODE.ADVANTAGE;
   else if ( disadvantage || event?.ctrlKey || event?.metaKey ) advantageMode = CONFIG.Dice.D20Roll.ADV_MODE.DISADVANTAGE;
@@ -261,7 +261,7 @@ export async function damageRoll({
  * @returns {{isFF: boolean, isCritical: boolean}}  Whether the roll is fast-forward, and whether it is a critical hit
  */
 function _determineCriticalMode({event, critical=false, fastForward=false}={}) {
-  const isFF = fastForward || (event && (event.shiftKey || event.altKey || event.ctrlKey || event.metaKey));
+  const isFF = fastForward || (event && (!event.shiftKey || event.altKey || event.ctrlKey || event.metaKey));
   if ( event?.altKey ) critical = true;
   return {isFF, isCritical: critical};
 }

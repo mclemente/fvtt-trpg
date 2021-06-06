@@ -1,33 +1,33 @@
 <form autocomplete="off">
-    <p class="notes">{{localize "DND5E.MovementConfigHint"}}</p>
+    <p class="notes">{{localize "TRPG.MovementConfigHint"}}</p>
     <div class="form-group">
-        <label>{{localize "DND5E.MovementWalk"}}</label>
+        <label>{{localize "TRPG.MovementWalk"}}</label>
         <input name="data.attributes.movement.walk" type="number" step="1.5" min="0" value="{{movement.walk}}"/>
     </div>
     <div class="form-group">
-        <label>{{localize "DND5E.MovementBurrow"}}</label>
+        <label>{{localize "TRPG.MovementBurrow"}}</label>
         <input name="data.attributes.movement.burrow" type="number" step="1.5" min="0" value="{{movement.burrow}}"/>
     </div>
     <div class="form-group">
-        <label>{{localize "DND5E.MovementClimb"}}</label>
+        <label>{{localize "TRPG.MovementClimb"}}</label>
         <input name="data.attributes.movement.climb" type="number" step="1.5" min="0" value="{{movement.climb}}"/>
     </div>
     <div class="form-group">
-        <label>{{localize "DND5E.MovementFly"}}</label>
+        <label>{{localize "TRPG.MovementFly"}}</label>
         <input name="data.attributes.movement.fly" type="number" step="1.5" min="0" value="{{movement.fly}}"/>
     </div>
     <div class="form-group">
-        <label>{{localize "DND5E.MovementSwim"}}</label>
+        <label>{{localize "TRPG.MovementSwim"}}</label>
         <input name="data.attributes.movement.swim" type="number" step="1.5" min="0" value="{{movement.swim}}"/>
     </div>
     <!-- <div class="form-group"> -->
-        <!-- <label>{{localize "DND5E.MovementUnits"}}</label> -->
+        <!-- <label>{{localize "TRPG.MovementUnits"}}</label> -->
         <!-- <select name="data.attributes.movement.units"> -->
             <!-- {{selectOptions units selected=movement.units}} -->
         <!-- </select> -->
     <!-- </div> -->
     <div class="form-group">
-        <label>{{localize "DND5E.MovementHover"}}</label>
+        <label>{{localize "TRPG.MovementHover"}}</label>
         <input name="data.attributes.movement.hover" type="checkbox" {{checked movement.hover}}/>
     </div>
     <button type="submit" name="submit" value="1"><i class="far fa-save"></i> {{ localize "Submit"}}</button>

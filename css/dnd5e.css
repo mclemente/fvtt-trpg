@@ -771,7 +771,7 @@
 }
 .dnd5e.sheet.actor ul.skills-list {
   flex: 0 0 180px;
-  height: 554px;
+  height: 583px;
   list-style: none;
   margin: 0 5px 0;
   padding: 3px 0 2px;
@@ -954,7 +954,7 @@
   white-space: nowrap;
 }
 .dnd5e.sheet.actor .inventory-list .inventory-header .item-controls a.item-create {
-  flex: 0 0 100%;
+  flex: 0 0 200%;
 }
 .dnd5e.sheet.actor .inventory-list .item-detail {
   flex: 0 0 70px;
@@ -1411,7 +1411,7 @@
 /* ----------------------------------------- */
 .dnd5e.sheet.actor.character {
   min-width: 720px;
-  min-height: 790px;
+  min-height: 820px;
   /* ----------------------------------------- */
   /*  Sheet Header                             */
   /* ----------------------------------------- */

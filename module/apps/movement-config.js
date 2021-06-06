@@ -18,7 +18,7 @@ export default class ActorMovementConfig extends DocumentSheet {
 
   /** @override */
   get title() {
-    return `${game.i18n.localize("DND5E.MovementConfig")}: ${this.document.name}`;
+    return `${game.i18n.localize("TRPG.MovementConfig")}: ${this.document.name}`;
   }
 
   /* -------------------------------------------- */
@@ -28,7 +28,7 @@ export default class ActorMovementConfig extends DocumentSheet {
     const sourceMovement = foundry.utils.getProperty(this.document.data._source, "data.attributes.movement") || {};
     const data = {
       movement: foundry.utils.deepClone(sourceMovement),
-      units: CONFIG.DND5E.movementUnits
+      units: CONFIG.TRPG.movementUnits
     };
     for ( let [k, v] of Object.entries(data.movement) ) {
       if ( ["units", "hover"].includes(k) ) continue;

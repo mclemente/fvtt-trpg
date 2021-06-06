@@ -176,7 +176,7 @@ function cleanActorData(actorData) {
   actorData.data = filterObject(actorData.data, model);
 
   // Scrub system flags
-  const allowedFlags = CONFIG.DND5E.allowedActorFlags.reduce((obj, f) => {
+  const allowedFlags = CONFIG.TRPG.allowedActorFlags.reduce((obj, f) => {
     obj[f] = null;
     return obj;
   }, {});
@@ -294,7 +294,7 @@ function _migrateActorSenses(actor, updateData) {
     const match = s.match(pattern);
     if ( !match ) continue;
     const type = match[1].toLowerCase();
-    if ( type in CONFIG.DND5E.senses ) {
+    if ( type in CONFIG.TRPG.senses ) {
       updateData[`data.attributes.senses.${type}`] = Number(match[2]).toNearest(0.5);
       wasMatched = true;
     }
@@ -336,7 +336,7 @@ function _migrateActorType(actor, updateData) {
 
     // Match a known creature type
     const typeLc = match.groups.type.trim().toLowerCase();
-    const typeMatch = Object.entries(CONFIG.DND5E.creatureTypes).find(([k, v]) => {
+    const typeMatch = Object.entries(CONFIG.TRPG.creatureTypes).find(([k, v]) => {
       return (typeLc === k) ||
         (typeLc === game.i18n.localize(v).toLowerCase()) ||
         (typeLc === game.i18n.localize(`${v}Pl`).toLowerCase());
@@ -349,10 +349,10 @@ function _migrateActorType(actor, updateData) {
     data.subtype = match.groups.subtype?.trim().titleCase() || "";
 
     // Match a swarm
-    const isNamedSwarm = actor.name.startsWith(game.i18n.localize("DND5E.CreatureSwarm"));
+    const isNamedSwarm = actor.name.startsWith(game.i18n.localize("TRPG.CreatureSwarm"));
     if ( match.groups.size || isNamedSwarm ) {
       const sizeLc = match.groups.size ? match.groups.size.trim().toLowerCase() : "tiny";
-      const sizeMatch = Object.entries(CONFIG.DND5E.actorSizes).find(([k, v]) => {
+      const sizeMatch = Object.entries(CONFIG.TRPG.actorSizes).find(([k, v]) => {
         return (sizeLc === k) || (sizeLc === game.i18n.localize(v).toLowerCase());
       });
       data.swarm = sizeMatch ? sizeMatch[0] : "tiny";
@@ -383,7 +383,7 @@ function _migrateActorType(actor, updateData) {
  */
 function _migrateItemAttunement(item, updateData) {
   if ( item.data?.attuned === undefined ) return updateData;
-  updateData["data.attunement"] = CONFIG.DND5E.attunementTypes.NONE;
+  updateData["data.attunement"] = CONFIG.TRPG.attunementTypes.NONE;
   updateData["data.-=attuned"] = null;
   return updateData;
 }

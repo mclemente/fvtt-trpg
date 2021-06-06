@@ -18,7 +18,7 @@ export default class ActorSensesConfig extends DocumentSheet {
 
   /** @inheritdoc */
   get title() {
-    return `${game.i18n.localize("DND5E.SensesConfig")}: ${this.document.name}`;
+    return `${game.i18n.localize("TRPG.SensesConfig")}: ${this.document.name}`;
   }
 
   /* -------------------------------------------- */
@@ -29,9 +29,9 @@ export default class ActorSensesConfig extends DocumentSheet {
     const data = {
       senses: {},
       special: senses.special ?? "",
-      units: senses.units, movementUnits: CONFIG.DND5E.movementUnits
+      units: senses.units, movementUnits: CONFIG.TRPG.movementUnits
     };
-    for ( let [name, label] of Object.entries(CONFIG.DND5E.senses) ) {
+    for ( let [name, label] of Object.entries(CONFIG.TRPG.senses) ) {
       const v = senses[name];
       data.senses[name] = {
         label: game.i18n.localize(label),

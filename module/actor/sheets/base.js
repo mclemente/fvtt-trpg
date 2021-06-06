@@ -5,7 +5,7 @@ import ActorHitDiceConfig from "../../apps/hit-dice-config.js";
 import ActorMovementConfig from "../../apps/movement-config.js";
 import ActorSensesConfig from "../../apps/senses-config.js";
 import ActorTypeConfig from "../../apps/actor-type.js";
-import {DND5E} from '../../config.js';
+import {TRPG} from '../../config.js';
 import {onManageActiveEffect, prepareActiveEffectCategories} from "../../effects.js";
 
 /**
@@ -76,7 +76,7 @@ export default class ActorSheet5e extends ActorSheet {
       isCharacter: this.actor.type === "character",
       isNPC: this.actor.type === "npc",
       isVehicle: this.actor.type === 'vehicle',
-      config: CONFIG.DND5E,
+      config: CONFIG.TRPG,
       rollData: this.actor.getRollData.bind(this.actor)
     };
 
@@ -100,24 +100,24 @@ export default class ActorSheet5e extends ActorSheet {
     // Ability Scores
     for ( let [a, abl] of Object.entries(actorData.data.abilities)) {
       abl.icon = this._getProficiencyIcon(abl.proficient);
-      abl.hover = CONFIG.DND5E.proficiencyLevels[abl.proficient];
-      abl.label = CONFIG.DND5E.abilities[a];
+      abl.hover = CONFIG.TRPG.proficiencyLevels[abl.proficient];
+      abl.label = CONFIG.TRPG.abilities[a];
     }
 
     // Saving Throws
     for ( let [a, save] of Object.entries(actorData.data.saves)) {
       save.icon = this._getProficiencyIcon(save.proficient);
-      save.hover = CONFIG.DND5E.proficiencyLevels[save.proficient];
-      save.label = CONFIG.DND5E.abilities[a];
+      save.hover = CONFIG.TRPG.proficiencyLevels[save.proficient];
+      save.label = CONFIG.TRPG.abilities[a];
     }
 
     // Skills
     if ( actorData.data.skills ) {
       for (let [s, skl] of Object.entries(actorData.data.skills)) {
-        skl.ability = CONFIG.DND5E.abilityAbbreviations[skl.ability];
+        skl.ability = CONFIG.TRPG.abilityAbbreviations[skl.ability];
         skl.icon = this._getProficiencyIcon(skl.value);
-        skl.hover = CONFIG.DND5E.proficiencyLevels[skl.value];
-        skl.label = CONFIG.DND5E.skills[s];
+        skl.hover = CONFIG.TRPG.proficiencyLevels[skl.value];
+        skl.label = CONFIG.TRPG.skills[s];
       }
     }
 
@@ -154,13 +154,13 @@ export default class ActorSheet5e extends ActorSheet {
 
     // Prepare an array of available movement speeds
     let speeds = [
-      [movement.burrow, `${game.i18n.localize("DND5E.MovementBurrow")} ${movement.burrow}`],
-      [movement.climb, `${game.i18n.localize("DND5E.MovementClimb")} ${movement.climb}`],
-      [movement.fly, `${game.i18n.localize("DND5E.MovementFly")} ${movement.fly}` + (movement.hover ? ` (${game.i18n.localize("DND5E.MovementHover")})` : "")],
-      [movement.swim, `${game.i18n.localize("DND5E.MovementSwim")} ${movement.swim}`]
+      [movement.burrow, `${game.i18n.localize("TRPG.MovementBurrow")} ${movement.burrow}`],
+      [movement.climb, `${game.i18n.localize("TRPG.MovementClimb")} ${movement.climb}`],
+      [movement.fly, `${game.i18n.localize("TRPG.MovementFly")} ${movement.fly}` + (movement.hover ? ` (${game.i18n.localize("TRPG.MovementHover")})` : "")],
+      [movement.swim, `${game.i18n.localize("TRPG.MovementSwim")} ${movement.swim}`]
     ]
     if ( largestPrimary ) {
-      speeds.push([movement.walk, `${game.i18n.localize("DND5E.MovementWalk")} ${movement.walk}`]);
+      speeds.push([movement.walk, `${game.i18n.localize("TRPG.MovementWalk")} ${movement.walk}`]);
     }
 
     // Filter and sort speeds on their values
@@ -189,7 +189,7 @@ export default class ActorSheet5e extends ActorSheet {
   _getSenses(actorData) {
     const senses = actorData.data.attributes.senses || {};
     const tags = {};
-    for ( let [k, label] of Object.entries(CONFIG.DND5E.senses) ) {
+    for ( let [k, label] of Object.entries(CONFIG.TRPG.senses) ) {
       const v = senses[k] ?? 0
       if ( v === 0 ) continue;
       tags[k] = `${game.i18n.localize(label)} ${v} ${senses.units}`;
@@ -207,14 +207,14 @@ export default class ActorSheet5e extends ActorSheet {
    */
   _prepareTraits(traits) {
     const map = {
-      "dr": CONFIG.DND5E.damageResistanceTypes,
-      "di": CONFIG.DND5E.damageResistanceTypes,
-      "dv": CONFIG.DND5E.damageResistanceTypes,
-      "ci": CONFIG.DND5E.conditionTypes,
-      "languages": CONFIG.DND5E.languages,
-      "armorProf": CONFIG.DND5E.armorProficiencies,
-      "weaponProf": CONFIG.DND5E.weaponProficiencies,
-      "toolProf": CONFIG.DND5E.toolProficiencies
+      "dr": CONFIG.TRPG.damageResistanceTypes,
+      "di": CONFIG.TRPG.damageResistanceTypes,
+      "dv": CONFIG.TRPG.damageResistanceTypes,
+      "ci": CONFIG.TRPG.conditionTypes,
+      "languages": CONFIG.TRPG.languages,
+      "armorProf": CONFIG.TRPG.armorProficiencies,
+      "weaponProf": CONFIG.TRPG.weaponProficiencies,
+      "toolProf": CONFIG.TRPG.toolProficiencies
     };
     for ( let [t, choices] of Object.entries(map) ) {
       const trait = traits[t];
@@ -290,19 +290,19 @@ export default class ActorSheet5e extends ActorSheet {
 
     // Level-based spellcasters have cantrips and leveled slots
     if ( maxLevel > 0 ) {
-      registerSection("spell0", 0, CONFIG.DND5E.spellLevels[0]);
+      registerSection("spell0", 0, CONFIG.TRPG.spellLevels[0]);
       for (let lvl = 1; lvl <= maxLevel; lvl++) {
         const sl = `spell${lvl}`;
-        registerSection(sl, lvl, CONFIG.DND5E.spellLevels[lvl], levels[sl]);
+        registerSection(sl, lvl, CONFIG.TRPG.spellLevels[lvl], levels[sl]);
       }
     }
 
     // Pact magic users have cantrips and a pact magic section
     if ( levels.pact && levels.pact.max ) {
-      if ( !spellbook["0"] ) registerSection("spell0", 0, CONFIG.DND5E.spellLevels[0]);
+      if ( !spellbook["0"] ) registerSection("spell0", 0, CONFIG.TRPG.spellLevels[0]);
       const l = levels.pact;
-      const config = CONFIG.DND5E.spellPreparationModes.pact;
-      const level = game.i18n.localize(`DND5E.SpellLevel${levels.pact.level}`);
+      const config = CONFIG.TRPG.spellPreparationModes.pact;
+      const level = game.i18n.localize(`TRPG.SpellLevel${levels.pact.level}`);
       const label = `${config} — ${level}`;
       registerSection("pact", sections.pact, label, {
         prepMode: "pact",
@@ -323,7 +323,7 @@ export default class ActorSheet5e extends ActorSheet {
         s = sections[mode];
         if ( !spellbook[s] ){
           const l = levels[mode] || {};
-          const config = CONFIG.DND5E.spellPreparationModes[mode];
+          const config = CONFIG.TRPG.spellPreparationModes[mode];
           registerSection(mode, s, config, {
             prepMode: mode,
             value: l.value,
@@ -335,7 +335,7 @@ export default class ActorSheet5e extends ActorSheet {
 
       // Sections for higher-level spells which the caster "should not" have, but spell items exist for
       else if ( !spellbook[s] ) {
-        registerSection(sl, s, CONFIG.DND5E.spellLevels[s], {levels: levels[sl]});
+        registerSection(sl, s, CONFIG.TRPG.spellLevels[s], {levels: levels[sl]});
       }
 
       // Add the spell to the relevant heading
@@ -594,22 +594,22 @@ export default class ActorSheet5e extends ActorSheet {
 
     // Create and render the Dialog
     return new Dialog({
-      title: game.i18n.localize('DND5E.PolymorphPromptTitle'),
+      title: game.i18n.localize('TRPG.PolymorphPromptTitle'),
       content: {
         options: game.settings.get("trpg", 'polymorphSettings'),
-        i18n: DND5E.polymorphSettings,
+        i18n: TRPG.polymorphSettings,
         isToken: this.actor.isToken
       },
       default: 'accept',
       buttons: {
         accept: {
           icon: '<i class="fas fa-check"></i>',
-          label: game.i18n.localize('DND5E.PolymorphAcceptSettings'),
+          label: game.i18n.localize('TRPG.PolymorphAcceptSettings'),
           callback: html => this.actor.transformInto(sourceActor, rememberOptions(html))
         },
         wildshape: {
           icon: '<i class="fas fa-paw"></i>',
-          label: game.i18n.localize('DND5E.PolymorphWildShape'),
+          label: game.i18n.localize('TRPG.PolymorphWildShape'),
           callback: html => this.actor.transformInto(sourceActor, {
             keepBio: true,
             keepClass: true,
@@ -621,7 +621,7 @@ export default class ActorSheet5e extends ActorSheet {
         },
         polymorph: {
           icon: '<i class="fas fa-pastafarianism"></i>',
-          label: game.i18n.localize('DND5E.Polymorph'),
+          label: game.i18n.localize('TRPG.Polymorph'),
           callback: html => this.actor.transformInto(sourceActor, {
             transformTokens: rememberOptions(html).transformTokens
           })
@@ -645,7 +645,7 @@ export default class ActorSheet5e extends ActorSheet {
 
     // Check to make sure items of this type are allowed on this actor
     if ( this.constructor.unsupportedItemTypes.has(itemData.type) ) {
-      return ui.notifications.warn(game.i18n.format("DND5E.ActorWarningInvalidItem", {
+      return ui.notifications.warn(game.i18n.format("TRPG.ActorWarningInvalidItem", {
         itemType: game.i18n.localize(CONFIG.Item.typeLabels[itemData.type]),
         actorType: game.i18n.localize(CONFIG.Actor.typeLabels[this.actor.type])
       }));
@@ -662,7 +662,7 @@ export default class ActorSheet5e extends ActorSheet {
       ["equipped", "proficient", "prepared"].forEach(k => delete itemData.data[k]);
 
       // Downgrade ATTUNED to REQUIRED
-      itemData.data.attunement = Math.min(itemData.data.attunement, CONFIG.DND5E.attunementTypes.REQUIRED);
+      itemData.data.attunement = Math.min(itemData.data.attunement, CONFIG.TRPG.attunementTypes.REQUIRED);
     }
 
     // Stack identical consumables
@@ -789,7 +789,7 @@ export default class ActorSheet5e extends ActorSheet {
     const header = event.currentTarget;
     const type = header.dataset.type;
     const itemData = {
-      name: game.i18n.format("DND5E.ItemNew", {type: type.capitalize()}),
+      name: game.i18n.format("TRPG.ItemNew", {type: type.capitalize()}),
       type: type,
       data: foundry.utils.deepClone(header.dataset)
     };
@@ -905,7 +905,7 @@ export default class ActorSheet5e extends ActorSheet {
     event.preventDefault();
     const a = event.currentTarget;
     const label = a.parentElement.querySelector("label");
-    const choices = CONFIG.DND5E[a.dataset.options];
+    const choices = CONFIG.TRPG[a.dataset.options];
     const options = { name: a.dataset.target, title: label.innerText, choices };
     return new TraitSelector(this.actor, options).render(true)
   }
@@ -917,7 +917,7 @@ export default class ActorSheet5e extends ActorSheet {
     let buttons = super._getHeaderButtons();
     if ( this.actor.isPolymorphed ) {
       buttons.unshift({
-        label: 'DND5E.PolymorphRestoreTransformation',
+        label: 'TRPG.PolymorphRestoreTransformation',
         class: "restore-transformation",
         icon: "fas fa-backward",
         onclick: () => this.actor.revertOriginalForm()

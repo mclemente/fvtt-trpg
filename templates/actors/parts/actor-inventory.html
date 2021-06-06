@@ -3,7 +3,7 @@
     {{#unless isNPC}}
     <ol class="currency flexrow">
         <h3>
-            {{localize "DND5E.Currency"}}
+            {{localize "TRPG.Currency"}}
             <a class="currency-convert rollable" data-action="convertCurrency" title="Convert Currency">
                 <i class="fas fa-coins"></i>
             </a>
@@ -17,10 +17,10 @@
 
     {{#unless isVehicle}}
     <ul class="filter-list flexrow" data-filter="inventory">
-        <li class="filter-item" data-filter="action">{{localize "DND5E.Action"}}</li>
-        <li class="filter-item" data-filter="bonus">{{localize "DND5E.BonusAction"}}</li>
-        <li class="filter-item" data-filter="reaction">{{localize "DND5E.Reaction"}}</li>
-        <li class="filter-item" data-filter="equipped">{{localize "DND5E.Equipped"}}</li>
+        <li class="filter-item" data-filter="action">{{localize "TRPG.Action"}}</li>
+        <li class="filter-item" data-filter="bonus">{{localize "TRPG.BonusAction"}}</li>
+        <li class="filter-item" data-filter="reaction">{{localize "TRPG.Reaction"}}</li>
+        <li class="filter-item" data-filter="equipped">{{localize "TRPG.Equipped"}}</li>
     </ul>
     {{/unless}}
 </div>
@@ -36,18 +36,18 @@
             {{/each}}
         {{else}}
             {{#if ../isCharacter}}
-                <div class="item-detail item-weight">{{localize "DND5E.Weight"}}</div>
+                <div class="item-detail item-weight">{{localize "TRPG.Weight"}}</div>
             {{/if}}
 
-            <div class="item-detail item-uses">{{localize "DND5E.Charges"}}</div>
-            <div class="item-detail item-action">{{localize "DND5E.Usage"}}</div>
+            <div class="item-detail item-uses">{{localize "TRPG.Charges"}}</div>
+            <div class="item-detail item-action">{{localize "TRPG.Usage"}}</div>
         {{/if}}
 
         {{#if ../owner}}
         <div class="item-controls flexrow">
-            <a class="item-control item-create" title='{{localize "DND5E.ItemCreate"}}'
+            <a class="item-control item-create" title='{{localize "TRPG.ItemCreate"}}'
                {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
-                <i class="fas fa-plus"></i> {{localize "DND5E.Add"}}
+                <i class="fas fa-plus"></i> {{localize "TRPG.Add"}}
             </a>
         </div>
         {{/if}}
@@ -92,7 +92,7 @@
                 <div class="item-detail item-weight">
                     {{#if item.totalWeight}}
                         <div class="item-detail">
-                            {{ item.totalWeight }} {{localize "DND5E.AbbreviationLbs"}}
+                            {{ item.totalWeight }} {{localize "TRPG.AbbreviationLbs"}}
                         </div>
                     {{/if}}
                 </div>
@@ -118,9 +118,9 @@
                 <a class="item-control item-toggle {{item.toggleClass}}" title='{{item.toggleTitle}}'><i class="fas fa-shield-alt"></i></a>
                 {{/unless}}
                 {{#unless section.editableName}}
-                <a class="item-control item-edit" title='{{localize "DND5E.ItemEdit"}}'><i class="fas fa-edit"></i></a>
+                <a class="item-control item-edit" title='{{localize "TRPG.ItemEdit"}}'><i class="fas fa-edit"></i></a>
                 {{/unless}}
-                <a class="item-control item-delete" title='{{localize "DND5E.ItemDelete"}}'><i class="fas fa-trash"></i></a>
+                <a class="item-control item-delete" title='{{localize "TRPG.ItemDelete"}}'><i class="fas fa-trash"></i></a>
             </div>
             {{/if}}
         </li>

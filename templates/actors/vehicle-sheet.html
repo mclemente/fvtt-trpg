@@ -5,29 +5,29 @@
         <section class="header-details flexrow">
             <h1 class="charnam">
                 <input name="name" type="text" value="{{actor.name}}"
-                       placeholder="{{localize 'DND5E.Name'}}">
+                       placeholder="{{localize 'TRPG.Name'}}">
             </h1>
             <ul class="summary flexrow">
                 <li>
                     <span>{{lookup config.actorSizes data.traits.size}}</span>
                 </li>
                 <li>
-                    <span>{{localize 'DND5E.Vehicle'}}</span>
+                    <span>{{localize 'TRPG.Vehicle'}}</span>
                 </li>
                 <li>
                     <input type="text" name="data.traits.dimensions"
                            value="{{data.traits.dimensions}}"
-                           placeholder="{{localize 'DND5E.Dimensions'}}">
+                           placeholder="{{localize 'TRPG.Dimensions'}}">
                 </li>
                 <li>
                     <input type="text" name="data.details.source"
                            value="{{data.details.source}}"
-                           placeholder="{{localize 'DND5E.Source'}}">
+                           placeholder="{{localize 'TRPG.Source'}}">
                 </li>
             </ul>
             <ul class="attributes flexrow">
                 <li class="attribute health">
-                    <h4 class="attribute-name box-title">{{localize 'DND5E.HitPoints'}}</h4>
+                    <h4 class="attribute-name box-title">{{localize 'TRPG.HitPoints'}}</h4>
                     <div class="attribute-value multiple">
                         <input name="data.attributes.hp.value" type="text" placeholder="&mdash;"
                                value="{{data.attributes.hp.value}}" data-dtype="Number">
@@ -37,15 +37,15 @@
                     </div>
                     <footer class="attribute-footer">
                         <input name="data.attributes.hp.dt" type="text" class="temphp"
-                               placeholder="{{localize 'DND5E.Threshold'}}"
+                               placeholder="{{localize 'TRPG.Threshold'}}"
                                value="{{data.attributes.hp.dt}}" data-dtype="Number">
                         <input name="data.attributes.hp.mt" type="text" class="temphp"
-                               placeholder="{{localize 'DND5E.VehicleMishap'}}"
+                               placeholder="{{localize 'TRPG.VehicleMishap'}}"
                                value="{{data.attributes.hp.mt}}" data-dtype="Number">
                     </footer>
                 </li>
                 <li class="attribute">
-                    <h4 class="attribute-name box-title">{{localize 'DND5E.ArmorClass'}}</h4>
+                    <h4 class="attribute-name box-title">{{localize 'TRPG.ArmorClass'}}</h4>
                     <div class="attribute-value">
                         <input name="data.attributes.ac.value" type="text" placeholder="&mdash;"
                                value="{{data.attributes.ac.value}}" data-dtype="Number">
@@ -57,8 +57,8 @@
                 </li>
                 <li class="attribute movement">
                     <h4 class="attribute-name box-title">
-                        {{ localize "DND5E.Movement" }}
-                        <a class="config-button" data-action="movement" title="{{localize 'DND5E.MovementConfig'}}"><i class="fas fa-cog"></i></a>
+                        {{ localize "TRPG.Movement" }}
+                        <a class="config-button" data-action="movement" title="{{localize 'TRPG.MovementConfig'}}"><i class="fas fa-cog"></i></a>
                     </h4>
                     <div class="attribute-value">
                         <span>{{movement.primary}}</span>
@@ -72,10 +72,10 @@
     </header>
 
     <nav class="sheet-navigation tabs" data-group="primary">
-        <a class="item active" data-tab="attributes">{{localize 'DND5E.Attributes'}}</a>
-        <a class="item" data-tab="features">{{localize 'DND5E.Features'}}</a>
-        <a class="item" data-tab="cargo">{{localize 'DND5E.VehicleCargoCrew'}}</a>
-        <a class="item" data-tab="biography">{{localize 'DND5E.Description'}}</a>
+        <a class="item active" data-tab="attributes">{{localize 'TRPG.Attributes'}}</a>
+        <a class="item" data-tab="features">{{localize 'TRPG.Features'}}</a>
+        <a class="item" data-tab="cargo">{{localize 'TRPG.VehicleCargoCrew'}}</a>
+        <a class="item" data-tab="biography">{{localize 'TRPG.Description'}}</a>
     </nav>
 
     <section class="sheet-body">
@@ -87,7 +87,7 @@
                     <input class="ability-score" name="data.abilities.{{id}}.value" type="text"
                            value="{{ability.value}}" data-dtype="Number" placeholder="0">
                     <div class="ability-modifiers flexrow">
-                        <span class="ability-mod" title="{{localize 'DND5E.Modifier'}}">
+                        <span class="ability-mod" title="{{localize 'TRPG.Modifier'}}">
                             {{numberFormat ability.mod decimals=0 sign=true}}
                         </span>
                     </div>
@@ -97,7 +97,7 @@
             <section class="center-pane flexcol">
                 <div class="counters">
                     <div class="counter flexrow creature-cap">
-                        <h4>{{localize 'DND5E.VehicleCreatureCapacity'}}</h4>
+                        <h4>{{localize 'TRPG.VehicleCreatureCapacity'}}</h4>
                         <div class="counter-value">
                             <input type="text" placeholder="&mdash;"
                                    name="data.attributes.capacity.creature"
@@ -105,14 +105,14 @@
                         </div>
                     </div>
                     <div class="counter flexrow cargo-cap">
-                        <h4>{{localize 'DND5E.VehicleCargoCapacity'}}</h4>
+                        <h4>{{localize 'TRPG.VehicleCargoCapacity'}}</h4>
                         <div class="counter-value">
                             <input type="text" name="data.attributes.capacity.cargo" placeholder="0"
                                    data-dtype="Number" value="{{data.attributes.capacity.cargo}}">
                         </div>
                     </div>
                     <div class="counter flexrow stations">
-                        <h4>{{localize 'DND5E.VehicleActionStations'}}</h4>
+                        <h4>{{localize 'TRPG.VehicleActionStations'}}</h4>
                         <div class="counter-value">
                             <input name="data.attributes.actions.stations" type="checkbox"
                                    data-dtype="Boolean" value="{{data.attributes.actions.stations}}"
@@ -120,14 +120,14 @@
                         </div>
                     </div>
                     <div class="counter flexrow actions">
-                        <h4>{{localize 'DND5E.ActionPl'}}</h4>
+                        <h4>{{localize 'TRPG.ActionPl'}}</h4>
                         <div class="counter-value">
                             <input type="text" name="data.attributes.actions.value" placeholder="0"
                                    data-dtype="Number" value="{{data.attributes.actions.value}}">
                         </div>
                     </div>
                     <div class="counter flexrow action-thresholds">
-                        <h4>{{localize 'DND5E.VehicleActionThresholds'}}</h4>
+                        <h4>{{localize 'TRPG.VehicleActionThresholds'}}</h4>
                         <div class="counter-value">
                             <span class="sep">&lt;</span>
                             <input type="text" placeholder="&mdash;" data-dtype="Number"

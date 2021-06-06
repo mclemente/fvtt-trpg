@@ -6,12 +6,12 @@
 
         <section class="header-details flexrow">
             <h1 class="charname">
-                <input name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'DND5E.Name' }}"/>
+                <input name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'TRPG.Name' }}"/>
             </h1>
 
             <aside class="header-exp flexcol">
                 <div class="charlevel" title="{{multiclassLabels}}">
-                    <label>{{ localize "DND5E.Level" }} {{data.details.level}}</label>
+                    <label>{{ localize "TRPG.Level" }} {{data.details.level}}</label>
                     <span class="levels">{{classLabels}}</span>
                 </div>
 
@@ -30,35 +30,35 @@
             {{!-- Character Summary --}}
             <ul class="summary flexrow">
                 <li>
-                    <input type="text" name="data.details.race" value="{{data.details.race}}" placeholder="{{ localize 'DND5E.Race' }}"/>
+                    <input type="text" name="data.details.race" value="{{data.details.race}}" placeholder="{{ localize 'TRPG.Race' }}"/>
                 </li>
                 <li>
-                    <input type="text" name="data.details.background" value="{{data.details.background}}" placeholder="{{ localize 'DND5E.Background' }}"/>
+                    <input type="text" name="data.details.background" value="{{data.details.background}}" placeholder="{{ localize 'TRPG.Background' }}"/>
                 </li>
                 <li>
-                    <input type="text" name="data.details.alignment" value="{{data.details.alignment}}" placeholder="{{ localize 'DND5E.Alignment' }}"/>
+                    <input type="text" name="data.details.alignment" value="{{data.details.alignment}}" placeholder="{{ localize 'TRPG.Alignment' }}"/>
                 </li>
                 <li>
                     <a class="rest long-rest">Descansar</a>
                 </li>
                 <!-- <li class="proficiency">
-                    <span>{{ localize "DND5E.Proficiency" }} {{numberFormat data.attributes.prof decimals=0 sign=true}}</span>
+                    <span>{{ localize "TRPG.Proficiency" }} {{numberFormat data.attributes.prof decimals=0 sign=true}}</span>
                 </li> -->
             </ul>
 
             {{!-- Header Attributes --}}
             <ul class="attributes flexrow">
                 <li class="attribute health">
-                    <h4 class="attribute-name box-title">{{ localize "DND5E.HitPoints" }}</h4>
+                    <h4 class="attribute-name box-title">{{ localize "TRPG.HitPoints" }}</h4>
                     <div class="attribute-value multiple">
                         <input name="data.attributes.hp.value" type="text" value="{{data.attributes.hp.value}}" placeholder="10" data-dtype="Number"/>
                         <span class="sep"> / </span>
                         <input name="data.attributes.hp.max" type="text" value="{{data.attributes.hp.max}}" placeholder="10" data-dtype="Number"/>
                     </div>
                     <footer class="attribute-footer">
-                        <input name="data.attributes.hp.temp" type="text" class="temphp" placeholder="+{{ localize 'DND5E.Temp' }}"
+                        <input name="data.attributes.hp.temp" type="text" class="temphp" placeholder="+{{ localize 'TRPG.Temp' }}"
                                value="{{data.attributes.hp.temp}}" data-dtype="Number"/>
-                        <input name="data.attributes.hp.tempmax" type="text" class="temphp" placeholder="+{{ localize 'DND5E.Max' }}"
+                        <input name="data.attributes.hp.tempmax" type="text" class="temphp" placeholder="+{{ localize 'TRPG.Max' }}"
                                value="{{data.attributes.hp.tempmax}}" data-dtype="Number"/>
                     </footer>
                 </li>
@@ -71,41 +71,41 @@
                         <input name="data.attributes.mp.max" type="text" value="{{data.attributes.mp.max}}" placeholder="10" data-dtype="Number"/>
                     </div>
                     <footer class="attribute-footer">
-                        <input name="data.attributes.mp.temp" type="text" class="temphp" placeholder="+{{ localize 'DND5E.Temp' }}"
+                        <input name="data.attributes.mp.temp" type="text" class="temphp" placeholder="+{{ localize 'TRPG.Temp' }}"
                                value="{{data.attributes.mp.temp}}" data-dtype="Number"/>
-                        <input name="data.attributes.mp.tempmax" type="text" class="temphp" placeholder="+{{ localize 'DND5E.Max' }}"
+                        <input name="data.attributes.mp.tempmax" type="text" class="temphp" placeholder="+{{ localize 'TRPG.Max' }}"
                                value="{{data.attributes.mp.tempmax}}" data-dtype="Number"/>
                     </footer>
                 </li>
 
                 <!-- <li class="attribute hit-dice">
                     <h4 class="attribute-name box-title">
-                        {{ localize "DND5E.HitDice" }}
-                        <a class="config-button" data-action="hit-dice" title="{{localize 'DND5E.HitDiceConfig'}}"><i class="fas fa-cog"></i></a>
+                        {{ localize "TRPG.HitDice" }}
+                        <a class="config-button" data-action="hit-dice" title="{{localize 'TRPG.HitDiceConfig'}}"><i class="fas fa-cog"></i></a>
                     </h4>
                     <div class="attribute-value multiple">
                         <label class="hit-dice">{{data.attributes.hd}} <span class="sep"> / </span> {{data.details.level}}</label>
                     </div>
                     <footer class="attribute-footer">
-                        <a class="rest short-rest">{{ localize "DND5E.RestS" }}</a>
-                        <a class="rest long-rest">{{ localize "DND5E.RestL" }}</a>
+                        <a class="rest short-rest">{{ localize "TRPG.RestS" }}</a>
+                        <a class="rest long-rest">{{ localize "TRPG.RestL" }}</a>
                     </footer>
                 </li> -->
 
                 <li class="attribute">
-                    <h4 class="attribute-name box-title">{{ localize "DND5E.ArmorClass" }}</h4>
+                    <h4 class="attribute-name box-title">{{ localize "TRPG.ArmorClass" }}</h4>
                     <div class="attribute-value">
                         <input name="data.attributes.ac.value" type="number" value="{{data.attributes.ac.value}}" placeholder="10"/>
                     </div>
                     <footer class="attribute-footer">
-                        <span class="spell-dc">{{localize "DND5E.SpellDC"}} {{data.attributes.spelldc}}</span>
+                        <span class="spell-dc">{{localize "TRPG.SpellDC"}} {{data.attributes.spelldc}}</span>
                     </footer>
                 </li>
 
                 <li class="attribute movement">
                     <h4 class="attribute-name box-title">
-                        {{ localize "DND5E.Movement" }}
-                        <a class="config-button" data-action="movement" title="{{localize 'DND5E.MovementConfig'}}"><i class="fas fa-cog"></i></a>
+                        {{ localize "TRPG.Movement" }}
+                        <a class="config-button" data-action="movement" title="{{localize 'TRPG.MovementConfig'}}"><i class="fas fa-cog"></i></a>
                     </h4>
                     <div class="attribute-value">
                         <span>{{movement.primary}}</span>
@@ -116,12 +116,12 @@
                 </li>
 
                 <!-- <li class="attribute initiative">
-                    <h4 class="attribute-name box-title rollable" data-action="rollInitiative">{{ localize "DND5E.Initiative" }}</h4>
+                    <h4 class="attribute-name box-title rollable" data-action="rollInitiative">{{ localize "TRPG.Initiative" }}</h4>
                     <div class="attribute-value">
                         <span>{{numberFormat data.attributes.init.total decimals=0 sign=true}}</span>
                     </div>
                     <footer class="attribute-footer">
-                        <span>{{ localize "DND5E.Modifier" }}</span>
+                        <span>{{ localize "TRPG.Modifier" }}</span>
                         <input name="data.attributes.init.value" type="text" data-dtype="Number" placeholder="0"
                                value="{{numberFormat data.attributes.init.value decimals=0 sign=true}}"/>
                     </footer>
@@ -132,12 +132,12 @@
 
     {{!-- Character Sheet Navigation --}}
     <nav class="sheet-navigation tabs" data-group="primary">
-        <a class="item active" data-tab="attributes">{{ localize "DND5E.Attributes" }}</a>
-        <a class="item" data-tab="inventory">{{ localize "DND5E.Inventory" }}</a>
-        <a class="item" data-tab="features">{{ localize "DND5E.Features" }}</a>
-        {{#if data.details.showSpells}}<a class="item" data-tab="spellbook">{{ localize "DND5E.Spellbook" }}</a>{{/if}}
-        <a class="item" data-tab="effects">{{ localize "DND5E.Effects" }}</a>
-        <a class="item" data-tab="biography">{{ localize "DND5E.Biography" }}</a>
+        <a class="item active" data-tab="attributes">{{ localize "TRPG.Attributes" }}</a>
+        <a class="item" data-tab="inventory">{{ localize "TRPG.Inventory" }}</a>
+        <a class="item" data-tab="features">{{ localize "TRPG.Features" }}</a>
+        {{#if data.details.showSpells}}<a class="item" data-tab="spellbook">{{ localize "TRPG.Spellbook" }}</a>{{/if}}
+        <a class="item" data-tab="effects">{{ localize "TRPG.Effects" }}</a>
+        <a class="item" data-tab="biography">{{ localize "TRPG.Biography" }}</a>
     </nav>
 
     {{!-- Character Sheet Body --}}
@@ -154,7 +154,7 @@
                     <div class="ability-modifiers flexrow">
                         <span class="ability-mod" title="Modifier">{{numberFormat ability.mod decimals=0 sign=true}}</span>
                         <!-- <input type="hidden" name="data.abilities.{{id}}.proficient" value="{{ability.proficient}}" data-dtype="Number"/> -->
-                        <!-- <a class="proficiency-toggle ability-proficiency" title="{{ localize 'DND5E.Proficiency' }}">{{{ability.icon}}}</a> -->
+                        <!-- <a class="proficiency-toggle ability-proficiency" title="{{ localize 'TRPG.Proficiency' }}">{{{ability.icon}}}</a> -->
                         <!-- <span class="ability-save" title="Saving Throw">{{numberFormat ability.save decimals=0 sign=true}}</span> -->
                     </div>
                 </li>
@@ -218,7 +218,7 @@
                         </h4>
                         <div class="attribute-value">
                             <!-- <label class="recharge checkbox flexcol">
-                                <span>{{ localize "DND5E.AbbreviationSR" }}</span><input name="data.resources.{{res.name}}.sr" type="checkbox" {{checked res.sr}}/>
+                                <span>{{ localize "TRPG.AbbreviationSR" }}</span><input name="data.resources.{{res.name}}.sr" type="checkbox" {{checked res.sr}}/>
                             </label> -->
 
                             <input name="data.resources.{{res.name}}.value" type="number" value="{{res.value}}" placeholder="0"/>
@@ -226,7 +226,7 @@
                             <input name="data.resources.{{res.name}}.max" type="number" value="{{res.max}}" placeholder="0"/>
 
                             <!-- <label class="recharge checkbox flexcol">
-                                <span>{{ localize "DND5E.AbbreviationLR" }}</span><input name="data.resources.{{res.name}}.lr" type="checkbox" {{checked res.lr}}/>
+                                <span>{{ localize "TRPG.AbbreviationLR" }}</span><input name="data.resources.{{res.name}}.lr" type="checkbox" {{checked res.lr}}/>
                             </label> -->
                         </div>
                     </li>
@@ -236,7 +236,7 @@
                 {{!-- Counters --}}
                 <!-- <div class="counters">
                     <div class="counter flexrow death-saves">
-                        <h4 class="rollable" data-action="rollDeathSave">{{ localize "DND5E.DeathSave" }}</h4>
+                        <h4 class="rollable" data-action="rollDeathSave">{{ localize "TRPG.DeathSave" }}</h4>
                         <div class="counter-value">
                             <i class="fas fa-check"></i>
                             <input name="data.attributes.death.success" type="number" placeholder="0"
@@ -247,14 +247,14 @@
                         </div>
                     </div>
                     <div class="counter flexrow exhaustion">
-                        <h4>{{ localize "DND5E.Exhaustion" }}</h4>
+                        <h4>{{ localize "TRPG.Exhaustion" }}</h4>
                         <div class="counter-value">
                             <input name="data.attributes.exhaustion" type="number" placeholder="0"
                                    value="{{data.attributes.exhaustion}}" />
                         </div>
                     </div>
                     <div class="counter flexrow inspiration">
-                        <h4>{{ localize "DND5E.Inspiration" }}</h4>
+                        <h4>{{ localize "TRPG.Inspiration" }}</h4>
                         <div class="counter-value">
                             <input type="checkbox" name="data.attributes.inspiration" data-dtype="Boolean"
                                    {{checked data.attributes.inspiration}}/>
@@ -290,15 +290,15 @@
         {{!-- Biography Tab --}}
         <div class="tab flexrow" data-group="primary" data-tab="biography">
             <div class="characteristics flexcol">
-                <label>{{ localize "DND5E.Appearance" }}</label>
+                <label>{{ localize "TRPG.Appearance" }}</label>
                 <textarea name="data.details.appearance">{{data.details.appearance}}</textarea>
-                <label>{{ localize "DND5E.PersonalityTraits" }}</label>
+                <label>{{ localize "TRPG.PersonalityTraits" }}</label>
                 <textarea name="data.details.trait">{{data.details.trait}}</textarea>
-                <label>{{ localize "DND5E.Ideals" }}</label>
+                <label>{{ localize "TRPG.Ideals" }}</label>
                 <textarea name="data.details.ideal">{{data.details.ideal}}</textarea>
-                <label>{{ localize "DND5E.Bonds" }}</label>
+                <label>{{ localize "TRPG.Bonds" }}</label>
                 <textarea name="data.details.bond">{{data.details.bond}}</textarea>
-                <label>{{ localize "DND5E.Flaws" }}</label>
+                <label>{{ localize "TRPG.Flaws" }}</label>
                 <textarea name="data.details.flaw">{{data.details.flaw}}</textarea>
             </div>
             <div class="biography">

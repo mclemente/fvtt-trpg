@@ -1,12 +1,12 @@
 <form id="short-rest-hd" class="dialog-content" onsubmit="event.preventDefault();">
-    <p>{{ localize "DND5E.ShortRestHint" }}</p>
+    <p>{{ localize "TRPG.ShortRestHint" }}</p>
     <div class="form-group">
-        <label>{{ localize "DND5E.ShortRestSelect" }}</label>
+        <label>{{ localize "TRPG.ShortRestSelect" }}</label>
         <div class="form-fields">
             <select name="hd">
                 {{#select denomination}}
                 {{#each availableHD as |num denom|}}
-                <option value="{{denom}}">{{denom}} ({{num}} {{ localize "DND5E.available" }})</option>
+                <option value="{{denom}}">{{denom}} ({{num}} {{ localize "TRPG.available" }})</option>
                 {{/each}}
                 {{/select}}
             </select>
@@ -15,7 +15,7 @@
             </button>
         </div>
         {{#unless canRoll}}
-        <p class="notes">{{ localize "DND5E.ShortRestNoHD" }}</p>
+        <p class="notes">{{ localize "TRPG.ShortRestNoHD" }}</p>
         {{/unless}}
     </div>
 

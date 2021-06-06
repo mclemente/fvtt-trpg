@@ -1,12 +1,12 @@
 {
   "name": "trpg",
-  "title": "TRPG",
+  "title": "Tormenta RPG",
   "description": "",
   "author": "Matheus Clemente",
   "authors": [],
   "url": "",
   "flags": {},
-  "version": "1.0.0",
+  "version": "1.3.3",
   "minimumCoreVersion": "0.8.2",
   "compatibleCoreVersion": "0.8.6",
   "scripts": [],
@@ -30,7 +30,7 @@
       "path": "./packs/classes.db",
       "private": false,
       "entity": "Item",
-      "system": "dnd5e"
+      "system": "trpg"
     },
     {
       "name": "classfeatures",
@@ -38,7 +38,7 @@
       "path": "./packs/classfeatures.db",
       "private": false,
       "entity": "Item",
-      "system": "dnd5e"
+      "system": "trpg"
     }
   ],
   "system": [],

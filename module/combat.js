@@ -8,7 +8,7 @@
 export const _getInitiativeFormula = function() {
   const actor = this.actor;
   if ( !actor ) return "1d20";
-  const init = actor.data.data.skills.ini;
+  const init = actor.data.data.skills.init;
 
   // Construct initiative formula parts
   let nd = 1;

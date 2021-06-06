@@ -1,9 +1,9 @@
 {{#unless isVehicle}}
 <div class="inventory-filters flexrow">
     <ul class="filter-list flexrow" data-filter="features">
-        <li class="filter-item" data-filter="action">{{localize "DND5E.Action"}}</li>
-        <li class="filter-item" data-filter="bonus">{{localize "DND5E.BonusAction"}}</li>
-        <li class="filter-item" data-filter="reaction">{{localize "DND5E.Reaction"}}</li>
+        <li class="filter-item" data-filter="action">{{localize "TRPG.Action"}}</li>
+        <li class="filter-item" data-filter="bonus">{{localize "TRPG.BonusAction"}}</li>
+        <li class="filter-item" data-filter="reaction">{{localize "TRPG.Reaction"}}</li>
     </ul>
 </div>
 {{/unless}}
@@ -14,8 +14,8 @@
         <h3 class="item-name flexrow">{{localize section.label}}</h3>
 
         {{#if section.hasActions}}
-        <div class="item-detail item-uses">{{localize "DND5E.Uses"}}</div>
-        <div class="item-detail item-action">{{localize "DND5E.Usage"}}</div>
+        <div class="item-detail item-uses">{{localize "TRPG.Uses"}}</div>
+        <div class="item-detail item-action">{{localize "TRPG.Usage"}}</div>
         {{/if}}
 
         {{#if section.columns}}
@@ -26,8 +26,8 @@
 
         {{#if ../owner}}
         <div class="item-controls flexrow">
-            <a class="item-control item-create" title="{{localize 'DND5E.FeatureAdd'}}" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
-                <i class="fas fa-plus"></i> {{localize "DND5E.Add"}}
+            <a class="item-control item-create" title="{{localize 'TRPG.FeatureAdd'}}" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
+                <i class="fas fa-plus"></i> {{localize "TRPG.Add"}}
             </a>
         </div>
         {{/if}}
@@ -40,7 +40,7 @@
                 <div class="item-image" style="background-image: url('{{item.img}}')"></div>
                 <h4>
                     {{item.name}}
-                    {{#if item.isOriginalClass}} <i class="original-class fas fa-sun" title="{{localize 'DND5E.ClassOriginal'}}"></i>{{/if}}
+                    {{#if item.isOriginalClass}} <i class="original-class fas fa-sun" title="{{localize 'TRPG.ClassOriginal'}}"></i>{{/if}}
                 </h4>
             </div>
 
@@ -49,7 +49,7 @@
                 {{#if item.isOnCooldown}}
                 <a class="item-recharge rollable">{{item.labels.recharge}}</a>
                 {{else if item.data.recharge.value}}
-                {{localize "DND5E.Charged"}}
+                {{localize "TRPG.Charged"}}
 
                 {{else if item.hasUses}}
                 <input type="text" value="{{item.data.uses.value}}" placeholder="0"/>/ {{item.data.uses.max}}

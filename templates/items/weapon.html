@@ -6,7 +6,7 @@
 
         <div class="header-details flexrow">
             <h1 class="charname">
-                <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'DND5E.ItemName' }}"/>
+                <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'TRPG.ItemName' }}"/>
             </h1>
 
             <div class="item-subtitle">
@@ -19,10 +19,10 @@
                     {{lookup config.weaponTypes data.weaponType }}
                 </li>
                 <li>
-                    <input type="text" name="data.rarity" value="{{data.rarity}}" placeholder="{{ localize 'DND5E.Rarity' }}"/>
+                    <input type="text" name="data.rarity" value="{{data.rarity}}" placeholder="{{ localize 'TRPG.Rarity' }}"/>
                 </li>
                 <li>
-                    <input type="text" name="data.source" value="{{data.source}}" placeholder="{{ localize 'DND5E.Source' }}"/>
+                    <input type="text" name="data.source" value="{{data.source}}" placeholder="{{ localize 'TRPG.Source' }}"/>
                 </li>
             </ul>
         </div>
@@ -30,9 +30,9 @@
 
     {{!-- Item Sheet Navigation --}}
     <nav class="sheet-navigation tabs" data-group="primary">
-        <a class="item active" data-tab="description">{{ localize "DND5E.Description" }}</a>
-        <a class="item" data-tab="details">{{ localize "DND5E.Details" }}</a>
-        <a class="item" data-tab="effects">{{ localize "DND5E.Effects" }}</a>
+        <a class="item active" data-tab="description">{{ localize "TRPG.Description" }}</a>
+        <a class="item" data-tab="details">{{ localize "TRPG.Details" }}</a>
+        <a class="item" data-tab="effects">{{ localize "TRPG.Effects" }}</a>
     </nav>
 
     {{!-- Item Sheet Body --}}
@@ -43,11 +43,11 @@
 
         {{!-- Details Tab --}}
         <div class="tab details" data-group="primary" data-tab="details">
-            <h3 class="form-header">{{ localize "DND5E.ItemWeaponDetails" }}</h3>
+            <h3 class="form-header">{{ localize "TRPG.ItemWeaponDetails" }}</h3>
 
             {{!-- Weapon Type --}}
             <div class="form-group">
-                <label>{{ localize "DND5E.ItemWeaponType" }}</label>
+                <label>{{ localize "TRPG.ItemWeaponType" }}</label>
                 <select name="data.weaponType">
                     {{#select data.weaponType}}
                     {{#each config.weaponTypes as |name type|}}
@@ -59,7 +59,7 @@
 
             {{#unless isMountable}}
             <div class="form-group">
-                <label>{{localize "DND5E.Attunement"}}</label>
+                <label>{{localize "TRPG.Attunement"}}</label>
                 <select name="data.attunement" data-dtype="Number">
                     {{selectOptions config.attunements selected=data.attunement localize=true}}
                 </select>
@@ -67,16 +67,16 @@
 
             {{!-- Weapon Status --}}
             <div class="form-group stacked">
-                <label>{{ localize "DND5E.ItemWeaponStatus" }}</label>
+                <label>{{ localize "TRPG.ItemWeaponStatus" }}</label>
                 <div class="form-fields">
                     <label class="checkbox">
-                        <input type="checkbox" name="data.proficient" {{checked data.proficient}}/> {{ localize "DND5E.Proficient" }}
+                        <input type="checkbox" name="data.proficient" {{checked data.proficient}}/> {{ localize "TRPG.Proficient" }}
                     </label>
                     <label class="checkbox">
-                        <input type="checkbox" name="data.equipped" {{checked data.equipped}}/> {{ localize "DND5E.Equipped" }}
+                        <input type="checkbox" name="data.equipped" {{checked data.equipped}}/> {{ localize "TRPG.Equipped" }}
                     </label>
                     <label class="checkbox">
-                        <input type="checkbox" name="data.identified" {{checked data.identified}}/> {{ localize "DND5E.Identified" }}
+                        <input type="checkbox" name="data.identified" {{checked data.identified}}/> {{ localize "TRPG.Identified" }}
                     </label>
                 </div>
             </div>
@@ -84,7 +84,7 @@
 
             {{!-- Weapon Properties --}}
             <div class="form-group stacked weapon-properties">
-                <label>{{ localize "DND5E.ItemWeaponProperties" }}</label>
+                <label>{{ localize "TRPG.ItemWeaponProperties" }}</label>
                 {{#each config.weaponProperties as |name prop|}}
                 <label class="checkbox">
                     <input type="checkbox" name="data.properties.{{prop}}" {{checked (lookup ../data.properties prop)}}/> {{ name }}
@@ -94,7 +94,7 @@
 
             {{#if isMountable}}
             <div class="form-group">
-                <label>{{localize 'DND5E.ArmorClass'}}</label>
+                <label>{{localize 'TRPG.ArmorClass'}}</label>
                 <div class="form-fields">
                     <input type="text" name="data.armor.value" value="{{data.armor.value}}"
                            data-dtype="Number">
@@ -104,12 +104,12 @@
             {{> 'systems/trpg/templates/items/parts/item-mountable.html'}}
             {{/if}}
 
-            <h3 class="form-header">{{ localize "DND5E.ItemWeaponUsage" }}</h3>
+            <h3 class="form-header">{{ localize "TRPG.ItemWeaponUsage" }}</h3>
 
             {{!-- Item Activation Template --}}
             {{> "systems/trpg/templates/items/parts/item-activation.html"}}
 
-            <h3 class="form-header">{{ localize "DND5E.ItemWeaponAttack" }}</h3>
+            <h3 class="form-header">{{ localize "TRPG.ItemWeaponAttack" }}</h3>
 
             {{!-- Item Action Template --}}
             {{> "systems/trpg/templates/items/parts/item-action.html"}}

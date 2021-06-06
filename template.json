@@ -1,6 +1,6 @@
 {
   "Actor": {
-    "types": ["character", "npc", "vehicle"],
+    "types": ["character", "npc"],
     "templates": {
       "common": {
         "abilities": {
@@ -187,6 +187,10 @@
           "eng": {
             "value": 0,
             "ability": "cha"
+          },
+          "init": {
+            "value": 0,
+            "ability": "dex"
           },
           "intu": {
             "value": 0,
@@ -391,7 +395,7 @@
     }
   },
   "Item": {
-    "types": ["weapon", "equipment", "consumable", "tool", "loot", "class", "spell", "feat", "backpack"],
+    "types": ["weapon", "equipment", "consumable", "loot", "class", "spell", "feat", "backpack"],
     "templates": {
       "itemDescription": {
         "description": {

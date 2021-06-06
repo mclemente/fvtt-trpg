@@ -9,7 +9,7 @@
  */
 
 // Import Modules
-import { DND5E } from "./module/config.js";
+import { TRPG } from "./module/config.js";
 import { registerSystemSettings } from "./module/settings.js";
 import { preloadHandlebarsTemplates } from "./module/templates.js";
 import { _getInitiativeFormula } from "./module/combat.js";
@@ -26,7 +26,7 @@ import AbilityUseDialog from "./module/apps/ability-use-dialog.js";
 import ActorSheetFlags from "./module/apps/actor-flags.js";
 import ActorSheet5eCharacter from "./module/actor/sheets/character.js";
 import ActorSheet5eNPC from "./module/actor/sheets/npc.js";
-import ActorSheet5eVehicle from "./module/actor/sheets/vehicle.js";
+// import ActorSheet5eVehicle from "./module/actor/sheets/vehicle.js";
 import ItemSheet5e from "./module/item/sheet.js";
 import ShortRestDialog from "./module/apps/short-rest.js";
 import TraitSelector from "./module/apps/trait-selector.js";
@@ -48,7 +48,7 @@ import * as migrations from "./module/migration.js";
 /* -------------------------------------------- */
 
 Hooks.once("init", function() {
-  console.log(`DnD5e | Initializing the DnD5e Game System\n${DND5E.ASCII}`);
+  console.log(`TRPG | Iniciando o Sistema de Jogo TRPG`); //\n${TRPG.ASCII}
 
   // Create a namespace within the game global
   game.dnd5e = {
@@ -57,7 +57,7 @@ Hooks.once("init", function() {
       ActorSheetFlags,
       ActorSheet5eCharacter,
       ActorSheet5eNPC,
-      ActorSheet5eVehicle,
+      // ActorSheet5eVehicle,
       ItemSheet5e,
       ShortRestDialog,
       TraitSelector,
@@ -67,7 +67,7 @@ Hooks.once("init", function() {
     canvas: {
       AbilityTemplate
     },
-    config: DND5E,
+    config: TRPG,
     dice: dice,
     entities: {
       Actor5e,
@@ -81,7 +81,7 @@ Hooks.once("init", function() {
   };
 
   // Record Configuration Values
-  CONFIG.DND5E = DND5E;
+  CONFIG.TRPG = TRPG;
   CONFIG.Actor.documentClass = Actor5e;
   CONFIG.Item.documentClass = Item5e;
   CONFIG.Token.documentClass = TokenDocument5e;
@@ -98,7 +98,7 @@ Hooks.once("init", function() {
   registerSystemSettings();
 
   // Patch Core Functions
-  CONFIG.Combat.initiative.formula = "1d20 + @skills.ini.mod + @skills.ini.prof + @bonus";
+  CONFIG.Combat.initiative.formula = "1d20 + @skills.init.mod + @skills.init.prof + @bonus";
   Combatant.prototype._getInitiativeFormula = _getInitiativeFormula;
 
   // Register Roll Extensions
@@ -110,22 +110,22 @@ Hooks.once("init", function() {
   Actors.registerSheet("trpg", ActorSheet5eCharacter, {
     types: ["character"],
     makeDefault: true,
-    label: "DND5E.SheetClassCharacter"
+    label: "TRPG.SheetClassCharacter"
   });
   Actors.registerSheet("trpg", ActorSheet5eNPC, {
     types: ["npc"],
     makeDefault: true,
-    label: "DND5E.SheetClassNPC"
+    label: "TRPG.SheetClassNPC"
   });
-  Actors.registerSheet("trpg", ActorSheet5eVehicle, {
-    types: ['vehicle'],
-    makeDefault: true,
-    label: "DND5E.SheetClassVehicle"
-  });
+  // Actors.registerSheet("trpg", ActorSheet5eVehicle, {
+  //   types: ['vehicle'],
+  //   makeDefault: true,
+  //   label: "TRPG.SheetClassVehicle"
+  // });
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("trpg", ItemSheet5e, {
     makeDefault: true,
-    label: "DND5E.SheetClassItem"
+    label: "TRPG.SheetClassItem"
   });
 	
   // Preload Handlebars Templates
@@ -160,11 +160,11 @@ Hooks.once("setup", function() {
 
   // Localize and sort CONFIG objects
   for ( let o of toLocalize ) {
-    const localized = Object.entries(CONFIG.DND5E[o]).map(e => {
+    const localized = Object.entries(CONFIG.TRPG[o]).map(e => {
       return [e[0], game.i18n.localize(e[1])];
     });
     if ( !noSort.includes(o) ) localized.sort((a, b) => a[1].localeCompare(b[1]));
-    CONFIG.DND5E[o] = localized.reduce((obj, e) => {
+    CONFIG.TRPG[o] = localized.reduce((obj, e) => {
       obj[e[0]] = e[1];
       return obj;
     }, {});
@@ -207,7 +207,7 @@ Hooks.once("ready", function() {
 
 Hooks.on("canvasInit", function() {
   // Extend Diagonal Measurement
-  canvas.grid.diagonalRule = game.settings.get("trpg", "diagonalMovement");
+  // canvas.grid.diagonalRule = game.settings.get("trpg", "diagonalMovement");
   SquareGrid.prototype.measureDistances = measureDistances;
 });
 
