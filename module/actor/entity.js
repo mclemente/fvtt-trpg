@@ -594,10 +594,15 @@ export default class Actor5e extends Actor {
 
   /** @override */
   async modifyTokenAttribute(attribute, value, isDelta, isBar) {
-    if ( attribute === "attributes.hp" || attribute === "attributes.mp" ) {
+    if ( attribute === "attributes.hp") {
       const hp = getProperty(this.data.data, attribute);
       const delta = isDelta ? (-1 * value) : (hp.value + hp.temp) - value;
       return this.applyDamage(delta);
+    }
+    else if ( attribute === "attributes.mp") {
+      const hp = getProperty(this.data.data, attribute);
+      const delta = isDelta ? (-1 * value) : (hp.value + hp.temp) - value;
+      return this.reduceMagicPoints(delta);
     }
     return super.modifyTokenAttribute(attribute, value, isDelta, isBar);
   }
@@ -632,6 +637,35 @@ export default class Actor5e extends Actor {
     // TODO replace this in the future with a better modifyTokenAttribute function in the core
     const allowed = Hooks.call("modifyTokenAttribute", {
       attribute: "attributes.hp",
+      value: amount,
+      isDelta: false,
+      isBar: true
+    }, updates);
+    return allowed !== false ? this.update(updates) : this;
+  }
+
+  async reduceMagicPoints(amount=0, multiplier=1) {
+    amount = Math.floor(parseInt(amount) * multiplier);
+    const hp = this.data.data.attributes.mp;
+
+    // Deduct damage from temp HP first
+    const tmp = parseInt(hp.temp) || 0;
+    const dt = amount > 0 ? Math.min(tmp, amount) : 0;
+
+    // Remaining goes to health
+    const tmpMax = parseInt(hp.tempmax) || 0;
+    const dh = Math.clamped(hp.value - (amount - dt), 0, hp.max + tmpMax);
+
+    // Update the Actor
+    const updates = {
+      "data.attributes.mp.temp": tmp - dt,
+      "data.attributes.mp.value": dh
+    };
+
+    // Delegate damage application to a hook
+    // TODO replace this in the future with a better modifyTokenAttribute function in the core
+    const allowed = Hooks.call("modifyTokenAttribute", {
+      attribute: "attributes.mp",
       value: amount,
       isDelta: false,
       isBar: true

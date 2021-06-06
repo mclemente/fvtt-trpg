@@ -829,22 +829,32 @@ TRPG.cover = {
 
 // Condition Types
 TRPG.conditionTypes = {
-  "blinded": "TRPG.ConBlinded",
-  "charmed": "TRPG.ConCharmed",
-  "deafened": "TRPG.ConDeafened",
-  "diseased": "TRPG.ConDiseased",
-  "exhaustion": "TRPG.ConExhaustion",
-  "frightened": "TRPG.ConFrightened",
-  "grappled": "TRPG.ConGrappled",
-  "incapacitated": "TRPG.ConIncapacitated",
-  "invisible": "TRPG.ConInvisible",
-  "paralyzed": "TRPG.ConParalyzed",
-  "petrified": "TRPG.ConPetrified",
-  "poisoned": "TRPG.ConPoisoned",
-  "prone": "TRPG.ConProne",
-  "restrained": "TRPG.ConRestrained",
-  "stunned": "TRPG.ConStunned",
-  "unconscious": "TRPG.ConUnconscious"
+	'abalado': 'TRPG.ConAbalado',
+	'agarrado': 'TRPG.ConAgarrado',
+	'apavorado': 'TRPG.ConApavorado',
+	'atordoado': 'TRPG.ConAtordoado',
+	'caído': 'TRPG.ConCaido',
+	'cego': 'TRPG.ConCego',
+	'confuso': 'TRPG.ConConfuso',
+	'dano de habilidade': 'TRPG.ConDanoHabilidade',
+	'desprevinido': 'TRPG.ConDesprevinido',
+	'enjoado': 'TRPG.ConEnjoado',
+	'enredado': 'TRPG.ConEnredado',
+	'exausto': 'TRPG.ConExausto',
+	'fascinado': 'TRPG.ConFascinado',
+	'fatigado': 'TRPG.ConFatigado',
+	'inconsciente': 'TRPG.ConInconsciente',
+	'incorpóreo': 'TRPG.ConIncorporeo',
+	'indefeso': 'TRPG.ConIndefeso',
+	'invisível': 'TRPG.ConInvisível',
+	'lento': 'TRPG.ConLento',
+	'nível negativo': 'TRPG.ConNivelNegativo',
+	'ofuscado': 'TRPG.ConOfuscado',
+	'paralisado': 'TRPG.ConParalisado',
+	'pasmo': 'TRPG.ConPasmo',
+	'sangrando': 'TRPG.ConSangrando',
+	'surdo': 'TRPG.ConSurdo',
+	'surpreendido': 'TRPG.ConSurpreendido'
 };
 
 // Languages
@@ -950,13 +960,13 @@ TRPG.characterFlags = {
     type: Number,
     placeholder: 20
   },
-  "spellCriticalThreshold": {
-    name: "TRPG.FlagsSpellCritThreshold",
-    hint: "TRPG.FlagsSpellCritThresholdHint",
-    section: "Feats",
-    type: Number,
-    placeholder: 20
-  },
+  // "spellCriticalThreshold": {
+  //   name: "TRPG.FlagsSpellCritThreshold",
+  //   hint: "TRPG.FlagsSpellCritThresholdHint",
+  //   section: "Feats",
+  //   type: Number,
+  //   placeholder: 20
+  // },
   "meleeCriticalDamageDice": {
     name: "TRPG.FlagsMeleeCriticalDice",
     hint: "TRPG.FlagsMeleeCriticalDiceHint",

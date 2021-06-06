@@ -49,5 +49,6 @@
   "protected": false,
   "gridDistance": 1.5,
   "gridUnits": "m",
-  "primaryTokenAttribute": "attributes.hp"
+  "primaryTokenAttribute": "attributes.hp",
+  "secondaryTokenAttribute": "attributes.pm"
 }
