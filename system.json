@@ -1,7 +1,7 @@
 {
   "name": "trpg",
-  "title": "Tormenta RPG",
-  "description": "",
+  "title": "TRPG",
+  "description": "Um sistema para jogar TRPG no FoundryVTT.",
   "author": "Matheus Clemente",
   "authors": [],
   "url": "",
