@@ -437,7 +437,7 @@ export default class Item5e extends Item {
     let consumeUsage = !!uses.per;              // Consume limited uses
     let consumeQuantity = uses.autoDestroy;     // Consume quantity of the item in lieu of uses
     let consumeSpellLevel = null;               // Consume a specific category of spell slot
-    if ( requireSpellSlot ) consumeSpellLevel = id.preparation.mode === "pact" ? "pact" : `spell${id.level}`;
+    if ( requireSpellSlot ) consumeSpellLevel = `spell${id.level}`;
 
     // Display a configuration dialog to customize the usage
     const needsConfiguration = createMeasuredTemplate || consumeRecharge || consumeResource || consumeSpellSlot || consumeUsage;
@@ -454,9 +454,9 @@ export default class Item5e extends Item {
 
       // Handle spell upcasting
       if ( requireSpellSlot ) {
-        consumeSpellLevel = configuration.level === "pact" ? "pact" : `spell${configuration.level}`;
+        consumeSpellLevel = `spell${configuration.level}`;
         if ( consumeSpellSlot === false ) consumeSpellLevel = null;
-        const upcastLevel = configuration.level === "pact" ? ad.spells.pact.level : parseInt(configuration.level);
+        const upcastLevel = parseInt(configuration.level);
         if (upcastLevel !== id.level) {
           item = this.clone({"data.level": upcastLevel}, {keepId: true});
           item.data.update({_id: this.id}); // Retain the original ID (needed until 0.8.2+)
@@ -532,7 +532,7 @@ export default class Item5e extends Item {
       const level = this.actor?.data.data.spells[consumeSpellLevel];
       const spells = Number(level?.value ?? 0);
       if ( spells === 0 ) {
-        const label = game.i18n.localize(consumeSpellLevel === "pact" ? "TRPG.SpellProgPact" : `TRPG.SpellLevel${id.level}`);
+        const label = game.i18n.localize(`TRPG.SpellLevel${id.level}`);
         ui.notifications.warn(game.i18n.format("TRPG.SpellCastNoSlots", {name: this.name, level: label}));
         return false;
       }

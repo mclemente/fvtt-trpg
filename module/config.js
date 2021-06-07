@@ -6,7 +6,6 @@ export const TRPG = {};
 // ASCII Artwork
 TRPG.ASCII = ``;
 
-
 /**
  * The set of Ability Scores used within the system
  * @type {Object}
@@ -621,21 +620,17 @@ TRPG.skills = {
 
 TRPG.spellPreparationModes = {
   "prepared": "TRPG.SpellPrepPrepared",
-  "pact": "TRPG.PactMagic",
   "always": "TRPG.SpellPrepAlways",
   "atwill": "TRPG.SpellPrepAtWill",
   "innate": "TRPG.SpellPrepInnate"
 };
 
-TRPG.spellUpcastModes = ["always", "pact", "prepared"];
+TRPG.spellUpcastModes = ["always", "prepared"];
 
 TRPG.spellProgression = {
   "none": "TRPG.SpellNone",
   "full": "TRPG.SpellProgFull",
-  "half": "TRPG.SpellProgHalf",
-  "third": "TRPG.SpellProgThird",
-  "pact": "TRPG.SpellProgPact",
-  "artificer": "TRPG.SpellProgArt"
+  "half": "TRPG.SpellProgHalf"
 };
 
 /* -------------------------------------------- */

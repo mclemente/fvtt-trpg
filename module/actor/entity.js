@@ -417,8 +417,7 @@ export default class Actor5e extends Actor {
     // Translate the list of classes into spell-casting progression
     const progression = {
       total: 0,
-      slot: 0,
-      pact: 0
+      slot: 0
     };
 
     // Keep track of the last seen caster in case we're in a single-caster situation.
@@ -433,25 +432,17 @@ export default class Actor5e extends Actor {
       const prog = d.spellcasting.progression;
 
       // Accumulate levels
-      if ( prog !== "pact" ) {
-        caster = d;
-        progression.total++;
-      }
       switch (prog) {
-        case 'third': progression.slot += Math.floor(levels / 3); break;
-        case 'half': progression.slot += Math.floor(levels / 2); break;
+        case 'half': progression.slot += Math.floor((levels-1) / 4); break;
         case 'full': progression.slot += levels; break;
-        case 'artificer': progression.slot += Math.ceil(levels / 2); break;
-        case 'pact': progression.pact += levels; break;
       }
     }
 
     // EXCEPTION: single-classed non-full progression rounds up, rather than down
-    const isSingleClass = (progression.total === 1) && (progression.slot > 0);
-    if (!isNPC && isSingleClass && ['half', 'third'].includes(caster.spellcasting.progression) ) {
-      const denom = caster.spellcasting.progression === 'third' ? 3 : 2;
-      progression.slot = Math.ceil(caster.levels / denom);
-    }
+    // const isSingleClass = (progression.total === 1) && (progression.slot > 0);
+    // if (!isNPC && isSingleClass && ['half'].includes(caster.spellcasting.progression) ) {
+    //   progression.slot = Math.ceil(caster.levels / 4);
+    // }
 
     // EXCEPTION: NPC with an explicit spell-caster level
     if (isNPC && actorData.data.details.spellLevel) {
@@ -467,22 +458,6 @@ export default class Actor5e extends Actor {
       if ( Number.isNumeric(lvl.override) ) lvl.max = Math.max(parseInt(lvl.override), 0);
       else lvl.max = slots[i-1] || 0;
       lvl.value = parseInt(lvl.value);
-    }
-
-    // Determine the Actor's pact magic level (if any)
-    let pl = Math.clamped(progression.pact, 0, 20);
-    spells.pact = spells.pact || {};
-    if ( (pl === 0) && isNPC && Number.isNumeric(spells.pact.override) ) pl = actorData.data.details.spellLevel;
-
-    // Determine the number of Warlock pact slots per level
-    if ( pl > 0) {
-      spells.pact.level = Math.ceil(Math.min(10, pl) / 2);
-      if ( Number.isNumeric(spells.pact.override) ) spells.pact.max = Math.max(parseInt(spells.pact.override), 1);
-      else spells.pact.max = Math.max(1, Math.min(pl, 2), Math.min(pl - 8, 3), Math.min(pl - 13, 4));
-      spells.pact.value = Math.min(spells.pact.value, spells.pact.max);
-    } else {
-      spells.pact.max = parseInt(spells.pact.override) || 0
-      spells.pact.level = spells.pact.max > 0 ? 1 : 0;
     }
   }
 
@@ -1272,12 +1247,8 @@ export default class Actor5e extends Actor {
    * @return {object}                                Updates to the actor.
    * @protected
    */
-  _getRestSpellRecovery({ recoverPact=true, recoverSpells=true }={}) {
+  _getRestSpellRecovery({ recoverSpells=true }={}) {
     let updates = {};
-    if ( recoverPact ) {
-      const pact = this.data.data.spells.pact;
-      updates['data.spells.pact.value'] = pact.override || pact.max;
-    }
 
     if ( recoverSpells ) {
       for ( let [k, v] of Object.entries(this.data.data.spells) ) {

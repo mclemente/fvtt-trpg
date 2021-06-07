@@ -116,16 +116,6 @@ export default class AbilityUseDialog extends Dialog {
       return arr;
     }, []).filter(sl => sl.level <= lmax);
 
-    // If this character has pact slots, present them as an option for casting the spell.
-    const pact = actorData.spells.pact;
-    if (pact.level >= lvl) {
-      spellLevels.push({
-        level: 'pact',
-        label: `${game.i18n.format('TRPG.SpellLevelPact', {level: pact.level, n: pact.value})}`,
-        canCast: true,
-        hasSlots: pact.value > 0
-      });
-    }
     const canCast = spellLevels.some(l => l.hasSlots);
     if ( !canCast ) data.errors.push(game.i18n.format("TRPG.SpellCastNoSlots", {
       level: CONFIG.TRPG.spellLevels[lvl],

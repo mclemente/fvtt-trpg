@@ -252,8 +252,7 @@ export default class ActorSheet5e extends ActorSheet {
     // Define some mappings
     const sections = {
       "atwill": -20,
-      "innate": -10,
-      "pact": 0.5
+      "innate": -10
     };
 
     // Label spell slot uses headers
@@ -295,21 +294,6 @@ export default class ActorSheet5e extends ActorSheet {
         const sl = `spell${lvl}`;
         registerSection(sl, lvl, CONFIG.TRPG.spellLevels[lvl], levels[sl]);
       }
-    }
-
-    // Pact magic users have cantrips and a pact magic section
-    if ( levels.pact && levels.pact.max ) {
-      if ( !spellbook["0"] ) registerSection("spell0", 0, CONFIG.TRPG.spellLevels[0]);
-      const l = levels.pact;
-      const config = CONFIG.TRPG.spellPreparationModes.pact;
-      const level = game.i18n.localize(`TRPG.SpellLevel${levels.pact.level}`);
-      const label = `${config} — ${level}`;
-      registerSection("pact", sections.pact, label, {
-        prepMode: "pact",
-        value: l.value,
-        max: l.max,
-        override: l.override
-      });
     }
 
     // Iterate over every spell item, adding spells to the spellbook by section

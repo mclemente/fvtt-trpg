@@ -134,39 +134,57 @@
         "skills": {
           "acr": {
             "value": 0,
-            "ability": "dex"
+            "ability": "dex",
+            "pda": true
           },
           "ani": {
             "value": 0,
-            "ability": "wis"
+            "ability": "wis",
+            "st": true
+          },
+          "ath": {
+            "value": 0,
+            "ability": "str",
+            "pda": true
+          },
+          "atu": {
+            "value": 0,
+            "ability": "cha"
           },
           "conArc": {
             "value": 0,
-            "ability": "int"
+            "ability": "int",
+            "st": true
           },
           "conGeo": {
             "value": 0,
-            "ability": "int"
+            "ability": "int",
+            "st": true
           },
           "conHis": {
             "value": 0,
-            "ability": "int"
+            "ability": "int",
+            "st": true
           },
           "conNat": {
             "value": 0,
-            "ability": "int"
+            "ability": "int",
+            "st": true
           },
           "conRel": {
             "value": 0,
-            "ability": "int"
+            "ability": "int",
+            "st": true
           },
           "conTor": {
             "value": 0,
-            "ability": "int"
+            "ability": "int",
+            "st": true
           },
           "ide": {
             "value": 0,
-            "ability": "int"
+            "ability": "int",
+            "st": true
           },
           "obinf": {
             "value": 0,
@@ -176,17 +194,26 @@
             "value": 0,
             "ability": "int"
           },
-          "ath": {
-            "value": 0,
-            "ability": "str"
-          },
           "cav": {
             "value": 0,
             "ability": "dex"
           },
+          "cur": {
+            "value": 0,
+            "ability": "wis"
+          },
+          "dip": {
+            "value": 0,
+            "ability": "cha"
+          },
           "eng": {
             "value": 0,
             "ability": "cha"
+          },
+          "fur": {
+            "value": 0,
+            "ability": "dex",
+            "pda": true
           },
           "init": {
             "value": 0,
@@ -200,29 +227,15 @@
             "value": 0,
             "ability": "cha"
           },
-          "cur": {
+          "lad": {
             "value": 0,
-            "ability": "wis"
+            "ability": "dex",
+            "st": true,
+            "pda": true
           },
           "prc": {
             "value": 0,
             "ability": "wis"
-          },
-          "atu": {
-            "value": 0,
-            "ability": "cha"
-          },
-          "dip": {
-            "value": 0,
-            "ability": "cha"
-          },
-          "lad": {
-            "value": 0,
-            "ability": "dex"
-          },
-          "fur": {
-            "value": 0,
-            "ability": "dex"
           },
           "sur": {
             "value": 0,
@@ -269,10 +282,6 @@
             "override": null
           },
           "spell9": {
-            "value": 0,
-            "override": null
-          },
-          "pact": {
             "value": 0,
             "override": null
           }
