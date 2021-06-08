@@ -23,7 +23,7 @@ jobs:
         download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/system.zip
 
     # Create a zip file with all files required by the system to add to the release
-    - run: zip -r ./system.zip system.json dnd5e.js LICENSE.txt OGL.txt README.txt template.json css/ fonts/ icons/ lang/ module/ packs/ templates/ ui/
+    - run: zip -r ./trpg.zip system.json dnd5e.js LICENSE.txt OGL.txt README.txt template.json css/ fonts/ icons/ lang/ module/ packs/ templates/ ui/
 
     # Create a release for this specific version
     - name: Update Release with Files
@@ -35,6 +35,6 @@ jobs:
         draft: false
         prerelease: false
         token: ${{ secrets.GITHUB_TOKEN }}
-        artifacts: './system.json, ./system.zip'
+        artifacts: './system.json, ./trpg.zip'
         tag: ${{ github.event.release.tag_name }}
         body: ${{ github.event.release.body }}
