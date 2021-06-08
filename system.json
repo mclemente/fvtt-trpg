@@ -39,6 +39,14 @@
       "private": false,
       "entity": "Item",
       "system": "trpg"
+    },
+    {
+      "label": "Talentos",
+      "entity": "Item",
+      "name": "talentos",
+      "path": "./packs/talentos.db",
+      "private": false,
+      "system": "trpg"
     }
   ],
   "system": [],
