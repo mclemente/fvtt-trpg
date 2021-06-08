@@ -26,16 +26,16 @@
   "packs": [
     {
       "name": "classes",
-      "label": "Classes (SRD)",
+      "label": "Classes",
       "path": "./packs/classes.db",
       "private": false,
       "entity": "Item",
       "system": "trpg"
     },
     {
-      "name": "classfeatures",
-      "label": "Class Features (SRD)",
-      "path": "./packs/classfeatures.db",
+      "name": "habilidades-de-classe",
+      "label": "Habilidades de Classe",
+      "path": "./packs/habilidades-de-classe.db",
       "private": false,
       "entity": "Item",
       "system": "trpg"

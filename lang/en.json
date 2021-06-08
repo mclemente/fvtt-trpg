@@ -97,6 +97,7 @@
 "TRPG.BonusAbilitySave": "Bônus Global para Testes de Resistência",
 "TRPG.BonusAbilitySkill": "Bônus Global para Testes de Perícia",
 "TRPG.BonusAction": "Ação de Movimento",
+"TRPG.FreeAction": "Ação Livre",
 
 
 "TRPG.BonusMWAttack": "Bônus de Ataque Corpo a Corpo",
@@ -608,7 +609,7 @@
 "TRPG.SpecialTraits": "Traços Especiais",
 "TRPG.Speed": "Deslocamento",
 "TRPG.SpeedSpecial": "Movimento Especial",
-"TRPG.SpellAbility": "Conjuração",
+"TRPG.SpellAbility": "Conjuração: Atributo-Chave",
 "TRPG.SpellAdd": "Adicionar Magia",
 "TRPG.SpellCantrip": "Truque",
 "TRPG.SpellCastConsume": "Consumir Espaço de Magia?",
@@ -644,9 +645,10 @@
 "TRPG.SpellPrepAlways": "Sempre Disponível",
 "TRPG.SpellPreparationMode": "Modo de Preparação da Magia",
 "TRPG.SpellPrepared": "Preparada",
-"TRPG.SpellProgArt": "Artífice",
-"TRPG.SpellProgFull": "Conjurador Pleno",
-"TRPG.SpellProgHalf": "Semiconjurador",
+
+"TRPG.SpellProgFull": "Conjurador",
+"TRPG.SpellProgTwoThirds": "Bardo",
+"TRPG.SpellProgHalf": "Paladino/Ranger",
 "TRPG.SpellProgOverride": "Sobrepor Espaços",
 "TRPG.SpellProgPact": "Magia de Pacto",
 "TRPG.SpellProgThird": "Conjurador Terciário",

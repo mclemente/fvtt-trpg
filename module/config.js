@@ -220,9 +220,10 @@ TRPG.abilityActivationTypes = {
   "hour": TRPG.timePeriods.hour,
   "day": TRPG.timePeriods.day,
   "special": TRPG.timePeriods.spec,
-  "legendary": "TRPG.LegAct",
-  "lair": "TRPG.LairAct",
-  "crew": "TRPG.VehicleCrewAction"
+	"free": "TRPG.FreeAction",
+  // "legendary": "TRPG.LegAct",
+  // "lair": "TRPG.LairAct",
+  // "crew": "TRPG.VehicleCrewAction"
 };
 
 /* -------------------------------------------- */
@@ -630,6 +631,7 @@ TRPG.spellUpcastModes = ["always", "prepared"];
 TRPG.spellProgression = {
   "none": "TRPG.SpellNone",
   "full": "TRPG.SpellProgFull",
+	"twoThirds": "TRPG.SpellProgTwoThirds",
   "half": "TRPG.SpellProgHalf"
 };
 

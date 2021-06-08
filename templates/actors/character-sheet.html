@@ -63,6 +63,7 @@
                     </footer>
                 </li>
 
+                {{#unless hasSpells}}
                 <li class="attribute health">
                     <h4 class="attribute-name box-title">{{ localize "TRPG.MagicPoints" }}</h4>
                     <div class="attribute-value multiple">
@@ -77,6 +78,7 @@
                                value="{{data.attributes.mp.tempmax}}" data-dtype="Number"/>
                     </footer>
                 </li>
+                {{/unless}}
 
                 <!-- <li class="attribute hit-dice">
                     <h4 class="attribute-name box-title">
@@ -97,9 +99,11 @@
                     <div class="attribute-value">
                         <input name="data.attributes.ac.value" type="number" value="{{data.attributes.ac.value}}" placeholder="10"/>
                     </div>
+                    {{#unless hasSpells}}
                     <footer class="attribute-footer">
                         <span class="spell-dc">{{localize "TRPG.SpellDC"}} {{data.attributes.spelldc}}</span>
                     </footer>
+                    {{/unless}}
                 </li>
 
                 <li class="attribute movement">
@@ -183,7 +187,7 @@
 					<li class="skill flexrow {{#if skill.value}}proficient{{/if}}" data-skill="{{s}}">
 						<input type="hidden" name="data.skills.{{s}}.value" value="{{skill.value}}" data-dtype="Number"/>
 						<a class="proficiency-toggle skill-proficiency" title="{{skill.hover}}">{{{skill.icon}}}</a>
-						<h4 class="skill-name rollable">{{label}}</h4>
+						<h4 class="skill-name rollable">{{label}}{{#if skill.st}}*{{/if}}{{#if skill.pda}}+{{/if}}</h4>
 						<span class="skill-ability">{{skill.ability}}</span>
 						<span class="skill-mod">{{numberFormat skill.total decimals=0 sign=true}}</span>
 						<!-- <span class="skill-passive">({{skill.passive}})</span> -->

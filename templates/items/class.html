@@ -47,13 +47,13 @@
                 </div>
             </div>
 
-            {{!-- Subclass Name --}}
-            <div class="form-group">
-                <label>{{ localize "TRPG.SubclassName" }}</label>
-                <div class="form-fields">
-                    <input type="text" name="data.subclass" value="{{data.subclass}}"/>
-                </div>
-            </div>
+            <!-- {{!-- Subclass Name --}} -->
+            <!-- <div class="form-group"> -->
+                <!-- <label>{{ localize "TRPG.SubclassName" }}</label> -->
+                <!-- <div class="form-fields"> -->
+                    <!-- <input type="text" name="data.subclass" value="{{data.subclass}}"/> -->
+                <!-- </div> -->
+            <!-- </div> -->
 
             <!-- {{!-- Class Hit Dice --}}
             <div class="form-group">
@@ -85,8 +85,8 @@
                     </select>
                 </div>
             </div>
-
-            {{!-- Spellcasting --}}
+			
+			<!-- {{!-- Spellcasting --}}
             <div class="form-group">
                 <label>{{localize 'TRPG.SpellProgression'}}</label>
                 <div class="form-fields">
@@ -94,7 +94,7 @@
                         {{selectOptions config.spellProgression selected=data.spellcasting.progression localize=true}}
                     </select>
                 </div>
-            </div>
+            </div>-->
 
             <div class="form-group">
                 <label>{{localize "TRPG.SpellAbility"}}</label>
@@ -105,7 +105,7 @@
                 </div>
             </div>
 
-            {{!-- Proficiencies --}}
+            <!-- {{!-- Proficiencies --}}
             <div class="form-group">
                 <label>
                     {{ localize "TRPG.ClassSaves" }}
@@ -115,13 +115,13 @@
                     </a>
                     {{/if}}
                 </label>
-                <!-- <div class="form-fields">
+                <div class="form-fields">
                     <ul class="traits-list">
                         {{#each data.saves}}
                             <li class="tag {{this}}">{{lookup ../config.abilities this}}</li>
                         {{/each}}
                     </ul>
-                </div> -->
+                </div>
             </div>
 
             {{!-- Level 1 skills --}}
@@ -147,7 +147,7 @@
                         {{/each}}
                     </ul>
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
 </form>

@@ -103,7 +103,7 @@ export default class Actor5e extends Actor {
     for (let [id, abl] of Object.entries(data.abilities)) {
       abl.mod = Math.floor((abl.value - 10) / 2);
       abl.checkBonus = checkBonus;
-      abl.dc = 8 + abl.mod + data.attributes.prof + dcBonus;
+      abl.dc = 10 + abl.mod + dcBonus;
 
       // If we merged saves when transforming, take the highest bonus here.
       if (originalSaves && abl.proficient) {
@@ -412,31 +412,32 @@ export default class Actor5e extends Actor {
 
     // Spellcasting DC
     const spellcastingAbility = ad.abilities[ad.attributes.spellcasting];
-    ad.attributes.spelldc = spellcastingAbility ? spellcastingAbility.dc : 8 + ad.attributes.prof;
+    ad.attributes.spelldc = spellcastingAbility ? spellcastingAbility.dc : 10;
 
     // Translate the list of classes into spell-casting progression
-    const progression = {
-      total: 0,
-      slot: 0
-    };
+    // const progression = {
+    //   total: 0,
+    //   slot: 0
+    // };
 
     // Keep track of the last seen caster in case we're in a single-caster situation.
-    let caster = null;
+    // let caster = null;
 
     // Tabulate the total spell-casting progression
-    const classes = this.data.items.filter(i => i.type === "class");
-    for ( let cls of classes ) {
-      const d = cls.data.data;
-      if ( d.spellcasting.progression === "none" ) continue;
-      const levels = d.levels;
-      const prog = d.spellcasting.progression;
+    // const classes = this.data.items.filter(i => i.type === "class");
+    // for ( let cls of classes ) {
+    //   const d = cls.data.data;
+    //   if ( d.spellcasting.progression === "none" ) continue;
+    //   const levels = d.levels;
+    //   const prog = d.spellcasting.progression;
 
-      // Accumulate levels
-      switch (prog) {
-        case 'half': progression.slot += Math.floor((levels-1) / 4); break;
-        case 'full': progression.slot += levels; break;
-      }
-    }
+    //   // Accumulate levels
+    //   switch (prog) {
+    //     case 'half': progression.slot += Math.floor((levels-1) / 4); break;
+    //     case 'twoThirds': break;
+    //     case 'full': progression.slot += levels; break;
+    //   }
+    // }
 
     // EXCEPTION: single-classed non-full progression rounds up, rather than down
     // const isSingleClass = (progression.total === 1) && (progression.slot > 0);
@@ -445,20 +446,20 @@ export default class Actor5e extends Actor {
     // }
 
     // EXCEPTION: NPC with an explicit spell-caster level
-    if (isNPC && actorData.data.details.spellLevel) {
-      progression.slot = actorData.data.details.spellLevel;
-    }
+    // if (isNPC && actorData.data.details.spellLevel) {
+    //   progression.slot = actorData.data.details.spellLevel;
+    // }
 
     // Look up the number of slots per level from the progression table
-    const levels = Math.clamped(progression.slot, 0, 20);
-    const slots = TRPG.SPELL_SLOT_TABLE[levels - 1] || [];
-    for ( let [n, lvl] of Object.entries(spells) ) {
-      let i = parseInt(n.slice(-1));
-      if ( Number.isNaN(i) ) continue;
-      if ( Number.isNumeric(lvl.override) ) lvl.max = Math.max(parseInt(lvl.override), 0);
-      else lvl.max = slots[i-1] || 0;
-      lvl.value = parseInt(lvl.value);
-    }
+    // const levels = Math.clamped(progression.slot, 0, 20);
+    // const slots = TRPG.SPELL_SLOT_TABLE[levels - 1] || [];
+    // for ( let [n, lvl] of Object.entries(spells) ) {
+    //   let i = parseInt(n.slice(-1));
+    //   if ( Number.isNaN(i) ) continue;
+    //   if ( Number.isNumeric(lvl.override) ) lvl.max = Math.max(parseInt(lvl.override), 0);
+    //   else lvl.max = slots[i-1] || 0;
+    //   lvl.value = parseInt(lvl.value);
+    // }
   }
 
   /* -------------------------------------------- */

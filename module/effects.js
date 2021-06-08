@@ -3,7 +3,7 @@
  * @param {MouseEvent} event      The left-click event on the effect control
  * @param {Actor|Item} owner      The owning entity which manages this effect
  */
-export function onManageActiveEffect(event, owner) {
+ export function onManageActiveEffect(event, owner) {
   event.preventDefault();
   const a = event.currentTarget;
   const li = a.closest("li");
@@ -37,7 +37,7 @@ export function prepareActiveEffectCategories(effects) {
     const categories = {
       temporary: {
         type: "temporary",
-        label: "Efeitos Tempor·rios",
+        label: "Efeitos Tempor√°rios",
         effects: []
       },
       passive: {
