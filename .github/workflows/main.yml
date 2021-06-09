@@ -20,7 +20,7 @@ jobs:
         version: ${{github.event.release.tag_name}}
         url: https://github.com/${{github.repository}}
         manifest: https://github.com/${{github.repository}}/releases/latest/download/system.json
-        download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/system.zip
+        download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/trpg.zip
 
     # Create a zip file with all files required by the system to add to the release
     - run: zip -r ./trpg.zip system.json dnd5e.js LICENSE.txt OGL.txt README.txt template.json css/ fonts/ icons/ lang/ module/ packs/ templates/ ui/
