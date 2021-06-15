@@ -466,6 +466,10 @@
           "parts": [],
           "versatile": ""
         },
+        "critical": {
+          "multiplier": 2,
+          "threshold": 20
+        },
         "formula": "",
         "save": {
           "ability": "",

@@ -180,8 +180,8 @@ function cleanActorData(actorData) {
     obj[f] = null;
     return obj;
   }, {});
-  if ( actorData.flags.dnd5e ) {
-    actorData.flags.dnd5e = filterObject(actorData.flags.dnd5e, allowedFlags);
+  if ( actorData.flags.trpg ) {
+    actorData.flags.trpg = filterObject(actorData.flags.trpg, allowedFlags);
   }
 
   // Return the scrubbed data
@@ -417,7 +417,7 @@ function _migrateItemSpellcasting(item, updateData) {
  */
 export async function purgeFlags(pack) {
   const cleanFlags = (flags) => {
-    const flags5e = flags.dnd5e || null;
+    const flags5e = flags.trpg || null;
     return flags5e ? {dnd5e: flags5e} : {};
   };
   await pack.configure({locked: false});

@@ -420,8 +420,6 @@ TRPG.damageTypes = {
   "lightning": "TRPG.DamageLightning",
   "necrotic": "TRPG.DamageNecrotic",
   "piercing": "TRPG.DamagePiercing",
-  "poison": "TRPG.DamagePoison",
-  "psychic": "TRPG.DamagePsychic",
   "radiant": "TRPG.DamageRadiant",
   "slashing": "TRPG.DamageSlashing",
   "thunder": "TRPG.DamageThunder"
@@ -659,9 +657,11 @@ TRPG.weaponTypes = {
   "simpleR": "TRPG.WeaponSimpleR",
   "martialM": "TRPG.WeaponMartialM",
   "martialR": "TRPG.WeaponMartialR",
+  "exoM": "TRPG.WeaponExoM",
+  "exoR": "TRPG.WeaponExoM",
   "natural": "TRPG.WeaponNatural",
   "improv": "TRPG.WeaponImprov",
-  "siege": "TRPG.WeaponSiege"
+  // "siege": "TRPG.WeaponSiege"
 };
 
 
@@ -672,23 +672,21 @@ TRPG.weaponTypes = {
  * @type {Object}
  */
 TRPG.weaponProperties = {
-  "ada": "TRPG.WeaponPropertiesAda",
+  // "ada": "TRPG.WeaponPropertiesAda",
   "amm": "TRPG.WeaponPropertiesAmm",
+  "dou": "TRPG.WeaponPropertiesDou",
   "fin": "TRPG.WeaponPropertiesFin",
   "fir": "TRPG.WeaponPropertiesFir",
-  "foc": "TRPG.WeaponPropertiesFoc",
-  "hvy": "TRPG.WeaponPropertiesHvy",
+  // "hvy": "TRPG.WeaponPropertiesHvy",
   "lgt": "TRPG.WeaponPropertiesLgt",
   "lod": "TRPG.WeaponPropertiesLod",
   "mgc": "TRPG.WeaponPropertiesMgc",
   "rch": "TRPG.WeaponPropertiesRch",
-  "rel": "TRPG.WeaponPropertiesRel",
-  "ret": "TRPG.WeaponPropertiesRet",
-  "sil": "TRPG.WeaponPropertiesSil",
-  "spc": "TRPG.WeaponPropertiesSpc",
+  // "sil": "TRPG.WeaponPropertiesSil",
+  // "spc": "TRPG.WeaponPropertiesSpc",
   "thr": "TRPG.WeaponPropertiesThr",
   "two": "TRPG.WeaponPropertiesTwo",
-  "ver": "TRPG.WeaponPropertiesVer"
+  // "ver": "TRPG.WeaponPropertiesVer"
 };
 
 
@@ -705,10 +703,28 @@ TRPG.spellSchools = {
   "con": "TRPG.SchoolCon",
   "div": "TRPG.SchoolDiv",
   "enc": "TRPG.SchoolEnc",
-  "evo": "TRPG.SchoolEvo",
+  // "evo": "TRPG.SchoolEvo",
   "ill": "TRPG.SchoolIll",
   "nec": "TRPG.SchoolNec",
-  "trs": "TRPG.SchoolTrs"
+  "trs": "TRPG.SchoolTrs",
+	"acid": "TRPG.SchoolAcid",
+	"agua": "TRPG.SchoolAgua",
+	"ar": "TRPG.SchoolAr",
+	"elet": "TRPG.SchoolEletricidade",
+	"esse": "TRPG.SchoolEssencia",
+	"fogo": "TRPG.SchoolFogo",
+	"frio": "TRPG.SchoolFrio",
+	"sonic": "TRPG.SchoolSonico",
+	"terra": "TRPG.SchoolTerra",
+	"bem": "TRPG.SchoolBem",
+	"mal": "TRPG.SchoolMal",
+	"ordem": "TRPG.SchoolOrdem",
+	"caos": "TRPG.SchoolCaos",
+	"cura": "TRPG.SchoolCura",
+	"escuro": "TRPG.SchoolEscuridao",
+	"luz": "TRPG.SchoolLuz",
+	"medo": "TRPG.SchoolMedo",
+	"tempo": "TRPG.SchoolTempo"
 };
 
 // Spell Levels
@@ -950,13 +966,13 @@ TRPG.characterFlags = {
   //   section: "Feats",
   //   type: Boolean
   // },
-  "weaponCriticalThreshold": {
-    name: "TRPG.FlagsWeaponCritThreshold",
-    hint: "TRPG.FlagsWeaponCritThresholdHint",
-    section: "Feats",
-    type: Number,
-    placeholder: 20
-  },
+  // "weaponCriticalThreshold": {
+  //   name: "TRPG.FlagsWeaponCritThreshold",
+  //   hint: "TRPG.FlagsWeaponCritThresholdHint",
+  //   section: "Feats",
+  //   type: Number,
+  //   placeholder: 20
+  // },
   // "spellCriticalThreshold": {
   //   name: "TRPG.FlagsSpellCritThreshold",
   //   hint: "TRPG.FlagsSpellCritThresholdHint",
@@ -964,13 +980,13 @@ TRPG.characterFlags = {
   //   type: Number,
   //   placeholder: 20
   // },
-  "meleeCriticalDamageDice": {
-    name: "TRPG.FlagsMeleeCriticalDice",
-    hint: "TRPG.FlagsMeleeCriticalDiceHint",
-    section: "Feats",
-    type: Number,
-    placeholder: 0
-  },
+  // "meleeCriticalDamageDice": {
+  //   name: "TRPG.FlagsMeleeCriticalDice",
+  //   hint: "TRPG.FlagsMeleeCriticalDiceHint",
+  //   section: "Feats",
+  //   type: Number,
+  //   placeholder: 0
+  // },
 };
 
 // Configure allowed status flags

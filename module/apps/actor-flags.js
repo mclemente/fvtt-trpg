@@ -71,7 +71,7 @@ export default class ActorSheetFlags extends DocumentSheet {
       flag.isCheckbox = v.type === Boolean;
       flag.isSelect = v.hasOwnProperty('choices');
       flag.value = getProperty(baseData.flags, `dnd5e.${k}`);
-      flags[v.section][`flags.dnd5e.${k}`] = flag;
+      flags[v.section][`flags.trpg.${k}`] = flag;
     }
     return flags;
   }
@@ -113,7 +113,7 @@ export default class ActorSheetFlags extends DocumentSheet {
 
     // Unset any flags which are "false"
     let unset = false;
-    const flags = updateData.flags.dnd5e;
+    const flags = updateData.flags.trpg;
     for ( let [k, v] of Object.entries(flags) ) {
       if ( [undefined, null, "", false, 0].includes(v) ) {
         delete flags[k];

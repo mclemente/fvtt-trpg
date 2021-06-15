@@ -60,6 +60,22 @@
     {{/each}}
 </ol>
 
+{{#if data.damage.parts.length }}
+<div class="form-group">
+    <label>Margem de Ameaça</label>
+    <div class="form-fields">
+        <input type="number" name="data.critical.threshold" value="{{data.critical.threshold}}" placeholder="20" max="20" min="2" />
+    </div>
+</div>
+<div class="form-group">
+    <label>Multiplicador de Crítico</label>
+    <div class="form-fields">
+        <input type="number" name="data.critical.multiplier" value="{{data.critical.multiplier}}" placeholder="2" min="2" />
+    </div>
+</div>
+{{/if}}
+
+<!--
 {{!-- Versatile Damage --}}
 {{#if data.damage.parts.length }}
 <div class="form-group">
@@ -69,6 +85,7 @@
     </div>
 </div>
 {{/if}}
+-->
 
 {{!-- Other Formula --}}
 <div class="form-group">
@@ -85,7 +102,7 @@
         <select name="data.save.ability">
             {{#select data.save.ability}}
             <option value=""></option>
-            {{#each config.abilities as |ability a|}}
+            {{#each config.saves as |ability a|}}
             <option value="{{a}}">{{ability}}</option>
             {{/each}}
             {{/select}}
@@ -94,7 +111,7 @@
         <input type="text" name="data.save.dc" value="{{#if data.save.dc}}{{data.save.dc}}{{/if}}" data-dtype="Number" placeholder="{{ localize 'TRPG.AbbreviationDC' }}" {{#unless isFlatDC}}disabled{{/unless}}/>
         <select name="data.save.scaling">
             {{#select data.save.scaling}}
-            <option value="spell">{{ localize "TRPG.Spellcasting" }}</option>
+            <option value="spell">Atributo-Chave</option>
             {{#each config.abilities as |ability a|}}
             <option value="{{a}}">{{ability}}</option>
             {{/each}}

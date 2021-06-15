@@ -295,7 +295,7 @@ export default class Item5e extends Item {
 
     // Actor spell-DC based scaling
     if ( save.scaling === "spell" ) {
-      save.dc = this.isOwned ? getProperty(this.actor.data, "data.attributes.spelldc") : null;
+      save.dc = this.isOwned ? getProperty(this.actor.data, "data.attributes.spelldc") + this.data.data.level : null;
     }
 
     // Ability-score based scaling
@@ -304,7 +304,7 @@ export default class Item5e extends Item {
     }
 
     // Update labels
-    const abl = CONFIG.TRPG.abilities[save.ability];
+    const abl = CONFIG.TRPG.saves[save.ability];
     this.labels.save = game.i18n.format("TRPG.SaveDC", {dc: save.dc || "", ability: abl});
     return save.dc;
   }
@@ -427,7 +427,7 @@ export default class Item5e extends Item {
     const recharge = id.recharge || {};       // Recharge mechanic
     const uses = id?.uses ?? {};              // Limited uses
     const isSpell = this.type === "spell";    // Does the item require a spell slot?
-    const requireSpellSlot = isSpell && (id.level > 0) && CONFIG.TRPG.spellUpcastModes.includes(id.preparation.mode);
+    const requireSpellSlot = false; //isSpell && (id.level > 0) && CONFIG.TRPG.spellUpcastModes.includes(id.preparation.mode);
 
     // Define follow-up actions resulting from the item usage
     let createMeasuredTemplate = hasArea;       // Trigger a template creation
@@ -853,7 +853,7 @@ export default class Item5e extends Item {
    */
   async rollAttack(options={}) {
     const itemData = this.data.data;
-    const flags = this.actor.data.flags.dnd5e || {};
+    const flags = this.actor.data.flags.trpg || {};
     if ( !this.hasAttack ) {
       throw new Error("You may not place an Attack Roll with this Item.");
     }
@@ -897,15 +897,13 @@ export default class Item5e extends Item {
         top: options.event ? options.event.clientY - 80 : null,
         left: window.innerWidth - 710
       },
-      messageData: {"flags.dnd5e.roll": {type: "attack", itemId: this.id }}
+      messageData: {"flags.trpg.roll": {type: "attack", itemId: this.id }}
     }, options);
     rollConfig.event = options.event;
 
     // Expanded critical hit thresholds
-    if (( this.data.type === "weapon" ) && flags.weaponCriticalThreshold) {
-      rollConfig.critical = parseInt(flags.weaponCriticalThreshold);
-    } else if (( this.data.type === "spell" ) && flags.spellCriticalThreshold) {
-      rollConfig.critical = parseInt(flags.spellCriticalThreshold);
+    if ( this.data.type === "weapon" || this.data.type === "spell" ) {
+      rollConfig.critical = itemData.critical.threshold;
     }
 
     // Elven Accuracy
@@ -941,7 +939,7 @@ export default class Item5e extends Item {
     if ( !this.hasDamage ) throw new Error("You may not make a Damage Roll with this Item.");
     const itemData = this.data.data;
     const actorData = this.actor.data.data;
-    const messageData = {"flags.dnd5e.roll": {type: "damage", itemId: this.id }};
+    const messageData = {"flags.trpg.roll": {type: "damage", itemId: this.id }};
 
     // Get roll data
     const parts = itemData.damage.parts.map(d => d[0]);
@@ -972,7 +970,11 @@ export default class Item5e extends Item {
     // Adjust damage from versatile usage
     if ( versatile && itemData.damage.versatile ) {
       parts[0] = itemData.damage.versatile;
-      messageData["flags.dnd5e.roll"].versatile = true;
+      messageData["flags.trpg.roll"].versatile = true;
+    }
+
+    if ( this.data.type === "weapon" || this.data.type === "spell" ) {
+      rollConfig.criticalMultiplier = itemData.critical.multiplier;
     }
 
     // Scale damage from up-casting spells
@@ -1002,11 +1004,6 @@ export default class Item5e extends Item {
       rollData["ammo"] = ammoData.data.damage.parts.map(p => p[0]).join("+");
       rollConfig.flavor += ` [${this._ammo.name}]`;
       delete this._ammo;
-    }
-
-    // Scale melee critical hit damage
-    if ( itemData.actionType === "mwak" ) {
-      rollConfig.criticalBonusDice = this.actor.getFlag("trpg", "meleeCriticalDamageDice") ?? 0;
     }
 
     // Call the roll helper utility
@@ -1102,7 +1099,7 @@ export default class Item5e extends Item {
       speaker: ChatMessage.getSpeaker({actor: this.actor}),
       flavor: title,
       rollMode: game.settings.get("core", "rollMode"),
-      messageData: {"flags.dnd5e.roll": {type: "other", itemId: this.id }}
+      messageData: {"flags.trpg.roll": {type: "other", itemId: this.id }}
     });
     return roll;
   }
@@ -1169,7 +1166,7 @@ export default class Item5e extends Item {
       chooseModifier: true,
       halflingLucky: this.actor.getFlag("trpg", "halflingLucky" ) || false,
       reliableTalent: (this.data.data.proficient >= 1) && this.actor.getFlag("trpg", "reliableTalent"),
-      messageData: {"flags.dnd5e.roll": {type: "tool", itemId: this.id }}
+      messageData: {"flags.trpg.roll": {type: "tool", itemId: this.id }}
     }, options);
     rollConfig.event = options.event;
 

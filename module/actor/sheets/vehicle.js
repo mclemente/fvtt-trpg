@@ -217,7 +217,7 @@ export default class ActorSheet5eVehicle extends ActorSheet5e {
       this._prepareCrewedItem(item);
 
       // Handle cargo explicitly
-      const isCargo = item.flags.dnd5e?.vehicleCargo === true;
+      const isCargo = item.flags.trpg?.vehicleCargo === true;
       if ( isCargo ) {
         totalWeight += (item.data.weight || 0) * item.data.quantity;
         cargo.cargo.items.push(item);
@@ -375,7 +375,7 @@ export default class ActorSheet5eVehicle extends ActorSheet5e {
   async _onDropItemCreate(itemData) {
     const cargoTypes = ["weapon", "equipment", "consumable", "tool", "loot", "backpack"];
     const isCargo = cargoTypes.includes(itemData.type) && (this._tabs[0].active === "cargo");
-    foundry.utils.setProperty(itemData, "flags.dnd5e.vehicleCargo", isCargo);
+    foundry.utils.setProperty(itemData, "flags.trpg.vehicleCargo", isCargo);
     return super._onDropItemCreate(itemData);
   }
 

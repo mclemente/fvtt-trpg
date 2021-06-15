@@ -90,7 +90,7 @@ export default class AbilityUseDialog extends Dialog {
 
     // Determine whether the spell may be up-cast
     const lvl = itemData.level;
-    const consumeSpellSlot = (lvl > 0) && CONFIG.TRPG.spellUpcastModes.includes(itemData.preparation.mode);
+    const consumeSpellSlot = false; //(lvl > 0) && CONFIG.TRPG.spellUpcastModes.includes(itemData.preparation.mode);
 
     // If can't upcast, return early and don't bother calculating available spell slots
     if (!consumeSpellSlot) {

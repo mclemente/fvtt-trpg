@@ -77,7 +77,7 @@ export default class Actor5e extends Actor {
   prepareDerivedData() {
     const actorData = this.data;
     const data = actorData.data;
-    const flags = actorData.flags.dnd5e || {};
+    const flags = actorData.flags.trpg || {};
     const bonuses = getProperty(data, "bonuses.abilities") || {};
 
     // Retrieve data for polymorphed actors
@@ -360,7 +360,7 @@ export default class Actor5e extends Actor {
     if (actorData.type === 'vehicle') return;
 
     const data = actorData.data;
-    const flags = actorData.flags.dnd5e || {};
+    const flags = actorData.flags.trpg || {};
 
     // Skill modifiers
     const feats = TRPG.characterFlags;
@@ -695,7 +695,7 @@ export default class Actor5e extends Actor {
       reliableTalent: reliableTalent,
       messageData: {
         speaker: options.speaker || ChatMessage.getSpeaker({actor: this}),
-        "flags.dnd5e.roll": {type: "skill", skillId }
+        "flags.trpg.roll": {type: "skill", skillId }
       }
     });
     return d20Roll(rollData);
@@ -746,7 +746,7 @@ export default class Actor5e extends Actor {
     const data = {mod: abl.mod};
 
     // Add feat-related proficiency bonuses
-    const feats = this.data.flags.dnd5e || {};
+    const feats = this.data.flags.trpg || {};
     if ( feats.remarkableAthlete && TRPG.characterFlags.remarkableAthlete.abilities.includes(abilityId) ) {
       parts.push("@proficiency");
       data.proficiency = Math.ceil(0.5 * this.data.data.attributes.prof);
@@ -776,7 +776,7 @@ export default class Actor5e extends Actor {
       halflingLucky: feats.halflingLucky,
       messageData: {
         speaker: options.speaker || ChatMessage.getSpeaker({actor: this}),
-        "flags.dnd5e.roll": {type: "ability", abilityId }
+        "flags.trpg.roll": {type: "ability", abilityId }
       }
     });
     return d20Roll(rollData);
@@ -825,7 +825,7 @@ export default class Actor5e extends Actor {
       halflingLucky: this.getFlag("trpg", "halflingLucky"),
       messageData: {
         speaker: options.speaker || ChatMessage.getSpeaker({actor: this}),
-        "flags.dnd5e.roll": {type: "save", abilityId }
+        "flags.trpg.roll": {type: "save", abilityId }
       }
     });
     return d20Roll(rollData);
@@ -873,7 +873,7 @@ export default class Actor5e extends Actor {
       targetValue: 10,
       messageData: {
         speaker: options.speaker || ChatMessage.getSpeaker({actor: this}),
-        "flags.dnd5e.roll": {type: "death"}
+        "flags.trpg.roll": {type: "death"}
       }
     });
     const roll = await d20Roll(rollData);
@@ -981,7 +981,7 @@ export default class Actor5e extends Actor {
       dialogOptions: {width: 350},
       messageData: {
         speaker: ChatMessage.getSpeaker({actor: this}),
-        "flags.dnd5e.roll": {type: "hitDie"}
+        "flags.trpg.roll": {type: "hitDie"}
       }
     });
     if ( !roll ) return null;
@@ -1377,8 +1377,8 @@ export default class Actor5e extends Actor {
 
     // Get the original Actor data and the new source data
     const o = this.toJSON();
-    o.flags.dnd5e = o.flags.dnd5e || {};
-    o.flags.dnd5e.transformOptions = {mergeSkills, mergeSaves};
+    o.flags.trpg = o.flags.trpg || {};
+    o.flags.trpg.transformOptions = {mergeSkills, mergeSaves};
     const source = target.toJSON();
 
     // Prepare new data to merge from the source
@@ -1469,8 +1469,8 @@ export default class Actor5e extends Actor {
     if (keepVision) d.data.traits.senses = o.data.traits.senses;
 
     // Set new data flags
-    if ( !this.isPolymorphed || !d.flags.dnd5e.originalActor ) d.flags.dnd5e.originalActor = this.id;
-    d.flags.dnd5e.isPolymorphed = true;
+    if ( !this.isPolymorphed || !d.flags.trpg.originalActor ) d.flags.trpg.originalActor = this.id;
+    d.flags.trpg.isPolymorphed = true;
 
     // Update unlinked Tokens in place since they can simply be re-dropped from the base actor
     if (this.isToken) {
