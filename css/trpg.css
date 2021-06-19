@@ -1413,11 +1413,11 @@
 /*  Basic Structure                          */
 /* ----------------------------------------- */
 .dnd5e.sheet.actor.character.idj {
-  min-height: 728px;
+  min-height: 730px;
 }
 .dnd5e.sheet.actor.character {
   min-width: 720px;
-  min-height: 676px;
+  min-height: 680px;
   /* ----------------------------------------- */
   /*  Sheet Header                             */
   /* ----------------------------------------- */
@@ -1575,8 +1575,11 @@
 /* ----------------------------------------- */
 /*  Basic Structure                          */
 /* ----------------------------------------- */
+.dnd5e.sheet.actor.npc.idj {
+  min-height: 730px;
+}
 .dnd5e.sheet.actor.npc {
-  min-width: 600px;
+  min-width: 605px;
   min-height: 680px;
 }
 .dnd5e.sheet.actor.npc .header-exp {
