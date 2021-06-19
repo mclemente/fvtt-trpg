@@ -34,7 +34,7 @@
 "TRPG.AbilityCha": "Carisma",
 "TRPG.AbilityChaAbbr": "car",
 "TRPG.AbilityHon": "Honra",
-"TRPG.AbilityChaAbbr": "hon",
+"TRPG.AbilityHonAbbr": "hon",
 "TRPG.AbilityModifier": "Modificador de Habilidade",
 "TRPG.AbilityPromptText": "What type of {ability} check?",
 "TRPG.AbilityPromptTitle": "{ability} Ability Check",
