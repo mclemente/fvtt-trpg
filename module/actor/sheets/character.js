@@ -14,10 +14,10 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
    */
 	static get defaultOptions() {
     let classes = ["dnd5e", "sheet", "actor", "character"];
-    let height = 676;
+    let height = 680;
     if (game.settings.get("trpg", "idjMode")) {
       classes.push("idj");
-      height = 728;
+      height = 730;
     }
 	  return mergeObject(super.defaultOptions, {
       classes: classes,

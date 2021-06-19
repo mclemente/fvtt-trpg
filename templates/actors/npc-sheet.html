@@ -56,6 +56,23 @@
                     </footer> -->
                 </li>
 
+                {{#unless hasSpells}}
+                <li class="attribute health">
+                    <h4 class="attribute-name box-title">{{ localize "TRPG.MagicPoints" }}</h4>
+                    <div class="attribute-value multiple">
+                        <input name="data.attributes.mp.value" type="text" value="{{data.attributes.mp.value}}" placeholder="10" data-dtype="Number"/>
+                        <span class="sep"> / </span>
+                        <input name="data.attributes.mp.max" type="text" value="{{data.attributes.mp.max}}" placeholder="10" data-dtype="Number"/>
+                    </div>
+                    <footer class="attribute-footer">
+                        <input name="data.attributes.mp.temp" type="text" class="temphp" placeholder="+{{ localize 'TRPG.Temp' }}"
+                               value="{{data.attributes.mp.temp}}" data-dtype="Number"/>
+                        <input name="data.attributes.mp.tempmax" type="text" class="temphp" placeholder="+{{ localize 'TRPG.Max' }}"
+                               value="{{data.attributes.mp.tempmax}}" data-dtype="Number"/>
+                    </footer>
+                </li>
+                {{/unless}}
+
                 <li class="attribute">
                     <h4 class="attribute-name box-title">{{ localize "TRPG.ArmorClass" }}</h4>
                     <div class="attribute-value">
@@ -87,7 +104,7 @@
     <nav class="sheet-navigation tabs" data-group="primary">
         <a class="item active" data-tab="attributes">{{ localize "TRPG.Attributes" }}</a>
         <a class="item" data-tab="features">{{ localize "TRPG.Features" }}</a>
-        <a class="item" data-tab="spellbook">{{ localize "TRPG.Spellbook" }}</a>
+        {{#if (or hasSpells data.details.showSpells (eq idj true))}}<a class="item" data-tab="spellbook">{{ localize "TRPG.Spellbook" }}</a>{{/if}}
         <a class="item" data-tab="effects">{{ localize "TRPG.Effects" }}</a>
         <a class="item" data-tab="biography">{{ localize "TRPG.Biography" }}</a>
     </nav>
@@ -97,8 +114,10 @@
         <div class="tab attributes flexrow" data-group="primary" data-tab="attributes">
 
             {{!-- Ability Scores --}}
-            <ul class="ability-scores flexrow">
+            <ul class="ability-scores {{#if idj}}idj{{/if}} flexrow">
             {{#each data.abilities as |ability id|}}
+            {{#if (and (eq id "hon") (eq ../idj false))}}
+            {{else}}
                 <li class="ability {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}">
                     <h4 class="ability-name box-title rollable">{{ability.label}}</h4>
                     <input class="ability-score" name="data.abilities.{{id}}.value" type="number" value="{{ability.value}}" placeholder="10"/>
@@ -109,6 +128,7 @@
                         <!-- <span class="ability-save" title="Saving Throw">{{numberFormat ability.save decimals=0 sign=true}}</span> -->
                     </div>
                 </li>
+                {{/if}}
             {{/each}}
             </ul>
 

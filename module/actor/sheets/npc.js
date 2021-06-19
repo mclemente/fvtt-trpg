@@ -10,10 +10,16 @@ export default class ActorSheet5eNPC extends ActorSheet5e {
 
   /** @override */
 	static get defaultOptions() {
+    let classes = ["dnd5e", "sheet", "actor", "npc"];
+    let height = 680;
+    if (game.settings.get("trpg", "idjMode")) {
+      classes.push("idj");
+      height = 730;
+    }
 	  return mergeObject(super.defaultOptions, {
-      classes: ["dnd5e", "sheet", "actor", "npc"],
-      width: 600,
-      height: 680
+      classes: classes,
+      width: 605,
+      height: height
     });
   }
 
@@ -86,6 +92,8 @@ export default class ActorSheet5eNPC extends ActorSheet5e {
 
     // Creature Type
     data.labels["type"] = this.actor.labels.creatureType;
+
+    data["idj"] = game.settings.get("trpg", "idjMode");
     return data;
   }
 
