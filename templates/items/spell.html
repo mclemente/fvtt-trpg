@@ -16,10 +16,7 @@
 
             <ul class="summary flexrow">
                 <li>
-                    {{labels.level}}
-                </li>
-                <li>
-                    {{labels.school}}
+                    {{labels.spellList}} {{labels.level}} ({{labels.school}})
                 </li>
                 <li>
                     <input type="text" name="data.source" value="{{data.source}}" placeholder="{{ localize 'TRPG.Source' }}"/>
@@ -52,6 +49,18 @@
                     {{#select data.level}}
                     {{#each config.spellLevels as |name lvl|}}
                     <option value="{{lvl}}">{{name}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+			
+			{{!-- Spell List --}}
+            <div class="form-group">
+                <label>Lista</label>
+                <select name="data.spellList">
+                    {{#select data.spellList}}
+                    {{#each config.spellLists as |name list|}}
+                    <option value="{{list}}">{{name}}</option>
                     {{/each}}
                     {{/select}}
                 </select>

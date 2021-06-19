@@ -701,6 +701,12 @@ TRPG.spellComponents = {
   "M": "TRPG.ComponentMaterial"
 };
 
+// Spell Lists
+TRPG.spellLists = {
+	"univ": "Universal",
+	"arcana": "Arcana",
+	"divina": "Divina"
+}
 // Spell Schools
 TRPG.spellSchools = {
   "abj": "TRPG.SchoolAbj",

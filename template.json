@@ -582,6 +582,7 @@
     "spell": {
       "templates": ["itemDescription", "activatedEffect", "action"],
       "level": 1,
+      "spellList": "univ",
       "school": "",
       "components": {
         "value": "",
