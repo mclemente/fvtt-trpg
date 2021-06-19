@@ -481,7 +481,7 @@ export default class Item5e extends Item {
 
     // Initiate measured template creation
     if ( createMeasuredTemplate ) {
-      const template = game.dnd5e.canvas.AbilityTemplate.fromItem(item);
+      const template = game.trpg.canvas.AbilityTemplate.fromItem(item);
       if ( template ) template.drawPreview();
     }
 
@@ -1267,7 +1267,7 @@ export default class Item5e extends Item {
       case "toolCheck":
         await item.rollToolCheck({event}); break;
       case "placeTemplate":
-        const template = game.dnd5e.canvas.AbilityTemplate.fromItem(item);
+        const template = game.trpg.canvas.AbilityTemplate.fromItem(item);
         if ( template ) template.drawPreview();
         break;
     }

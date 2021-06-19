@@ -16,7 +16,7 @@ export async function create5eMacro(data, slot) {
   const item = data.data;
 
   // Create the macro command
-  const command = `game.dnd5e.rollItemMacro("${item.name}");`;
+  const command = `game.trpg.rollItemMacro("${item.name}");`;
   let macro = game.macros.entities.find(m => (m.name === item.name) && (m.command === command));
   if ( !macro ) {
     macro = await Macro.create({

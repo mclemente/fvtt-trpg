@@ -27,6 +27,10 @@
           "cha": {
             "value": 10,
             "proficient": 0
+          },
+          "hon": {
+            "value": 10,
+            "proficient": 0
           }
         },
         "attributes": {
@@ -156,6 +160,11 @@
             "ability": "int",
             "st": true
           },
+          "conEng": {
+            "value": 0,
+            "ability": "int",
+            "st": true
+          },
           "conGeo": {
             "value": 0,
             "ability": "int",
@@ -167,6 +176,11 @@
             "st": true
           },
           "conNat": {
+            "value": 0,
+            "ability": "int",
+            "st": true
+          },
+          "conNob": {
             "value": 0,
             "ability": "int",
             "st": true
@@ -208,12 +222,14 @@
           },
           "eng": {
             "value": 0,
-            "ability": "cha"
+            "ability": "cha",
+            "dishonor": true
           },
           "fur": {
             "value": 0,
             "ability": "dex",
-            "pda": true
+            "pda": true,
+            "dishonor": true
           },
           "init": {
             "value": 0,
@@ -231,7 +247,8 @@
             "value": 0,
             "ability": "dex",
             "st": true,
-            "pda": true
+            "pda": true,
+            "dishonor": true
           },
           "prc": {
             "value": 0,

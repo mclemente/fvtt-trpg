@@ -16,7 +16,8 @@ TRPG.abilities = {
   "con": "TRPG.AbilityCon",
   "int": "TRPG.AbilityInt",
   "wis": "TRPG.AbilityWis",
-  "cha": "TRPG.AbilityCha"
+  "cha": "TRPG.AbilityCha",
+  "hon": "TRPG.AbilityHon"
 };
 
 TRPG.abilityAbbreviations = {
@@ -25,7 +26,8 @@ TRPG.abilityAbbreviations = {
   "con": "TRPG.AbilityConAbbr",
   "int": "TRPG.AbilityIntAbbr",
   "wis": "TRPG.AbilityWisAbbr",
-  "cha": "TRPG.AbilityChaAbbr"
+  "cha": "TRPG.AbilityChaAbbr",
+  "hon": "TRPG.AbilityHonAbbr"
 };
 
 /* -------------------------------------------- */
@@ -594,9 +596,11 @@ TRPG.skills = {
 	"atu": "TRPG.SkillAtu", //Atuação
   "cav": "TRPG.SkilLCav", //Cavalgar
   "conArc": "TRPG.SkillArc", //Arcanismo
+  "conEng": "TRPG.SkillConEng", //Engenharia
   "conGeo": "TRPG.SkillGeo", //Geografia
   "conHis": "TRPG.SkillHis", //História
   "conNat": "TRPG.SkillNat", //Natureza
+  "conNob": "TRPG.SkillNob", //Nobreza
   "conRel": "TRPG.SkillRel", //Religião
   "conTor": "TRPG.SkillTor", //Tormenta
   "cur": "TRPG.SkillCur", //Cura

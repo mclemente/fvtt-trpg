@@ -139,7 +139,7 @@
         <a class="item active" data-tab="attributes">{{ localize "TRPG.Attributes" }}</a>
         <a class="item" data-tab="inventory">{{ localize "TRPG.Inventory" }}</a>
         <a class="item" data-tab="features">{{ localize "TRPG.Features" }}</a>
-        {{#if data.details.showSpells}}<a class="item" data-tab="spellbook">{{ localize "TRPG.Spellbook" }}</a>{{/if}}
+        {{#if (or hasSpells data.details.showSpells (eq idj true))}}<a class="item" data-tab="spellbook">{{ localize "TRPG.Spellbook" }}</a>{{/if}}
         <a class="item" data-tab="effects">{{ localize "TRPG.Effects" }}</a>
         <a class="item" data-tab="biography">{{ localize "TRPG.Biography" }}</a>
     </nav>
@@ -150,8 +150,10 @@
         <div class="tab attributes flexrow" data-group="primary" data-tab="attributes">
 
             {{!-- Ability Scores --}}
-            <ul class="ability-scores flexrow">
+            <ul class="ability-scores {{#if idj}}idj{{/if}} flexrow">
             {{#each data.abilities as |ability id|}}
+                {{#if (and (eq id "hon") (eq ../idj false))}}
+                {{else}}
                 <li class="ability {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}">
                     <h4 class="ability-name box-title rollable">{{ability.label}}</h4>
                     <input class="ability-score" name="data.abilities.{{id}}.value" type="number" value="{{ability.value}}" placeholder="10"/>
@@ -162,6 +164,7 @@
                         <!-- <span class="ability-save" title="Saving Throw">{{numberFormat ability.save decimals=0 sign=true}}</span> -->
                     </div>
                 </li>
+                {{/if}}
             {{/each}}
             </ul>
 			
@@ -187,7 +190,7 @@
 					<li class="skill flexrow {{#if skill.value}}proficient{{/if}}" data-skill="{{s}}">
 						<input type="hidden" name="data.skills.{{s}}.value" value="{{skill.value}}" data-dtype="Number"/>
 						<a class="proficiency-toggle skill-proficiency" title="{{skill.hover}}">{{{skill.icon}}}</a>
-						<h4 class="skill-name rollable">{{label}}{{#if skill.st}}*{{/if}}{{#if skill.pda}}+{{/if}}</h4>
+						<h4 class="skill-name rollable">{{label}}{{#if skill.st}}*{{/if}}{{#if (and ../idj skill.dishonor)}}▽{{/if}}{{#if skill.pda}}+{{/if}}</h4>
 						<span class="skill-ability">{{skill.ability}}</span>
 						<span class="skill-mod">{{numberFormat skill.total decimals=0 sign=true}}</span>
 						<!-- <span class="skill-passive">({{skill.passive}})</span> -->

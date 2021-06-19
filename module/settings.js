@@ -47,6 +47,15 @@ export const registerSystemSettings = function() {
   //   onChange: rule => canvas.grid.diagonalRule = rule
   // });
 
+    game.settings.register("trpg", "idjMode", {
+      name: "SETTINGS.idjModeN",
+      hint: "SETTINGS.idjModeL",
+      scope: "world",
+      config: true,
+      default: false,
+      type: Boolean,
+    });
+
   /**
    * Register Initiative formula setting
    */

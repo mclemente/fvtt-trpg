@@ -1,20 +1,20 @@
 {
   "name": "trpg",
-  "title": "TRPG",
-  "description": "Um sistema para jogar TRPG no FoundryVTT.",
+  "title": "Tormenta RPG e Império de Jade",
+  "description": "Um sistema para jogar Tormenta RPG e Império de Jade no FoundryVTT.",
   "author": "Matheus Clemente",
   "authors": [],
   "url": "",
   "flags": {},
   "version": "1.0.0",
   "minimumCoreVersion": "0.8.2",
-  "compatibleCoreVersion": "0.8.6",
+  "compatibleCoreVersion": "0.8.7",
   "scripts": [],
   "esmodules": [
-    "dnd5e.js"
+    "trpg.js"
   ],
   "styles": [
-    "css/dnd5e.css", "css/extras.css"
+    "css/trpg.css", "css/extras.css"
   ],
   "languages": [
     {

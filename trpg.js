@@ -51,7 +51,7 @@ Hooks.once("init", function() {
   console.log(`TRPG | Iniciando o Sistema de Jogo TRPG`); //\n${TRPG.ASCII}
 
   // Create a namespace within the game global
-  game.dnd5e = {
+  game.trpg = {
     applications: {
       AbilityUseDialog,
       ActorSheetFlags,
@@ -185,6 +185,7 @@ Hooks.once("ready", function() {
 	game.socket.on('module.BonusDie', socketsHandle());
 
   // Determine whether a system migration is required and feasible
+  /*
   if ( !game.user.isGM ) return;
   const currentVersion = game.settings.get("trpg", "systemMigrationVersion");
   if ( !currentVersion ) return game.settings.set("trpg", 'systemMigrationVersion', game.system.data.version);
@@ -199,6 +200,7 @@ Hooks.once("ready", function() {
     ui.notifications.error(warning, {permanent: true});
   }
   migrations.migrateWorld();
+  */
 });
 
 /* -------------------------------------------- */

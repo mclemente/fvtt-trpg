@@ -13,10 +13,16 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
    * @return {Object}
    */
 	static get defaultOptions() {
+    let classes = ["dnd5e", "sheet", "actor", "character"];
+    let height = 676;
+    if (game.settings.get("trpg", "idjMode")) {
+      classes.push("idj");
+      height = 728;
+    }
 	  return mergeObject(super.defaultOptions, {
-      classes: ["dnd5e", "sheet", "actor", "character"],
+      classes: classes,
       width: 720,
-      height: 821
+      height: height
     });
   }
 
@@ -45,6 +51,8 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
       if (res && res.max === 0) delete res.max;
       return arr.concat([res]);
     }, []);
+
+    sheetData["idj"] = game.settings.get("trpg", "idjMode");
 
     // Experience Tracking
     sheetData["disableExperience"] = game.settings.get("trpg", "disableExperienceTracking");

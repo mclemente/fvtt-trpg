@@ -664,7 +664,7 @@
   white-space: nowrap;
 }
 .dnd5e.sheet.actor .tab.attributes {
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 .dnd5e.sheet.actor ul.attributes {
   flex: 0 0 60px;
@@ -707,6 +707,9 @@
   font-size: 12px;
   font-weight: 400;
   white-space: nowrap;
+}
+.dnd5e.sheet.actor .ability-scores.idj {
+  height: 492px;
 }
 .dnd5e.sheet.actor .ability-scores {
   flex: 0 0 100px;
@@ -1409,9 +1412,12 @@
 /* ----------------------------------------- */
 /*  Basic Structure                          */
 /* ----------------------------------------- */
+.dnd5e.sheet.actor.character.idj {
+  min-height: 728px;
+}
 .dnd5e.sheet.actor.character {
   min-width: 720px;
-  min-height: 821px;
+  min-height: 676px;
   /* ----------------------------------------- */
   /*  Sheet Header                             */
   /* ----------------------------------------- */
