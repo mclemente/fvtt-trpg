@@ -23,7 +23,7 @@ jobs:
         download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/trpg.zip
 
     # Create a zip file with all files required by the system to add to the release
-    - run: zip -r ./trpg.zip system.json dnd5e.js LICENSE.txt OGL.txt README.txt template.json css/ fonts/ icons/ lang/ module/ packs/ templates/ ui/
+    - run: zip -r ./trpg.zip system.json trpg.js LICENSE.txt OGL.txt README.txt template.json css/ fonts/ icons/ lang/ module/ packs/ templates/ ui/
 
     # Create a release for this specific version
     - name: Update Release with Files
