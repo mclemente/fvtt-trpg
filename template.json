@@ -568,7 +568,8 @@
       "recharge": {
         "value": null,
         "charged": false
-      }
+      },
+      "type": ""
     },
     "loot": {
       "templates": ["itemDescription", "physicalItem"]

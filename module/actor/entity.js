@@ -53,6 +53,26 @@ export default class Actor5e extends Actor {
   prepareData() {
     super.prepareData();
 
+    const skills = this.data.data.skills;
+    for (let key in skills) {
+      let skill = skills[key];
+      let bonus = this.getFlag("trpg", `${key}.skill-bonus`) || 0;
+      let bonusAsInt = parseInt(Number(bonus));
+      if (!isNaN(bonusAsInt)) {
+        skill.total += bonusAsInt;
+      }
+    }
+    
+    const saves = this.data.data.saves;
+    for (let key in saves) {
+      let save = saves[key];
+      let bonus = this.getFlag("trpg", `${key}.skill-bonus`) || 0;
+      let bonusAsInt = parseInt(Number(bonus));
+      if (!isNaN(bonusAsInt)) {
+        save.save += bonusAsInt;
+      }
+    }
+
     // iterate over owned items and recompute attributes that depend on prepared actor data
     this.items.forEach(item => item.prepareFinalAttributes());
   }
@@ -683,6 +703,13 @@ export default class Actor5e extends Actor {
       parts.push(...options.parts);
     }
 
+    // Bonus
+    const skillBonus = this.getFlag("trpg", `${skillId}.skill-bonus`);
+    if (skillBonus) {
+      parts.push("@extra");
+      data.extra = skillBonus;
+    }
+
     // Reliable Talent applies to any skill check we have full or better proficiency in
     const reliableTalent = (skl.value >= 1 && this.getFlag("trpg", "reliableTalent"));
 
@@ -815,6 +842,13 @@ export default class Actor5e extends Actor {
     // Add provided extra roll parts now because they will get clobbered by mergeObject below
     if (options.parts?.length > 0) {
       parts.push(...options.parts);
+    }
+
+    // Bonus
+    const skillBonus = this.getFlag("trpg", `${abilityId}.skill-bonus`);
+    if (skillBonus) {
+      parts.push("@extra");
+      data.extra = skillBonus;
     }
 
     // Roll and return

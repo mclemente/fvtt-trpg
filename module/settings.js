@@ -110,10 +110,10 @@ export const registerSystemSettings = function() {
   /**
    * Option to allow GMs to restrict polymorphing to GMs only.
    */
-  game.settings.register("trpg", 'allowPolymorphing', {
-    name: 'SETTINGS.5eAllowPolymorphingN',
-    hint: 'SETTINGS.5eAllowPolymorphingL',
-    scope: 'world',
+  game.settings.register("trpg", "allowPolymorphing", {
+    name: "SETTINGS.5eAllowPolymorphingN",
+    hint: "SETTINGS.5eAllowPolymorphingL",
+    scope: "world",
     config: true,
     default: false,
     type: Boolean
@@ -122,8 +122,8 @@ export const registerSystemSettings = function() {
   /**
    * Remember last-used polymorph settings.
    */
-  game.settings.register("trpg", 'polymorphSettings', {
-    scope: 'client',
+  game.settings.register("trpg", "polymorphSettings", {
+    scope: "client",
     default: {
       keepPhysical: false,
       keepMental: false,
@@ -149,4 +149,13 @@ export const registerSystemSettings = function() {
 		config: false,
 		restricted: false
 	});
+
+  game.settings.register("trpg", "customizeSkills", {
+    name: "SETTINGS.customizeSkillsN",
+    hint: "SETTINGS.customizeSkillsL",
+    scope: "client",
+    config: true,
+    default: true,
+    type: Boolean
+  });
 };

@@ -37,7 +37,7 @@
 "TRPG.AbilityHonAbbr": "hon",
 "TRPG.AbilityModifier": "Modificador de Habilidade",
 "TRPG.AbilityPromptText": "What type of {ability} check?",
-"TRPG.AbilityPromptTitle": "{ability} Ability Check",
+"TRPG.AbilityPromptTitle": "Teste de {ability}",
 "TRPG.AbilityUseHint": "Configure how you would like to use the {name} {type}.",
 "TRPG.AbilityUseUnavailableHint": "There are no uses of this item remaining!",
 "TRPG.AbilityUseChargedHint": "This {type} is charged and ready to use!",
@@ -816,5 +816,7 @@
 "SETTINGS.5eRestPHB": "Player's Handbook (LR: 8 hours, SR: 1 hour)",
 "SETTINGS.5eRestGritty": "Gritty Realism (LR: 7 days, SR: 8 hours)",
 "SETTINGS.5eRestEpic": "Epic Heroism (LR: 1 hour, SR: 1 min)",
+"SETTINGS.customizeSkillsN": "Customizar Perícias e Resistências",
+"SETTINGS.customizeSkillsL": "Permite alterar a habilidade de cada perícia e adicionar um bônus para perícias e resistências.",
 "SETTINGS.5eUndoChanges": "Desfazer Mudanças"
 }

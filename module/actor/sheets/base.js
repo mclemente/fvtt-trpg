@@ -910,3 +910,119 @@ export default class ActorSheet5e extends ActorSheet {
     return buttons;
   }
 }
+
+
+export function injectActorSheet(app, html, data) {
+  if (!game.settings.get("trpg", "customizeSkills")) return;
+  html.find(".skills-list").addClass("skill-customize");
+
+  const skillRowSelector = ".skills-list .skill";
+
+  const actor = app.actor;
+
+  html.find(skillRowSelector).each(function () {
+    const skillElem = $(this);
+    const skillKey = $(this).attr("data-skill");
+    const bonusKey = `${skillKey}.skill-bonus`;
+    const selectedAbility = actor.data.data.skills[skillKey].ability;
+
+    let selectElement = $("<select>");
+    selectElement.addClass("skill-ability-select");
+    Object.keys(actor.data.data.abilities).forEach((ability) => {
+      let abilityOption = $("<option>");
+      let abilityKey = ability.charAt(0).toUpperCase() + ability.slice(1);
+      let abilityString = game.i18n.localize(`TRPG.Ability${abilityKey}`).slice(0, 3);
+
+      abilityOption.attr("value", ability);
+
+      if (ability === selectedAbility) {
+        abilityOption.attr("selected", "true");
+      }
+
+      abilityOption.text(abilityString);
+      selectElement.append(abilityOption);
+    });
+
+    selectElement.change(function (event) {
+      let newData = { data: { skills: {} } };
+      newData.data.skills[skillKey] = { ability: event.target.value };
+      actor.update(newData);
+    });
+
+    let textBoxElement = $('<input type="text" size=2>');
+    textBoxElement.addClass("skill-cust-bonus");
+    textBoxElement.val(actor.getFlag("trpg", bonusKey) || "-");
+
+    textBoxElement.click(function () {
+      $(this).select();
+    });
+
+    textBoxElement.change(async function (event) {
+      const bonusValue = event.target.value;
+      if (bonusValue === "-" || bonusValue === "0") {
+        await actor.unsetFlag("trpg", bonusKey);
+        textBoxElement.val("-");
+      }
+      else {
+        try {
+          const rollResult = await new Roll(`1d20 + ${bonusValue}`).roll();
+          const valid = !isNaN(rollResult._total);
+
+          if (valid) {
+            await actor.setFlag("trpg", bonusKey, bonusValue);
+          } else {
+            textBoxElement.val(actor.getFlag("trpg", bonusKey) || "-");
+          }
+        }
+        catch (err) {
+          textBoxElement.val(actor.getFlag("trpg", bonusKey) || "-");
+        }
+      }
+    });
+
+    skillElem.find(".skill-ability").after(selectElement);
+    skillElem.find(".skill-ability").detach();
+    selectElement.after(textBoxElement);
+  });
+  
+  html.find(".attribute .skill").each(function () {
+    const skillElem = $(this);
+    const skillKey = $(this).attr("data-save");
+    const bonusKey = `${skillKey}.skill-bonus`;
+    const selectedAbility = actor.data.data.saves[skillKey].ability;
+
+    let textBoxElement = $('<input type="text" size=2>');
+    textBoxElement.addClass("skill-cust-bonus");
+    textBoxElement.val(actor.getFlag("trpg", bonusKey) || "-");
+
+    textBoxElement.click(function () {
+      $(this).select();
+    });
+
+    textBoxElement.change(async function (event) {
+      const bonusValue = event.target.value;
+      if (bonusValue === "-" || bonusValue === "0") {
+        await actor.unsetFlag("trpg", bonusKey);
+        textBoxElement.val("-");
+      }
+      else {
+        try {
+          const rollResult = await new Roll(`1d20 + ${bonusValue}`).roll();
+          const valid = !isNaN(rollResult._total);
+
+          if (valid) {
+            await actor.setFlag("trpg", bonusKey, bonusValue);
+          }
+          else {
+            textBoxElement.val(actor.getFlag("trpg", bonusKey) || "-");
+          }
+        }
+        catch (err) {
+          textBoxElement.val(actor.getFlag("trpg", bonusKey) || "-");
+        }
+      }
+    });
+
+    skillElem.find(".save-name").after(textBoxElement);
+  });
+}
