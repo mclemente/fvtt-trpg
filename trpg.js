@@ -34,10 +34,6 @@ import TraitSelector from "./module/apps/trait-selector.js";
 import ActorMovementConfig from "./module/apps/movement-config.js";
 import ActorSensesConfig from "./module/apps/senses-config.js";
 
-// Bonus Dice
-import { handle } from "./module/apps/BonusDice/BonusDice.js";
-import { socketsHandle } from "./module/apps/BonusDice/socketsHandler.js";
-
 // Import Helpers
 import * as chat from "./module/chat.js";
 import * as dice from "./module/dice.js";
@@ -181,9 +177,6 @@ Hooks.once("ready", function() {
 
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => macros.create5eMacro(data, slot));
-	
-	//Bonus Dice
-	game.socket.on('module.BonusDie', socketsHandle());
 
   // Determine whether a system migration is required and feasible
   /*
@@ -235,8 +228,6 @@ Hooks.on("renderChatLog", (app, html, data) => Item5e.chatListeners(html));
 Hooks.on("renderChatPopout", (app, html, data) => Item5e.chatListeners(html));
 //Skill Bonus
 Hooks.on("renderActorSheet", (app, html, data) => injectActorSheet(app, html, data));
-//Bonus Dice
-Hooks.on("renderPlayerList", (playerList, $playerList, players) => $playerList.find('ol').children().each(handle(players)));
 Hooks.on('getActorDirectoryEntryContext', Actor5e.addDirectoryContextOptions);
 
 // FIXME: This helper is needed for the vehicle sheet. It should probably be refactored.
