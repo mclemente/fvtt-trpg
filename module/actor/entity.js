@@ -1626,7 +1626,7 @@ export default class Actor5e extends Actor {
     let type = localizedType;
     if ( !!typeData.swarm ) {
       type = game.i18n.format('TRPG.CreatureSwarmPhrase', {
-        size: game.i18n.localize(CONFIG.TRPG.actorSizes[typeData.swarm]),
+        size: game.i18n.localize(CONFIG.TRPG.actorSizes[typeData.swarm]) + "s",
         type: localizedType
       });
     }

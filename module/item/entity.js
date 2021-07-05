@@ -1,5 +1,6 @@
 import {simplifyRollFormula, d20Roll, damageRoll} from "../dice.js";
 import AbilityUseDialog from "../apps/ability-use-dialog.js";
+import { TRPG } from "../config.js";
 
 /**
  * Override and extend the basic Item implementation
@@ -179,9 +180,7 @@ export default class Item5e extends Item {
     // Feat Items
     else if ( itemData.type === "feat" ) {
       const act = data.activation;
-      if ( act && (act.type === C.abilityActivationTypes.legendary) ) labels.featType = game.i18n.localize("TRPG.LegendaryActionLabel");
-      else if ( act && (act.type === C.abilityActivationTypes.lair) ) labels.featType = game.i18n.localize("TRPG.LairActionLabel");
-      else if ( act && act.type ) labels.featType = game.i18n.localize(data.damage.length ? "TRPG.Attack" : "TRPG.Action");
+      if ( act && act.type ) labels.featType = game.i18n.localize(C.abilityActivationTypes[data.activation.type]);
       else labels.featType = game.i18n.localize("TRPG.Passive");
     }
 

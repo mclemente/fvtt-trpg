@@ -277,20 +277,12 @@ TRPG.tokenHPColors = {
  * @type {Object}
  */
 TRPG.creatureTypes = {
-  "aberration": "TRPG.CreatureAberration",
-  "beast": "TRPG.CreatureBeast",
-  "celestial": "TRPG.CreatureCelestial",
-  "construct": "TRPG.CreatureConstruct",
-  "dragon": "TRPG.CreatureDragon",
-  "elemental": "TRPG.CreatureElemental",
-  "fey": "TRPG.CreatureFey",
-  "fiend": "TRPG.CreatureFiend",
-  "giant": "TRPG.CreatureGiant",
-  "humanoid": "TRPG.CreatureHumanoid",
-  "monstrosity": "TRPG.CreatureMonstrosity",
-  "ooze": "TRPG.CreatureOoze",
-  "plant": "TRPG.CreaturePlant",
-  "undead": "TRPG.CreatureUndead"
+  "animal": "TRPG.CreatureAnimal",
+  "construto": "TRPG.CreatureConstruto",
+  "espirito": "TRPG.CreatureEspirito",
+  "humanoid": "TRPG.CreatureHumanoide",
+  "monstro": "TRPG.CreatureMonstro",
+  "mortoVivo": "TRPG.CreatureMortoVivo"
 };
 
 
