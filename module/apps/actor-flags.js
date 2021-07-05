@@ -113,7 +113,7 @@ export default class ActorSheetFlags extends DocumentSheet {
 
     // Unset any flags which are "false"
     let unset = false;
-    const flags = updateData.flags.trpg;
+    const flags = updateData.flags?.trpg || {};
     for ( let [k, v] of Object.entries(flags) ) {
       if ( [undefined, null, "", false, 0].includes(v) ) {
         delete flags[k];

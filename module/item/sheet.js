@@ -197,7 +197,7 @@ export default class ItemSheet5e extends ItemSheet {
     }
 
     else if ( item.type === "feat" ) {
-      props.push(labels.featType);
+      // props.push(labels.featType);
     }
 
     // Action type

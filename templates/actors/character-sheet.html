@@ -57,13 +57,13 @@
                     </div>
                     <footer class="attribute-footer">
                         <input name="data.attributes.hp.temp" type="text" class="temphp" placeholder="+{{ localize 'TRPG.Temp' }}"
-                               value="{{data.attributes.hp.temp}}" data-dtype="Number"/>
+                            value="{{data.attributes.hp.temp}}" data-dtype="Number"/>
                         <input name="data.attributes.hp.tempmax" type="text" class="temphp" placeholder="+{{ localize 'TRPG.Max' }}"
-                               value="{{data.attributes.hp.tempmax}}" data-dtype="Number"/>
+                            value="{{data.attributes.hp.tempmax}}" data-dtype="Number"/>
                     </footer>
                 </li>
 
-                {{#unless hasSpells}}
+                {{#if (or hasSpells data.details.showSpells (eq idj true))}}
                 <li class="attribute health">
                     <h4 class="attribute-name box-title">{{ localize "TRPG.MagicPoints" }}</h4>
                     <div class="attribute-value multiple">
@@ -73,12 +73,12 @@
                     </div>
                     <footer class="attribute-footer">
                         <input name="data.attributes.mp.temp" type="text" class="temphp" placeholder="+{{ localize 'TRPG.Temp' }}"
-                               value="{{data.attributes.mp.temp}}" data-dtype="Number"/>
+                            value="{{data.attributes.mp.temp}}" data-dtype="Number"/>
                         <input name="data.attributes.mp.tempmax" type="text" class="temphp" placeholder="+{{ localize 'TRPG.Max' }}"
-                               value="{{data.attributes.mp.tempmax}}" data-dtype="Number"/>
+                            value="{{data.attributes.mp.tempmax}}" data-dtype="Number"/>
                     </footer>
                 </li>
-                {{/unless}}
+                {{/if}}
 
                 <!-- <li class="attribute hit-dice">
                     <h4 class="attribute-name box-title">
@@ -99,11 +99,11 @@
                     <div class="attribute-value">
                         <input name="data.attributes.ac.value" type="number" value="{{data.attributes.ac.value}}" placeholder="10"/>
                     </div>
-                    {{#unless hasSpells}}
+                    {{#if (or hasSpells data.details.showSpells (eq idj true))}}
                     <footer class="attribute-footer">
                         <span class="spell-dc">{{localize "TRPG.SpellDC"}} {{data.attributes.spelldc}}</span>
                     </footer>
-                    {{/unless}}
+                    {{/if}}
                 </li>
 
                 <li class="attribute movement">
@@ -127,7 +127,7 @@
                     <footer class="attribute-footer">
                         <span>{{ localize "TRPG.Modifier" }}</span>
                         <input name="data.attributes.init.value" type="text" data-dtype="Number" placeholder="0"
-                               value="{{numberFormat data.attributes.init.value decimals=0 sign=true}}"/>
+                            value="{{numberFormat data.attributes.init.value decimals=0 sign=true}}"/>
                     </footer>
                 </li> -->
             </ul>
@@ -248,15 +248,15 @@
         {{!-- Biography Tab --}}
         <div class="tab flexrow" data-group="primary" data-tab="biography">
             <div class="characteristics flexcol">
-                <label>{{ localize "TRPG.Appearance" }}</label>
+                <input named="data.details.appearance" type="text" value="" placeholder="{{ localize 'TRPG.Appearance' }}">
                 <textarea name="data.details.appearance">{{data.details.appearance}}</textarea>
-                <label>{{ localize "TRPG.PersonalityTraits" }}</label>
+                <input named="data.details.trait" type="text" value="" placeholder="{{ localize 'TRPG.PersonalityTraits' }}">
                 <textarea name="data.details.trait">{{data.details.trait}}</textarea>
-                <label>{{ localize "TRPG.Ideals" }}</label>
+                <input named="data.details.ideal" type="text" value="" placeholder="{{ localize 'TRPG.Ideals' }}">
                 <textarea name="data.details.ideal">{{data.details.ideal}}</textarea>
-                <label>{{ localize "TRPG.Bonds" }}</label>
+                <input named="data.details.bond" type="text" value="" placeholder="{{ localize 'TRPG.Bonds' }}">
                 <textarea name="data.details.bond">{{data.details.bond}}</textarea>
-                <label>{{ localize "TRPG.Flaws" }}</label>
+                <input named="data.details.flaw" type="text" value="" placeholder="{{ localize 'TRPG.Flaws' }}">
                 <textarea name="data.details.flaw">{{data.details.flaw}}</textarea>
             </div>
             <div class="biography">

@@ -773,7 +773,7 @@ export default class ActorSheet5e extends ActorSheet {
     const header = event.currentTarget;
     const type = header.dataset.type;
     const itemData = {
-      name: game.i18n.format("TRPG.ItemNew", {type: type.capitalize()}),
+      name: game.i18n.format("TRPG.ItemNew", {type: game.i18n.localize("ITEM.Type" + header.dataset.type.capitalize())}),
       type: type,
       data: foundry.utils.deepClone(header.dataset)
     };

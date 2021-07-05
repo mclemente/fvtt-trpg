@@ -43,7 +43,7 @@
 
             {{!-- Header Attributes --}}
             <ul class="attributes flexrow">
-               <li class="attribute health">
+                <li class="attribute health">
                     <h4 class="attribute-name box-title rollable">{{ localize "TRPG.HitPoints" }}</h4>
                     <div class="attribute-value multiple">
                         <input name="data.attributes.hp.value" type="text" value="{{data.attributes.hp.value}}" placeholder="10" data-dtype="Number"/>
@@ -52,11 +52,11 @@
                     </div>
                     <!-- <footer class="attribute-footer">
                         <input name="data.attributes.hp.formula" class="hpformula" type="text" placeholder="{{ localize 'TRPG.HPFormula' }}"
-                               value="{{data.attributes.hp.formula}}"/>
+                            value="{{data.attributes.hp.formula}}"/>
                     </footer> -->
                 </li>
 
-                {{#unless hasSpells}}
+                {{#if (or hasSpells data.details.showSpells (eq idj true))}}
                 <li class="attribute health">
                     <h4 class="attribute-name box-title">{{ localize "TRPG.MagicPoints" }}</h4>
                     <div class="attribute-value multiple">
@@ -65,7 +65,7 @@
                         <input name="data.attributes.mp.max" type="text" value="{{data.attributes.mp.max}}" placeholder="10" data-dtype="Number"/>
                     </div>
                 </li>
-                {{/unless}}
+                {{/if}}
 
                 <li class="attribute">
                     <h4 class="attribute-name box-title">{{ localize "TRPG.ArmorClass" }}</h4>
