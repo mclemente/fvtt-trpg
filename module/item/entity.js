@@ -760,7 +760,7 @@ export default class Item5e extends Item {
     props.push(
       CONFIG.TRPG.equipmentTypes[data.armor.type],
       labels.armor || null,
-      data.stealth.value ? game.i18n.localize("TRPG.StealthDisadvantage") : null
+      data.stealth ? `PDA: ${data.stealth}` : null
     );
   }
 

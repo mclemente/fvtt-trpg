@@ -335,12 +335,7 @@
     "character": {
       "templates": ["common", "creature"],
       "attributes": {
-        "death": {
-          "success": 0,
-          "failure": 0
-        },
-        "exhaustion": 0,
-        "inspiration": 0
+        "penalidadeArmadura": 0
       },
       "details": {
         "background": "",
@@ -559,7 +554,7 @@
         "conditions": ""
       },
       "strength": 0,
-      "stealth": false,
+      "stealth": 0,
       "proficient": true
     },
     "feat": {

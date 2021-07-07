@@ -59,6 +59,9 @@ export default class Actor5e extends Actor {
       let bonus = this.getFlag("trpg", `${key}.skill-bonus`) || 0;
       let bonusAsInt = parseInt(Number(bonus));
       if (!isNaN(bonusAsInt)) {
+        if (skill.pda && this.data.data.attributes.penalidadeArmadura) {
+          bonusAsInt += this.data.data.attributes.penalidadeArmadura;
+        }
         skill.total += bonusAsInt;
       }
     }
@@ -323,6 +326,14 @@ export default class Actor5e extends Actor {
     data.attributes.bab.value = babTotal;
     data.attributes.bab.total = babTotal;
 
+    const [pda] = this.items.reduce((arr, item) => {
+      if ( item.type === "equipment" && item.data.data.equipped ) {
+        arr[0] += item.data.data.stealth;
+      }
+      return arr;
+    }, [0]);
+    data.attributes.penalidadeArmadura = pda;
+
     // Character proficiency bonus
     data.attributes.prof = Math.floor((level + 7) / 4);
 
@@ -565,11 +576,11 @@ export default class Actor5e extends Actor {
     }
 
     // Reset death save counters
-    const isDead = this.data.data.attributes.hp.value <= 0;
-    if ( isDead && (foundry.utils.getProperty(changed, "data.attributes.hp.value") > 0) ) {
-      foundry.utils.setProperty(changed, "data.attributes.death.success", 0);
-      foundry.utils.setProperty(changed, "data.attributes.death.failure", 0);
-    }
+    // const isDead = this.data.data.attributes.hp.value <= 0;
+    // if ( isDead && (foundry.utils.getProperty(changed, "data.attributes.hp.value") > 0) ) {
+    //   foundry.utils.setProperty(changed, "data.attributes.death.success", 0);
+    //   foundry.utils.setProperty(changed, "data.attributes.death.failure", 0);
+    // }
   }
 
   /* -------------------------------------------- */
