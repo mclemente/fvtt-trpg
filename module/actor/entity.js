@@ -312,26 +312,22 @@ export default class Actor5e extends Actor {
     const data = actorData.data;
 
     // Determine character level and available hit dice based on owned Class items
-    const [level, hd, babTotal] = this.items.reduce((arr, item) => {
+    const [level, hd, babTotal, pda] = this.items.reduce((arr, item) => {
       if ( item.type === "class" ) {
         const classLevels = parseInt(item.data.data.levels) || 1;
         arr[0] += classLevels;
         arr[1] += classLevels - (parseInt(item.data.data.hitDiceUsed) || 0);
         arr[2] += Math.floor(classLevels * CONFIG.TRPG.classBABFormulas[item.data.data.bab]);
       }
+      if ( item.type === "equipment" && item.data.data.equipped ) {
+        arr[3] += item.data.data.stealth;
+      }
       return arr;
-    }, [0, 0, 0]);
+    }, [0, 0, 0, 0]);
     data.details.level = level;
     data.attributes.hd = hd;
     data.attributes.bab.value = babTotal;
     data.attributes.bab.total = babTotal;
-
-    const [pda] = this.items.reduce((arr, item) => {
-      if ( item.type === "equipment" && item.data.data.equipped ) {
-        arr[0] += item.data.data.stealth;
-      }
-      return arr;
-    }, [0]);
     data.attributes.penalidadeArmadura = pda;
 
     // Character proficiency bonus
