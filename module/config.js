@@ -80,112 +80,17 @@ TRPG.weaponProficiencies = {
 };
 
 /**
- * The basic weapon types in 5e. This enables specific weapon proficiencies or
- * starting equipment provided by classes and backgrounds.
- *
- * @enum {string}
+ * A map of weapon item proficiency to actor item proficiency
+ * Used when a new player owned item is created
+ * @type {Object}
  */
-TRPG.weaponIds = {
-		"battleaxe": "I0WocDSuNpGJayPb",
-		"blowgun": "wNWK6yJMHG9ANqQV",
-		"club": "nfIRTECQIG81CvM4",
-		"dagger": "0E565kQUBmndJ1a2",
-		"dart": "3rCO8MTIdPGSW6IJ",
-		"flail": "UrH3sMdnUDckIHJ6",
-		"glaive": "rOG1OM2ihgPjOvFW",
-		"greataxe": "1Lxk6kmoRhG8qQ0u",
-		"greatclub": "QRCsxkCwWNwswL9o",
-		"greatsword": "xMkP8BmFzElcsMaR",
-		"halberd": "DMejWAc8r8YvDPP1",
-		"handaxe": "eO7Fbv5WBk5zvGOc",
-		"handcrossbow": "qaSro7kFhxD6INbZ",
-		"heavycrossbow": "RmP0mYRn2J7K26rX",
-		"javelin": "DWLMnODrnHn8IbAG",
-		"lance": "RnuxdHUAIgxccVwj",
-		"lightcrossbow": "ddWvQRLmnnIS0eLF",
-		"lighthammer": "XVK6TOL4sGItssAE",
-		"longbow": "3cymOVja8jXbzrdT",
-		"longsword": "10ZP2Bu3vnCuYMIB",
-		"mace": "Ajyq6nGwF7FtLhDQ",
-		"maul": "DizirD7eqjh8n95A",
-		"morningstar": "dX8AxCh9o0A9CkT3",
-		"net": "aEiM49V8vWpWw7rU",
-		"pike": "tC0kcqZT9HHAO0PD",
-		"quarterstaff": "g2dWN7PQiMRYWzyk",
-		"rapier": "Tobce1hexTnDk4sV",
-		"scimitar": "fbC0Mg1a73wdFbqO",
-		"shortsword": "osLzOwQdPtrK3rQH",
-		"sickle": "i4NeNZ30ycwPDHMx",
-		"spear": "OG4nBBydvmfWYXIk",
-		"shortbow": "GJv6WkD7D2J6rP6M",
-		"sling": "3gynWO9sN4OLGMWD",
-		"trident": "F65ANO66ckP8FDMa",
-		"warpick": "2YdfjN1PIIrSHZii",
-		"warhammer":	"F0Df164Xv1gWcYt0",
-		"whip": "QKTyxoO0YDnAsbYe"
+DND5E.weaponProficienciesMap = {
+  "natural": true,
+  "simpleM": "sim",
+  "simpleR": "sim",
+  "martialM": "mar",
+  "martialR": "mar"
 };
-
-/* -------------------------------------------- */
-
-
-
-TRPG.toolProficiencies = {
-	"art": "TRPG.ToolArtisans",
-	"disg": "TRPG.ToolDisguiseKit",
-	"forg": "TRPG.ToolForgeryKit",
-	"game": "TRPG.ToolGamingSet",
-	"herb": "TRPG.ToolHerbalismKit",
-	"music": "TRPG.ToolMusicalInstrument",
-	"navg": "TRPG.ToolNavigators",
-	"pois": "TRPG.ToolPoisonersKit",
-	"thief": "TRPG.ToolThieves",
-	"vehicle": "TRPG.ToolVehicle"
-};
-
-/**
- * The basic tool types in 5e. This enables specific tool proficiencies or
- * starting equipment provided by classes and backgrounds.
- *
- * @enum {string}
- */
-TRPG.toolIds = {
-	"alchemist": "SztwZhbhZeCqyAes",
-	"bagpipes": "yxHi57T5mmVt0oDr",
-	"brewer": "Y9S75go1hLMXUD48",
-	"calligrapher": "jhjo20QoiD5exf09",
-	"card": "YwlHI3BVJapz4a3E",
-	"carpenter": "8NS6MSOdXtUqD7Ib",
-	"cartographer": "fC0lFK8P4RuhpfaU",
-	"cobbler": "hM84pZnpCqKfi8XH",
-	"cook": "Gflnp29aEv5Lc1ZM",
-	"dice": "iBuTM09KD9IoM5L8",
-	"disg": "IBhDAr7WkhWPYLVn",
-	"drum": "69Dpr25pf4BjkHKb",
-	"dulcimer": "NtdDkjmpdIMiX7I2",
-	"flute": "eJOrPcAz9EcquyRQ",
-	"forg": "cG3m4YlHfbQlLEOx",
-	"glassblower": "rTbVrNcwApnuTz5E",
-	"herb": "i89okN7GFTWHsvPy",
-	"horn": "aa9KuBy4dst7WIW9",
-	"jeweler": "YfBwELTgPFHmQdHh",
-	"leatherworker": "PUMfwyVUbtyxgYbD",
-	"lute": "qBydtUUIkv520DT7",
-	"lyre": "EwG1EtmbgR3bM68U",
-	"mason": "skUih6tBvcBbORzA",
-	"navg": "YHCmjsiXxZ9UdUhU",
-	"painter": "ccm5xlWhx74d6lsK",
-	"panflute": "G5m5gYIx9VAUWC3J",
-	"pois": "il2GNi8C0DvGLL9P",
-	"potter": "hJS8yEVkqgJjwfWa",
-	"shawm": "G3cqbejJpfB91VhP",
-	"smith": "KndVe2insuctjIaj",
-	"thief": "woWZ1sO5IUVGzo58",
-	"tinker": "0d08g1i5WXnNrCNA",
-	"viol": "baoe3U5BfMMMxhCU",
-	"weaver": "ap9prThUB2y9lDyj",
-	"woodcarver": "xKErqkLo4ASYr5EP",
-};
-
 
 /* -------------------------------------------- */
 
@@ -320,6 +225,21 @@ TRPG.itemCapacityTypes = {
 /* -------------------------------------------- */
 
 /**
+ * List of various item rarities.
+ * @enum {String}
+ */
+DND5E.itemRarity = {
+  "common": "DND5E.ItemRarityCommon",
+  "uncommon": "DND5E.ItemRarityUncommon",
+  "rare": "DND5E.ItemRarityRare",
+  "veryRare": "DND5E.ItemRarityVeryRare",
+  "legendary": "DND5E.ItemRarityLegendary",
+  "artifact": "DND5E.ItemRarityArtifact"
+};
+
+/* -------------------------------------------- */
+
+/**
  * Enumerate the lengths of time over which an item can have limited use ability
  * @type {Object}
  */
@@ -330,6 +250,19 @@ TRPG.limitedUsePeriods = {
 	"charges": "TRPG.Charges"
 };
 
+/* -------------------------------------------- */
+
+/**
+ * Specific equipment types that modify base AC
+ * @type {object}
+ */
+TRPG.armorTypes = {
+  "light": "DND5E.EquipmentLight",
+  "medium": "DND5E.EquipmentMedium",
+  "heavy": "DND5E.EquipmentHeavy",
+  "natural": "DND5E.EquipmentNatural",
+  "shield": "DND5E.EquipmentShield"
+};
 
 /* -------------------------------------------- */
 
@@ -338,17 +271,24 @@ TRPG.limitedUsePeriods = {
  * @type {Object}
  */
 TRPG.equipmentTypes = {
-	"light": "TRPG.EquipmentLight",
-	"medium": "TRPG.EquipmentMedium",
-	"heavy": "TRPG.EquipmentHeavy",
-	"bonus": "TRPG.EquipmentBonus",
-	"natural": "TRPG.EquipmentNatural",
-	"shield": "TRPG.EquipmentShield",
-	"clothing": "TRPG.EquipmentClothing",
-	"trinket": "TRPG.EquipmentTrinket",
-	"vehicle": "TRPG.EquipmentVehicle"
+  "bonus": "TRPG.EquipmentBonus",
+  "clothing": "TRPG.EquipmentClothing",
+  "trinket": "TRPG.EquipmentTrinket",
+  "vehicle": "TRPG.EquipmentVehicle",
+  ...TRPG.armorTypes
 };
 
+/* -------------------------------------------- */
+
+/**
+ * The various types of vehicles in which characters can be proficient.
+ * @enum {string}
+ */
+DND5E.vehicleTypes = {
+  "air": "DND5E.VehicleTypeAir",
+  "land": "DND5E.VehicleTypeLand",
+  "water": "DND5E.VehicleTypeWater"
+};
 
 /* -------------------------------------------- */
 
@@ -363,6 +303,79 @@ TRPG.armorProficiencies = {
 	"shl": "TRPG.EquipmentShieldProficiency"
 };
 
+/**
+ * A map of armor item proficiency to actor item proficiency
+ * Used when a new player owned item is created
+ * @type {Object}
+ */
+DND5E.armorProficienciesMap = {
+  "natural": true,
+  "clothing": true,
+  "light": "lgt",
+  "medium": "med",
+  "heavy": "hvy",
+  "shield": "shl"
+};
+
+/**
+ * The basic armor types in 5e. This enables specific armor proficiencies,
+ * automated AC calculation in NPCs, and starting equipment.
+ *
+ * @enum {string}
+ */
+DND5E.armorIds = {
+  "breastplate": "SK2HATQ4abKUlV8i",
+  "chainmail": "rLMflzmxpe8JGTOA",
+  "chainshirt": "p2zChy24ZJdVqMSH",
+  "halfplate": "vsgmACFYINloIdPm",
+  "hide": "n1V07puo0RQxPGuF",
+  "leather": "WwdpHLXGX5r8uZu5",
+  "padded": "GtKV1b5uqFQqpEni",
+  "plate": "OjkIqlW2UpgFcjZa",
+  "ringmail": "nsXZejlmgalj4he9",
+  "scalemail": "XmnlF5fgIO3tg6TG",
+  "splint": "cKpJmsJmU8YaiuqG",
+  "studded": "TIV3B1vbrVHIhQAm"
+};
+
+/**
+ * The basic shield in 5e.
+ *
+ * @enum {string}
+ */
+DND5E.shieldIds = {
+  "shield": "sSs3hSzkKBMNBgTs"
+};
+
+/**
+ * Common armor class calculations.
+ * @enum {object}
+ */
+DND5E.armorClasses = {
+  "default": {
+    "label": "DND5E.ArmorClassDefault",
+    "formula": "@attributes.ac.base + @abilities.dex.mod"
+  },
+  "mage": {
+    "label": "DND5E.ArmorClassMage",
+    "formula": "13 + @abilities.dex.mod"
+  },
+  "draconic": {
+    "label": "DND5E.ArmorClassDraconic",
+    "formula": "13 + @abilities.dex.mod"
+  },
+  "unarmoredMonk": {
+    "label": "DND5E.ArmorClassUnarmoredMonk",
+    "formula": "10 + @abilities.dex.mod + @abilities.wis.mod"
+  },
+  "unarmoredBarb": {
+    "label": "DND5E.ArmorClassUnarmoredBarbarian",
+    "formula": "10 + @abilities.dex.mod + @abilities.con.mod"
+  },
+  "custom": {
+    "label": "DND5E.ArmorClassCustom"
+  }
+};
 
 /* -------------------------------------------- */
 
@@ -453,6 +466,7 @@ TRPG.movementTypes = {
  */
 TRPG.movementUnits = {
 	"m": "TRPG.DistM",
+	"km": "TRPG.DistKm"
 	// "ft": "TRPG.DistFt",
 	// "mi": "TRPG.DistMi"
 };
@@ -483,7 +497,7 @@ for ( let [k, v] of Object.entries(TRPG.movementUnits) ) {
 TRPG.encumbrance = {
 	currencyPerWeight: 1, //10 grams
 	strMultiplier: 10, //Strength value * 10
-	vehicleWeightMultiplier: 2000 // 2000 lbs in a ton
+	vehicleWeightMultiplier: 1000 // 1000 kg in a ton
 };
 
 /* -------------------------------------------- */
@@ -912,89 +926,6 @@ TRPG.classFeatures = ClassFeatures;
 
 // Configure Optional Character Flags
 TRPG.characterFlags = {
-	// "diamondSoul": {
-	//	 name: "TRPG.FlagsDiamondSoul",
-	//	 hint: "TRPG.FlagsDiamondSoulHint",
-	//	 section: "Feats",
-	//	 type: Boolean
-	// },
-	// "elvenAccuracy": {
-	//	 name: "TRPG.FlagsElvenAccuracy",
-	//	 hint: "TRPG.FlagsElvenAccuracyHint",
-	//	 section: "Racial Traits",
-	//	 type: Boolean
-	// },
-	// "halflingLucky": {
-	//	 name: "TRPG.FlagsHalflingLucky",
-	//	 hint: "TRPG.FlagsHalflingLuckyHint",
-	//	 section: "Racial Traits",
-	//	 type: Boolean
-	// },
-	// "initiativeAdv": {
-	//	 name: "TRPG.FlagsInitiativeAdv",
-	//	 hint: "TRPG.FlagsInitiativeAdvHint",
-	//	 section: "Feats",
-	//	 type: Boolean
-	// },
-	// "initiativeAlert": {
-	//	 name: "TRPG.FlagsAlert",
-	//	 hint: "TRPG.FlagsAlertHint",
-	//	 section: "Feats",
-	//	 type: Boolean
-	// },
-	// "jackOfAllTrades": {
-	//	 name: "TRPG.FlagsJOAT",
-	//	 hint: "TRPG.FlagsJOATHint",
-	//	 section: "Feats",
-	//	 type: Boolean
-	// },
-	// "observantFeat": {
-	//	 name: "TRPG.FlagsObservant",
-	//	 hint: "TRPG.FlagsObservantHint",
-	//	 skills: ['prc','inv'],
-	//	 section: "Feats",
-	//	 type: Boolean
-	// },
-	// "powerfulBuild": {
-	//	 name: "TRPG.FlagsPowerfulBuild",
-	//	 hint: "TRPG.FlagsPowerfulBuildHint",
-	//	 section: "Racial Traits",
-	//	 type: Boolean
-	// },
-	// "reliableTalent": {
-	//	 name: "TRPG.FlagsReliableTalent",
-	//	 hint: "TRPG.FlagsReliableTalentHint",
-	//	 section: "Feats",
-	//	 type: Boolean
-	// },
-	// "remarkableAthlete": {
-	//	 name: "TRPG.FlagsRemarkableAthlete",
-	//	 hint: "TRPG.FlagsRemarkableAthleteHint",
-	//	 abilities: ['str','dex','con'],
-	//	 section: "Feats",
-	//	 type: Boolean
-	// },
-	// "weaponCriticalThreshold": {
-	//	 name: "TRPG.FlagsWeaponCritThreshold",
-	//	 hint: "TRPG.FlagsWeaponCritThresholdHint",
-	//	 section: "Feats",
-	//	 type: Number,
-	//	 placeholder: 20
-	// },
-	// "spellCriticalThreshold": {
-	//	 name: "TRPG.FlagsSpellCritThreshold",
-	//	 hint: "TRPG.FlagsSpellCritThresholdHint",
-	//	 section: "Feats",
-	//	 type: Number,
-	//	 placeholder: 20
-	// },
-	// "meleeCriticalDamageDice": {
-	//	 name: "TRPG.FlagsMeleeCriticalDice",
-	//	 hint: "TRPG.FlagsMeleeCriticalDiceHint",
-	//	 section: "Feats",
-	//	 type: Number,
-	//	 placeholder: 0
-	// },
 };
 
 // Configure allowed status flags

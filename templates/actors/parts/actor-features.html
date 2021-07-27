@@ -69,14 +69,14 @@
                 {{item.data.subclass}}
             </div>
             <div class="item-detail item-action">
-                Level {{item.data.levels}}
+                {{localize "DND5E.Level"}} {{item.data.levels}}
             </div>
             {{/if}}
 
             {{#if section.columns}}
                 {{#each section.columns}}
                     <div class="item-detail {{css}}">
-                        {{#with (lookup item property)}}
+                        {{#with (getProperty item property)}}
                             {{#if ../editable}}
                                 <input type="text" value="{{this}}" placeholder="&mdash;"
                                        data-dtype="{{../editable}}">
@@ -96,8 +96,8 @@
                     <i class="fas fa-sun"></i>
                 </a>
                 {{/if}}
-                <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-                <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                <a class="item-control item-edit" title="{{localize 'DND5E.ItemEdit'}}"><i class="fas fa-edit"></i></a>
+                <a class="item-control item-delete" title="{{localize 'DND5E.ItemDelete'}}"><i class="fas fa-trash"></i></a>
             </div>
             {{/if}}
         </li>

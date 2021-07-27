@@ -263,11 +263,11 @@ export const ClassFeatures = {
        "label": "Champion",
        "source": "PHB pg. 72",
        "features": {
-         "3": ["Compendium.trpg.classfeatures.YgLQV1O849wE5TgM"],
-         "7": ["Compendium.trpg.classfeatures.dHu1yzIjD38BvGGd"],
-         "11": ["Compendium.trpg.classfeatures.kYJsED0rqqqUcgKz"],
-         "15": ["Compendium.trpg.classfeatures.aVKH6TLn1AG9hPSA"],
-         "18": ["Compendium.trpg.classfeatures.ipG5yx1tRNmeJfSH"]
+         "3": ["Compendium.dnd5e.classfeatures.YgLQV1O849wE5TgM"],
+         "7": ["Compendium.dnd5e.classfeatures.dHu1yzIjD38BvGGd"],
+         "10": ["Compendium.dnd5e.classfeatures.kYJsED0rqqqUcgKz"],
+         "15": ["Compendium.dnd5e.classfeatures.aVKH6TLn1AG9hPSA"],
+         "18": ["Compendium.dnd5e.classfeatures.ipG5yx1tRNmeJfSH"]
        }
      },
      "echo-knight": {

@@ -39,7 +39,7 @@ export default class AbilityUseDialog extends Dialog {
     // Prepare dialog form data
     const data = {
       item: item.data,
-      title: game.i18n.format("TRPG.AbilityUseHint", item.data),
+      title: game.i18n.format("TRPG.AbilityUseHint", {type: game.i18n.localize(`TRPG.ItemType${item.type.capitalize()}`), name: item.name}),
       note: this._getAbilityUseNote(item.data, uses, recharge),
       consumeSpellSlot: false,
       consumeRecharge: recharges,
@@ -59,7 +59,7 @@ export default class AbilityUseDialog extends Dialog {
     const label = game.i18n.localize("TRPG.AbilityUse" + (data.isSpell ? "Cast" : "Use"));
     return new Promise((resolve) => {
       const dlg = new this(item, {
-        title: `${item.name}: Usage Configuration`,
+        title: `${item.name}: ${game.i18n.localize("TRPG.AbilityUseConfig")}`,
         content: html,
         buttons: {
           use: {
@@ -141,7 +141,7 @@ export default class AbilityUseDialog extends Dialog {
     // Abilities which use Recharge
     if ( !!recharge.value ) {
       return game.i18n.format(recharge.charged ? "TRPG.AbilityUseChargedHint" : "TRPG.AbilityUseRechargeHint", {
-        type: item.type,
+        type: game.i18n.localize(`TRPG.ItemType${item.type.capitalize()}`),
       })
     }
 
@@ -155,7 +155,7 @@ export default class AbilityUseDialog extends Dialog {
       else if ( item.data.quantity === 1 && uses.autoDestroy ) str = "TRPG.AbilityUseConsumableDestroyHint";
       else if ( item.data.quantity > 1 ) str = "TRPG.AbilityUseConsumableQuantityHint";
       return game.i18n.format(str, {
-        type: item.data.consumableType,
+        type: game.i18n.localize(`DND5E.Consumable${item.data.consumableType.capitalize()}`),
         value: uses.value,
         quantity: item.data.quantity,
         max: uses.max,
@@ -166,7 +166,7 @@ export default class AbilityUseDialog extends Dialog {
     // Other Items
     else {
       return game.i18n.format("TRPG.AbilityUseNormalHint", {
-        type: item.type,
+        type: game.i18n.localize(`TRPG.ItemType${item.type.capitalize()}`),
         value: uses.value,
         max: uses.max,
         per: CONFIG.TRPG.limitedUsePeriods[uses.per]

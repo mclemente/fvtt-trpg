@@ -5,6 +5,8 @@
         <img class="profile" src="{{actor.img}}" title="{{actor.name}}" data-edit="img"/>
 
         <section class="header-details flexrow">
+            {{> "systems/dnd5e/templates/actors/parts/actor-warnings.html"}}
+
             <h1 class="charname">
                 <input name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'TRPG.Name' }}"/>
             </h1>
@@ -94,10 +96,13 @@
                     </footer>
                 </li> -->
 
-                <li class="attribute">
-                    <h4 class="attribute-name box-title">{{ localize "TRPG.ArmorClass" }}</h4>
-                    <div class="attribute-value">
-                        <input name="data.attributes.ac.value" type="number" value="{{data.attributes.ac.value}}" placeholder="10"/>
+                <li class="attribute armor">
+                    <h4 class="attribute-name box-title">
+                        {{ localize "TRPG.ArmorClass" }}
+                        <a class="config-button" data-action="armor" title="{{localize 'TRPG.ArmorConfig'}}"><i class="fas fa-cog"></i></a>
+                    </h4>
+                    <div class="attribute-value attributable" data-property="attributes.ac">
+                        <span>{{data.attributes.ac.value}}</span>
                     </div>
                     {{#if (or hasSpells data.details.showSpells (eq idj true))}}
                     <footer class="attribute-footer">
@@ -158,7 +163,7 @@
                     <h4 class="ability-name box-title rollable">{{ability.label}}</h4>
                     <input class="ability-score" name="data.abilities.{{id}}.value" type="number" value="{{ability.value}}" placeholder="10"/>
                     <div class="ability-modifiers flexrow">
-                        <span class="ability-mod" title="Modifier">{{numberFormat ability.mod decimals=0 sign=true}}</span>
+                        <span class="ability-mod" title="Modificador">{{numberFormat ability.mod decimals=0 sign=true}}</span>
                     </div>
                 </li>
                 {{/if}}

@@ -885,7 +885,7 @@ export default class Item5e extends Item {
     }
 
     // Compose roll options
-    const rollConfig = mergeObject({
+    let rollConfig = {
       parts: parts,
       actor: this.actor,
       data: rollData,
@@ -898,8 +898,7 @@ export default class Item5e extends Item {
         left: window.innerWidth - 710
       },
       messageData: {"flags.trpg.roll": {type: "attack", itemId: this.id }}
-    }, options);
-    rollConfig.event = options.event;
+    };
 
     // Expanded critical hit thresholds
     if ( this.data.type === "weapon" || this.data.type === "spell" ) {
@@ -913,6 +912,9 @@ export default class Item5e extends Item {
 
     // Apply Halfling Lucky
     if ( flags.halflingLucky ) rollConfig.halflingLucky = true;
+
+    // Compose calculated roll options with passed-in roll options 
+    rollConfig = mergeObject(rollConfig, options)
 
     // Invoke the d20 roll helper
     const roll = await d20Roll(rollConfig);
@@ -980,7 +982,10 @@ export default class Item5e extends Item {
     // Scale damage from up-casting spells
     if ( (this.data.type === "spell") ) {
       if ( (itemData.scaling.mode === "cantrip") ) {
-        const level = this.actor.data.type === "character" ? actorData.details.level : actorData.details.spellLevel;
+        let level;
+        if ( this.actor.type === "character" ) level = actorData.details.level;
+        else if ( itemData.preparation.mode === "innate" ) level = Math.ceil(actorData.details.cr);
+        else level = actorData.details.spellLevel;
         this._scaleCantripDamage(parts, itemData.scaling.formula, level, rollData);
       }
       else if ( spellLevel && (itemData.scaling.mode === "level") && itemData.scaling.formula ) {
@@ -1189,7 +1194,10 @@ export default class Item5e extends Item {
     const abl = this.abilityMod;
     if ( abl ) {
       const ability = rollData.abilities[abl];
-      rollData["mod"] = ability.mod || 0;
+      if ( !ability ) {
+        console.warn(`Item ${this.name} in Actor ${this.actor.name} has an invalid item ability modifier of ${abl} defined`);
+      }
+      rollData["mod"] = ability?.mod || 0;
     }
 
     // Include a proficiency score
@@ -1430,14 +1438,7 @@ export default class Item5e extends Item {
       if ( isNPC ) {
         updates["data.proficient"] = true;  // NPCs automatically have equipment proficiency
       } else {
-        const armorProf = {
-          "natural": true,
-          "clothing": true,
-          "light": "lgt",
-          "medium": "med",
-          "heavy": "hvy",
-          "shield": "shl"
-        }[data.data?.armor?.type];        // Player characters check proficiency
+        const armorProf = CONFIG.DND5E.armorProficienciesMap[data.data?.armor?.type]; // Player characters check proficiency
         const actorArmorProfs = actorData.data.traits?.armorProf?.value || [];
         updates["data.proficient"] = (armorProf === true) || actorArmorProfs.includes(armorProf);
       }
@@ -1474,13 +1475,7 @@ export default class Item5e extends Item {
       if ( isNPC ) {
         updates["data.proficient"] = true;    // NPCs automatically have equipment proficiency
       } else {
-        const weaponProf = {
-          "natural": true,
-          "simpleM": "sim",
-          "simpleR": "sim",
-          "martialM": "mar",
-          "martialR": "mar"
-        }[data.data?.weaponType];         // Player characters check proficiency
+        const weaponProf = CONFIG.DND5E.weaponProficienciesMap[data.data?.weaponType]; // Player characters check proficiency
         const actorWeaponProfs = actorData.data.traits?.weaponProf?.value || [];
         updates["data.proficient"] = (weaponProf === true) || actorWeaponProfs.includes(weaponProf);
       }
@@ -1500,7 +1495,7 @@ export default class Item5e extends Item {
   static async createScrollFromSpell(spell) {
 
     // Get spell data
-    const itemData = spell instanceof Item5e ? spell.data : spell;
+    const itemData = (spell instanceof Item5e) ? spell.toObject() : spell;
     const {actionType, description, source, activation, duration, target, range, damage, save, level} = itemData.data;
 
     // Get scroll data
@@ -1520,7 +1515,7 @@ export default class Item5e extends Item {
     const desc = `${scrollIntro}<hr/><h3>${itemData.name} (Level ${level})</h3><hr/>${description.value}<hr/><h3>Scroll Details</h3><hr/>${scrollDetails}`;
 
     // Create the spell scroll data
-    const spellScrollData = mergeObject(scrollData, {
+    const spellScrollData = foundry.utils.mergeObject(scrollData, {
       name: `${game.i18n.localize("TRPG.SpellScroll")}: ${itemData.name}`,
       img: itemData.img,
       data: {
