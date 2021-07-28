@@ -115,7 +115,7 @@ export default class ActorSheet5e extends ActorSheet {
       save.icon = this._getProficiencyIcon(save.proficient);
       save.hover = CONFIG.TRPG.proficiencyLevels[save.proficient];
       save.label = CONFIG.TRPG.abilities[a];
-      save.baseProf = source.abilities[a].proficient;
+      save.baseProf = source.saves[a].proficient;
     }
 
     // Skills
@@ -227,7 +227,7 @@ export default class ActorSheet5e extends ActorSheet {
     // Flat
     if ( calc.flat !== null ) {
       return [{
-        label: game.i18n.localize("DND5E.Flat"),
+        label: game.i18n.localize("TRPG.Flat"),
         mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
         value: calc.flat
       }];
@@ -253,7 +253,7 @@ export default class ActorSheet5e extends ActorSheet {
 
     // Formula
     else {
-      const formula = calc.calc === "custom" ? calc.formula : CONFIG.DND5E.armorClasses[calc.calc]?.formula;
+      const formula = calc.calc === "custom" ? calc.formula : CONFIG.TRPG.armorClasses[calc.calc]?.formula;
       let base = calc.base;
       const dataRgx = new RegExp(/@([a-z.0-9_\-]+)/gi);
       const rollData = this.actor.getRollData();
@@ -268,7 +268,7 @@ export default class ActorSheet5e extends ActorSheet {
         });
       }
       attribution.unshift({
-        label: game.i18n.localize("DND5E.PropertyBase"),
+        label: game.i18n.localize("TRPG.PropertyBase"),
         mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
         value: base
       });
@@ -283,14 +283,14 @@ export default class ActorSheet5e extends ActorSheet {
 
     // Bonus
     if ( calc.bonus !== 0 ) attribution.push({
-      label: game.i18n.localize("DND5E.EquipmentBonus"),
+      label: game.i18n.localize("TRPG.EquipmentBonus"),
       mode: CONST.ACTIVE_EFFECT_MODES.ADD,
       value: calc.bonus
     });
 
     // Cover
     if ( calc.cover !== 0 ) attribution.push({
-      label: game.i18n.localize("DND5E.Cover"),
+      label: game.i18n.localize("TRPG.Cover"),
       mode: CONST.ACTIVE_EFFECT_MODES.ADD,
       value: calc.cover
     });

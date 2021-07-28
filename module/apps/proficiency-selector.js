@@ -23,12 +23,12 @@ export default class ProficiencySelector extends TraitSelector {
     const attr = foundry.utils.getProperty(this.object.data, this.attribute);
     const value = (this.options.valueKey) ? foundry.utils.getProperty(attr, this.options.valueKey) ?? [] : attr;
 
-    this.options.choices = CONFIG.DND5E[`${this.options.type}Proficiencies`];
+    this.options.choices = CONFIG.TRPG[`${this.options.type}Proficiencies`];
     const data = super.getData();
 
-    const pack = game.packs.get(CONFIG.DND5E.sourcePacks.ITEMS);
-    const ids = CONFIG.DND5E[`${this.options.type}Ids`];
-    const map = CONFIG.DND5E[`${this.options.type}ProficienciesMap`];
+    const pack = game.packs.get(CONFIG.TRPG.sourcePacks.ITEMS);
+    const ids = CONFIG.TRPG[`${this.options.type}Ids`];
+    const map = CONFIG.TRPG[`${this.options.type}ProficienciesMap`];
     if ( ids !== undefined ) {
       const typeProperty = (this.options.type !== "armor") ? `${this.options.type}Type` : `armor.type`;
       for ( const [key, id] of Object.entries(ids) ) {
@@ -51,7 +51,7 @@ export default class ProficiencySelector extends TraitSelector {
     }
 
     if ( this.options.type === "tool" ) {
-      data.choices["vehicle"].children = Object.entries(CONFIG.DND5E.vehicleTypes).reduce((obj, [key, label]) => {
+      data.choices["vehicle"].children = Object.entries(CONFIG.TRPG.vehicleTypes).reduce((obj, [key, label]) => {
         obj[key] = {
           label: label,
           chosen: attr ? value.includes(key) : false

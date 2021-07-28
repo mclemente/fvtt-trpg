@@ -39,6 +39,7 @@ import * as chat from "./module/chat.js";
 import * as dice from "./module/dice.js";
 import * as macros from "./module/macros.js";
 import * as migrations from "./module/migration.js";
+import ActiveEffect5e from "./module/active-effect.js";
 
 /* -------------------------------------------- */
 /*  Foundry VTT Initialization                  */
@@ -79,6 +80,7 @@ Hooks.once("init", function() {
 
   // Record Configuration Values
   CONFIG.TRPG = TRPG;
+  CONFIG.ActiveEffect.documentClass = ActiveEffect5e;
   CONFIG.Actor.documentClass = Actor5e;
   CONFIG.Item.documentClass = Item5e;
   CONFIG.Token.documentClass = TokenDocument5e;
@@ -142,25 +144,29 @@ Hooks.once("setup", function() {
   // Localize CONFIG objects once up-front
   const toLocalize = [
     "abilities", "abilityAbbreviations", "abilityActivationTypes", "abilityConsumptionTypes", "actorSizes", "alignments",
-    "armorProficiencies", "bab", "conditionTypes", "consumableTypes", "cover", "currencies", "damageResistanceTypes",
-    "damageTypes", "distanceUnits", "equipmentTypes", "healingTypes", "itemActionTypes", "languages",
+    "armorClasses", "armorProficiencies", "bab", "conditionTypes", "consumableTypes", "cover", "currencies", "damageResistanceTypes",
+    "damageTypes", "distanceUnits", "equipmentTypes", "healingTypes", "itemActionTypes", "itemRarity", "languages",
     "limitedUsePeriods", "movementTypes", "movementUnits", "polymorphSettings", "proficiencyLevels", "saves", "senses", "skills",
     "spellComponents", "spellLevels", "spellPreparationModes", "spellScalingModes", "spellSchools", "targetTypes",
-    "timePeriods", "toolProficiencies", "weaponProficiencies", "weaponProperties", "weaponTypes"
+    "timePeriods", "vehicleTypes", "weaponProficiencies", "weaponProperties", "weaponTypes"
   ];
 
   // Exclude some from sorting where the default order matters
   const noSort = [
-    "abilities", "actorSizes", "alignments", "currencies", "distanceUnits", "movementUnits", "itemActionTypes", "proficiencyLevels",
-    "limitedUsePeriods", "spellComponents", "spellLevels", "spellPreparationModes", "weaponTypes"
+    "abilities", "actorSizes", "alignments", "armorClasses", "armorProficiencies", "currencies", "distanceUnits", "movementUnits", "itemActionTypes", "itemRarity",  "proficiencyLevels",
+    "limitedUsePeriods", "spellComponents", "spellLevels", "spellPreparationModes", "weaponProficiencies", "weaponTypes"
   ];
 
   // Localize and sort CONFIG objects
   for ( let o of toLocalize ) {
-    const localized = Object.entries(CONFIG.TRPG[o]).map(e => {
-      return [e[0], game.i18n.localize(e[1])];
+    const localized = Object.entries(CONFIG.TRPG[o]).map(([k, v]) => {
+      if ( v.label ) v.label = game.i18n.localize(v.label);
+      if ( typeof v === "string" ) return [k, game.i18n.localize(v)];
+      return [k, v];
     });
-    if ( !noSort.includes(o) ) localized.sort((a, b) => a[1].localeCompare(b[1]));
+    if ( !noSort.includes(o) ) localized.sort((a, b) =>
+      (a[1].label ?? a[1]).localeCompare(b[1].label ?? b[1])
+    );
     CONFIG.TRPG[o] = localized.reduce((obj, e) => {
       obj[e[0]] = e[1];
       return obj;
@@ -179,22 +185,20 @@ Hooks.once("ready", function() {
   Hooks.on("hotbarDrop", (bar, data, slot) => macros.create5eMacro(data, slot));
 
   // Determine whether a system migration is required and feasible
-  /*
   if ( !game.user.isGM ) return;
   const currentVersion = game.settings.get("trpg", "systemMigrationVersion");
   if ( !currentVersion ) return game.settings.set("trpg", 'systemMigrationVersion', game.system.data.version);
-  const NEEDS_MIGRATION_VERSION = "1.3.0";
+  const NEEDS_MIGRATION_VERSION = "0.9.0";
   const COMPATIBLE_MIGRATION_VERSION = 0.80;
   const needsMigration = currentVersion && isNewerVersion(NEEDS_MIGRATION_VERSION, currentVersion);
   if ( !needsMigration ) return;
 
   // Perform the migration
   if ( currentVersion && isNewerVersion(COMPATIBLE_MIGRATION_VERSION, currentVersion) ) {
-    const warning = `Your DnD5e system data is from too old a Foundry version and cannot be reliably migrated to the latest version. The process will be attempted, but errors may occur.`;
+    const warning = `O seu sistema TRPG é muito antigo e talvez não seja migrado corretamente para a última versão. O processo acontecerá, mas podem ocorrer erros.`;
     ui.notifications.error(warning, {permanent: true});
   }
   migrations.migrateWorld();
-  */
 });
 
 /* -------------------------------------------- */

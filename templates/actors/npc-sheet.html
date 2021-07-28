@@ -5,7 +5,7 @@
         <img class="profile" src="{{actor.img}}" title="{{actor.name}}" data-edit="img"/>
 
         <section class="header-details flexrow">
-            {{> "systems/dnd5e/templates/actors/parts/actor-warnings.html"}}
+            {{> "systems/trpg/templates/actors/parts/actor-warnings.html"}}
 
             <h1 class="charname">
                 <input name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'TRPG.Name' }}"/>
@@ -26,7 +26,7 @@
                 </div>
                 <div class="proficiency">
                     <span>
-                        {{ localize "DND5E.Proficiency" }} {{numberFormat data.attributes.prof decimals=0 sign=true}}
+                        {{ localize "TRPG.Proficiency" }} {{numberFormat data.attributes.prof decimals=0 sign=true}}
                     </span>
                 </div>
             </aside>

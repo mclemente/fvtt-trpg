@@ -10,7 +10,7 @@ export default class ActorArmorConfig extends DocumentSheet {
     return foundry.utils.mergeObject(super.defaultOptions, {
       id: "actor-armor-config",
       classes: ["dnd5e", "actor-armor-config"],
-      template: "systems/dnd5e/templates/apps/actor-armor.html",
+      template: "systems/trpg/templates/apps/actor-armor.html",
       width: 320,
       height: "auto"
     });
@@ -20,7 +20,7 @@ export default class ActorArmorConfig extends DocumentSheet {
 
   /** @inheritdoc */
   get title() {
-    return `${game.i18n.localize("DND5E.ArmorConfig")}: ${this.document.name}`;
+    return `${game.i18n.localize("TRPG.ArmorConfig")}: ${this.document.name}`;
   }
 
   /* -------------------------------------------- */
@@ -29,14 +29,14 @@ export default class ActorArmorConfig extends DocumentSheet {
   async getData() {
     const actorData = foundry.utils.deepClone(this.object.data.data);
     const data = {
-      config: CONFIG.DND5E,
+      config: CONFIG.TRPG,
       ac: foundry.utils.getProperty(actorData, "attributes.ac"),
       preview: this.object._computeArmorClass(actorData, { ignoreFlat: true }).value,
       formulaDisabled: false
     };
 
     if ( data.ac.calc !== "custom" ) {
-      data.ac.formula = CONFIG.DND5E.armorClasses[data.ac.calc]?.formula || "";
+      data.ac.formula = CONFIG.TRPG.armorClasses[data.ac.calc]?.formula || "";
       data.formulaDisabled = true;
     }
 
@@ -60,7 +60,7 @@ export default class ActorArmorConfig extends DocumentSheet {
     await super._onChangeInput(event);
     const calc = this.form["ac.calc"].value;
     this.form["ac.formula"].disabled = calc !== "custom";
-    if ( calc !== "custom" ) this.form["ac.formula"].value = CONFIG.DND5E.armorClasses[calc]?.formula || "";
+    if ( calc !== "custom" ) this.form["ac.formula"].value = CONFIG.TRPG.armorClasses[calc]?.formula || "";
     const data = mergeObject(this.object.toObject(false), {
       'data.attributes.ac': {calc, formula: this.form["ac.formula"].value}
     });

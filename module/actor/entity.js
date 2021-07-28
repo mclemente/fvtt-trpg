@@ -538,7 +538,7 @@ export default class Actor5e extends Actor {
       return {value: calc.flat};
     }
 
-    const armorTypes = new Set(Object.keys(CONFIG.DND5E.armorTypes));
+    const armorTypes = new Set(Object.keys(CONFIG.TRPG.armorTypes));
     const {armors, shields} = this.itemTypes.equipment.reduce((obj, equip) => {
       const armor = equip.data.data.armor;
       if ( !equip.data.data.equipped || !armorTypes.has(armor?.type) ) return obj;
@@ -548,29 +548,29 @@ export default class Actor5e extends Actor {
     }, {armors: [], shields: []});
 
     if ( armors.length ) {
-      if ( armors.length > 1 ) this._preparationWarnings.push("DND5E.WarnMultipleArmor");
+      if ( armors.length > 1 ) this._preparationWarnings.push("TRPG.WarnMultipleArmor");
       const armorData = armors[0].data.data.armor;
       let ac = armorData.value + Math.min(armorData.dex ?? Infinity, data.abilities.dex.mod);
-      if ( armorData.type === "heavy" ) ac = armorData.value;
+      // if ( armorData.type === "heavy" ) ac = armorData.value;
       if ( (ac > calc.base) && (calc.calc === "default") ) calc.base = ac;
     }
 
     if ( shields.length ) {
-      if ( shields.length > 1 ) this._preparationWarnings.push("DND5E.WarnMultipleShields");
+      if ( shields.length > 1 ) this._preparationWarnings.push("TRPG.WarnMultipleShields");
       const ac = shields[0].data.data.armor.value;
       if ( ac > calc.shield ) calc.shield = ac;
     }
 
     if ( !armors.length || calc.calc !== "default" ) {
-      let formula = calc.calc === "custom" ? calc.formula : CONFIG.DND5E.armorClasses[calc.calc]?.formula;
+      let formula = calc.calc === "custom" ? calc.formula : CONFIG.TRPG.armorClasses[calc.calc]?.formula;
       const rollData = this.getRollData();
       let ac;
       try {
         const replaced = Roll.replaceFormulaData(formula, rollData);
         ac = Roll.safeEval(replaced);
       } catch (err) {
-        this._preparationWarnings.push("DND5E.WarnBadACFormula");
-        formula = CONFIG.DND5E.armorClasses.default.formula;
+        this._preparationWarnings.push("TRPG.WarnBadACFormula");
+        formula = CONFIG.TRPG.armorClasses.default.formula;
         const replaced = Roll.replaceFormulaData(formula, rollData);
         ac = Roll.safeEval(replaced);
       }
@@ -1623,7 +1623,7 @@ export default class Actor5e extends Actor {
 
     // Update regular Actors by creating a new Actor with the Polymorphed data
     await this.sheet.close();
-    Hooks.callAll('dnd5e.transformActor', this, target, d, {
+    Hooks.callAll('trpg.transformActor', this, target, d, {
       keepPhysical, keepMental, keepSaves, keepSkills, mergeSaves, mergeSkills,
       keepClass, keepFeats, keepSpells, keepItems, keepBio, keepVision, transformTokens
     });
@@ -1759,8 +1759,8 @@ export default class Actor5e extends Actor {
    * @param {string} type                "armor", "weapon", or "tool"
    */
   static prepareProficiencies(data, type) {
-    const profs = CONFIG.DND5E[`${type}Proficiencies`];
-    const itemTypes = CONFIG.DND5E[`${type}Ids`];
+    const profs = CONFIG.TRPG[`${type}Proficiencies`];
+    const itemTypes = CONFIG.TRPG[`${type}Ids`];
 
     let values = [];
     if ( data.value ) {
@@ -1768,15 +1768,15 @@ export default class Actor5e extends Actor {
     }
 
     data.selected = {};
-    const pack = game.packs.get(CONFIG.DND5E.sourcePacks.ITEMS);
+    const pack = game.packs.get(CONFIG.TRPG.sourcePacks.ITEMS);
     for ( const key of values ) {
       if ( profs[key] ) {
         data.selected[key] = profs[key];
       } else if ( itemTypes && itemTypes[key] ) {
         const item = pack.index.get(itemTypes[key]);
         data.selected[key] = item.name;
-      } else if ( type === "tool" && CONFIG.DND5E.vehicleTypes[key] ) {
-        data.selected[key] = CONFIG.DND5E.vehicleTypes[key];
+      } else if ( type === "tool" && CONFIG.TRPG.vehicleTypes[key] ) {
+        data.selected[key] = CONFIG.TRPG.vehicleTypes[key];
       }
     }
 

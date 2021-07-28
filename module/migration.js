@@ -128,7 +128,7 @@ export const migrateArmorClass = async function(pack) {
   await pack.configure({locked: false});
   const actors = await pack.getDocuments();
   const updates = [];
-  const armor = new Set(Object.keys(CONFIG.DND5E.armorTypes));
+  const armor = new Set(Object.keys(CONFIG.TRPG.armorTypes));
 
   for ( const actor of actors ) {
     try {
@@ -462,8 +462,8 @@ function _migrateItemAttunement(item, updateData) {
  */
 function _migrateItemRarity(item, updateData) {
   if ( item.data?.rarity === undefined ) return updateData;
-  const rarity = Object.keys(CONFIG.DND5E.itemRarity).find(key =>
-    (CONFIG.DND5E.itemRarity[key].toLowerCase() === item.data.rarity.toLowerCase()) || (key === item.data.rarity)
+  const rarity = Object.keys(CONFIG.TRPG.itemRarity).find(key =>
+    (CONFIG.TRPG.itemRarity[key].toLowerCase() === item.data.rarity.toLowerCase()) || (key === item.data.rarity)
   );
   updateData["data.rarity"] = rarity ?? "";
   return updateData;

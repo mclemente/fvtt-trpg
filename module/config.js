@@ -84,12 +84,14 @@ TRPG.weaponProficiencies = {
  * Used when a new player owned item is created
  * @type {Object}
  */
-DND5E.weaponProficienciesMap = {
+TRPG.weaponProficienciesMap = {
   "natural": true,
   "simpleM": "sim",
   "simpleR": "sim",
   "martialM": "mar",
-  "martialR": "mar"
+  "martialR": "mar",
+	"exoM": "exo",
+	"exoR": "exo"
 };
 
 /* -------------------------------------------- */
@@ -228,13 +230,13 @@ TRPG.itemCapacityTypes = {
  * List of various item rarities.
  * @enum {String}
  */
-DND5E.itemRarity = {
-  "common": "DND5E.ItemRarityCommon",
-  "uncommon": "DND5E.ItemRarityUncommon",
-  "rare": "DND5E.ItemRarityRare",
-  "veryRare": "DND5E.ItemRarityVeryRare",
-  "legendary": "DND5E.ItemRarityLegendary",
-  "artifact": "DND5E.ItemRarityArtifact"
+TRPG.itemRarity = {
+  "common": "TRPG.ItemRarityCommon",
+  "uncommon": "TRPG.ItemRarityUncommon",
+  "rare": "TRPG.ItemRarityRare",
+  "veryRare": "TRPG.ItemRarityVeryRare",
+  "legendary": "TRPG.ItemRarityLegendary",
+  "artifact": "TRPG.ItemRarityArtifact"
 };
 
 /* -------------------------------------------- */
@@ -257,11 +259,11 @@ TRPG.limitedUsePeriods = {
  * @type {object}
  */
 TRPG.armorTypes = {
-  "light": "DND5E.EquipmentLight",
-  "medium": "DND5E.EquipmentMedium",
-  "heavy": "DND5E.EquipmentHeavy",
-  "natural": "DND5E.EquipmentNatural",
-  "shield": "DND5E.EquipmentShield"
+  "light": "TRPG.EquipmentLight",
+  "medium": "TRPG.EquipmentMedium",
+  "heavy": "TRPG.EquipmentHeavy",
+  "natural": "TRPG.EquipmentNatural",
+  "shield": "TRPG.EquipmentShield"
 };
 
 /* -------------------------------------------- */
@@ -284,10 +286,10 @@ TRPG.equipmentTypes = {
  * The various types of vehicles in which characters can be proficient.
  * @enum {string}
  */
-DND5E.vehicleTypes = {
-  "air": "DND5E.VehicleTypeAir",
-  "land": "DND5E.VehicleTypeLand",
-  "water": "DND5E.VehicleTypeWater"
+TRPG.vehicleTypes = {
+  "air": "TRPG.VehicleTypeAir",
+  "land": "TRPG.VehicleTypeLand",
+  "water": "TRPG.VehicleTypeWater"
 };
 
 /* -------------------------------------------- */
@@ -308,7 +310,7 @@ TRPG.armorProficiencies = {
  * Used when a new player owned item is created
  * @type {Object}
  */
-DND5E.armorProficienciesMap = {
+TRPG.armorProficienciesMap = {
   "natural": true,
   "clothing": true,
   "light": "lgt",
@@ -323,7 +325,7 @@ DND5E.armorProficienciesMap = {
  *
  * @enum {string}
  */
-DND5E.armorIds = {
+TRPG.armorIds = {
   "breastplate": "SK2HATQ4abKUlV8i",
   "chainmail": "rLMflzmxpe8JGTOA",
   "chainshirt": "p2zChy24ZJdVqMSH",
@@ -343,7 +345,7 @@ DND5E.armorIds = {
  *
  * @enum {string}
  */
-DND5E.shieldIds = {
+TRPG.shieldIds = {
   "shield": "sSs3hSzkKBMNBgTs"
 };
 
@@ -351,29 +353,13 @@ DND5E.shieldIds = {
  * Common armor class calculations.
  * @enum {object}
  */
-DND5E.armorClasses = {
+TRPG.armorClasses = {
   "default": {
-    "label": "DND5E.ArmorClassDefault",
+    "label": "TRPG.ArmorClassDefault",
     "formula": "@attributes.ac.base + @abilities.dex.mod"
   },
-  "mage": {
-    "label": "DND5E.ArmorClassMage",
-    "formula": "13 + @abilities.dex.mod"
-  },
-  "draconic": {
-    "label": "DND5E.ArmorClassDraconic",
-    "formula": "13 + @abilities.dex.mod"
-  },
-  "unarmoredMonk": {
-    "label": "DND5E.ArmorClassUnarmoredMonk",
-    "formula": "10 + @abilities.dex.mod + @abilities.wis.mod"
-  },
-  "unarmoredBarb": {
-    "label": "DND5E.ArmorClassUnarmoredBarbarian",
-    "formula": "10 + @abilities.dex.mod + @abilities.con.mod"
-  },
   "custom": {
-    "label": "DND5E.ArmorClassCustom"
+    "label": "TRPG.ArmorClassCustom"
   }
 };
 
