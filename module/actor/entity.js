@@ -184,9 +184,10 @@ export default class Actor5e extends Actor {
     this._computeSpellcastingProgression(this.data);
 
     // Prepare armor class data
-    const {armor, shield} = this._computeArmorClass(data);
-    this.armor = armor || null;
-    this.shield = shield || null;
+    const ac = this._computeArmorClass(data);
+    this.armor = ac.equippedArmor || null;
+    this.shield = ac.equippedShield || null;
+    if ( ac.warnings ) this._preparationWarnings.push(...ac.warnings);
   }
 
   /* -------------------------------------------- */
@@ -525,17 +526,31 @@ export default class Actor5e extends Actor {
 
   /**
    * Determine a character's AC value from their equipped armor and shield.
-   * @param {object} data
-   * @param {object} [options]
-   * @param {boolean} [options.ignoreFlat]  Should ac.flat be ignored while calculating the AC?
-   * @return {Number}                       Calculated armor value.
+   * @param {object} data      Note that this object will be mutated.
+   * @return {{
+   *   calc: string,
+   *   value: number,
+   *   base: number,
+   *   shield: number,
+   *   bonus: number,
+   *   cover: number,
+   *   flat: number,
+   *   equippedArmor: Item5e,
+   *   equippedShield: Item5e,
+   *   warnings: string[]
+   * }}
    * @private
    */
-  _computeArmorClass(data, { ignoreFlat=false }={}) {
-    const calc = data.attributes.ac;
-    if ( !ignoreFlat && (calc.flat !== null) ) {
-      calc.value = calc.flat;
-      return {value: calc.flat};
+  _computeArmorClass(data) {
+
+    // Get AC configuration and apply automatic migrations for older data structures
+    const ac = data.attributes.ac;
+    ac.warnings = [];
+    let cfg = CONFIG.TRPG.armorClasses[ac.calc];
+    if ( !cfg ) {
+      ac.calc = "flat";
+      if ( Number.isNumeric(ac.value) ) ac.flat = Number(ac.value);
+      cfg = CONFIG.TRPG.armorClasses.flat;
     }
 
     const armorTypes = new Set(Object.keys(CONFIG.TRPG.armorTypes));
@@ -547,38 +562,59 @@ export default class Actor5e extends Actor {
       return obj;
     }, {armors: [], shields: []});
 
-    if ( armors.length ) {
-      if ( armors.length > 1 ) this._preparationWarnings.push("TRPG.WarnMultipleArmor");
-      const armorData = armors[0].data.data.armor;
-      let ac = armorData.value + Math.min(armorData.dex ?? Infinity, data.abilities.dex.mod);
-      // if ( armorData.type === "heavy" ) ac = armorData.value;
-      if ( (ac > calc.base) && (calc.calc === "default") ) calc.base = ac;
+    // Determine base AC
+    switch ( ac.calc ) {
+
+      // Flat AC (no additional bonuses)
+      case "flat":
+        ac.value = ac.flat;
+        return ac;
+
+      // Natural AC (includes bonuses)
+      case "natural":
+        ac.base = ac.flat;
+        break;
+
+      // Equipment-based AC
+      case "default":
+        if ( armors.length ) {
+          if ( armors.length > 1 ) ac.warnings.push("TRPG.WarnMultipleArmor");
+          const armorData = armors[0].data.data.armor;
+          const isHeavy = armorData.type === "heavy";
+          ac.dex = isHeavy ? 0 : Math.min(armorData.dex ?? Infinity, data.abilities.dex.mod);
+          ac.base = (armorData.value ?? 0) + ac.dex;
+          ac.equippedArmor = armors[0];
+        } else {
+          ac.dex = data.abilities.dex.mod;
+          ac.base = 10 + ac.dex;
+        }
+        break;
+
+      // Formula-based AC
+      default:
+        let formula = ac.calc === "custom" ? ac.formula : cfg.formula;
+        const rollData = this.getRollData();
+        try {
+          const replaced = Roll.replaceFormulaData(formula, rollData);
+          ac.base = Roll.safeEval(replaced);
+        } catch (err) {
+          ac.warnings.push("TRPG.WarnBadACFormula");
+          const replaced = Roll.replaceFormulaData(CONFIG.TRPG.armorClasses.default.formula, rollData);
+          ac.base = Roll.safeEval(replaced);
+        }
+        break;
     }
 
+    // Equipped Shield
     if ( shields.length ) {
-      if ( shields.length > 1 ) this._preparationWarnings.push("TRPG.WarnMultipleShields");
-      const ac = shields[0].data.data.armor.value;
-      if ( ac > calc.shield ) calc.shield = ac;
+      if ( shields.length > 1 ) ac.warnings.push("TRPG.WarnMultipleShields");
+      ac.shield = shields[0].data.data.armor.value ?? 0;
+      ac.equippedShield = shields[0];
     }
 
-    if ( !armors.length || calc.calc !== "default" ) {
-      let formula = calc.calc === "custom" ? calc.formula : CONFIG.TRPG.armorClasses[calc.calc]?.formula;
-      const rollData = this.getRollData();
-      let ac;
-      try {
-        const replaced = Roll.replaceFormulaData(formula, rollData);
-        ac = Roll.safeEval(replaced);
-      } catch (err) {
-        this._preparationWarnings.push("TRPG.WarnBadACFormula");
-        formula = CONFIG.TRPG.armorClasses.default.formula;
-        const replaced = Roll.replaceFormulaData(formula, rollData);
-        ac = Roll.safeEval(replaced);
-      }
-      calc.base = ac;
-    }
-
-    calc.value = calc.base + calc.shield + calc.bonus + calc.cover;
-    return {value: calc.value, armor: armors[0], shield: shields[0]};
+    // Compute total AC and return
+    ac.value = ac.base + ac.shield + ac.bonus + ac.cover;
+    return ac;
   }
 
   /* -------------------------------------------- */
@@ -986,6 +1022,7 @@ export default class Actor5e extends Actor {
     // Evaluate a global saving throw bonus
     const parts = [];
     const data = {};
+    const speaker = options.speaker || ChatMessage.getSpeaker({actor: this});
 
     // Diamond Soul adds proficiency
     if ( this.getFlag("trpg", "diamondSoul") ) {
@@ -1008,7 +1045,7 @@ export default class Actor5e extends Actor {
       halflingLucky: this.getFlag("trpg", "halflingLucky"),
       targetValue: 10,
       messageData: {
-        speaker: options.speaker || ChatMessage.getSpeaker({actor: this}),
+        speaker: speaker,
         "flags.trpg.roll": {type: "death"}
       }
     });

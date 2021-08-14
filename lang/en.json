@@ -90,6 +90,8 @@
 "TRPG.ArmorClassDefault": "Armadura Equipada",
 "TRPG.ArmorClassMage": "Armadura Arcana",
 "TRPG.ArmorClassDraconic": "Draconic Resilience",
+"TRPG.ArmorClassFlat": "Fixo",
+"TRPG.ArmorClassUnarmored": "Sem Armadura",
 "TRPG.ArmorClassUnarmoredMonk": "Unarmored Defense (Monk)",
 "TRPG.ArmorClassUnarmoredBarbarian": "Unarmored Defense (Barbarian)",
 "TRPG.ArmorClassCustom": "Fórmula Customizada",

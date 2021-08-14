@@ -354,11 +354,19 @@ TRPG.shieldIds = {
  * @enum {object}
  */
 TRPG.armorClasses = {
-  "default": {
+  default: {
     "label": "TRPG.ArmorClassDefault",
     "formula": "@attributes.ac.base + @abilities.dex.mod"
   },
-  "custom": {
+  flat: {
+    label: "TRPG.ArmorClassFlat",
+    formula: "@attributes.ac.flat"
+  },
+  natural: {
+    label: "TRPG.ArmorClassNatural",
+    formula: "@attributes.ac.flat"
+  },
+  custom: {
     "label": "TRPG.ArmorClassCustom"
   }
 };
