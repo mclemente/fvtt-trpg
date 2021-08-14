@@ -188,7 +188,7 @@ Hooks.once("ready", function() {
   if ( !game.user.isGM ) return;
   const currentVersion = game.settings.get("trpg", "systemMigrationVersion");
   if ( !currentVersion ) return game.settings.set("trpg", 'systemMigrationVersion', game.system.data.version);
-  const NEEDS_MIGRATION_VERSION = "0.9.0";
+  const NEEDS_MIGRATION_VERSION = "1.0.0";
   const COMPATIBLE_MIGRATION_VERSION = 0.80;
   const needsMigration = currentVersion && isNewerVersion(NEEDS_MIGRATION_VERSION, currentVersion);
   if ( !needsMigration ) return;
