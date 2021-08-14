@@ -242,7 +242,7 @@ export default class ActorSheet5e extends ActorSheet {
    */
   _prepareArmorClassAttribution(data) {
     const ac = data.attributes.ac;
-    const cfg = CONFIG.DND5E.armorClasses[ac.calc];
+    const cfg = CONFIG.TRPG.armorClasses[ac.calc];
     const attribution = [];
 
     // Base AC Attribution
@@ -307,7 +307,7 @@ export default class ActorSheet5e extends ActorSheet {
 
     // Shield
     if ( ac.shield !== 0 ) attribution.push({
-      label: this.actor.shield?.name ?? game.i18n.localize("DND5E.EquipmentShield"),
+      label: this.actor.shield?.name ?? game.i18n.localize("TRPG.EquipmentShield"),
       mode: CONST.ACTIVE_EFFECT_MODES.ADD,
       value: ac.shield
     });

@@ -109,8 +109,8 @@ export default class ActorSheet5eNPC extends ActorSheet5e {
   getArmorLabel() {
     const ac = this.actor.data.data.attributes.ac;
     const label = [];
-    if ( ac.calc === "default" ) label.push(this.actor.armor?.name || game.i18n.localize("DND5E.ArmorClassUnarmored"));
-    else label.push(game.i18n.localize(CONFIG.DND5E.armorClasses[ac.calc].label));
+    if ( ac.calc === "default" ) label.push(this.actor.armor?.name || game.i18n.localize("TRPG.ArmorClassUnarmored"));
+    else label.push(game.i18n.localize(CONFIG.TRPG.armorClasses[ac.calc].label));
     if ( this.actor.shield ) label.push(this.actor.shield.name);
     return label.filterJoin(", ");
   }

@@ -50,7 +50,7 @@ export default class ActiveEffect5e extends ActiveEffect {
     switch ( a.dataset.action ) {
       case "create":
         return owner.createEmbeddedDocuments("ActiveEffect", [{
-          label: game.i18n.localize("DND5E.EffectNew"),
+          label: game.i18n.localize("TRPG.EffectNew"),
           icon: "icons/svg/aura.svg",
           origin: owner.uuid,
           "duration.rounds": li.dataset.effectType === "temporary" ? 1 : undefined,
@@ -77,24 +77,24 @@ export default class ActiveEffect5e extends ActiveEffect {
     const categories = {
       temporary: {
         type: "temporary",
-        label: game.i18n.localize("DND5E.EffectTemporary"),
+        label: game.i18n.localize("TRPG.EffectTemporary"),
         effects: []
       },
       passive: {
         type: "passive",
-        label: game.i18n.localize("DND5E.EffectPassive"),
+        label: game.i18n.localize("TRPG.EffectPassive"),
         effects: []
       },
       inactive: {
         type: "inactive",
-        label: game.i18n.localize("DND5E.EffectInactive"),
+        label: game.i18n.localize("TRPG.EffectInactive"),
         effects: []
       },
       suppressed: {
         type: "suppressed",
-        label: game.i18n.localize("DND5E.EffectUnavailable"),
+        label: game.i18n.localize("TRPG.EffectUnavailable"),
         effects: [],
-        info: [game.i18n.localize("DND5E.EffectUnavailableInfo")]
+        info: [game.i18n.localize("TRPG.EffectUnavailableInfo")]
       }
     };
 

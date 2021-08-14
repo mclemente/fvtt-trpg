@@ -32,16 +32,16 @@ export default class ActorArmorConfig extends DocumentSheet {
     const ac = foundry.utils.getProperty(actorData, "attributes.ac");
 
     // Get configuration data for the calculation mode
-    let cfg = CONFIG.DND5E.armorClasses[ac.calc];
+    let cfg = CONFIG.TRPG.armorClasses[ac.calc];
     if ( !cfg ) {
       ac.calc = "flat";
-      cfg = CONFIG.DND5E.armorClasses.flat;
+      cfg = CONFIG.TRPG.armorClasses.flat;
     }
 
     // Return context data
     return {
       ac: ac,
-      calculations: CONFIG.DND5E.armorClasses,
+      calculations: CONFIG.TRPG.armorClasses,
       value: this.object._computeArmorClass(actorData).value,
       valueDisabled: !["flat", "natural"].includes(ac.calc),
       formula: ac.calc === "custom" ? ac.formula : cfg.formula,
@@ -71,7 +71,7 @@ export default class ActorArmorConfig extends DocumentSheet {
 
     // Reference form data
     const calc = this.form["ac.calc"].value;
-    const cfg = CONFIG.DND5E.armorClasses[calc];
+    const cfg = CONFIG.TRPG.armorClasses[calc];
     const enableFlat = ["flat", "natural"].includes(calc);
 
     // Handle changes to the calculation mode specifically
