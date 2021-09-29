@@ -1,3 +1,13 @@
+
+.dnd5e.sheet .rest.long-rest {
+  width: calc(100% - 2px);
+  padding: 1px 3px;
+  display: block;
+  height: 24px;
+  line-height: 24px;
+  border: 1px solid transparent;
+}
+
 /*Skill Customization */
 .dnd5e.sheet.actor .skills-list > .skill > .skill-cust-bonus,
 .dnd5e.sheet.actor .attribute .skill .skill-cust-bonus,
