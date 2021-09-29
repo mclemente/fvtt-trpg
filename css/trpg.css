@@ -707,7 +707,8 @@
   font-size: 18px;
 }
 .dnd5e.sheet.actor .sheet-header .summary input,
-.dnd5e.sheet.actor .sheet-header .summary span {
+.dnd5e.sheet.actor .sheet-header .summary span,
+.dnd5e.sheet .rest.long-rest {
   display: block;
   height: 24px;
   line-height: 24px;

@@ -2,9 +2,6 @@
 .dnd5e.sheet .rest.long-rest {
   width: calc(100% - 2px);
   padding: 1px 3px;
-  display: block;
-  height: 24px;
-  line-height: 24px;
   border: 1px solid transparent;
 }
 
