@@ -1,58 +1,99 @@
 {
-  "name": "trpg",
-  "title": "Tormenta RPG e Império de Jade",
-  "description": "Um sistema para jogar Tormenta RPG e Império de Jade no FoundryVTT.",
-  "author": "Matheus Clemente",
-  "authors": [],
-  "url": "",
-  "version": "1.0.1",
-  "minimumCoreVersion": "0.8.2",
-  "compatibleCoreVersion": "0.8.8",
-  "scripts": [],
-  "esmodules": [
-    "trpg.js"
-  ],
-  "styles": [
-    "css/trpg.css", "css/extras.css"
-  ],
-  "languages": [
-    {
-      "lang": "en",
-      "name": "English",
-      "path": "lang/en.json"
-    }
-  ],
-  "packs": [
-    {
-      "name": "classes",
-      "label": "Classes",
-      "path": "./packs/classes.db",
-      "private": false,
-      "entity": "Item",
-      "system": "trpg"
-    },
-    {
-      "name": "habilidades-de-classe",
-      "label": "Habilidades de Classe",
-      "path": "./packs/habilidades-de-classe.db",
-      "private": false,
-      "entity": "Item",
-      "system": "trpg"
-    },
-    {
-      "label": "Talentos",
-      "entity": "Item",
-      "name": "talentos",
-      "path": "./packs/talentos.db",
-      "private": false,
-      "system": "trpg"
-    }
-  ],
-  "socket": true,
-  "manifest": "https://github.com/mclemente/fvtt-trpg/releases/latest/download/system.json",
-  "download": "https://github.com/mclemente/fvtt-trpg/releases/latest/download/trpg.zip",
-  "gridDistance": 1.5,
-  "gridUnits": "m",
-  "primaryTokenAttribute": "attributes.hp",
-  "secondaryTokenAttribute": "attributes.pm"
+	"name": "trpg",
+	"title": "Tormenta RPG e Império de Jade",
+	"description": "Um sistema para jogar Tormenta RPG e Império de Jade no FoundryVTT.",
+	"author": "Matheus Clemente",
+	"authors": [],
+	"url": "",
+	"version": "1.0.1",
+	"minimumCoreVersion": "0.8.2",
+	"compatibleCoreVersion": "0.8.8",
+	"scripts": [],
+	"esmodules": ["trpg.js"],
+	"styles": ["css/trpg.css", "css/extras.css"],
+	"languages": [
+		{
+			"lang": "en",
+			"name": "English",
+			"path": "lang/en.json"
+		}
+	],
+	"packs": [
+		{
+			"name": "classes",
+			"label": "Classes",
+			"path": "./packs/classes.db",
+			"private": false,
+			"entity": "Item",
+			"system": "trpg"
+		},
+		{
+			"name": "habilidades-de-classe",
+			"label": "Habilidades de Classe",
+			"path": "./packs/habilidades-de-classe.db",
+			"private": false,
+			"entity": "Item",
+			"system": "trpg"
+		},
+		{
+			"label": "Talentos",
+			"entity": "Item",
+			"name": "talentos",
+			"path": "./packs/talentos.db",
+			"private": false,
+			"system": "trpg"
+		},
+		{
+			"name": "classes-idj",
+			"label": "Classes (Império de Jade)",
+			"path": "./packs/classes-idj.db",
+			"private": false,
+			"entity": "Item",
+			"system": "trpg"
+		},
+		{
+			"name": "habilidades-de-classe",
+			"label": "Habilidades de Classe",
+			"entity": "Item",
+			"system": "trpg"
+		},
+		{
+			"name": "habilidades-de-classe-idj",
+			"label": "Habilidades de Classe (Império de Jade)",
+			"path": "./packs/habilidades-de-classe-idj.db",
+			"private": false,
+			"entity": "Item",
+			"system": "trpg"
+		},
+		{
+			"label": "Talentos",
+			"entity": "Item",
+			"path": "./packs/talentos.db",
+			"private": false,
+			"system": "trpg"
+		},
+		{
+			"label": "Talentos (Império de Jade)",
+			"entity": "Item",
+			"name": "talentos-idj",
+			"path": "./packs/talentos-idj.db",
+			"private": false,
+			"system": "trpg"
+		},
+		{
+			"label": "Mercadorias (Império de Jade)",
+			"entity": "Item",
+			"name": "mercadorias-idj",
+			"path": "./packs/mercadorias-idj.db",
+			"private": false,
+			"system": "trpg"
+		}
+	],
+	"socket": true,
+	"manifest": "https://github.com/mclemente/fvtt-trpg/releases/latest/download/system.json",
+	"download": "https://github.com/mclemente/fvtt-trpg/releases/latest/download/trpg.zip",
+	"gridDistance": 1.5,
+	"gridUnits": "m",
+	"primaryTokenAttribute": "attributes.hp",
+	"secondaryTokenAttribute": "attributes.pm"
 }
