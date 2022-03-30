@@ -587,7 +587,7 @@ export default class Actor5e extends Actor {
 					const armorData = armors[0].data.data.armor;
 					const isHeavy = armorData.type === "heavy";
 					ac.dex = isHeavy ? 0 : Math.min(armorData.dex ?? Infinity, data.abilities.dex.mod);
-					ac.base = (armorData.value ?? 0) + ac.dex;
+					ac.base = 10 + (armorData.value ?? 0) + ac.dex;
 					ac.equippedArmor = armors[0];
 				} else {
 					ac.dex = data.abilities.dex.mod;
