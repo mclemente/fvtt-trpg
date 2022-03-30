@@ -36,5 +36,8 @@
 }
 
 .dnd5e.sheet.actor ul.skills-list {
-    flex: 0 0 230px;
+	flex: 0 0 230px;
+}
+.dnd5e.sheet.actor .tab.attributes {
+	scrollbar-width: thin;
 }
