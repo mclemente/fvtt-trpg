@@ -262,6 +262,14 @@ export default class ActorSheet5e extends ActorSheet {
 
 			// Equipment-based AC
 			case "default":
+				const halfLevel = Math.floor(this.actor.data.data.details.level / 2);
+				if (halfLevel) {
+					attribution.push({
+						label: game.i18n.localize("TRPG.ArmorClassHalfLevel"),
+						mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+						value: halfLevel,
+					});
+				}
 				const hasArmor = !!this.actor.armor;
 				attribution.push({
 					label: hasArmor ? this.actor.armor.name : game.i18n.localize("TRPG.ArmorClassUnarmored"),

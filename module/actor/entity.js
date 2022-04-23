@@ -582,16 +582,17 @@ export default class Actor5e extends Actor {
 
 			// Equipment-based AC
 			case "default":
+				ac.base = 10 + Math.floor(data.details.level / 2);
 				if (armors.length) {
 					if (armors.length > 1) ac.warnings.push("TRPG.WarnMultipleArmor");
 					const armorData = armors[0].data.data.armor;
 					const isHeavy = armorData.type === "heavy";
 					ac.dex = isHeavy ? 0 : Math.min(armorData.dex ?? Infinity, data.abilities.dex.mod);
-					ac.base = 10 + (armorData.value ?? 0) + ac.dex;
+					ac.base += (armorData.value ?? 0) + ac.dex;
 					ac.equippedArmor = armors[0];
 				} else {
-					ac.dex = data.abilities.dex.mod;
-					ac.base = 10 + ac.dex;
+					ac.dex += data.abilities.dex.mod;
+					ac.base += ac.dex;
 				}
 				break;
 
