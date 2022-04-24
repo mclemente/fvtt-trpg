@@ -1154,7 +1154,7 @@ export function injectActorSheet(app, html, data) {
 				textBoxElement.val("-");
 			} else {
 				try {
-					const rollResult = await new Roll(`1d20 + ${bonusValue}`).roll();
+					const rollResult = await new Roll(`1d20 + ${bonusValue}`).roll({ async: false });
 					const valid = !isNaN(rollResult._total);
 
 					if (valid) {
@@ -1194,7 +1194,7 @@ export function injectActorSheet(app, html, data) {
 				textBoxElement.val("-");
 			} else {
 				try {
-					const rollResult = await new Roll(`1d20 + ${bonusValue}`).roll();
+					const rollResult = await new Roll(`1d20 + ${bonusValue}`).roll({ async: false });
 					const valid = !isNaN(rollResult._total);
 
 					if (valid) {

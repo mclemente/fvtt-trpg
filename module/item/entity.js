@@ -1059,18 +1059,18 @@ export default class Item5e extends Item {
 	 *
 	 * @return {Promise<Roll>}   A Promise which resolves to the created Roll instance
 	 */
-	async rollFormula(options = {}) {
+	async rollFormula({ spellLevel } = {}) {
 		if (!this.data.data.formula) {
 			throw new Error("This Item does not have a formula to roll!");
 		}
 
 		// Define Roll Data
 		const rollData = this.getRollData();
-		if (options.spellLevel) rollData.item.level = options.spellLevel;
+		if (spellLevel) rollData.item.level = spellLevel;
 		const title = `${this.name} - ${game.i18n.localize("TRPG.OtherFormula")}`;
 
 		// Invoke the roll and submit it to chat
-		const roll = new Roll(rollData.item.formula, rollData).roll();
+		const roll = await new Roll(rollData.item.formula, rollData).roll({ async: true });
 		roll.toMessage({
 			speaker: ChatMessage.getSpeaker({ actor: this.actor }),
 			flavor: title,
@@ -1091,7 +1091,7 @@ export default class Item5e extends Item {
 		if (!data.recharge.value) return;
 
 		// Roll the check
-		const roll = new Roll("1d6").roll();
+		const roll = new Roll("1d6").roll({ async: true });
 		const success = roll.total >= parseInt(data.recharge.value);
 
 		// Display a Chat Message
