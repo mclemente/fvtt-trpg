@@ -1,4 +1,4 @@
-import {ClassFeatures} from "./classFeatures.js"
+import { ClassFeatures } from "./classFeatures.js";
 
 // Namespace Configuration Values
 export const TRPG = {};
@@ -11,23 +11,23 @@ TRPG.ASCII = ``;
  * @type {Object}
  */
 TRPG.abilities = {
-	"str": "TRPG.AbilityStr",
-	"dex": "TRPG.AbilityDex",
-	"con": "TRPG.AbilityCon",
-	"int": "TRPG.AbilityInt",
-	"wis": "TRPG.AbilityWis",
-	"cha": "TRPG.AbilityCha",
-	"hon": "TRPG.AbilityHon"
+	str: "TRPG.AbilityStr",
+	dex: "TRPG.AbilityDex",
+	con: "TRPG.AbilityCon",
+	int: "TRPG.AbilityInt",
+	wis: "TRPG.AbilityWis",
+	cha: "TRPG.AbilityCha",
+	hon: "TRPG.AbilityHon",
 };
 
 TRPG.abilityAbbreviations = {
-	"str": "TRPG.AbilityStrAbbr",
-	"dex": "TRPG.AbilityDexAbbr",
-	"con": "TRPG.AbilityConAbbr",
-	"int": "TRPG.AbilityIntAbbr",
-	"wis": "TRPG.AbilityWisAbbr",
-	"cha": "TRPG.AbilityChaAbbr",
-	"hon": "TRPG.AbilityHonAbbr"
+	str: "TRPG.AbilityStrAbbr",
+	dex: "TRPG.AbilityDexAbbr",
+	con: "TRPG.AbilityConAbbr",
+	int: "TRPG.AbilityIntAbbr",
+	wis: "TRPG.AbilityWisAbbr",
+	cha: "TRPG.AbilityChaAbbr",
+	hon: "TRPG.AbilityHonAbbr",
 };
 
 /* -------------------------------------------- */
@@ -37,15 +37,15 @@ TRPG.abilityAbbreviations = {
  * @type {Object}
  */
 TRPG.alignments = {
-	'lg': "TRPG.AlignmentLG",
-	'ng': "TRPG.AlignmentNG",
-	'cg': "TRPG.AlignmentCG",
-	'ln': "TRPG.AlignmentLN",
-	'tn': "TRPG.AlignmentTN",
-	'cn': "TRPG.AlignmentCN",
-	'le': "TRPG.AlignmentLE",
-	'ne': "TRPG.AlignmentNE",
-	'ce': "TRPG.AlignmentCE"
+	lg: "TRPG.AlignmentLG",
+	ng: "TRPG.AlignmentNG",
+	cg: "TRPG.AlignmentCG",
+	ln: "TRPG.AlignmentLN",
+	tn: "TRPG.AlignmentTN",
+	cn: "TRPG.AlignmentCN",
+	le: "TRPG.AlignmentLE",
+	ne: "TRPG.AlignmentNE",
+	ce: "TRPG.AlignmentCE",
 };
 
 /* -------------------------------------------- */
@@ -67,16 +67,15 @@ TRPG.attunementTypes = {
 TRPG.attunements = {
 	0: "TRPG.AttunementNone",
 	1: "TRPG.AttunementRequired",
-	2: "TRPG.AttunementAttuned"
+	2: "TRPG.AttunementAttuned",
 };
 
 /* -------------------------------------------- */
 
-
 TRPG.weaponProficiencies = {
-	"sim": "TRPG.WeaponSimpleProficiency",
-	"mar": "TRPG.WeaponMartialProficiency",
-	"exo": "Armas Exóticas",
+	sim: "TRPG.WeaponSimpleProficiency",
+	mar: "TRPG.WeaponMartialProficiency",
+	exo: "Armas Exóticas",
 };
 
 /**
@@ -85,13 +84,13 @@ TRPG.weaponProficiencies = {
  * @type {Object}
  */
 TRPG.weaponProficienciesMap = {
-  "natural": true,
-  "simpleM": "sim",
-  "simpleR": "sim",
-  "martialM": "mar",
-  "martialR": "mar",
-	"exoM": "exo",
-	"exoR": "exo"
+	natural: true,
+	simpleM: "sim",
+	simpleR: "sim",
+	martialM: "mar",
+	martialR: "mar",
+	exoM: "exo",
+	exoR: "exo",
 };
 
 /* -------------------------------------------- */
@@ -101,18 +100,17 @@ TRPG.weaponProficienciesMap = {
  * @type {Object}
  */
 TRPG.timePeriods = {
-	"inst": "TRPG.TimeInst",
-	"turn": "TRPG.TimeTurn",
-	"round": "TRPG.TimeRound",
-	"minute": "TRPG.TimeMinute",
-	"hour": "TRPG.TimeHour",
-	"day": "TRPG.TimeDay",
-	"month": "TRPG.TimeMonth",
-	"year": "TRPG.TimeYear",
-	"perm": "TRPG.TimePerm",
-	"spec": "TRPG.Special"
+	inst: "TRPG.TimeInst",
+	turn: "TRPG.TimeTurn",
+	round: "TRPG.TimeRound",
+	minute: "TRPG.TimeMinute",
+	hour: "TRPG.TimeHour",
+	day: "TRPG.TimeDay",
+	month: "TRPG.TimeMonth",
+	year: "TRPG.TimeYear",
+	perm: "TRPG.TimePerm",
+	spec: "TRPG.Special",
 };
-
 
 /* -------------------------------------------- */
 
@@ -121,15 +119,15 @@ TRPG.timePeriods = {
  * @type {Object}
  */
 TRPG.abilityActivationTypes = {
-	"none": "TRPG.None",
-	"action": "TRPG.Action",
-	"bonus": "TRPG.BonusAction",
-	"reaction": "TRPG.Reaction",
-	"minute": TRPG.timePeriods.minute,
-	"hour": TRPG.timePeriods.hour,
-	"day": TRPG.timePeriods.day,
-	"special": TRPG.timePeriods.spec,
-	"free": "TRPG.FreeAction",
+	none: "TRPG.None",
+	action: "TRPG.Action",
+	bonus: "TRPG.BonusAction",
+	reaction: "TRPG.Reaction",
+	minute: TRPG.timePeriods.minute,
+	hour: TRPG.timePeriods.hour,
+	day: TRPG.timePeriods.day,
+	special: TRPG.timePeriods.spec,
+	free: "TRPG.FreeAction",
 	// "legendary": "TRPG.LegAct",
 	// "lair": "TRPG.LairAct",
 	// "crew": "TRPG.VehicleCrewAction"
@@ -137,40 +135,38 @@ TRPG.abilityActivationTypes = {
 
 /* -------------------------------------------- */
 
-
 TRPG.abilityConsumptionTypes = {
-	"ammo": "TRPG.ConsumeAmmunition",
-	"attribute": "TRPG.ConsumeAttribute",
-	"material": "TRPG.ConsumeMaterial",
-	"charges": "TRPG.ConsumeCharges"
+	ammo: "TRPG.ConsumeAmmunition",
+	attribute: "TRPG.ConsumeAttribute",
+	material: "TRPG.ConsumeMaterial",
+	charges: "TRPG.ConsumeCharges",
 };
-
 
 /* -------------------------------------------- */
 
 // Creature Sizes
 TRPG.actorSizes = {
-	"infimo": "TRPG.SizeInfimo",
-	"diminuto": "TRPG.SizeDiminuto",
-	"tiny": "TRPG.SizeTiny",
-	"sm": "TRPG.SizeSmall",
-	"med": "TRPG.SizeMedium",
-	"lg": "TRPG.SizeLarge",
-	"huge": "TRPG.SizeHuge",
-	"grg": "TRPG.SizeGargantuan",
-	"colossal": "TRPG.SizeColossal"
+	infimo: "TRPG.SizeInfimo",
+	diminuto: "TRPG.SizeDiminuto",
+	tiny: "TRPG.SizeTiny",
+	sm: "TRPG.SizeSmall",
+	med: "TRPG.SizeMedium",
+	lg: "TRPG.SizeLarge",
+	huge: "TRPG.SizeHuge",
+	grg: "TRPG.SizeGargantuan",
+	colossal: "TRPG.SizeColossal",
 };
 
 TRPG.tokenSizes = {
-	"infimo": 1,
-	"diminuto": 1,
-	"tiny": 1,
-	"sm": 1,
-	"med": 1,
-	"lg": 2,
-	"huge": 3,
-	"grg": 4,
-	"colossal": 5
+	infimo: 1,
+	diminuto: 1,
+	tiny: 1,
+	sm: 1,
+	med: 1,
+	lg: 2,
+	huge: 3,
+	grg: 4,
+	colossal: 5,
 };
 
 /**
@@ -178,10 +174,10 @@ TRPG.tokenSizes = {
  * @enum {number}
  */
 TRPG.tokenHPColors = {
-	temp: 0x66CCFF,
+	temp: 0x66ccff,
 	tempmax: 0x440066,
-	negmax: 0x550000
-}
+	negmax: 0x550000,
+};
 
 /* -------------------------------------------- */
 
@@ -190,14 +186,13 @@ TRPG.tokenHPColors = {
  * @type {Object}
  */
 TRPG.creatureTypes = {
-	"animal": "TRPG.CreatureAnimal",
-	"construto": "TRPG.CreatureConstruto",
-	"espirito": "TRPG.CreatureEspirito",
-	"humanoid": "TRPG.CreatureHumanoide",
-	"monstro": "TRPG.CreatureMonstro",
-	"mortoVivo": "TRPG.CreatureMortoVivo"
+	animal: "TRPG.CreatureAnimal",
+	construto: "TRPG.CreatureConstruto",
+	espirito: "TRPG.CreatureEspirito",
+	humanoid: "TRPG.CreatureHumanoide",
+	monstro: "TRPG.CreatureMonstro",
+	mortoVivo: "TRPG.CreatureMortoVivo",
 };
-
 
 /* -------------------------------------------- */
 
@@ -206,22 +201,22 @@ TRPG.creatureTypes = {
  * @type {Object}
  */
 TRPG.itemActionTypes = {
-	"mwak": "TRPG.ActionMWAK",
-	"rwak": "TRPG.ActionRWAK",
+	mwak: "TRPG.ActionMWAK",
+	rwak: "TRPG.ActionRWAK",
 	// "msak": "TRPG.ActionMSAK",
 	// "rsak": "TRPG.ActionRSAK",
-	"save": "TRPG.ActionSave",
-	"heal": "TRPG.ActionHeal",
-	"abil": "TRPG.ActionAbil",
-	"util": "TRPG.ActionUtil",
-	"other": "TRPG.ActionOther"
+	save: "TRPG.ActionSave",
+	heal: "TRPG.ActionHeal",
+	abil: "TRPG.ActionAbil",
+	util: "TRPG.ActionUtil",
+	other: "TRPG.ActionOther",
 };
 
 /* -------------------------------------------- */
 
 TRPG.itemCapacityTypes = {
-	"items": "TRPG.ItemContainerCapacityItems",
-	"weight": "TRPG.ItemContainerCapacityWeight"
+	items: "TRPG.ItemContainerCapacityItems",
+	weight: "TRPG.ItemContainerCapacityWeight",
 };
 
 /* -------------------------------------------- */
@@ -231,12 +226,12 @@ TRPG.itemCapacityTypes = {
  * @enum {String}
  */
 TRPG.itemRarity = {
-  "common": "TRPG.ItemRarityCommon",
-  "uncommon": "TRPG.ItemRarityUncommon",
-  "rare": "TRPG.ItemRarityRare",
-  "veryRare": "TRPG.ItemRarityVeryRare",
-  "legendary": "TRPG.ItemRarityLegendary",
-  "artifact": "TRPG.ItemRarityArtifact"
+	common: "TRPG.ItemRarityCommon",
+	uncommon: "TRPG.ItemRarityUncommon",
+	rare: "TRPG.ItemRarityRare",
+	veryRare: "TRPG.ItemRarityVeryRare",
+	legendary: "TRPG.ItemRarityLegendary",
+	artifact: "TRPG.ItemRarityArtifact",
 };
 
 /* -------------------------------------------- */
@@ -247,9 +242,9 @@ TRPG.itemRarity = {
  */
 TRPG.limitedUsePeriods = {
 	// "sr": "TRPG.ShortRest",
-	"lr": "TRPG.LongRest",
-	"day": "TRPG.Day",
-	"charges": "TRPG.Charges"
+	lr: "TRPG.LongRest",
+	day: "TRPG.Day",
+	charges: "TRPG.Charges",
 };
 
 /* -------------------------------------------- */
@@ -259,11 +254,11 @@ TRPG.limitedUsePeriods = {
  * @type {object}
  */
 TRPG.armorTypes = {
-  "light": "TRPG.EquipmentLight",
-  "medium": "TRPG.EquipmentMedium",
-  "heavy": "TRPG.EquipmentHeavy",
-  "natural": "TRPG.EquipmentNatural",
-  "shield": "TRPG.EquipmentShield"
+	light: "TRPG.EquipmentLight",
+	medium: "TRPG.EquipmentMedium",
+	heavy: "TRPG.EquipmentHeavy",
+	natural: "TRPG.EquipmentNatural",
+	shield: "TRPG.EquipmentShield",
 };
 
 /* -------------------------------------------- */
@@ -273,11 +268,11 @@ TRPG.armorTypes = {
  * @type {Object}
  */
 TRPG.equipmentTypes = {
-  "bonus": "TRPG.EquipmentBonus",
-  "clothing": "TRPG.EquipmentClothing",
-  "trinket": "TRPG.EquipmentTrinket",
-  "vehicle": "TRPG.EquipmentVehicle",
-  ...TRPG.armorTypes
+	bonus: "TRPG.EquipmentBonus",
+	clothing: "TRPG.EquipmentClothing",
+	trinket: "TRPG.EquipmentTrinket",
+	vehicle: "TRPG.EquipmentVehicle",
+	...TRPG.armorTypes,
 };
 
 /* -------------------------------------------- */
@@ -287,9 +282,9 @@ TRPG.equipmentTypes = {
  * @enum {string}
  */
 TRPG.vehicleTypes = {
-  "air": "TRPG.VehicleTypeAir",
-  "land": "TRPG.VehicleTypeLand",
-  "water": "TRPG.VehicleTypeWater"
+	air: "TRPG.VehicleTypeAir",
+	land: "TRPG.VehicleTypeLand",
+	water: "TRPG.VehicleTypeWater",
 };
 
 /* -------------------------------------------- */
@@ -299,10 +294,10 @@ TRPG.vehicleTypes = {
  * @type {Object}
  */
 TRPG.armorProficiencies = {
-	"lgt": TRPG.equipmentTypes.light,
-	"med": TRPG.equipmentTypes.medium,
-	"hvy": TRPG.equipmentTypes.heavy,
-	"shl": "TRPG.EquipmentShieldProficiency"
+	lgt: TRPG.equipmentTypes.light,
+	med: TRPG.equipmentTypes.medium,
+	hvy: TRPG.equipmentTypes.heavy,
+	shl: "TRPG.EquipmentShieldProficiency",
 };
 
 /**
@@ -311,12 +306,12 @@ TRPG.armorProficiencies = {
  * @type {Object}
  */
 TRPG.armorProficienciesMap = {
-  "natural": true,
-  "clothing": true,
-  "light": "lgt",
-  "medium": "med",
-  "heavy": "hvy",
-  "shield": "shl"
+	natural: true,
+	clothing: true,
+	light: "lgt",
+	medium: "med",
+	heavy: "hvy",
+	shield: "shl",
 };
 
 /**
@@ -326,18 +321,18 @@ TRPG.armorProficienciesMap = {
  * @enum {string}
  */
 TRPG.armorIds = {
-  "breastplate": "SK2HATQ4abKUlV8i",
-  "chainmail": "rLMflzmxpe8JGTOA",
-  "chainshirt": "p2zChy24ZJdVqMSH",
-  "halfplate": "vsgmACFYINloIdPm",
-  "hide": "n1V07puo0RQxPGuF",
-  "leather": "WwdpHLXGX5r8uZu5",
-  "padded": "GtKV1b5uqFQqpEni",
-  "plate": "OjkIqlW2UpgFcjZa",
-  "ringmail": "nsXZejlmgalj4he9",
-  "scalemail": "XmnlF5fgIO3tg6TG",
-  "splint": "cKpJmsJmU8YaiuqG",
-  "studded": "TIV3B1vbrVHIhQAm"
+	breastplate: "SK2HATQ4abKUlV8i",
+	chainmail: "rLMflzmxpe8JGTOA",
+	chainshirt: "p2zChy24ZJdVqMSH",
+	halfplate: "vsgmACFYINloIdPm",
+	hide: "n1V07puo0RQxPGuF",
+	leather: "WwdpHLXGX5r8uZu5",
+	padded: "GtKV1b5uqFQqpEni",
+	plate: "OjkIqlW2UpgFcjZa",
+	ringmail: "nsXZejlmgalj4he9",
+	scalemail: "XmnlF5fgIO3tg6TG",
+	splint: "cKpJmsJmU8YaiuqG",
+	studded: "TIV3B1vbrVHIhQAm",
 };
 
 /**
@@ -346,7 +341,7 @@ TRPG.armorIds = {
  * @enum {string}
  */
 TRPG.shieldIds = {
-  "shield": "sSs3hSzkKBMNBgTs"
+	shield: "sSs3hSzkKBMNBgTs",
 };
 
 /**
@@ -354,21 +349,21 @@ TRPG.shieldIds = {
  * @enum {object}
  */
 TRPG.armorClasses = {
-  default: {
-    "label": "TRPG.ArmorClassDefault",
-    "formula": "@attributes.ac.base + @abilities.dex.mod"
-  },
-  flat: {
-    label: "TRPG.ArmorClassFlat",
-    formula: "@attributes.ac.flat"
-  },
-  natural: {
-    label: "TRPG.ArmorClassNatural",
-    formula: "@attributes.ac.flat"
-  },
-  custom: {
-    "label": "TRPG.ArmorClassCustom"
-  }
+	default: {
+		label: "TRPG.ArmorClassDefault",
+		formula: "10 + (Nível/2) + mod. de Destreza + armadura",
+	},
+	flat: {
+		label: "TRPG.ArmorClassFlat",
+		formula: "@attributes.ac.flat",
+	},
+	natural: {
+		label: "TRPG.ArmorClassNatural",
+		formula: "@attributes.ac.flat",
+	},
+	custom: {
+		label: "TRPG.ArmorClassCustom",
+	},
 };
 
 /* -------------------------------------------- */
@@ -378,14 +373,14 @@ TRPG.armorClasses = {
  * @type {Object}
  */
 TRPG.consumableTypes = {
-	"ammo": "TRPG.ConsumableAmmunition",
-	"potion": "TRPG.ConsumablePotion",
-	"poison": "TRPG.ConsumablePoison",
-	"food": "TRPG.ConsumableFood",
-	"scroll": "TRPG.ConsumableScroll",
-	"wand": "TRPG.ConsumableWand",
-	"rod": "TRPG.ConsumableRod",
-	"trinket": "TRPG.ConsumableTrinket"
+	ammo: "TRPG.ConsumableAmmunition",
+	potion: "TRPG.ConsumablePotion",
+	poison: "TRPG.ConsumablePoison",
+	food: "TRPG.ConsumableFood",
+	scroll: "TRPG.ConsumableScroll",
+	wand: "TRPG.ConsumableWand",
+	rod: "TRPG.ConsumableRod",
+	trinket: "TRPG.ConsumableTrinket",
 };
 
 /* -------------------------------------------- */
@@ -395,48 +390,45 @@ TRPG.consumableTypes = {
  * @type {Object}
  */
 TRPG.currencies = {
-	"pp": "TRPG.CurrencyPP",
-	"gp": "TRPG.CurrencyGP",
+	pp: "TRPG.CurrencyPP",
+	gp: "TRPG.CurrencyGP",
 	// "ep": "TRPG.CurrencyEP",
-	"sp": "TRPG.CurrencySP",
-	"cp": "TRPG.CurrencyCP",
+	sp: "TRPG.CurrencySP",
+	cp: "TRPG.CurrencyCP",
 };
-
 
 /**
  * Define the upwards-conversion rules for registered currency types
  * @type {{string, object}}
  */
 TRPG.currencyConversion = {
-	cp: {into: "sp", each: 10},
-	sp: {into: "gp", each: 10},
+	cp: { into: "sp", each: 10 },
+	sp: { into: "gp", each: 10 },
 	// ep: {into: "gp", each: 2 },
-	gp: {into: "pp", each: 10}
+	gp: { into: "pp", each: 10 },
 };
 
 /* -------------------------------------------- */
 
-
 // Damage Types
 TRPG.damageTypes = {
-	"acid": "TRPG.DamageAcid",
-	"bludgeoning": "TRPG.DamageBludgeoning",
-	"cold": "TRPG.DamageCold",
-	"fire": "TRPG.DamageFire",
-	"force": "TRPG.DamageForce",
-	"lightning": "TRPG.DamageLightning",
-	"necrotic": "TRPG.DamageNecrotic",
-	"piercing": "TRPG.DamagePiercing",
-	"radiant": "TRPG.DamageRadiant",
-	"slashing": "TRPG.DamageSlashing",
-	"thunder": "TRPG.DamageThunder"
+	acid: "TRPG.DamageAcid",
+	bludgeoning: "TRPG.DamageBludgeoning",
+	cold: "TRPG.DamageCold",
+	fire: "TRPG.DamageFire",
+	force: "TRPG.DamageForce",
+	lightning: "TRPG.DamageLightning",
+	necrotic: "TRPG.DamageNecrotic",
+	piercing: "TRPG.DamagePiercing",
+	radiant: "TRPG.DamageRadiant",
+	slashing: "TRPG.DamageSlashing",
+	thunder: "TRPG.DamageThunder",
 };
 
 // Damage Resistance Types
 TRPG.damageResistanceTypes = mergeObject(foundry.utils.deepClone(TRPG.damageTypes), {
-	"physical": "TRPG.DamagePhysical"
+	physical: "TRPG.DamagePhysical",
 });
-
 
 /* -------------------------------------------- */
 
@@ -446,11 +438,11 @@ TRPG.damageResistanceTypes = mergeObject(foundry.utils.deepClone(TRPG.damageType
  * @type {Object<string,string>}
  */
 TRPG.movementTypes = {
-	"burrow": "TRPG.MovementBurrow",
-	"climb": "TRPG.MovementClimb",
-	"fly": "TRPG.MovementFly",
-	"swim": "TRPG.MovementSwim",
-	"walk": "TRPG.MovementWalk",
+	burrow: "TRPG.MovementBurrow",
+	climb: "TRPG.MovementClimb",
+	fly: "TRPG.MovementFly",
+	swim: "TRPG.MovementSwim",
+	walk: "TRPG.MovementWalk",
 };
 
 /**
@@ -459,8 +451,8 @@ TRPG.movementTypes = {
  * @type {Object<string,string>}
  */
 TRPG.movementUnits = {
-	"m": "TRPG.DistM",
-	"km": "TRPG.DistKm"
+	m: "TRPG.DistM",
+	km: "TRPG.DistKm",
 	// "ft": "TRPG.DistFt",
 	// "mi": "TRPG.DistMi"
 };
@@ -471,18 +463,17 @@ TRPG.movementUnits = {
  * @type {Object<string,string>}
  */
 TRPG.distanceUnits = {
-	"none": "TRPG.None",
-	"self": "TRPG.DistSelf",
-	"touch": "TRPG.DistTouch",
-	"spec": "TRPG.Special",
-	"any": "TRPG.DistAny"
+	none: "TRPG.None",
+	self: "TRPG.DistSelf",
+	touch: "TRPG.DistTouch",
+	spec: "TRPG.Special",
+	any: "TRPG.DistAny",
 };
-for ( let [k, v] of Object.entries(TRPG.movementUnits) ) {
+for (let [k, v] of Object.entries(TRPG.movementUnits)) {
 	TRPG.distanceUnits[k] = v;
 }
 
 /* -------------------------------------------- */
-
 
 /**
  * Configure aspects of encumbrance calculation so that it could be configured by modules
@@ -491,7 +482,7 @@ for ( let [k, v] of Object.entries(TRPG.movementUnits) ) {
 TRPG.encumbrance = {
 	currencyPerWeight: 1, //10 grams
 	strMultiplier: 10, //Strength value * 10
-	vehicleWeightMultiplier: 1000 // 1000 kg in a ton
+	vehicleWeightMultiplier: 1000, // 1000 kg in a ton
 };
 
 /* -------------------------------------------- */
@@ -501,26 +492,24 @@ TRPG.encumbrance = {
  * @type {Object}
  */
 TRPG.targetTypes = {
-	"none": "TRPG.None",
-	"self": "TRPG.TargetSelf",
-	"creature": "TRPG.TargetCreature",
-	"ally": "TRPG.TargetAlly",
-	"enemy": "TRPG.TargetEnemy",
-	"object": "TRPG.TargetObject",
-	"space": "TRPG.TargetSpace",
-	"radius": "TRPG.TargetRadius",
-	"sphere": "TRPG.TargetSphere",
-	"cylinder": "TRPG.TargetCylinder",
-	"cone": "TRPG.TargetCone",
-	"square": "TRPG.TargetSquare",
-	"cube": "TRPG.TargetCube",
-	"line": "TRPG.TargetLine",
-	"wall": "TRPG.TargetWall"
+	none: "TRPG.None",
+	self: "TRPG.TargetSelf",
+	creature: "TRPG.TargetCreature",
+	ally: "TRPG.TargetAlly",
+	enemy: "TRPG.TargetEnemy",
+	object: "TRPG.TargetObject",
+	space: "TRPG.TargetSpace",
+	radius: "TRPG.TargetRadius",
+	sphere: "TRPG.TargetSphere",
+	cylinder: "TRPG.TargetCylinder",
+	cone: "TRPG.TargetCone",
+	square: "TRPG.TargetSquare",
+	cube: "TRPG.TargetCube",
+	line: "TRPG.TargetLine",
+	wall: "TRPG.TargetWall",
 };
 
-
 /* -------------------------------------------- */
-
 
 /**
  * Map the subset of target types which produce a template area of effect
@@ -535,28 +524,24 @@ TRPG.areaTargetTypes = {
 	radius: "circle",
 	sphere: "circle",
 	square: "rect",
-	wall: "ray"
+	wall: "ray",
 };
-
 
 /* -------------------------------------------- */
 
 // Healing Types
 TRPG.healingTypes = {
-	"healing": "TRPG.Healing",
-	"temphp": "TRPG.HealingTemp"
+	healing: "TRPG.Healing",
+	temphp: "TRPG.HealingTemp",
 };
 
-
 /* -------------------------------------------- */
-
 
 /**
  * Enumerate the denominations of hit dice which can apply to classes
  * @type {string[]}
  */
 TRPG.hitDieTypes = ["d6", "d8", "d10", "d12"];
-
 
 /* -------------------------------------------- */
 
@@ -565,30 +550,30 @@ TRPG.hitDieTypes = ["d6", "d8", "d10", "d12"];
  * @enum {string}
  */
 TRPG.senses = {
-	"blindsight": "TRPG.SenseBlindsight",
-	"darkvision": "TRPG.SenseDarkvision",
-	"tremorsense": "TRPG.SenseTremorsense",
-	"truesight": "TRPG.SenseTruesight"
+	blindsight: "TRPG.SenseBlindsight",
+	darkvision: "TRPG.SenseDarkvision",
+	tremorsense: "TRPG.SenseTremorsense",
+	truesight: "TRPG.SenseTruesight",
 };
 
 /* -------------------------------------------- */
 
 TRPG.saves = {
-	"fortitude": "TRPG.SavesFortitude",
-	"reflex": "TRPG.SavesReflex",
-	"will": "TRPG.SavesWill"
-}
+	fortitude: "TRPG.SavesFortitude",
+	reflex: "TRPG.SavesReflex",
+	will: "TRPG.SavesWill",
+};
 
 TRPG.bab = {
-	"low": "TRPG.Low",
-	"med": "TRPG.Medium",
-	"high": "TRPG.High"
+	low: "TRPG.Low",
+	med: "TRPG.Medium",
+	high: "TRPG.High",
 };
 
 TRPG.classBABFormulas = {
-	"low": 0.5,
-	"med": 0.75,
-	"high": 1
+	low: 0.5,
+	med: 0.75,
+	high: 1,
 };
 
 /**
@@ -596,51 +581,50 @@ TRPG.classBABFormulas = {
  * @type {Object}
  */
 TRPG.skills = {
-	"acr": "TRPG.SkillAcr", //Acrobacia
-	"ani": "TRPG.SkillAni", //Adestrar Animais
-	"ath": "TRPG.SkillAth", //Atletismo
-	"atu": "TRPG.SkillAtu", //Atuação
-	"cav": "TRPG.SkilLCav", //Cavalgar
-	"conArc": "TRPG.SkillArc", //Arcanismo
-	"conEng": "TRPG.SkillConEng", //Engenharia
-	"conGeo": "TRPG.SkillGeo", //Geografia
-	"conHis": "TRPG.SkillHis", //História
-	"conNat": "TRPG.SkillNat", //Natureza
-	"conNob": "TRPG.SkillNob", //Nobreza
-	"conRel": "TRPG.SkillRel", //Religião
-	"conTor": "TRPG.SkillTor", //Tormenta
-	"cur": "TRPG.SkillCur", //Cura
-	"dip": "TRPG.SkillDip", //Diplomacia
-	"eng": "TRPG.SkillEng", //Enganação
-	"fur": "TRPG.SkillFur", //Furtividade
-	"ide": "TRPG.SkillIde", //Identificar Magia
-	"init": "TRPG.SkillIni", //Iniciativa
-	"inti": "TRPG.SkillInti", //Intimidação
-	"intu": "TRPG.SkillIntu", //Intuição
-	"lad": "TRPG.SkillLad", //Ladinagem
-	"obinf": "TRPG.SkillObinf", //Obter Informação
-	"ofi": "TRPG.SkillOfi", //Ofício
-	"prc": "TRPG.SkillPrc", //Percepção
-	"sur": "TRPG.SkillSur" //Sobrevivência
+	acr: "TRPG.SkillAcr", //Acrobacia
+	ani: "TRPG.SkillAni", //Adestrar Animais
+	ath: "TRPG.SkillAth", //Atletismo
+	atu: "TRPG.SkillAtu", //Atuação
+	cav: "TRPG.SkilLCav", //Cavalgar
+	conArc: "TRPG.SkillArc", //Arcanismo
+	conEng: "TRPG.SkillConEng", //Engenharia
+	conGeo: "TRPG.SkillGeo", //Geografia
+	conHis: "TRPG.SkillHis", //História
+	conNat: "TRPG.SkillNat", //Natureza
+	conNob: "TRPG.SkillNob", //Nobreza
+	conRel: "TRPG.SkillRel", //Religião
+	conTor: "TRPG.SkillTor", //Tormenta
+	cur: "TRPG.SkillCur", //Cura
+	dip: "TRPG.SkillDip", //Diplomacia
+	eng: "TRPG.SkillEng", //Enganação
+	fur: "TRPG.SkillFur", //Furtividade
+	ide: "TRPG.SkillIde", //Identificar Magia
+	init: "TRPG.SkillIni", //Iniciativa
+	inti: "TRPG.SkillInti", //Intimidação
+	intu: "TRPG.SkillIntu", //Intuição
+	lad: "TRPG.SkillLad", //Ladinagem
+	obinf: "TRPG.SkillObinf", //Obter Informação
+	ofi: "TRPG.SkillOfi", //Ofício
+	prc: "TRPG.SkillPrc", //Percepção
+	sur: "TRPG.SkillSur", //Sobrevivência
 };
-
 
 /* -------------------------------------------- */
 
 TRPG.spellPreparationModes = {
-	"prepared": "TRPG.SpellPrepPrepared",
-	"always": "TRPG.SpellPrepAlways",
-	"atwill": "TRPG.SpellPrepAtWill",
-	"innate": "TRPG.SpellPrepInnate"
+	prepared: "TRPG.SpellPrepPrepared",
+	always: "TRPG.SpellPrepAlways",
+	atwill: "TRPG.SpellPrepAtWill",
+	innate: "TRPG.SpellPrepInnate",
 };
 
 TRPG.spellUpcastModes = ["always", "prepared"];
 
 TRPG.spellProgression = {
-	"none": "TRPG.SpellNone",
-	"full": "TRPG.SpellProgFull",
-	"twoThirds": "TRPG.SpellProgTwoThirds",
-	"half": "TRPG.SpellProgHalf"
+	none: "TRPG.SpellNone",
+	full: "TRPG.SpellProgFull",
+	twoThirds: "TRPG.SpellProgTwoThirds",
+	half: "TRPG.SpellProgHalf",
 };
 
 /* -------------------------------------------- */
@@ -650,30 +634,28 @@ TRPG.spellProgression = {
  * @type {Object}
  */
 TRPG.spellScalingModes = {
-	"none": "TRPG.SpellNone",
-	"cantrip": "TRPG.SpellCantrip",
-	"level": "TRPG.SpellLevel"
+	none: "TRPG.SpellNone",
+	cantrip: "TRPG.SpellCantrip",
+	level: "TRPG.SpellLevel",
 };
 
 /* -------------------------------------------- */
-
 
 /**
  * Define the set of types which a weapon item can take
  * @type {Object}
  */
 TRPG.weaponTypes = {
-	"simpleM": "TRPG.WeaponSimpleM",
-	"simpleR": "TRPG.WeaponSimpleR",
-	"martialM": "TRPG.WeaponMartialM",
-	"martialR": "TRPG.WeaponMartialR",
-	"exoM": "TRPG.WeaponExoM",
-	"exoR": "TRPG.WeaponExoR",
-	"natural": "TRPG.WeaponNatural",
-	"improv": "TRPG.WeaponImprov",
+	simpleM: "TRPG.WeaponSimpleM",
+	simpleR: "TRPG.WeaponSimpleR",
+	martialM: "TRPG.WeaponMartialM",
+	martialR: "TRPG.WeaponMartialR",
+	exoM: "TRPG.WeaponExoM",
+	exoR: "TRPG.WeaponExoR",
+	natural: "TRPG.WeaponNatural",
+	improv: "TRPG.WeaponImprov",
 	// "siege": "TRPG.WeaponSiege"
 };
-
 
 /* -------------------------------------------- */
 
@@ -683,64 +665,63 @@ TRPG.weaponTypes = {
  */
 TRPG.weaponProperties = {
 	// "ada": "TRPG.WeaponPropertiesAda",
-	"amm": "TRPG.WeaponPropertiesAmm",
-	"dou": "TRPG.WeaponPropertiesDou",
-	"fin": "TRPG.WeaponPropertiesFin",
-	"fir": "TRPG.WeaponPropertiesFir",
+	amm: "TRPG.WeaponPropertiesAmm",
+	dou: "TRPG.WeaponPropertiesDou",
+	fin: "TRPG.WeaponPropertiesFin",
+	fir: "TRPG.WeaponPropertiesFir",
 	// "hvy": "TRPG.WeaponPropertiesHvy",
-	"lgt": "TRPG.WeaponPropertiesLgt",
-	"lod": "TRPG.WeaponPropertiesLod",
-	"mgc": "TRPG.WeaponPropertiesMgc",
-	"rch": "TRPG.WeaponPropertiesRch",
+	lgt: "TRPG.WeaponPropertiesLgt",
+	lod: "TRPG.WeaponPropertiesLod",
+	mgc: "TRPG.WeaponPropertiesMgc",
+	rch: "TRPG.WeaponPropertiesRch",
 	// "sil": "TRPG.WeaponPropertiesSil",
 	// "spc": "TRPG.WeaponPropertiesSpc",
-	"thr": "TRPG.WeaponPropertiesThr",
-	"two": "TRPG.WeaponPropertiesTwo",
+	thr: "TRPG.WeaponPropertiesThr",
+	two: "TRPG.WeaponPropertiesTwo",
 	// "ver": "TRPG.WeaponPropertiesVer"
 };
 
-
 // Spell Components
 TRPG.spellComponents = {
-	"V": "TRPG.ComponentVerbal",
-	"S": "TRPG.ComponentSomatic",
-	"M": "TRPG.ComponentMaterial"
+	V: "TRPG.ComponentVerbal",
+	S: "TRPG.ComponentSomatic",
+	M: "TRPG.ComponentMaterial",
 };
 
 // Spell Lists
 TRPG.spellLists = {
-	"univ": "Universal",
-	"arcana": "Arcana",
-	"divina": "Divina"
-}
+	univ: "Universal",
+	arcana: "Arcana",
+	divina: "Divina",
+};
 // Spell Schools
 TRPG.spellSchools = {
-	"abj": "TRPG.SchoolAbj",
-	"con": "TRPG.SchoolCon",
-	"div": "TRPG.SchoolDiv",
-	"enc": "TRPG.SchoolEnc",
+	abj: "TRPG.SchoolAbj",
+	con: "TRPG.SchoolCon",
+	div: "TRPG.SchoolDiv",
+	enc: "TRPG.SchoolEnc",
 	// "evo": "TRPG.SchoolEvo",
-	"ill": "TRPG.SchoolIll",
-	"nec": "TRPG.SchoolNec",
-	"trs": "TRPG.SchoolTrs",
-	"acid": "TRPG.SchoolAcid",
-	"agua": "TRPG.SchoolAgua",
-	"ar": "TRPG.SchoolAr",
-	"elet": "TRPG.SchoolEletricidade",
-	"esse": "TRPG.SchoolEssencia",
-	"fogo": "TRPG.SchoolFogo",
-	"frio": "TRPG.SchoolFrio",
-	"sonic": "TRPG.SchoolSonico",
-	"terra": "TRPG.SchoolTerra",
-	"bem": "TRPG.SchoolBem",
-	"mal": "TRPG.SchoolMal",
-	"ordem": "TRPG.SchoolOrdem",
-	"caos": "TRPG.SchoolCaos",
-	"cura": "TRPG.SchoolCura",
-	"escuro": "TRPG.SchoolEscuridao",
-	"luz": "TRPG.SchoolLuz",
-	"medo": "TRPG.SchoolMedo",
-	"tempo": "TRPG.SchoolTempo"
+	ill: "TRPG.SchoolIll",
+	nec: "TRPG.SchoolNec",
+	trs: "TRPG.SchoolTrs",
+	acid: "TRPG.SchoolAcid",
+	agua: "TRPG.SchoolAgua",
+	ar: "TRPG.SchoolAr",
+	elet: "TRPG.SchoolEletricidade",
+	esse: "TRPG.SchoolEssencia",
+	fogo: "TRPG.SchoolFogo",
+	frio: "TRPG.SchoolFrio",
+	sonic: "TRPG.SchoolSonico",
+	terra: "TRPG.SchoolTerra",
+	bem: "TRPG.SchoolBem",
+	mal: "TRPG.SchoolMal",
+	ordem: "TRPG.SchoolOrdem",
+	caos: "TRPG.SchoolCaos",
+	cura: "TRPG.SchoolCura",
+	escuro: "TRPG.SchoolEscuridao",
+	luz: "TRPG.SchoolLuz",
+	medo: "TRPG.SchoolMedo",
+	tempo: "TRPG.SchoolTempo",
 };
 
 // Spell Levels
@@ -754,7 +735,7 @@ TRPG.spellLevels = {
 	6: "TRPG.SpellLevel6",
 	7: "TRPG.SpellLevel7",
 	8: "TRPG.SpellLevel8",
-	9: "TRPG.SpellLevel9"
+	9: "TRPG.SpellLevel9",
 };
 
 // Spell Scroll Compendium UUIDs
@@ -768,7 +749,7 @@ TRPG.spellScrollIds = {
 	6: "tI3rWx4bxefNCexS",
 	7: "mtyw4NS1s7j2EJaD",
 	8: "aOrinPg7yuDZEuWr",
-	9: "O4YbkJkLlnsgUszZ"
+	9: "O4YbkJkLlnsgUszZ",
 };
 
 /**
@@ -776,8 +757,8 @@ TRPG.spellScrollIds = {
  * @enum {string}
  */
 TRPG.sourcePacks = {
-	ITEMS: "TRPG.items"
-}
+	ITEMS: "TRPG.items",
+};
 
 /**
  * Define the standard slot progression by character level.
@@ -804,25 +785,25 @@ TRPG.SPELL_SLOT_TABLE = [
 	[4, 3, 3, 3, 2, 1, 1, 1, 1],
 	[4, 3, 3, 3, 3, 1, 1, 1, 1],
 	[4, 3, 3, 3, 3, 2, 1, 1, 1],
-	[4, 3, 3, 3, 3, 2, 2, 1, 1]
+	[4, 3, 3, 3, 3, 2, 2, 1, 1],
 ];
 
 /* -------------------------------------------- */
 
 // Polymorph options.
 TRPG.polymorphSettings = {
-	keepPhysical: 'TRPG.PolymorphKeepPhysical',
-	keepMental: 'TRPG.PolymorphKeepMental',
-	keepSaves: 'TRPG.PolymorphKeepSaves',
-	keepSkills: 'TRPG.PolymorphKeepSkills',
-	mergeSaves: 'TRPG.PolymorphMergeSaves',
-	mergeSkills: 'TRPG.PolymorphMergeSkills',
-	keepClass: 'TRPG.PolymorphKeepClass',
-	keepFeats: 'TRPG.PolymorphKeepFeats',
-	keepSpells: 'TRPG.PolymorphKeepSpells',
-	keepItems: 'TRPG.PolymorphKeepItems',
-	keepBio: 'TRPG.PolymorphKeepBio',
-	keepVision: 'TRPG.PolymorphKeepVision'
+	keepPhysical: "TRPG.PolymorphKeepPhysical",
+	keepMental: "TRPG.PolymorphKeepMental",
+	keepSaves: "TRPG.PolymorphKeepSaves",
+	keepSkills: "TRPG.PolymorphKeepSkills",
+	mergeSaves: "TRPG.PolymorphMergeSaves",
+	mergeSkills: "TRPG.PolymorphMergeSkills",
+	keepClass: "TRPG.PolymorphKeepClass",
+	keepFeats: "TRPG.PolymorphKeepFeats",
+	keepSpells: "TRPG.PolymorphKeepSpells",
+	keepItems: "TRPG.PolymorphKeepItems",
+	keepBio: "TRPG.PolymorphKeepBio",
+	keepVision: "TRPG.PolymorphKeepVision",
 };
 
 /* -------------------------------------------- */
@@ -836,7 +817,7 @@ TRPG.proficiencyLevels = {
 	0: "TRPG.NotProficient",
 	1: "TRPG.Proficient",
 	0.5: "TRPG.HalfProficient",
-	2: "TRPG.Expertise"
+	2: "TRPG.Expertise",
 };
 
 /* -------------------------------------------- */
@@ -847,80 +828,75 @@ TRPG.proficiencyLevels = {
  * in play, we take the highest value.
  */
 TRPG.cover = {
-	0: 'TRPG.None',
-	.5: 'TRPG.CoverHalf',
-	.75: 'TRPG.CoverThreeQuarters',
-	1: 'TRPG.CoverTotal'
+	0: "TRPG.None",
+	0.5: "TRPG.CoverHalf",
+	0.75: "TRPG.CoverThreeQuarters",
+	1: "TRPG.CoverTotal",
 };
 
 /* -------------------------------------------- */
 
-
 // Condition Types
 TRPG.conditionTypes = {
-	'abalado': 'TRPG.ConAbalado',
-	'agarrado': 'TRPG.ConAgarrado',
-	'apavorado': 'TRPG.ConApavorado',
-	'atordoado': 'TRPG.ConAtordoado',
-	'caído': 'TRPG.ConCaido',
-	'cego': 'TRPG.ConCego',
-	'confuso': 'TRPG.ConConfuso',
-	'dano de habilidade': 'TRPG.ConDanoHabilidade',
-	'desprevinido': 'TRPG.ConDesprevinido',
-	'enjoado': 'TRPG.ConEnjoado',
-	'enredado': 'TRPG.ConEnredado',
-	'exausto': 'TRPG.ConExausto',
-	'fascinado': 'TRPG.ConFascinado',
-	'fatigado': 'TRPG.ConFatigado',
-	'inconsciente': 'TRPG.ConInconsciente',
-	'incorpóreo': 'TRPG.ConIncorporeo',
-	'indefeso': 'TRPG.ConIndefeso',
-	'invisível': 'TRPG.ConInvisível',
-	'lento': 'TRPG.ConLento',
-	'nível negativo': 'TRPG.ConNivelNegativo',
-	'ofuscado': 'TRPG.ConOfuscado',
-	'paralisado': 'TRPG.ConParalisado',
-	'pasmo': 'TRPG.ConPasmo',
-	'sangrando': 'TRPG.ConSangrando',
-	'surdo': 'TRPG.ConSurdo',
-	'surpreendido': 'TRPG.ConSurpreendido'
+	abalado: "TRPG.ConAbalado",
+	agarrado: "TRPG.ConAgarrado",
+	apavorado: "TRPG.ConApavorado",
+	atordoado: "TRPG.ConAtordoado",
+	caído: "TRPG.ConCaido",
+	cego: "TRPG.ConCego",
+	confuso: "TRPG.ConConfuso",
+	"dano de habilidade": "TRPG.ConDanoHabilidade",
+	desprevinido: "TRPG.ConDesprevinido",
+	enjoado: "TRPG.ConEnjoado",
+	enredado: "TRPG.ConEnredado",
+	exausto: "TRPG.ConExausto",
+	fascinado: "TRPG.ConFascinado",
+	fatigado: "TRPG.ConFatigado",
+	inconsciente: "TRPG.ConInconsciente",
+	incorpóreo: "TRPG.ConIncorporeo",
+	indefeso: "TRPG.ConIndefeso",
+	invisível: "TRPG.ConInvisível",
+	lento: "TRPG.ConLento",
+	"nível negativo": "TRPG.ConNivelNegativo",
+	ofuscado: "TRPG.ConOfuscado",
+	paralisado: "TRPG.ConParalisado",
+	pasmo: "TRPG.ConPasmo",
+	sangrando: "TRPG.ConSangrando",
+	surdo: "TRPG.ConSurdo",
+	surpreendido: "TRPG.ConSurpreendido",
 };
 
 // Languages
 TRPG.languages = {
-	"common": "TRPG.LanguagesCommon",
-	"abyssal": "TRPG.LanguagesAbyssal",
-	"dwarvish": "TRPG.LanguagesDwarvish",
-	"aquan": "TRPG.LanguagesAquan",
-	"auran": "TRPG.LanguagesAuran",
-	"celestial": "TRPG.LanguagesCelestial",
-	"draconic": "TRPG.LanguagesDraconic",
-	"elvish": "TRPG.LanguagesElvish",
-	"giant": "TRPG.LanguagesGiant",
-	"goblin": "TRPG.LanguagesGoblin",
-	"gnoll": "TRPG.LanguagesGnoll",
-	"halfling": "TRPG.LanguagesHalfling",
-	"ignan": "TRPG.LanguagesIgnan",
-	"infernal": "TRPG.LanguagesInfernal",
-	"orc": "TRPG.LanguagesOrc",
-	"primordial": "TRPG.LanguagesPrimordial",
-	"sylvan": "TRPG.LanguagesSylvan",
-	"taurico": "TRPG.LanguagesTaurico",
-	"terran": "TRPG.LanguagesTerran"
+	common: "TRPG.LanguagesCommon",
+	abyssal: "TRPG.LanguagesAbyssal",
+	dwarvish: "TRPG.LanguagesDwarvish",
+	aquan: "TRPG.LanguagesAquan",
+	auran: "TRPG.LanguagesAuran",
+	celestial: "TRPG.LanguagesCelestial",
+	draconic: "TRPG.LanguagesDraconic",
+	elvish: "TRPG.LanguagesElvish",
+	giant: "TRPG.LanguagesGiant",
+	goblin: "TRPG.LanguagesGoblin",
+	gnoll: "TRPG.LanguagesGnoll",
+	halfling: "TRPG.LanguagesHalfling",
+	ignan: "TRPG.LanguagesIgnan",
+	infernal: "TRPG.LanguagesInfernal",
+	orc: "TRPG.LanguagesOrc",
+	primordial: "TRPG.LanguagesPrimordial",
+	sylvan: "TRPG.LanguagesSylvan",
+	taurico: "TRPG.LanguagesTaurico",
+	terran: "TRPG.LanguagesTerran",
 };
 
 // Character Level XP Requirements
-TRPG.CHARACTER_EXP_LEVELS =	[
-	0, 1000, 3000, 6000, 10000, 15000, 21000, 28000, 36000, 45000, 55000, 66000,
-	78000, 91000, 105000, 120000, 136000, 153000, 171000, 190000]
-;
+TRPG.CHARACTER_EXP_LEVELS = [0, 1000, 3000, 6000, 10000, 15000, 21000, 28000, 36000, 45000, 55000, 66000, 78000, 91000, 105000, 120000, 136000, 153000, 171000, 190000];
 
 // Character Features Per Class And Level
 TRPG.classFeatures = ClassFeatures;
 
 // Configure Optional Character Flags
-TRPG.characterFlags = {
-};
+TRPG.characterFlags = {};
 
 // Configure allowed status flags
 TRPG.allowedActorFlags = ["isPolymorphed", "originalActor"].concat(Object.keys(TRPG.characterFlags));
