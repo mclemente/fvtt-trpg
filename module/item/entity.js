@@ -343,7 +343,7 @@ export default class Item5e extends Item {
 		if (rollData.attributes.bab.total !== 0 && rollData.attributes.bab.total != null) {
 			parts.push("@attributes.bab.total");
 		}
-		if (!itemData.proficient) {
+		if (itemData.proficient != undefined && !itemData.proficient) {
 			parts.push("-4");
 		}
 
