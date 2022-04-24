@@ -591,7 +591,7 @@ export default class Actor5e extends Actor {
 					ac.base += (armorData.value ?? 0) + ac.dex;
 					ac.equippedArmor = armors[0];
 				} else {
-					ac.dex += data.abilities.dex.mod;
+					ac.dex = data.abilities.dex.mod;
 					ac.base += ac.dex;
 				}
 				break;
