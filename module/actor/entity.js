@@ -347,6 +347,7 @@ export default class Actor5e extends Actor {
 			[0, 0, 0, 0]
 		);
 		data.details.level = level;
+		data.details.halfLevel = Math.floor(level / 2);
 		data.attributes.hd = hd;
 		data.attributes.bab.value = babTotal;
 		data.attributes.bab.total = babTotal;

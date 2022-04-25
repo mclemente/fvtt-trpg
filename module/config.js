@@ -351,7 +351,7 @@ TRPG.shieldIds = {
 TRPG.armorClasses = {
 	default: {
 		label: "TRPG.ArmorClassDefault",
-		formula: "10 + (Nível/2) + mod. de Destreza + armadura",
+		formula: `@attributes.ac.base + @details.halfLevel + @abilities.dex.mod`,
 	},
 	flat: {
 		label: "TRPG.ArmorClassFlat",
