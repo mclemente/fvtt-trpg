@@ -377,6 +377,7 @@ export default class Actor5e extends Actor {
 		data.details.xp.value = this.getCRExp(data.details.cr);
 
 		data.details.level = Math.clamped(data.details.level, 0, 20);
+		data.details.halfLevel = Math.floor(data.details.level / 2);
 
 		// Proficiency
 		data.attributes.prof = Math.floor((Math.max(data.details.cr, 1) + 7) / 4);
