@@ -588,8 +588,7 @@ export default class Actor5e extends Actor {
 				if (armors.length) {
 					if (armors.length > 1) ac.warnings.push("TRPG.WarnMultipleArmor");
 					const armorData = armors[0].data.data.armor;
-					const isHeavy = armorData.type === "heavy";
-					ac.dex = isHeavy ? 0 : Math.min(armorData.dex ?? Infinity, data.abilities.dex.mod);
+					ac.dex = Math.min(armorData.dex ?? Infinity, data.abilities.dex.mod);
 					ac.base += (armorData.value ?? 0) + ac.dex;
 					ac.equippedArmor = armors[0];
 				} else {
