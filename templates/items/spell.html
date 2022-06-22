@@ -1,86 +1,73 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
+	{{!-- Item Sheet Header --}}
+	<header class="sheet-header flexrow">
+		<img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img" />
 
-    {{!-- Item Sheet Header --}}
-    <header class="sheet-header flexrow">
-        <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+		<div class="header-details flexrow">
+			<h1 class="charname">
+				<input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'TRPG.SpellName' }}" />
+			</h1>
 
-        <div class="header-details flexrow">
-            <h1 class="charname">
-                <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'TRPG.SpellName' }}"/>
-            </h1>
+			<div class="item-subtitle">
+				<h4 class="item-type">{{itemType}}</h4>
+				<span class="item-status">{{itemStatus}}</span>
+			</div>
 
-            <div class="item-subtitle">
-                <h4 class="item-type">{{itemType}}</h4>
-                <span class="item-status">{{itemStatus}}</span>
-            </div>
+			<ul class="summary flexrow">
+				<li>{{labels.spellList}} {{labels.level}} ({{labels.school}})</li>
+				<li>
+					<input type="text" name="data.source" value="{{data.source}}" placeholder="{{ localize 'TRPG.Source' }}" />
+				</li>
+			</ul>
+		</div>
+	</header>
 
-            <ul class="summary flexrow">
-                <li>
-                    {{labels.spellList}} {{labels.level}} ({{labels.school}})
-                </li>
-                <li>
-                    <input type="text" name="data.source" value="{{data.source}}" placeholder="{{ localize 'TRPG.Source' }}"/>
-                </li>
-            </ul>
-        </div>
-    </header>
+	{{!-- Item Sheet Navigation --}}
+	<nav class="sheet-navigation tabs" data-group="primary">
+		<a class="item active" data-tab="description">{{ localize "TRPG.Description" }}</a>
+		<a class="item" data-tab="details">{{ localize "TRPG.Details" }}</a>
+		<a class="item" data-tab="effects">{{ localize "TRPG.Effects" }}</a>
+	</nav>
 
-    {{!-- Item Sheet Navigation --}}
-    <nav class="sheet-navigation tabs" data-group="primary">
-        <a class="item active" data-tab="description">{{ localize "TRPG.Description" }}</a>
-        <a class="item" data-tab="details">{{ localize "TRPG.Details" }}</a>
-        <a class="item" data-tab="effects">{{ localize "TRPG.Effects" }}</a>
-    </nav>
+	{{!-- Item Sheet Body --}}
+	<section class="sheet-body">
+		{{!-- Description Tab --}} {{> "systems/trpg/templates/items/parts/item-description.html"}} {{!-- Details Tab --}}
+		<div class="tab details" data-group="primary" data-tab="details">
+			<h3 class="form-header">{{ localize "TRPG.SpellDetails" }}</h3>
 
-    {{!-- Item Sheet Body --}}
-    <section class="sheet-body">
+			{{!-- Spell Level --}}
+			<div class="form-group">
+				<label>{{ localize "TRPG.SpellLevel" }}</label>
+				<select name="data.level" data-dtype="Number">
+					{{#select data.level}} {{#each config.spellLevels as |name lvl|}}
+					<option value="{{lvl}}">{{name}}</option>
+					{{/each}} {{/select}}
+				</select>
+			</div>
 
-        {{!-- Description Tab --}}
-        {{> "systems/trpg/templates/items/parts/item-description.html"}}
-
-        {{!-- Details Tab --}}
-        <div class="tab details" data-group="primary" data-tab="details">
-            <h3 class="form-header">{{ localize "TRPG.SpellDetails" }}</h3>
-
-            {{!-- Spell Level --}}
-            <div class="form-group">
-                <label>{{ localize "TRPG.SpellLevel" }}</label>
-                <select name="data.level" data-dtype="Number">
-                    {{#select data.level}}
-                    {{#each config.spellLevels as |name lvl|}}
-                    <option value="{{lvl}}">{{name}}</option>
-                    {{/each}}
-                    {{/select}}
-                </select>
-            </div>
-			
 			{{!-- Spell List --}}
-            <div class="form-group">
-                <label>Lista</label>
-                <select name="data.spellList">
-                    {{#select data.spellList}}
-                    {{#each config.spellLists as |name list|}}
-                    <option value="{{list}}">{{name}}</option>
-                    {{/each}}
-                    {{/select}}
-                </select>
-            </div>
+			<div class="form-group">
+				<label>Lista</label>
+				<select name="data.spellList">
+					{{#select data.spellList}} {{#each config.spellLists as |name list|}}
+					<option value="{{list}}">{{name}}</option>
+					{{/each}} {{/select}}
+				</select>
+			</div>
 
-            {{!-- Spell School --}}
-            <div class="form-group">
-                <label>{{ localize "TRPG.SpellSchool" }}</label>
-                <select name="data.school">
-                    {{#select data.school}}
-                    {{#each config.spellSchools as |name sch|}}
-                    <option value="{{sch}}">{{name}}</option>
-                    {{/each}}
-                    {{/select}}
-                </select>
-            </div>
+			{{!-- Spell School --}}
+			<div class="form-group">
+				<label>{{ localize "TRPG.SpellSchool" }}</label>
+				<select name="data.school">
+					{{#select data.school}} {{#each config.spellSchools as |name sch|}}
+					<option value="{{sch}}">{{name}}</option>
+					{{/each}} {{/select}}
+				</select>
+			</div>
 
-            {{!-- Spell Components --}}
-            <div class="spell-components form-group stacked">
-                <!-- <label>{{ localize "TRPG.SpellComponents" }}</label>
+			{{!-- Spell Components --}}
+			<div class="spell-components form-group stacked">
+				<!-- <label>{{ localize "TRPG.SpellComponents" }}</label>
                 <label class="checkbox">
                     <input type="checkbox" name="data.components.vocal" {{checked data.components.vocal}}/> {{ localize "TRPG.ComponentVerbal" }}
                 </label>
@@ -90,15 +77,15 @@
                 <label class="checkbox">
                     <input type="checkbox" name="data.components.material" {{checked data.components.material}}/> {{ localize "TRPG.ComponentMaterial" }}
                 </label> -->
-                <label class="checkbox">
-                    <input type="checkbox" name="data.components.concentration" {{checked data.components.concentration}}/> {{ localize "TRPG.Concentration" }}
-                </label>
-                <!-- <label class="checkbox">
+				<label class="checkbox">
+					<input type="checkbox" name="data.components.concentration" {{checked data.components.concentration}} /> {{ localize "TRPG.Concentration" }}
+				</label>
+				<!-- <label class="checkbox">
                     <input type="checkbox" name="data.components.ritual" {{checked data.components.ritual}}/> {{ localize "TRPG.Ritual" }}
                 </label> -->
-            </div>
+			</div>
 
-            <!-- {{!-- Material Components --}}
+			<!-- {{!-- Material Components --}}
             <div class="form-group stacked">
                 <label>{{ localize "TRPG.SpellMaterials" }}</label>
                 <input class="materials" type="text" name="data.materials.value" value="{{data.materials.value}}"/>
@@ -114,31 +101,27 @@
                 {{/if}}
             </div> -->
 
-            {{!-- Preparation Mode --}}
-            <div class="form-group input-select">
-                <label>{{ localize "TRPG.SpellPreparationMode" }}</label>
-                <div class="form-fields">
-                    <label class="checkbox prepared">
-                        {{ localize "TRPG.SpellPrepared" }} <input type="checkbox" name="data.preparation.prepared" {{checked data.preparation.prepared}}/>
-                    </label>
-                    <select name="data.preparation.mode">
-                        {{ selectOptions config.spellPreparationModes selected=data.preparation.mode }}
-                    </select>
-                </div>
-            </div>
+			{{!-- Preparation Mode --}}
+			<div class="form-group input-select">
+				<label>{{ localize "TRPG.SpellPreparationMode" }}</label>
+				<div class="form-fields">
+					<label class="checkbox prepared">
+						{{ localize "TRPG.SpellPrepared" }} <input type="checkbox" name="data.preparation.prepared" {{checked data.preparation.prepared}} />
+					</label>
+					<select name="data.preparation.mode">
+						{{ selectOptions config.spellPreparationModes selected=data.preparation.mode }}
+					</select>
+				</div>
+			</div>
 
-            <h3 class="form-header">{{ localize "TRPG.SpellCastingHeader" }}</h3>
+			<h3 class="form-header">{{ localize "TRPG.SpellCastingHeader" }}</h3>
 
-            {{!-- Item Activation Template --}}
-            {{> "systems/trpg/templates/items/parts/item-activation.html"}}
+			{{!-- Item Activation Template --}} {{> "systems/trpg/templates/items/parts/item-activation.html"}}
 
-            <h3 class="form-header">{{ localize "TRPG.SpellEffects" }}</h3>
+			<h3 class="form-header">{{ localize "TRPG.SpellEffects" }}</h3>
 
-            {{!-- Item Action Template --}}
-            {{> "systems/trpg/templates/items/parts/item-action.html"}}
-
-            {{!-- Spell Level Scaling --}}
-            <div class="form-group">
+			{{!-- Item Action Template --}} {{> "systems/trpg/templates/items/parts/item-action.html"}} {{!-- Spell Level Scaling --}}
+			<!-- <div class="form-group">
                 <label>{{ localize "TRPG.LevelScaling" }}</label>
                 <div class="form-fields">
                     <select name="data.scaling.mode">
@@ -150,12 +133,10 @@
                     </select>
                     <input type="text" name="data.scaling.formula" value="{{data.scaling.formula}}" placeholder="{{ localize 'TRPG.ScalingFormula' }}"/>
                 </div>
-            </div>
-        </div>
+            </div> -->
+		</div>
 
-        {{!-- Effects Tab --}}
-        <div class="tab effects flexcol" data-group="primary" data-tab="effects">
-            {{> "systems/trpg/templates/actors/parts/active-effects.html"}}
-        </div>
-    </section>
+		{{!-- Effects Tab --}}
+		<div class="tab effects flexcol" data-group="primary" data-tab="effects">{{> "systems/trpg/templates/actors/parts/active-effects.html"}}</div>
+	</section>
 </form>
