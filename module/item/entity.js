@@ -691,7 +691,7 @@ export default class Item5e extends Item {
 
 		// If the Item was destroyed in the process of displaying its card - embed the item data in the chat message
 		if (this.data.type === "consumable" && !this.actor.items.has(this.id)) {
-			chatData.flags["dnd5e.itemData"] = this.data;
+			chatData.flags["trpg.itemData"] = this.data;
 		}
 
 		// Apply the roll mode to adjust message visibility
