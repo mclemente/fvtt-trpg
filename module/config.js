@@ -227,12 +227,9 @@ TRPG.itemCapacityTypes = {
  * @enum {String}
  */
 TRPG.itemRarity = {
-	common: "TRPG.ItemRarityCommon",
-	uncommon: "TRPG.ItemRarityUncommon",
-	rare: "TRPG.ItemRarityRare",
-	veryRare: "TRPG.ItemRarityVeryRare",
-	legendary: "TRPG.ItemRarityLegendary",
-	artifact: "TRPG.ItemRarityArtifact",
+	menor: "TRPG.ItemRarityMenor",
+	medio: "TRPG.ItemRarityMedio",
+	maior: "TRPG.ItemRarityMaior",
 };
 
 /* -------------------------------------------- */
