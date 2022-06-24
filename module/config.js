@@ -122,6 +122,7 @@ TRPG.abilityActivationTypes = {
 	none: "TRPG.None",
 	action: "TRPG.Action",
 	bonus: "TRPG.BonusAction",
+	full: "TRPG.FullAction",
 	reaction: "TRPG.Reaction",
 	minute: TRPG.timePeriods.minute,
 	hour: TRPG.timePeriods.hour,
