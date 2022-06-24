@@ -483,7 +483,7 @@ export default class ActorSheet5e extends ActorSheet {
 			const data = item.data;
 
 			// Action usage
-			for (let f of ["action", "bonus", "reaction"]) {
+			for (let f of ["full", "action", "bonus", "reaction"]) {
 				if (filters.has(f)) {
 					if (data.activation && data.activation.type !== f) return false;
 				}
