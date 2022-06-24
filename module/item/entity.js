@@ -293,12 +293,12 @@ export default class Item5e extends Item {
 
 		// Actor spell-DC based scaling
 		if (save.scaling === "spell") {
-			save.dc = this.isOwned ? getProperty(this.actor.data, "data.attributes.spelldc") + this.data.data.level : null;
+			save.dc = this.isOwned ? getProperty(this.actor.data, "data.attributes.spelldc") + (this.data.data.level ?? 0) : null;
 		}
 
 		// Ability-score based scaling
 		else if (save.scaling !== "flat") {
-			save.dc = this.isOwned ? getProperty(this.actor.data, `data.abilities.${save.scaling}.dc`) + this.data.data.level : null;
+			save.dc = this.isOwned ? getProperty(this.actor.data, `data.abilities.${save.scaling}.dc`) + (this.data.data.level ?? 0) : null;
 		}
 
 		// Update labels
