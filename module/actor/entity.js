@@ -153,7 +153,7 @@ export default class Actor5e extends Actor {
 			abl.mod = Math.floor((data.abilities[abl.ability].value - 10) / 2);
 			abl.prof = abl.proficient ? 3 + data.details.level : Math.floor(data.details.level / 2);
 			abl.saveBonus = saveBonus;
-			abl.save = abl.mod + abl.prof + abl.saveBonus;
+			abl.save = abl.mod + abl.prof + abl.saveBonus + abl.value;
 
 			// If we merged saves when transforming, take the highest bonus here.
 			if (originalSaves && abl.proficient) {
