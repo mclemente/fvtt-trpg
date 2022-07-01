@@ -133,9 +133,11 @@ export default class Actor5e extends Actor {
 		}
 
 		// Ability modifiers
-		const dcBonus = Number.isNumeric(data.bonuses?.spell?.dc) ? parseInt(data.bonuses.spell.dc) : 0;
-		const saveBonus = Number.isNumeric(bonuses.save) ? parseInt(bonuses.save) : 0;
-		const checkBonus = Number.isNumeric(bonuses.check) ? parseInt(bonuses.check) : 0;
+		const bonusData = this.getRollData();
+
+		const dcBonus = this._simplifyBonus(data.bonuses?.spell?.dc, bonusData);
+		const saveBonus = this._simplifyBonus(bonuses.save, bonusData);
+		const checkBonus = this._simplifyBonus(bonuses.check, bonusData);
 		for (let [id, abl] of Object.entries(data.abilities)) {
 			abl.mod = Math.floor((abl.value - 10) / 2);
 			abl.checkBonus = checkBonus;
@@ -165,7 +167,7 @@ export default class Actor5e extends Actor {
 		data.attributes.encumbrance = this._computeEncumbrance(actorData);
 
 		// Prepare skills
-		this._prepareSkills(actorData, bonuses, checkBonus, originalSkills);
+		this._prepareSkills(actorData, bonusData, bonuses, checkBonus, originalSkills);
 
 		// Reset class store to ensure it is updated with any changes
 		this._classes = undefined;
@@ -407,7 +409,7 @@ export default class Actor5e extends Actor {
 	 * @param originalSkills A transformed actor's original actor's skills.
 	 * @private
 	 */
-	_prepareSkills(actorData, bonuses, checkBonus, originalSkills) {
+	_prepareSkills(actorData, bonusData, bonuses, checkBonus, originalSkills) {
 		if (actorData.type === "vehicle") return;
 
 		const data = actorData.data;
@@ -418,7 +420,7 @@ export default class Actor5e extends Actor {
 		const athlete = flags.remarkableAthlete;
 		const joat = flags.jackOfAllTrades;
 		const observant = flags.observantFeat;
-		const skillBonus = Number.isNumeric(bonuses.skill) ? parseInt(bonuses.skill) : 0;
+		const skillBonus = this._simplifyBonus(bonuses.skill, bonusData);
 		for (let [id, skl] of Object.entries(data.skills)) {
 			skl.value = Math.clamped(Number(skl.value).toNearest(0.5), 0, 2) ?? 0;
 
@@ -446,6 +448,29 @@ export default class Actor5e extends Actor {
 			// Compute passive bonus
 			// const passive = observant && (feats.observantFeat.skills.includes(id)) ? 5 : 0;
 			// skl.passive = 10 + skl.total + passive;
+		}
+	}
+
+	/* -------------------------------------------- */
+
+	/**
+	 * Convert a bonus value to a simple integer for displaying on the sheet.
+	 * @param {number|string|null} bonus  Actor's bonus value.
+	 * @param {object} data               Actor data to use for replacing @ strings.
+	 * @returns {number}                  Simplified bonus as an integer.
+	 * @protected
+	 */
+	_simplifyBonus(bonus, data) {
+		if (!bonus) return 0;
+		if (Number.isNumeric(bonus)) return Number(bonus);
+		try {
+			const roll = new Roll(bonus, data);
+			if (!roll.isDeterministic) return 0;
+			roll.evaluate({ async: false });
+			return roll.total;
+		} catch (error) {
+			console.error(error);
+			return 0;
 		}
 	}
 
@@ -844,6 +869,10 @@ export default class Actor5e extends Actor {
 			parts.push("@checkBonus");
 		}
 
+		// Ability-specific check bonus
+		if (skl?.bonuses?.check) data.abilityCheckBonus = Roll.replaceFormulaData(skl.bonuses.check, data);
+		else data.abilityCheckBonus = 0;
+
 		// Skill check bonus
 		if (bonuses.skill) {
 			data["skillBonus"] = bonuses.skill;
@@ -934,6 +963,13 @@ export default class Actor5e extends Actor {
 			data.proficiency = Math.floor(0.5 * this.data.data.attributes.prof);
 		}
 
+		// Add ability-specific check bonus
+		if (abl?.bonuses?.check) {
+			const checkBonusKey = `${abilityId}CheckBonus`;
+			parts.push(`@${checkBonusKey}`);
+			data[checkBonusKey] = Roll.replaceFormulaData(abl.bonuses.check, data);
+		}
+
 		// Add global actor bonus
 		const bonuses = getProperty(this.data.data, "bonuses.abilities") || {};
 		if (bonuses.check) {
@@ -981,6 +1017,13 @@ export default class Actor5e extends Actor {
 		if (abl.prof > 0) {
 			parts.push("@prof");
 			data.prof = abl.prof;
+		}
+
+		// Add ability-specific check bonus
+		if (abl?.bonuses?.save) {
+			const checkBonusKey = `${abilityId}SaveBonus`;
+			parts.push(`@${checkBonusKey}`);
+			data[checkBonusKey] = Roll.replaceFormulaData(abl.bonuses.save, data);
 		}
 
 		// Include a global actor ability save bonus

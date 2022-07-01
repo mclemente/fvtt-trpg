@@ -6,31 +6,52 @@
 				"abilities": {
 					"str": {
 						"value": 10,
-						"proficient": 0
+						"proficient": 0,
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"dex": {
 						"value": 10,
-						"proficient": 0
+						"proficient": 0,
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"con": {
 						"value": 10,
-						"proficient": 0
+						"proficient": 0,
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"int": {
 						"value": 10,
-						"proficient": 0
+						"proficient": 0,
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"wis": {
 						"value": 10,
-						"proficient": 0
+						"proficient": 0,
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"cha": {
 						"value": 10,
-						"proficient": 0
+						"proficient": 0,
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"hon": {
 						"value": 10,
-						"proficient": 0
+						"proficient": 0,
+						"bonuses": {
+							"check": ""
+						}
 					}
 				},
 				"attributes": {
@@ -121,143 +142,230 @@
 						"ability": "con",
 						"value": 0,
 						"proficient": 0,
-						"saveDetail": ""
+						"saveDetail": "",
+						"bonuses": {
+							"save": ""
+						}
 					},
 					"reflex": {
 						"ability": "dex",
 						"value": 0,
 						"proficient": 0,
-						"saveDetail": ""
+						"saveDetail": "",
+						"bonuses": {
+							"save": ""
+						}
 					},
 					"will": {
 						"ability": "wis",
 						"value": 0,
 						"proficient": 0,
-						"saveDetail": ""
+						"saveDetail": "",
+						"bonuses": {
+							"save": ""
+						}
 					}
 				},
 				"skills": {
 					"acr": {
 						"value": 0,
 						"ability": "dex",
-						"pda": true
+						"pda": true,
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"ani": {
 						"value": 0,
 						"ability": "wis",
-						"st": true
+						"st": true,
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"ath": {
 						"value": 0,
 						"ability": "str",
-						"pda": true
+						"pda": true,
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"atu": {
 						"value": 0,
-						"ability": "cha"
+						"ability": "cha",
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"conArc": {
 						"value": 0,
 						"ability": "int",
-						"st": true
+						"st": true,
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"conEng": {
 						"value": 0,
 						"ability": "int",
-						"st": true
+						"st": true,
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"conGeo": {
 						"value": 0,
 						"ability": "int",
-						"st": true
+						"st": true,
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"conHis": {
 						"value": 0,
 						"ability": "int",
-						"st": true
+						"st": true,
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"conNat": {
 						"value": 0,
 						"ability": "int",
-						"st": true
+						"st": true,
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"conNob": {
 						"value": 0,
 						"ability": "int",
-						"st": true
+						"st": true,
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"conRel": {
 						"value": 0,
 						"ability": "int",
-						"st": true
+						"st": true,
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"conTor": {
 						"value": 0,
 						"ability": "int",
-						"st": true
+						"st": true,
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"ide": {
 						"value": 0,
 						"ability": "int",
-						"st": true
+						"st": true,
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"obinf": {
 						"value": 0,
-						"ability": "int"
+						"ability": "int",
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"ofi": {
 						"value": 0,
-						"ability": "int"
+						"ability": "int",
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"cav": {
 						"value": 0,
-						"ability": "dex"
+						"ability": "dex",
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"cur": {
 						"value": 0,
-						"ability": "wis"
+						"ability": "wis",
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"dip": {
 						"value": 0,
-						"ability": "cha"
+						"ability": "cha",
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"eng": {
 						"value": 0,
 						"ability": "cha",
-						"dishonor": true
+						"dishonor": true,
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"fur": {
 						"value": 0,
 						"ability": "dex",
 						"pda": true,
-						"dishonor": true
+						"dishonor": true,
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"init": {
 						"value": 0,
-						"ability": "dex"
+						"ability": "dex",
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"intu": {
 						"value": 0,
-						"ability": "wis"
+						"ability": "wis",
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"inti": {
 						"value": 0,
-						"ability": "cha"
+						"ability": "cha",
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"lad": {
 						"value": 0,
 						"ability": "dex",
 						"st": true,
 						"pda": true,
-						"dishonor": true
+						"dishonor": true,
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"prc": {
 						"value": 0,
-						"ability": "wis"
+						"ability": "wis",
+						"bonuses": {
+							"check": ""
+						}
 					},
 					"sur": {
 						"value": 0,
-						"ability": "wis"
+						"ability": "wis",
+						"bonuses": {
+							"check": ""
+						}
 					}
 				},
 				"traits": {
