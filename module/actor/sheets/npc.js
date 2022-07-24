@@ -82,11 +82,11 @@ export default class ActorSheet5eNPC extends ActorSheet5e {
 	/* -------------------------------------------- */
 
 	/** @inheritdoc */
-	getData(options) {
-		const data = super.getData(options);
+	async getData(options) {
+		const data = await super.getData(options);
 
 		// Challenge Rating
-		const cr = parseFloat(data.data.details.cr || 0);
+		const cr = parseFloat(data.system.details.cr || 0);
 		const crLabels = { 0: "0", 0.125: "1/8", 0.25: "1/4", 0.5: "1/2" };
 		data.labels["cr"] = cr >= 1 ? String(cr) : crLabels[cr] || 1;
 
@@ -107,7 +107,7 @@ export default class ActorSheet5eNPC extends ActorSheet5e {
 	 * @return {string}  Formatted armor label.
 	 */
 	getArmorLabel() {
-		const ac = this.actor.data.data.attributes.ac;
+		const ac = this.actor.system.attributes.ac;
 		const label = [];
 		if (ac.calc === "default") label.push(this.actor.armor?.name || game.i18n.localize("TRPG.ArmorClassUnarmored"));
 		else label.push(game.i18n.localize(CONFIG.TRPG.armorClasses[ac.calc].label));
@@ -151,7 +151,7 @@ export default class ActorSheet5eNPC extends ActorSheet5e {
 	 */
 	_onRollHPFormula(event) {
 		event.preventDefault();
-		const formula = this.actor.data.data.attributes.hp.formula;
+		const formula = this.actor.system.attributes.hp.formula;
 		if (!formula) return;
 		const hp = new Roll(formula).roll({ async: false }).total;
 		AudioHelper.play({ src: CONFIG.sounds.dice });

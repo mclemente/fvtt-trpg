@@ -234,7 +234,7 @@ Hooks.once("ready", function () {
 	const NEEDS_MIGRATION_VERSION = "1.0.11";
 	const COMPATIBLE_MIGRATION_VERSION = 1;
 	const totalDocuments = game.actors.size + game.scenes.size + game.items.size;
-	if (!currentVersion && totalDocuments === 0) return game.settings.set("trpg", "systemMigrationVersion", game.system.data.version);
+	if (!currentVersion && totalDocuments === 0) return game.settings.set("trpg", "systemMigrationVersion", game.system.version);
 	const needsMigration = currentVersion && isNewerVersion(NEEDS_MIGRATION_VERSION, currentVersion);
 	if (!needsMigration) return;
 

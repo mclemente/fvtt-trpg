@@ -1,94 +1,117 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
+	{{!-- Sheet Header --}}
+	<header class="sheet-header flexrow">
+		<img class="profile" src="{{actor.img}}" title="{{actor.name}}" data-edit="img" />
 
-    {{!-- Sheet Header --}}
-    <header class="sheet-header flexrow">
-        <img class="profile" src="{{actor.img}}" title="{{actor.name}}" data-edit="img"/>
+		<section class="header-details flexrow">
+			{{> "systems/trpg/templates/actors/parts/actor-warnings.html"}}
 
-        <section class="header-details flexrow">
-            {{> "systems/trpg/templates/actors/parts/actor-warnings.html"}}
+			<h1 class="charname">
+				<input name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'TRPG.Name' }}" />
+			</h1>
 
-            <h1 class="charname">
-                <input name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'TRPG.Name' }}"/>
-            </h1>
+			<aside class="header-exp flexcol">
+				<div class="charlevel" title="{{multiclassLabels}}">
+					<label>{{ localize "TRPG.Level" }} {{system.details.level}}</label>
+					<span class="levels">{{classLabels}}</span>
+				</div>
 
-            <aside class="header-exp flexcol">
-                <div class="charlevel" title="{{multiclassLabels}}">
-                    <label>{{ localize "TRPG.Level" }} {{data.details.level}}</label>
-                    <span class="levels">{{classLabels}}</span>
-                </div>
+				{{#unless disableExperience}}
+				<div class="experience flexrow">
+					<input name="data.details.xp.value" type="text" value="{{system.details.xp.value}}" placeholder="0" data-dtype="Number" />
+					<span class="sep">/</span>
+					<span class="max">{{system.details.xp.max}}</span>
+				</div>
+				<div class="xpbar">
+					<span class="bar" style="width: {{system.details.xp.pct}}%"></span>
+				</div>
+				{{/unless}}
+			</aside>
 
-                {{#unless disableExperience}}
-                <div class="experience flexrow">
-                    <input name="data.details.xp.value" type="text" value="{{data.details.xp.value}}" placeholder="0" data-dtype="Number"/>
-                    <span class="sep">/</span>
-                    <span class="max">{{data.details.xp.max}}</span>
-                </div>
-                <div class="xpbar">
-                    <span class="bar" style="width: {{data.details.xp.pct}}%"></span>
-                </div>
-                {{/unless}}
-            </aside>
-
-            {{!-- Character Summary --}}
-            <ul class="summary flexrow">
-                <li>
-                    <input type="text" name="data.details.race" value="{{data.details.race}}" placeholder="{{ localize 'TRPG.Race' }}"/>
-                </li>
-                <li>
-                    <input type="text" name="data.details.background" value="{{data.details.background}}" placeholder="{{ localize 'TRPG.Background' }}"/>
-                </li>
-                <li>
-                    <input type="text" name="data.details.alignment" value="{{data.details.alignment}}" placeholder="{{ localize 'TRPG.Alignment' }}"/>
-                </li>
-                <li>
-                    <a class="rest long-rest">Descansar</a>
-                </li>
-                <!-- <li class="proficiency">
+			{{!-- Character Summary --}}
+			<ul class="summary flexrow">
+				<li>
+					<input type="text" name="data.details.race" value="{{system.details.race}}" placeholder="{{ localize 'TRPG.Race' }}" />
+				</li>
+				<li>
+					<input type="text" name="data.details.background" value="{{system.details.background}}" placeholder="{{ localize 'TRPG.Background' }}" />
+				</li>
+				<li>
+					<input type="text" name="data.details.alignment" value="{{system.details.alignment}}" placeholder="{{ localize 'TRPG.Alignment' }}" />
+				</li>
+				<li>
+					<a class="rest long-rest">Descansar</a>
+				</li>
+				<!-- <li class="proficiency">
                     <span>{{ localize "TRPG.Proficiency" }} {{numberFormat data.attributes.prof decimals=0 sign=true}}</span>
                 </li> -->
-            </ul>
+			</ul>
 
-            {{!-- Header Attributes --}}
-            <ul class="attributes flexrow">
-                <li class="attribute health">
-                    <h4 class="attribute-name box-title">{{ localize "TRPG.HitPoints" }}</h4>
-                    <div class="attribute-value multiple">
-                        <input name="data.attributes.hp.value" type="text" value="{{data.attributes.hp.value}}" placeholder="10" data-dtype="Number"/>
-                        <span class="sep"> / </span>
-                        <input name="data.attributes.hp.max" type="text" value="{{data.attributes.hp.max}}" placeholder="10" data-dtype="Number"/>
-                    </div>
-                    <footer class="attribute-footer">
-                        <input name="data.attributes.hp.temp" type="text" class="temphp" placeholder="+{{ localize 'TRPG.Temp' }}"
-                            value="{{data.attributes.hp.temp}}" data-dtype="Number"/>
-                        <input name="data.attributes.hp.tempmax" type="text" class="temphp" placeholder="+{{ localize 'TRPG.Max' }}"
-                            value="{{data.attributes.hp.tempmax}}" data-dtype="Number"/>
-                    </footer>
-                </li>
+			{{!-- Header Attributes --}}
+			<ul class="attributes flexrow">
+				<li class="attribute health">
+					<h4 class="attribute-name box-title">{{ localize "TRPG.HitPoints" }}</h4>
+					<div class="attribute-value multiple">
+						<input name="data.attributes.hp.value" type="text" value="{{system.attributes.hp.value}}" placeholder="10" data-dtype="Number" />
+						<span class="sep"> / </span>
+						<input name="data.attributes.hp.max" type="text" value="{{system.attributes.hp.max}}" placeholder="10" data-dtype="Number" />
+					</div>
+					<footer class="attribute-footer">
+						<input
+							name="data.attributes.hp.temp"
+							type="text"
+							class="temphp"
+							placeholder="+{{ localize 'TRPG.Temp' }}"
+							value="{{system.attributes.hp.temp}}"
+							data-dtype="Number"
+						/>
+						<input
+							name="data.attributes.hp.tempmax"
+							type="text"
+							class="temphp"
+							placeholder="+{{ localize 'TRPG.Max' }}"
+							value="{{system.attributes.hp.tempmax}}"
+							data-dtype="Number"
+						/>
+					</footer>
+				</li>
 
-                {{#if (or hasSpells data.details.showSpells (eq idj true))}}
-                <li class="attribute health">
-                    <h4 class="attribute-name box-title">{{ localize "TRPG.MagicPoints" }}</h4>
-                    <div class="attribute-value multiple">
-                        <input name="data.attributes.mp.value" type="text" value="{{data.attributes.mp.value}}" placeholder="10" data-dtype="Number"/>
-                        <span class="sep"> / </span>
-                        <input name="data.attributes.mp.max" type="text" value="{{data.attributes.mp.max}}" placeholder="10" data-dtype="Number"/>
-                    </div>
-                    <footer class="attribute-footer">
-                        <input name="data.attributes.mp.temp" type="text" class="temphp" placeholder="+{{ localize 'TRPG.Temp' }}"
-                            value="{{data.attributes.mp.temp}}" data-dtype="Number"/>
-                        <input name="data.attributes.mp.tempmax" type="text" class="temphp" placeholder="+{{ localize 'TRPG.Max' }}"
-                            value="{{data.attributes.mp.tempmax}}" data-dtype="Number"/>
-                    </footer>
-                </li>
-                {{/if}}
+				{{#if (or hasSpells data.details.showSpells (eq idj true))}}
+				<li class="attribute health">
+					<h4 class="attribute-name box-title">{{ localize "TRPG.MagicPoints" }}</h4>
+					<div class="attribute-value multiple">
+						<input name="data.attributes.mp.value" type="text" value="{{system.attributes.mp.value}}" placeholder="10" data-dtype="Number" />
+						<span class="sep"> / </span>
+						<input name="data.attributes.mp.max" type="text" value="{{system.attributes.mp.max}}" placeholder="10" data-dtype="Number" />
+					</div>
+					<footer class="attribute-footer">
+						<input
+							name="data.attributes.mp.temp"
+							type="text"
+							class="temphp"
+							placeholder="+{{ localize 'TRPG.Temp' }}"
+							value="{{system.attributes.mp.temp}}"
+							data-dtype="Number"
+						/>
+						<input
+							name="data.attributes.mp.tempmax"
+							type="text"
+							class="temphp"
+							placeholder="+{{ localize 'TRPG.Max' }}"
+							value="{{system.attributes.mp.tempmax}}"
+							data-dtype="Number"
+						/>
+					</footer>
+				</li>
+				{{/if}}
 
-                <!-- <li class="attribute hit-dice">
+				<!-- <li class="attribute hit-dice">
                     <h4 class="attribute-name box-title">
                         {{ localize "TRPG.HitDice" }}
                         <a class="config-button" data-action="hit-dice" title="{{localize 'TRPG.HitDiceConfig'}}"><i class="fas fa-cog"></i></a>
                     </h4>
                     <div class="attribute-value multiple">
-                        <label class="hit-dice">{{data.attributes.hd}} <span class="sep"> / </span> {{data.details.level}}</label>
+                        <label class="hit-dice">{{system.attributes.hd}} <span class="sep"> / </span> {{system.details.level}}</label>
                     </div>
                     <footer class="attribute-footer">
                         <a class="rest short-rest">{{ localize "TRPG.RestS" }}</a>
@@ -96,35 +119,35 @@
                     </footer>
                 </li> -->
 
-                <li class="attribute armor">
-                    <h4 class="attribute-name box-title">
-                        {{ localize "TRPG.ArmorClass" }}
-                        <a class="config-button" data-action="armor" title="{{localize 'TRPG.ArmorConfig'}}"><i class="fas fa-cog"></i></a>
-                    </h4>
-                    <div class="attribute-value attributable" data-property="attributes.ac">
-                        <span>{{data.attributes.ac.value}}</span>
-                    </div>
-                    {{#if (or hasSpells data.details.showSpells (eq idj true))}}
-                    <footer class="attribute-footer">
-                        <span class="spell-dc">{{localize "TRPG.SpellDC"}} {{data.attributes.spelldc}}</span>
-                    </footer>
-                    {{/if}}
-                </li>
+				<li class="attribute armor">
+					<h4 class="attribute-name box-title">
+						{{ localize "TRPG.ArmorClass" }}
+						<a class="config-button" data-action="armor" title="{{localize 'TRPG.ArmorConfig'}}"><i class="fas fa-cog"></i></a>
+					</h4>
+					<div class="attribute-value attributable" data-property="attributes.ac">
+						<span>{{system.attributes.ac.value}}</span>
+					</div>
+					{{#if (or hasSpells data.details.showSpells (eq idj true))}}
+					<footer class="attribute-footer">
+						<span class="spell-dc">{{localize "TRPG.SpellDC"}} {{system.attributes.spelldc}}</span>
+					</footer>
+					{{/if}}
+				</li>
 
-                <li class="attribute movement">
-                    <h4 class="attribute-name box-title">
-                        {{ localize "TRPG.Movement" }}
-                        <a class="config-button" data-action="movement" title="{{localize 'TRPG.MovementConfig'}}"><i class="fas fa-cog"></i></a>
-                    </h4>
-                    <div class="attribute-value">
-                        <span>{{movement.primary}}</span>
-                    </div>
-                    <footer class="attribute-footer">
-                        <span>{{movement.special}}</span>
-                    </footer>
-                </li>
+				<li class="attribute movement">
+					<h4 class="attribute-name box-title">
+						{{ localize "TRPG.Movement" }}
+						<a class="config-button" data-action="movement" title="{{localize 'TRPG.MovementConfig'}}"><i class="fas fa-cog"></i></a>
+					</h4>
+					<div class="attribute-value">
+						<span>{{movement.primary}}</span>
+					</div>
+					<footer class="attribute-footer">
+						<span>{{movement.special}}</span>
+					</footer>
+				</li>
 
-                <!-- <li class="attribute initiative">
+				<!-- <li class="attribute initiative">
                     <h4 class="attribute-name box-title rollable" data-action="rollInitiative">{{ localize "TRPG.Initiative" }}</h4>
                     <div class="attribute-value">
                         <span>{{numberFormat data.attributes.init.total decimals=0 sign=true}}</span>
@@ -135,138 +158,118 @@
                             value="{{numberFormat data.attributes.init.value decimals=0 sign=true}}"/>
                     </footer>
                 </li> -->
-            </ul>
-        </section>
-    </header>
+			</ul>
+		</section>
+	</header>
 
-    {{!-- Character Sheet Navigation --}}
-    <nav class="sheet-navigation tabs" data-group="primary">
-        <a class="item active" data-tab="attributes">{{ localize "TRPG.Attributes" }}</a>
-        <a class="item" data-tab="inventory">{{ localize "TRPG.Inventory" }}</a>
-        <a class="item" data-tab="features">{{ localize "TRPG.Features" }}</a>
-        {{#if (or hasSpells data.details.showSpells (eq idj true))}}<a class="item" data-tab="spellbook">{{ localize "TRPG.Spellbook" }}</a>{{/if}}
-        <a class="item" data-tab="effects">{{ localize "TRPG.Effects" }}</a>
-        <a class="item" data-tab="biography">{{ localize "TRPG.Biography" }}</a>
-    </nav>
+	{{!-- Character Sheet Navigation --}}
+	<nav class="sheet-navigation tabs" data-group="primary">
+		<a class="item active" data-tab="attributes">{{ localize "TRPG.Attributes" }}</a>
+		<a class="item" data-tab="inventory">{{ localize "TRPG.Inventory" }}</a>
+		<a class="item" data-tab="features">{{ localize "TRPG.Features" }}</a>
+		{{#if (or hasSpells data.details.showSpells (eq idj true))}}<a class="item" data-tab="spellbook">{{ localize "TRPG.Spellbook" }}</a>{{/if}}
+		<a class="item" data-tab="effects">{{ localize "TRPG.Effects" }}</a>
+		<a class="item" data-tab="biography">{{ localize "TRPG.Biography" }}</a>
+	</nav>
 
-    {{!-- Character Sheet Body --}}
-    <section class="sheet-body">
-
-        <div class="tab attributes flexrow" data-group="primary" data-tab="attributes">
-
-            {{!-- Ability Scores --}}
-            <ul class="ability-scores {{#if idj}}idj{{/if}} flexrow">
-            {{#each data.abilities as |ability id|}}
-                {{#if (and (eq id "hon") (eq ../idj false))}}
-                {{else}}
-                <li class="ability {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}">
-                    <h4 class="ability-name box-title rollable">{{ability.label}}</h4>
-                    <input class="ability-score" name="data.abilities.{{id}}.value" type="number" value="{{ability.value}}" placeholder="10"/>
-                    <div class="ability-modifiers flexrow">
-                        <span class="ability-mod" title="Modificador">{{numberFormat ability.mod decimals=0 sign=true}}</span>
-                    </div>
-                </li>
-                {{/if}}
-            {{/each}}
-            </ul>
+	{{!-- Character Sheet Body --}}
+	<section class="sheet-body">
+		<div class="tab attributes flexrow" data-group="primary" data-tab="attributes">
+			{{!-- Ability Scores --}}
+			<ul class="ability-scores {{#if idj}}idj{{/if}} flexrow">
+				{{#each system.abilities as |ability id|}} {{#if (and (eq id "hon") (eq ../idj false))}} {{else}}
+				<li class="ability {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}">
+					<h4 class="ability-name box-title rollable">{{ability.label}}</h4>
+					<input class="ability-score" name="data.abilities.{{id}}.value" type="number" value="{{ability.value}}" placeholder="10" />
+					<div class="ability-modifiers flexrow">
+						<span class="ability-mod" title="Modificador">{{numberFormat ability.mod decimals=0 sign=true}}</span>
+					</div>
+				</li>
+				{{/if}} {{/each}}
+			</ul>
 
 			{{!-- Skills --}}
 			<ul class="skills-list">
-			{{#each config.skills as |label s|}}
-			{{#with (lookup ../data.skills s) as |skill|}}
+				{{#each config.skills as |label s|}} {{#with (lookup ../system.skills s) as |skill|}}
 				<li class="skill flexrow {{#if skill.value}}proficient{{/if}}" data-skill="{{s}}">
-					<input type="hidden" name="data.skills.{{s}}.value" value="{{skill.value}}" data-dtype="Number"/>
+					<input type="hidden" name="data.skills.{{s}}.value" value="{{skill.value}}" data-dtype="Number" />
 					<a class="proficiency-toggle skill-proficiency" title="{{skill.hover}}">{{{skill.icon}}}</a>
 					<h4 class="skill-name rollable">{{label}}{{#if skill.st}}*{{/if}}{{#if skill.pda}}+{{/if}}</h4>
 					<span class="skill-ability">{{skill.ability}}</span>
 					<span class="skill-mod">{{numberFormat skill.total decimals=0 sign=true}}</span>
 				</li>
-			{{/with}}
-			{{/each}}
+				{{/with}} {{/each}}
 			</ul>
-			
-            <section class="center-pane flexcol">
-                {{!-- Body Attributes --}}
-                <ul class="attributes flexrow">
-                    {{!-- Saving Throws --}}
-                    <li class="attribute resource" style="padding: 3px;">
-                        <ul style="padding: 0; margin: 0;">
-                        {{#each config.saves as |label s|}}
-                        {{#with (lookup ../data.saves s) as |save|}}
-                            <li class="skill flexrow {{#if save.proficient}}proficient{{/if}}" data-save="{{s}}">
-                                <input type="hidden" name="data.saves.{{s}}.proficient" style="flex: 1;" value="{{save.proficient}}" data-dtype="Number"/>
-                                <a class="proficiency-toggle save-proficiency" style="flex: 1;;" title="{{save.hover}}">{{{save.icon}}}</a>
-                                <h4 class="save-name rollable" style="margin: 0;">{{label}}</h4>
-                                <span class="skill-mod" style="flex: 1;">{{numberFormat save.save decimals=0 sign=true}}</span>
-                            </li>
-                        {{/with}}
-                        {{/each}}
-                        </ul>
-                    </li>
-                    {{#each resources as |res|}}
-                    <li class="attribute resource">
-                        <h4 class="attribute-name box-title">
-                            <input name="data.resources.{{res.name}}.label" type="text" value="{{res.label}}" placeholder="{{res.placeholder}}" />
-                        </h4>
-                        <div class="attribute-value">
-                            <!-- <label class="recharge checkbox flexcol">
+
+			<section class="center-pane flexcol">
+				{{!-- Body Attributes --}}
+				<ul class="attributes flexrow">
+					{{!-- Saving Throws --}}
+					<li class="attribute resource" style="padding: 3px">
+						<ul style="padding: 0; margin: 0">
+							{{#each config.saves as |label s|}} {{#with (lookup ../system.saves s) as |save|}}
+							<li class="skill flexrow {{#if save.proficient}}proficient{{/if}}" data-save="{{s}}">
+								<input type="hidden" name="data.saves.{{s}}.proficient" style="flex: 1" value="{{save.proficient}}" data-dtype="Number" />
+								<a class="proficiency-toggle save-proficiency" style="flex: 1" title="{{save.hover}}">{{{save.icon}}}</a>
+								<h4 class="save-name rollable" style="margin: 0">{{label}}</h4>
+								<span class="skill-mod" style="flex: 1">{{numberFormat save.save decimals=0 sign=true}}</span>
+							</li>
+							{{/with}} {{/each}}
+						</ul>
+					</li>
+					{{#each resources as |res|}}
+					<li class="attribute resource">
+						<h4 class="attribute-name box-title">
+							<input name="data.resources.{{res.name}}.label" type="text" value="{{res.label}}" placeholder="{{res.placeholder}}" />
+						</h4>
+						<div class="attribute-value">
+							<!-- <label class="recharge checkbox flexcol">
                                 <span>{{ localize "TRPG.AbbreviationSR" }}</span><input name="data.resources.{{res.name}}.sr" type="checkbox" {{checked res.sr}}/>
                             </label> -->
 
-                            <input name="data.resources.{{res.name}}.value" type="number" value="{{res.value}}" placeholder="0"/>
-                            <span class="sep"> / </span>
-                            <input name="data.resources.{{res.name}}.max" type="number" value="{{res.max}}" placeholder="0"/>
+							<input name="data.resources.{{res.name}}.value" type="number" value="{{res.value}}" placeholder="0" />
+							<span class="sep"> / </span>
+							<input name="data.resources.{{res.name}}.max" type="number" value="{{res.max}}" placeholder="0" />
 
-                            <!-- <label class="recharge checkbox flexcol">
+							<!-- <label class="recharge checkbox flexcol">
                                 <span>{{ localize "TRPG.AbbreviationLR" }}</span><input name="data.resources.{{res.name}}.lr" type="checkbox" {{checked res.lr}}/>
                             </label> -->
-                        </div>
-                    </li>
-                    {{/each}}
-                </ul>
+						</div>
+					</li>
+					{{/each}}
+				</ul>
 
-                {{!-- Traits --}}
-                {{> "systems/trpg/templates/actors/parts/actor-traits.html"}}
-            </section>
-        </div>
+				{{!-- Traits --}} {{> "systems/trpg/templates/actors/parts/actor-traits.html"}}
+			</section>
+		</div>
 
-        {{!-- Inventory Tab --}}
-        <div class="tab inventory flexcol" data-group="primary" data-tab="inventory">
-            {{> "systems/trpg/templates/actors/parts/actor-inventory.html" sections=inventory}}
-        </div>
+		{{!-- Inventory Tab --}}
+		<div class="tab inventory flexcol" data-group="primary" data-tab="inventory">{{> "systems/trpg/templates/actors/parts/actor-inventory.html" sections=inventory}}</div>
 
-        {{!-- Features Tab --}}
-        <div class="tab features flexcol" data-group="primary" data-tab="features">
-            {{> "systems/trpg/templates/actors/parts/actor-features.html" sections=features}}
-        </div>
+		{{!-- Features Tab --}}
+		<div class="tab features flexcol" data-group="primary" data-tab="features">{{> "systems/trpg/templates/actors/parts/actor-features.html" sections=features}}</div>
 
-        {{!-- Spellbook Tab --}}
-        <div class="tab spellbook flexcol" data-group="primary" data-tab="spellbook">
-            {{> "systems/trpg/templates/actors/parts/actor-spellbook.html"}}
-        </div>
+		{{!-- Spellbook Tab --}}
+		<div class="tab spellbook flexcol" data-group="primary" data-tab="spellbook">{{> "systems/trpg/templates/actors/parts/actor-spellbook.html"}}</div>
 
-        {{!-- Effects Tab --}}
-        <div class="tab effects flexcol" data-group="primary" data-tab="effects">
-            {{> "systems/trpg/templates/actors/parts/active-effects.html"}}
-        </div>
+		{{!-- Effects Tab --}}
+		<div class="tab effects flexcol" data-group="primary" data-tab="effects">{{> "systems/trpg/templates/actors/parts/active-effects.html"}}</div>
 
-        {{!-- Biography Tab --}}
-        <div class="tab flexrow" data-group="primary" data-tab="biography">
-            <div class="characteristics flexcol">
-                <input named="data.details.appearance" type="text" value="" placeholder="{{ localize 'TRPG.Appearance' }}">
-                <textarea name="data.details.appearance">{{data.details.appearance}}</textarea>
-                <input named="data.details.trait" type="text" value="" placeholder="{{ localize 'TRPG.PersonalityTraits' }}">
-                <textarea name="data.details.trait">{{data.details.trait}}</textarea>
-                <input named="data.details.ideal" type="text" value="" placeholder="{{ localize 'TRPG.Ideals' }}">
-                <textarea name="data.details.ideal">{{data.details.ideal}}</textarea>
-                <input named="data.details.bond" type="text" value="" placeholder="{{ localize 'TRPG.Bonds' }}">
-                <textarea name="data.details.bond">{{data.details.bond}}</textarea>
-                <input named="data.details.flaw" type="text" value="" placeholder="{{ localize 'TRPG.Flaws' }}">
-                <textarea name="data.details.flaw">{{data.details.flaw}}</textarea>
-            </div>
-            <div class="biography">
-                {{editor content=data.details.biography.value target="data.details.biography.value" button=true owner=owner editable=editable rollData=rollData}}
-            </div>
-        </div>
-    </section>
+		{{!-- Biography Tab --}}
+		<div class="tab flexrow" data-group="primary" data-tab="biography">
+			<div class="characteristics flexcol">
+				<input named="data.details.appearance" type="text" value="" placeholder="{{ localize 'TRPG.Appearance' }}" />
+				<textarea name="data.details.appearance">{{system.details.appearance}}</textarea>
+				<input named="data.details.trait" type="text" value="" placeholder="{{ localize 'TRPG.PersonalityTraits' }}" />
+				<textarea name="data.details.trait">{{system.details.trait}}</textarea>
+				<input named="data.details.ideal" type="text" value="" placeholder="{{ localize 'TRPG.Ideals' }}" />
+				<textarea name="data.details.ideal">{{system.details.ideal}}</textarea>
+				<input named="data.details.bond" type="text" value="" placeholder="{{ localize 'TRPG.Bonds' }}" />
+				<textarea name="data.details.bond">{{system.details.bond}}</textarea>
+				<input named="data.details.flaw" type="text" value="" placeholder="{{ localize 'TRPG.Flaws' }}" />
+				<textarea name="data.details.flaw">{{system.details.flaw}}</textarea>
+			</div>
+			<div class="biography">{{editor biographyHTML target="data.details.biography.value" button=true owner=owner editable=editable rollData=rollData}}</div>
+		</div>
+	</section>
 </form>

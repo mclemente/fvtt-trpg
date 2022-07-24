@@ -34,10 +34,31 @@
 .dnd5e.sheet.actor ul.skills-list li.skill .skill-mod {
 	text-align: center;
 }
-
-.dnd5e.sheet.actor ul.skills-list {
-	flex: 0 0 230px;
-}
 .dnd5e.sheet.actor .tab.attributes {
 	scrollbar-width: thin;
+}
+.dnd5e.sheet.actor ul.skills-list li.skill .save-proficiency {
+	flex: 0 0 16px;
+	line-height: 18px;
+}
+/* IDJ */
+.dnd5e.sheet.actor .ability-scores.idj {
+	height: 492px;
+}
+.dnd5e.sheet.actor.character.idj,
+.dnd5e.sheet.actor.npc.idj {
+	min-height: 730px;
+}
+.dnd5e.sheet.actor.npc {
+	min-width: 605px;
+	min-height: 680px;
+}
+
+.dnd5e.sheet.actor .sheet-header .attributes .attribute .config-button {
+	position: absolute;
+	display: none;
+	right: -6px;
+	top: -3px;
+	font-size: 10px;
+	font-weight: normal;
 }

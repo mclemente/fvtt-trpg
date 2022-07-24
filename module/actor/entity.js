@@ -27,7 +27,7 @@ export default class Actor5e extends Actor {
 	 */
 	get classes() {
 		if (this._classes !== undefined) return this._classes;
-		if (!["character", "npc"].includes(this.data.type)) return (this._classes = {});
+		if (!["character", "npc"].includes(this.type)) return (this._classes = {});
 		return (this._classes = this.items
 			.filter((item) => item.type === "class")
 			.reduce((obj, cls) => {
@@ -55,20 +55,20 @@ export default class Actor5e extends Actor {
 		this._preparationWarnings = [];
 		super.prepareData();
 
-		const skills = this.data.data.skills;
+		const skills = this.system.skills;
 		for (let key in skills) {
 			let skill = skills[key];
 			let bonus = this.getFlag("trpg", `${key}.skill-bonus`) || 0;
 			let bonusAsInt = parseInt(Number(bonus));
 			if (!isNaN(bonusAsInt)) {
-				if (skill.pda && this.data.data.attributes.penalidadeArmadura) {
-					bonusAsInt += this.data.data.attributes.penalidadeArmadura;
+				if (skill.pda && this.system.attributes.penalidadeArmadura) {
+					bonusAsInt += this.system.attributes.penalidadeArmadura;
 				}
 				skill.total += bonusAsInt;
 			}
 		}
 
-		const saves = this.data.data.saves;
+		const saves = this.system.saves;
 		for (let key in saves) {
 			let save = saves[key];
 			let bonus = this.getFlag("trpg", `${key}.skill-bonus`) || 0;
@@ -86,14 +86,14 @@ export default class Actor5e extends Actor {
 
 	/** @override */
 	prepareBaseData() {
-		this._prepareBaseArmorClass(this.data);
-		switch (this.data.type) {
+		this._prepareBaseArmorClass(this);
+		switch (this.type) {
 			case "character":
-				return this._prepareCharacterData(this.data);
+				return this._prepareCharacterData(this);
 			case "npc":
-				return this._prepareNPCData(this.data);
+				return this._prepareNPCData(this);
 			case "vehicle":
-				return this._prepareVehicleData(this.data);
+				return this._prepareVehicleData(this);
 		}
 	}
 
@@ -111,8 +111,8 @@ export default class Actor5e extends Actor {
 
 	/** @override */
 	prepareDerivedData() {
-		const actorData = this.data;
-		const data = actorData.data;
+		const actorData = this;
+		const data = actorData.system;
 		const flags = actorData.flags.trpg || {};
 		const bonuses = getProperty(data, "bonuses.abilities") || {};
 
@@ -124,20 +124,18 @@ export default class Actor5e extends Actor {
 			const original = game.actors?.get(this.getFlag("trpg", "originalActor"));
 			if (original) {
 				if (transformOptions.mergeSaves) {
-					originalSaves = original.data.data.abilities;
+					originalSaves = original.system.abilities;
 				}
 				if (transformOptions.mergeSkills) {
-					originalSkills = original.data.data.skills;
+					originalSkills = original.system.skills;
 				}
 			}
 		}
 
 		// Ability modifiers
-		const bonusData = this.getRollData();
-
-		const dcBonus = this._simplifyBonus(data.bonuses?.spell?.dc, bonusData);
-		const saveBonus = this._simplifyBonus(bonuses.save, bonusData);
-		const checkBonus = this._simplifyBonus(bonuses.check, bonusData);
+		const dcBonus = Number.isNumeric(data.bonuses?.spell?.dc) ? parseInt(data.bonuses.spell.dc) : 0;
+		const saveBonus = Number.isNumeric(bonuses.save) ? parseInt(bonuses.save) : 0;
+		const checkBonus = Number.isNumeric(bonuses.check) ? parseInt(bonuses.check) : 0;
 		for (let [id, abl] of Object.entries(data.abilities)) {
 			abl.mod = Math.floor((abl.value - 10) / 2);
 			abl.checkBonus = checkBonus;
@@ -167,7 +165,7 @@ export default class Actor5e extends Actor {
 		data.attributes.encumbrance = this._computeEncumbrance(actorData);
 
 		// Prepare skills
-		this._prepareSkills(actorData, bonusData, bonuses, checkBonus, originalSkills);
+		this._prepareSkills(actorData, bonuses, checkBonus, originalSkills);
 
 		// Reset class store to ensure it is updated with any changes
 		this._classes = undefined;
@@ -184,7 +182,7 @@ export default class Actor5e extends Actor {
 		}
 
 		// Prepare spell-casting data
-		this._computeSpellcastingProgression(this.data);
+		this._computeSpellcastingProgression(this);
 
 		// Prepare armor class data
 		const ac = this._computeArmorClass(data);
@@ -221,10 +219,10 @@ export default class Actor5e extends Actor {
 	/** @inheritdoc */
 	getRollData() {
 		const data = super.getRollData();
-		data.prof = this.data.data.attributes.prof || 0;
+		data.prof = this.system.attributes.prof || 0;
 		data.classes = Object.entries(this.classes).reduce((obj, e) => {
 			const [slug, cls] = e;
-			obj[slug] = cls.data.data;
+			obj[slug] = cls.system;
 			return obj;
 		}, {});
 		return data;
@@ -314,7 +312,7 @@ export default class Actor5e extends Actor {
 		// Class spells should always be prepared
 		for (const feature of features) {
 			if (feature.type === "spell") {
-				const preparation = feature.data.data.preparation;
+				const preparation = feature.system.preparation;
 				preparation.mode = "always";
 				preparation.prepared = true;
 			}
@@ -330,19 +328,19 @@ export default class Actor5e extends Actor {
 	 * Prepare Character type specific data
 	 */
 	_prepareCharacterData(actorData) {
-		const data = actorData.data;
+		const data = actorData.system;
 
 		// Determine character level and available hit dice based on owned Class items
 		const [level, hd, babTotal, pda] = this.items.reduce(
 			(arr, item) => {
 				if (item.type === "class") {
-					const classLevels = parseInt(item.data.data.levels) || 1;
+					const classLevels = parseInt(item.system.levels) || 1;
 					arr[0] += classLevels;
-					arr[1] += classLevels - (parseInt(item.data.data.hitDiceUsed) || 0);
-					arr[2] += Math.floor(classLevels * CONFIG.TRPG.classBABFormulas[item.data.data.bab]);
+					arr[1] += classLevels - (parseInt(item.system.hitDiceUsed) || 0);
+					arr[2] += Math.floor(classLevels * CONFIG.TRPG.classBABFormulas[item.system.bab]);
 				}
-				if (item.type === "equipment" && item.data.data.equipped) {
-					arr[3] += item.data.data.stealth;
+				if (item.type === "equipment" && item.system.equipped) {
+					arr[3] += item.system.stealth;
 				}
 				return arr;
 			},
@@ -373,7 +371,7 @@ export default class Actor5e extends Actor {
 	 * Prepare NPC type specific data
 	 */
 	_prepareNPCData(actorData) {
-		const data = actorData.data;
+		const data = actorData.system;
 
 		// Kill Experience
 		data.details.xp.value = this.getCRExp(data.details.cr);
@@ -409,10 +407,10 @@ export default class Actor5e extends Actor {
 	 * @param originalSkills A transformed actor's original actor's skills.
 	 * @private
 	 */
-	_prepareSkills(actorData, bonusData, bonuses, checkBonus, originalSkills) {
+	_prepareSkills(actorData, bonuses, checkBonus, originalSkills) {
 		if (actorData.type === "vehicle") return;
 
-		const data = actorData.data;
+		const data = actorData.system;
 		const flags = actorData.flags.trpg || {};
 
 		// Skill modifiers
@@ -420,7 +418,7 @@ export default class Actor5e extends Actor {
 		const athlete = flags.remarkableAthlete;
 		const joat = flags.jackOfAllTrades;
 		const observant = flags.observantFeat;
-		const skillBonus = this._simplifyBonus(bonuses.skill, bonusData);
+		const skillBonus = Number.isNumeric(bonuses.skill) ? parseInt(bonuses.skill) : 0;
 		for (let [id, skl] of Object.entries(data.skills)) {
 			skl.value = Math.clamped(Number(skl.value).toNearest(0.5), 0, 2) ?? 0;
 
@@ -454,35 +452,12 @@ export default class Actor5e extends Actor {
 	/* -------------------------------------------- */
 
 	/**
-	 * Convert a bonus value to a simple integer for displaying on the sheet.
-	 * @param {number|string|null} bonus  Actor's bonus value.
-	 * @param {object} data               Actor data to use for replacing @ strings.
-	 * @returns {number}                  Simplified bonus as an integer.
-	 * @protected
-	 */
-	_simplifyBonus(bonus, data) {
-		if (!bonus) return 0;
-		if (Number.isNumeric(bonus)) return Number(bonus);
-		try {
-			const roll = new Roll(bonus, data);
-			if (!roll.isDeterministic) return 0;
-			roll.evaluate({ async: false });
-			return roll.total;
-		} catch (error) {
-			console.error(error);
-			return 0;
-		}
-	}
-
-	/* -------------------------------------------- */
-
-	/**
 	 * Initialize derived AC fields for Active Effects to target.
 	 * @param actorData
 	 * @private
 	 */
 	_prepareBaseArmorClass(actorData) {
-		const ac = actorData.data.attributes.ac;
+		const ac = actorData.system.attributes.ac;
 		ac.base = 10;
 		ac.shield = ac.bonus = ac.cover = 0;
 		this.armor = null;
@@ -497,7 +472,7 @@ export default class Actor5e extends Actor {
 	 */
 	_computeSpellcastingProgression(actorData) {
 		if (actorData.type === "vehicle") return;
-		const ad = actorData.data;
+		const ad = actorData.system;
 		const spells = ad.spells;
 		const isNPC = actorData.type === "npc";
 
@@ -517,7 +492,7 @@ export default class Actor5e extends Actor {
 		// Tabulate the total spell-casting progression
 		// const classes = this.data.items.filter(i => i.type === "class");
 		// for ( let cls of classes ) {
-		//   const d = cls.data.data;
+		//   const d = cls.system;
 		//   if ( d.spellcasting.progression === "none" ) continue;
 		//   const levels = d.levels;
 		//   const prog = d.spellcasting.progression;
@@ -537,8 +512,8 @@ export default class Actor5e extends Actor {
 		// }
 
 		// EXCEPTION: NPC with an explicit spell-caster level
-		// if (isNPC && actorData.data.details.spellLevel) {
-		//   progression.slot = actorData.data.details.spellLevel;
+		// if (isNPC && actorData.system.details.spellLevel) {
+		//   progression.slot = actorData.system.details.spellLevel;
 		// }
 
 		// Look up the number of slots per level from the progression table
@@ -586,8 +561,8 @@ export default class Actor5e extends Actor {
 		const armorTypes = new Set(Object.keys(CONFIG.TRPG.armorTypes));
 		const { armors, shields } = this.itemTypes.equipment.reduce(
 			(obj, equip) => {
-				const armor = equip.data.data.armor;
-				if (!equip.data.data.equipped || !armorTypes.has(armor?.type)) return obj;
+				const armor = equip.system.armor;
+				if (!equip.system.equipped || !armorTypes.has(armor?.type)) return obj;
 				if (armor.type === "shield") obj.shields.push(equip);
 				else obj.armors.push(equip);
 				return obj;
@@ -612,7 +587,7 @@ export default class Actor5e extends Actor {
 				ac.base = 10 + Math.floor(data.details.level / 2);
 				if (armors.length) {
 					if (armors.length > 1) ac.warnings.push("TRPG.WarnMultipleArmor");
-					const armorData = armors[0].data.data.armor;
+					const armorData = armors[0].system.armor;
 					ac.dex = Math.min(armorData.dex ?? Infinity, data.abilities.dex.mod);
 					ac.base += (armorData.value ?? 0) + ac.dex;
 					ac.equippedArmor = armors[0];
@@ -640,7 +615,7 @@ export default class Actor5e extends Actor {
 		// Equipped Shield
 		if (shields.length) {
 			if (shields.length > 1) ac.warnings.push("TRPG.WarnMultipleShields");
-			ac.shield = shields[0].data.data.armor.value ?? 0;
+			ac.shield = shields[0].system.armor.value ?? 0;
 			ac.equippedShield = shields[0];
 		}
 
@@ -665,14 +640,14 @@ export default class Actor5e extends Actor {
 		const physicalItems = ["weapon", "equipment", "consumable", "tool", "backpack", "loot"];
 		let weight = actorData.items.reduce((weight, i) => {
 			if (!physicalItems.includes(i.type)) return weight;
-			const q = i.data.data.quantity || 0;
-			const w = i.data.data.weight || 0;
+			const q = i.system.quantity || 0;
+			const w = i.system.weight || 0;
 			return weight + q * w;
 		}, 0);
 
 		// [Optional] add Currency Weight (for non-transformed actors)
-		if (game.settings.get("trpg", "currencyWeight") && actorData.data.currency) {
-			const currency = actorData.data.currency;
+		if (game.settings.get("trpg", "currencyWeight") && actorData.system.currency) {
+			const currency = actorData.system.currency;
 			const numCoins = Object.values(currency).reduce((val, denom) => (val += Math.max(denom, 0)), 0);
 			weight += (numCoins * CONFIG.TRPG.encumbrance.currencyPerWeight) / 100;
 		}
@@ -686,12 +661,12 @@ export default class Actor5e extends Actor {
 				lg: 2,
 				huge: 4,
 				grg: 8,
-			}[actorData.data.traits.size] || 1;
+			}[actorData.system.traits.size] || 1;
 		if (this.getFlag("trpg", "powerfulBuild")) mod = Math.min(mod * 2, 8);
 
 		// Compute Encumbrance percentage
 		weight = weight.toNearest(0.1);
-		const max = actorData.data.abilities.str.value * CONFIG.TRPG.encumbrance.strMultiplier * mod;
+		const max = actorData.system.abilities.str.value * CONFIG.TRPG.encumbrance.strMultiplier * mod;
 		const pct = Math.clamped((weight * 100) / max, 0, 100);
 		return { value: weight.toNearest(0.1), max, pct, encumbered: pct > 0.3 };
 	}
@@ -708,7 +683,7 @@ export default class Actor5e extends Actor {
 
 		// Some sensible defaults for convenience
 		// Token size category
-		const s = CONFIG.TRPG.tokenSizes[this.data.data.traits.size || "med"];
+		const s = CONFIG.TRPG.tokenSizes[this.system.traits.size || "med"];
 		this.data.token.update({ width: s, height: s });
 
 		// Player character configuration
@@ -735,7 +710,7 @@ export default class Actor5e extends Actor {
 		}
 
 		// Reset death save counters
-		// const isDead = this.data.data.attributes.hp.value <= 0;
+		// const isDead = this.system.attributes.hp.value <= 0;
 		// if ( isDead && (foundry.utils.getProperty(changed, "data.attributes.hp.value") > 0) ) {
 		//   foundry.utils.setProperty(changed, "data.attributes.death.success", 0);
 		//   foundry.utils.setProperty(changed, "data.attributes.death.failure", 0);
@@ -749,7 +724,7 @@ export default class Actor5e extends Actor {
 	 * @protected
 	 */
 	_assignPrimaryClass() {
-		const classes = this.itemTypes.class.sort((a, b) => b.data.data.levels - a.data.data.levels);
+		const classes = this.itemTypes.class.sort((a, b) => b.system.levels - a.system.levels);
 		const newPC = classes[0]?.id || "";
 		return this.update({ "data.details.originalClass": newPC });
 	}
@@ -761,11 +736,11 @@ export default class Actor5e extends Actor {
 	/** @override */
 	async modifyTokenAttribute(attribute, value, isDelta, isBar) {
 		if (attribute === "attributes.hp") {
-			const hp = getProperty(this.data.data, attribute);
+			const hp = getProperty(this.system, attribute);
 			const delta = isDelta ? -1 * value : hp.value + hp.temp - value;
 			return this.applyDamage(delta);
 		} else if (attribute === "attributes.mp") {
-			const hp = getProperty(this.data.data, attribute);
+			const hp = getProperty(this.system, attribute);
 			const delta = isDelta ? -1 * value : hp.value + hp.temp - value;
 			return this.reduceMagicPoints(delta);
 		}
@@ -782,7 +757,7 @@ export default class Actor5e extends Actor {
 	 */
 	async applyDamage(amount = 0, multiplier = 1) {
 		amount = Math.floor(parseInt(amount) * multiplier);
-		const hp = this.data.data.attributes.hp;
+		const hp = this.system.attributes.hp;
 
 		// Deduct damage from temp HP first
 		const tmp = parseInt(hp.temp) || 0;
@@ -815,7 +790,7 @@ export default class Actor5e extends Actor {
 
 	async reduceMagicPoints(amount = 0, multiplier = 1) {
 		amount = Math.floor(parseInt(amount) * multiplier);
-		const hp = this.data.data.attributes.mp;
+		const hp = this.system.attributes.mp;
 
 		// Deduct damage from temp HP first
 		const tmp = parseInt(hp.temp) || 0;
@@ -856,8 +831,8 @@ export default class Actor5e extends Actor {
 	 * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
 	 */
 	rollSkill(skillId, options = {}) {
-		const skl = this.data.data.skills[skillId];
-		const bonuses = getProperty(this.data.data, "bonuses.abilities") || {};
+		const skl = this.system.skills[skillId];
+		const bonuses = getProperty(this.system, "bonuses.abilities") || {};
 
 		// Compose roll parts and data
 		const parts = ["@mod"];
@@ -868,10 +843,6 @@ export default class Actor5e extends Actor {
 			data["checkBonus"] = bonuses.check;
 			parts.push("@checkBonus");
 		}
-
-		// Ability-specific check bonus
-		if (skl?.bonuses?.check) data.abilityCheckBonus = Roll.replaceFormulaData(skl.bonuses.check, data);
-		else data.abilityCheckBonus = 0;
 
 		// Skill check bonus
 		if (bonuses.skill) {
@@ -947,7 +918,7 @@ export default class Actor5e extends Actor {
 	 */
 	rollAbilityTest(abilityId, options = {}) {
 		const label = CONFIG.TRPG.abilities[abilityId];
-		const abl = this.data.data.abilities[abilityId];
+		const abl = this.system.abilities[abilityId];
 
 		// Construct parts
 		const parts = ["@mod"];
@@ -957,21 +928,14 @@ export default class Actor5e extends Actor {
 		const feats = this.data.flags.trpg || {};
 		if (feats.remarkableAthlete && TRPG.characterFlags.remarkableAthlete.abilities.includes(abilityId)) {
 			parts.push("@proficiency");
-			data.proficiency = Math.ceil(0.5 * this.data.data.attributes.prof);
+			data.proficiency = Math.ceil(0.5 * this.system.attributes.prof);
 		} else if (feats.jackOfAllTrades) {
 			parts.push("@proficiency");
-			data.proficiency = Math.floor(0.5 * this.data.data.attributes.prof);
-		}
-
-		// Add ability-specific check bonus
-		if (abl?.bonuses?.check) {
-			const checkBonusKey = `${abilityId}CheckBonus`;
-			parts.push(`@${checkBonusKey}`);
-			data[checkBonusKey] = Roll.replaceFormulaData(abl.bonuses.check, data);
+			data.proficiency = Math.floor(0.5 * this.system.attributes.prof);
 		}
 
 		// Add global actor bonus
-		const bonuses = getProperty(this.data.data, "bonuses.abilities") || {};
+		const bonuses = getProperty(this.system, "bonuses.abilities") || {};
 		if (bonuses.check) {
 			parts.push("@checkBonus");
 			data.checkBonus = bonuses.check;
@@ -1007,7 +971,7 @@ export default class Actor5e extends Actor {
 	 */
 	rollAbilitySave(abilityId, options = {}) {
 		const label = CONFIG.TRPG.saves[abilityId];
-		const abl = this.data.data.saves[abilityId];
+		const abl = this.system.saves[abilityId];
 
 		// Construct parts
 		const parts = ["@mod"];
@@ -1019,15 +983,8 @@ export default class Actor5e extends Actor {
 			data.prof = abl.prof;
 		}
 
-		// Add ability-specific check bonus
-		if (abl?.bonuses?.save) {
-			const checkBonusKey = `${abilityId}SaveBonus`;
-			parts.push(`@${checkBonusKey}`);
-			data[checkBonusKey] = Roll.replaceFormulaData(abl.bonuses.save, data);
-		}
-
 		// Include a global actor ability save bonus
-		const bonuses = getProperty(this.data.data, "bonuses.abilities") || {};
+		const bonuses = getProperty(this.system, "bonuses.abilities") || {};
 		if (bonuses.save) {
 			parts.push("@saveBonus");
 			data.saveBonus = bonuses.save;
@@ -1068,8 +1025,8 @@ export default class Actor5e extends Actor {
 	 */
 	async rollDeathSave(options = {}) {
 		// Display a warning if we are not at zero HP or if we already have reached 3
-		const death = this.data.data.attributes.death;
-		if (this.data.data.attributes.hp.value > 0 || death.failure >= 3 || death.success >= 3) {
+		const death = this.system.attributes.death;
+		if (this.system.attributes.hp.value > 0 || death.failure >= 3 || death.success >= 3) {
 			ui.notifications.warn(game.i18n.localize("TRPG.DeathSaveUnnecessary"));
 			return null;
 		}
@@ -1082,11 +1039,11 @@ export default class Actor5e extends Actor {
 		// Diamond Soul adds proficiency
 		if (this.getFlag("trpg", "diamondSoul")) {
 			parts.push("@prof");
-			data.prof = this.data.data.attributes.prof;
+			data.prof = this.system.attributes.prof;
 		}
 
 		// Include a global actor ability save bonus
-		const bonuses = foundry.utils.getProperty(this.data.data, "bonuses.abilities") || {};
+		const bonuses = foundry.utils.getProperty(this.system, "bonuses.abilities") || {};
 		if (bonuses.save) {
 			parts.push("@saveBonus");
 			data.saveBonus = bonuses.save;
@@ -1174,15 +1131,15 @@ export default class Actor5e extends Actor {
 		// If no denomination was provided, choose the first available
 		let cls = null;
 		if (!denomination) {
-			cls = this.itemTypes.class.find((c) => c.data.data.hitDiceUsed < c.data.data.levels);
+			cls = this.itemTypes.class.find((c) => c.system.hitDiceUsed < c.system.levels);
 			if (!cls) return null;
-			denomination = cls.data.data.hitDice;
+			denomination = cls.system.hitDice;
 		}
 
 		// Otherwise locate a class (if any) which has an available hit die of the requested denomination
 		else {
 			cls = this.items.find((i) => {
-				const d = i.data.data;
+				const d = i.system;
 				return d.hitDice === denomination && (d.hitDiceUsed || 0) < (d.levels || 1);
 			});
 		}
@@ -1196,7 +1153,7 @@ export default class Actor5e extends Actor {
 		// Prepare roll data
 		const parts = [`1${denomination}`, "@abilities.con.mod"];
 		const title = game.i18n.localize("TRPG.HitDiceRoll");
-		const rollData = foundry.utils.deepClone(this.data.data);
+		const rollData = foundry.utils.deepClone(this.system);
 
 		// Call the roll helper utility
 		const roll = await damageRoll({
@@ -1215,8 +1172,8 @@ export default class Actor5e extends Actor {
 		if (!roll) return null;
 
 		// Adjust actor data
-		await cls.update({ "data.hitDiceUsed": cls.data.data.hitDiceUsed + 1 });
-		const hp = this.data.data.attributes.hp;
+		await cls.update({ "data.hitDiceUsed": cls.system.hitDiceUsed + 1 });
+		const hp = this.system.attributes.hp;
 		const dhp = Math.min(hp.max + (hp.tempmax ?? 0) - hp.value, roll.total);
 		await this.update({ "data.attributes.hp.value": hp.value + dhp });
 		return roll;
@@ -1251,8 +1208,8 @@ export default class Actor5e extends Actor {
 	 */
 	async shortRest({ dialog = true, chat = true, autoHD = false, autoHDThreshold = 3 } = {}) {
 		// Take note of the initial hit points and number of hit dice the Actor has
-		const hd0 = this.data.data.attributes.hd;
-		const hp0 = this.data.data.attributes.hp.value;
+		const hd0 = this.system.attributes.hd;
+		const hp0 = this.system.attributes.hp.value;
 		let newDay = false;
 
 		// Display a Dialog for rolling hit dice
@@ -1269,7 +1226,7 @@ export default class Actor5e extends Actor {
 			await this.autoSpendHitDice({ threshold: autoHDThreshold });
 		}
 
-		return this._rest(chat, newDay, false, this.data.data.attributes.hd - hd0, this.data.data.attributes.hp.value - hp0);
+		return this._rest(chat, newDay, false, this.system.attributes.hd - hd0, this.system.attributes.hp.value - hp0);
 	}
 
 	/* -------------------------------------------- */
@@ -1414,10 +1371,10 @@ export default class Actor5e extends Actor {
 	 * @return {Promise.<number>}             Number of hit dice spent.
 	 */
 	async autoSpendHitDice({ threshold = 3 } = {}) {
-		const max = this.data.data.attributes.hp.max + this.data.data.attributes.hp.tempmax;
+		const max = this.system.attributes.hp.max + this.system.attributes.hp.tempmax;
 
 		let diceRolled = 0;
-		while (this.data.data.attributes.hp.value + threshold <= max) {
+		while (this.system.attributes.hp.value + threshold <= max) {
 			const r = await this.rollHitDie(undefined, { dialog: false });
 			if (r === null) break;
 			diceRolled += 1;
@@ -1438,7 +1395,7 @@ export default class Actor5e extends Actor {
 	 * @protected
 	 */
 	_getRestHitPointRecovery({ recoverTemp = true, recoverTempMax = true } = {}) {
-		const data = this.data.data;
+		const data = this.system;
 		let updates = {};
 		let max = data.attributes.hp.max;
 		let current = data.attributes.hp.value;
@@ -1459,7 +1416,7 @@ export default class Actor5e extends Actor {
 	}
 
 	_getRestMagicPointRecovery({ recoverTemp = true, recoverTempMax = true } = {}) {
-		const data = this.data.data;
+		const data = this.system;
 		let updates = {};
 		let max = data.attributes.mp.max;
 		let current = data.attributes.mp.value;
@@ -1491,7 +1448,7 @@ export default class Actor5e extends Actor {
 	 */
 	_getRestResourceRecovery({ recoverShortRestResources = true, recoverLongRestResources = true } = {}) {
 		let updates = {};
-		for (let [k, r] of Object.entries(this.data.data.resources)) {
+		for (let [k, r] of Object.entries(this.system.resources)) {
 			if (Number.isNumeric(r.max) && ((recoverShortRestResources && r.sr) || (recoverLongRestResources && r.lr))) {
 				updates[`data.resources.${k}.value`] = Number(r.max);
 			}
@@ -1514,7 +1471,7 @@ export default class Actor5e extends Actor {
 		let updates = {};
 
 		if (recoverSpells) {
-			for (let [k, v] of Object.entries(this.data.data.spells)) {
+			for (let [k, v] of Object.entries(this.system.spells)) {
 				updates[`data.spells.${k}.value`] = Number.isNumeric(v.override) ? v.override : v.max ?? 0;
 			}
 		}
@@ -1535,18 +1492,18 @@ export default class Actor5e extends Actor {
 	_getRestHitDiceRecovery({ maxHitDice = undefined } = {}) {
 		// Determine the number of hit dice which may be recovered
 		if (maxHitDice === undefined) {
-			maxHitDice = Math.max(Math.floor(this.data.data.details.level / 2), 1);
+			maxHitDice = Math.max(Math.floor(this.system.details.level / 2), 1);
 		}
 
 		// Sort classes which can recover HD, assuming players prefer recovering larger HD first.
 		const sortedClasses = Object.values(this.classes).sort((a, b) => {
-			return (parseInt(b.data.data.hitDice.slice(1)) || 0) - (parseInt(a.data.data.hitDice.slice(1)) || 0);
+			return (parseInt(b.system.hitDice.slice(1)) || 0) - (parseInt(a.system.hitDice.slice(1)) || 0);
 		});
 
 		let updates = [];
 		let hitDiceRecovered = 0;
 		for (let item of sortedClasses) {
-			const d = item.data.data;
+			const d = item.system;
 			if (hitDiceRecovered < maxHitDice && d.hitDiceUsed > 0) {
 				let delta = Math.min(d.hitDiceUsed || 0, maxHitDice - hitDiceRecovered);
 				hitDiceRecovered += delta;
@@ -1577,7 +1534,7 @@ export default class Actor5e extends Actor {
 
 		let updates = [];
 		for (let item of this.items) {
-			const d = item.data.data;
+			const d = item.system;
 			if (d.uses && recovery.includes(d.uses.per)) {
 				updates.push({ _id: item.id, "data.uses.value": d.uses.max });
 			}
@@ -1597,7 +1554,7 @@ export default class Actor5e extends Actor {
 	 * @return {Promise<Actor5e>}
 	 */
 	convertCurrency() {
-		const curr = foundry.utils.deepClone(this.data.data.currency);
+		const curr = foundry.utils.deepClone(this.system.currency);
 		const convert = CONFIG.TRPG.currencyConversion;
 		for (let [c, t] of Object.entries(convert)) {
 			let change = Math.floor(curr[c] / t.each);
@@ -1680,7 +1637,7 @@ export default class Actor5e extends Actor {
 		d.data.attributes.exhaustion = o.data.attributes.exhaustion; // Keep your prior exhaustion level
 		d.data.attributes.inspiration = o.data.attributes.inspiration; // Keep inspiration
 		d.data.spells = o.data.spells; // Keep spell slots
-		d.data.attributes.ac.flat = target.data.data.attributes.ac.value; // Override AC
+		d.data.attributes.ac.flat = target.system.attributes.ac.value; // Override AC
 
 		// Token appearance updates
 		d.token = { name: d.name };
@@ -1943,7 +1900,7 @@ export default class Actor5e extends Actor {
 	 */
 	getSpellDC(ability) {
 		console.warn(`The Actor5e#getSpellDC(ability) method has been deprecated in favor of Actor5e#data.data.abilities[ability].dc`);
-		return this.data.data.abilities[ability]?.dc;
+		return this.system.abilities[ability]?.dc;
 	}
 
 	/* -------------------------------------------- */

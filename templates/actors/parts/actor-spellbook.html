@@ -5,17 +5,17 @@
         {{else}}
         <label>{{localize "TRPG.Level"}}</label>
         <input class="spellcasting-level" type="text" name="data.details.spellLevel"
-               value="{{data.details.spellLevel}}" data-dtype="Number" placeholder="0"/>
+               value="{{system.details.spellLevel}}" data-dtype="Number" placeholder="0"/>
         {{/unless}}
         <select name="data.attributes.spellcasting" data-type="String">
             {{#select data.attributes.spellcasting}}
             <option value="">{{localize "TRPG.None"}}</option>
-            {{#each data.abilities as |abl a|}}
+            {{#each system.abilities as |abl a|}}
             <option value="{{a}}">{{abl.label}}</option>
             {{/each}}
             {{/select}}
         </select>
-        <span>{{localize "TRPG.AbbreviationDC"}} {{data.attributes.spelldc}}</span>
+        <span>{{localize "TRPG.AbbreviationDC"}} {{system.attributes.spelldc}}</span>
     </div>
 
     <ul class="filter-list flexrow" data-filter="spellbook">
