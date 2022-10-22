@@ -175,9 +175,9 @@ export default class ActorSheet5eVehicle extends ActorSheet5e {
 		};
 
 		data.items.forEach((item) => {
-			item.hasUses = item.data.uses && item.data.uses.max > 0;
-			item.isOnCooldown = item.data.recharge && !!item.data.recharge.value && item.data.recharge.charged === false;
-			item.isDepleted = item.isOnCooldown && item.data.uses.per && item.data.uses.value > 0;
+			item.hasUses = item.system.uses && item.system.uses.max > 0;
+			item.isOnCooldown = item.system.recharge && !!item.system.recharge.value && item.system.recharge.charged === false;
+			item.isDepleted = item.isOnCooldown && item.system.uses.per && item.system.uses.value > 0;
 		});
 
 		const cargo = {
@@ -232,7 +232,7 @@ export default class ActorSheet5eVehicle extends ActorSheet5e {
 			// Handle cargo explicitly
 			const isCargo = item.flags.trpg?.vehicleCargo === true;
 			if (isCargo) {
-				totalWeight += (item.data.weight || 0) * item.data.quantity;
+				totalWeight += (item.data.weight || 0) * item.system.quantity;
 				cargo.cargo.items.push(item);
 				continue;
 			}
@@ -251,7 +251,7 @@ export default class ActorSheet5eVehicle extends ActorSheet5e {
 					else features.actions.items.push(item);
 					break;
 				default:
-					totalWeight += (item.data.weight || 0) * item.data.quantity;
+					totalWeight += (item.data.weight || 0) * item.system.quantity;
 					cargo.cargo.items.push(item);
 			}
 		}

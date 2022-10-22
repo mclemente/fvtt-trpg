@@ -46,11 +46,11 @@ export default class ActorSheet5eNPC extends ActorSheet5e {
 		let [spells, other] = data.items.reduce(
 			(arr, item) => {
 				item.img = item.img || CONST.DEFAULT_TOKEN;
-				item.isStack = Number.isNumeric(item.data.quantity) && item.data.quantity !== 1;
-				item.hasUses = item.data.uses && item.data.uses.max > 0;
-				item.isOnCooldown = item.data.recharge && !!item.data.recharge.value && item.data.recharge.charged === false;
-				item.isDepleted = item.isOnCooldown && item.data.uses.per && item.data.uses.value > 0;
-				item.hasTarget = !!item.data.target && !["none", ""].includes(item.data.target.type);
+				item.isStack = Number.isNumeric(item.system.quantity) && item.system.quantity !== 1;
+				item.hasUses = item.system.uses && item.system.uses.max > 0;
+				item.isOnCooldown = item.system.recharge && !!item.system.recharge.value && item.system.recharge.charged === false;
+				item.isDepleted = item.isOnCooldown && item.system.uses.per && item.system.uses.value > 0;
+				item.hasTarget = !!item.system.target && !["none", ""].includes(item.system.target.type);
 				if (item.type === "spell") arr[0].push(item);
 				else arr[1].push(item);
 				return arr;

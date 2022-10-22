@@ -1,16 +1,16 @@
-import Actor5e from "../entity.js";
-import Item5e from "../../item/entity.js";
-import ProficiencySelector from "../../apps/proficiency-selector.js";
-import PropertyAttribution from "../../apps/property-attribution.js";
-import TraitSelector from "../../apps/trait-selector.js";
+import ActiveEffect5e from "../../active-effect.js";
 import ActorArmorConfig from "../../apps/actor-armor.js";
 import ActorSheetFlags from "../../apps/actor-flags.js";
+import ActorTypeConfig from "../../apps/actor-type.js";
 import ActorHitDiceConfig from "../../apps/hit-dice-config.js";
 import ActorMovementConfig from "../../apps/movement-config.js";
+import ProficiencySelector from "../../apps/proficiency-selector.js";
+import PropertyAttribution from "../../apps/property-attribution.js";
 import ActorSensesConfig from "../../apps/senses-config.js";
-import ActorTypeConfig from "../../apps/actor-type.js";
+import TraitSelector from "../../apps/trait-selector.js";
 import { TRPG } from "../../config.js";
-import ActiveEffect5e from "../../active-effect.js";
+import Item5e from "../../item/entity.js";
+import Actor5e from "../entity.js";
 
 /**
  * Extend the basic ActorSheet class to suppose system-specific logic and functionality.
@@ -494,7 +494,7 @@ export default class ActorSheet5e extends ActorSheet {
 	 */
 	_filterItems(items, filters) {
 		return items.filter((item) => {
-			const data = item.data;
+			const data = item.system;
 
 			// Action usage
 			for (let f of ["full", "action", "bonus", "reaction"]) {

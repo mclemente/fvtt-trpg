@@ -1,5 +1,5 @@
-import ActorSheet5e from "./base.js";
 import Actor5e from "../entity.js";
+import ActorSheet5e from "./base.js";
 
 /**
  * An Actor sheet for player character type actors.
@@ -88,7 +88,7 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
 			(arr, item) => {
 				// Item details
 				item.img = item.img || CONST.DEFAULT_TOKEN;
-				item.isStack = Number.isNumeric(item.data.quantity) && item.data.quantity !== 1;
+				item.isStack = Number.isNumeric(item.system.quantity) && item.system.quantity !== 1;
 				item.attunement = {
 					[CONFIG.TRPG.attunementTypes.REQUIRED]: {
 						icon: "fa-sun",
@@ -100,13 +100,13 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
 						cls: "attuned",
 						title: "TRPG.AttunementAttuned",
 					},
-				}[item.data.attunement];
+				}[item.system.attunement];
 
 				// Item usage
-				item.hasUses = item.data.uses && item.data.uses.max > 0;
-				item.isOnCooldown = item.data.recharge && !!item.data.recharge.value && item.data.recharge.charged === false;
-				item.isDepleted = item.isOnCooldown && item.data.uses.per && item.data.uses.value > 0;
-				item.hasTarget = !!item.data.target && !["none", ""].includes(item.data.target.type);
+				item.hasUses = item.system.uses && item.system.uses.max > 0;
+				item.isOnCooldown = item.system.recharge && !!item.system.recharge.value && item.system.recharge.charged === false;
+				item.isDepleted = item.isOnCooldown && item.system.uses.per && item.system.uses.value > 0;
+				item.hasTarget = !!item.system.target && !["none", ""].includes(item.system.target.type);
 
 				// Item toggle state
 				this._prepareItemToggleState(item);
@@ -131,9 +131,9 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
 
 		// Organize items
 		for (let i of items) {
-			i.data.quantity = i.data.quantity || 0;
-			i.data.weight = i.data.weight || 0;
-			i.totalWeight = (i.data.quantity * i.data.weight).toNearest(0.1);
+			i.system.quantity = i.system.quantity || 0;
+			i.system.weight = i.system.weight || 0;
+			i.totalWeight = (i.system.quantity * i.system.weight).toNearest(0.1);
 			inventory[i.type].items.push(i);
 		}
 
@@ -172,15 +172,15 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
 	 */
 	_prepareItemToggleState(item) {
 		if (item.type === "spell") {
-			const isAlways = getProperty(item.data, "preparation.mode") === "always";
-			const isPrepared = getProperty(item.data, "preparation.prepared");
+			const isAlways = getProperty(item.system, "preparation.mode") === "always";
+			const isPrepared = getProperty(item.system, "preparation.prepared");
 			item.toggleClass = isPrepared ? "active" : "";
 			if (isAlways) item.toggleClass = "fixed";
 			if (isAlways) item.toggleTitle = CONFIG.TRPG.spellPreparationModes.always;
 			else if (isPrepared) item.toggleTitle = CONFIG.TRPG.spellPreparationModes.prepared;
 			else item.toggleTitle = game.i18n.localize("TRPG.SpellUnprepared");
 		} else {
-			const isActive = getProperty(item.data, "equipped");
+			const isActive = getProperty(item.system, "equipped");
 			item.toggleClass = isActive ? "active" : "";
 			item.toggleTitle = game.i18n.localize(isActive ? "TRPG.Equipped" : "TRPG.Unequipped");
 		}
@@ -244,7 +244,7 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
 		event.preventDefault();
 		const itemId = event.currentTarget.closest(".item").dataset.itemId;
 		const item = this.actor.items.get(itemId);
-		const attr = item.data.type === "spell" ? "data.preparation.prepared" : "data.equipped";
+		const attr = item.type === "spell" ? "data.preparation.prepared" : "data.equipped";
 		return item.update({ [attr]: !getProperty(item.data, attr) });
 	}
 

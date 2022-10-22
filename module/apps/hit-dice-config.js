@@ -27,7 +27,7 @@ export default class ActorHitDiceConfig extends DocumentSheet {
 		return {
 			classes: this.object.items
 				.reduce((classes, item) => {
-					if (item.data.type === "class") {
+					if (item.type === "class") {
 						// Add the appropriate data only if this item is a "class"
 						classes.push({
 							classItemId: item.data._id,

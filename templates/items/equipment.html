@@ -1,137 +1,109 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
+	{{!-- Item Sheet Header --}}
+	<header class="sheet-header flexrow">
+		<img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img" />
 
-    {{!-- Item Sheet Header --}}
-    <header class="sheet-header flexrow">
-        <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+		<div class="header-details flexrow">
+			<h1 class="charname">
+				<input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'TRPG.ItemName' }}" />
+			</h1>
 
-        <div class="header-details flexrow">
-            <h1 class="charname">
-                <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'TRPG.ItemName' }}"/>
-            </h1>
+			<div class="item-subtitle">
+				<h4 class="item-type">{{itemType}}</h4>
+				<span class="item-status">{{itemStatus}}</span>
+			</div>
 
-            <div class="item-subtitle">
-                <h4 class="item-type">{{itemType}}</h4>
-                <span class="item-status">{{itemStatus}}</span>
-            </div>
+			<ul class="summary flexrow">
+				<li>{{lookup config.equipmentTypes system.armor.type }}</li>
+				<li>
+					<select name="system.rarity">
+						{{selectOptions config.itemRarity selected=system.rarity blank="&nbsp;"}}
+					</select>
+				</li>
+				<li>
+					<input type="text" name="system.source" value="{{system.source}}" placeholder="{{ localize 'TRPG.Source' }}" />
+				</li>
+			</ul>
+		</div>
+	</header>
 
-            <ul class="summary flexrow">
-                <li>
-                    {{lookup config.equipmentTypes data.armor.type }}
-                </li>
-                <li>
-                    <select name="data.rarity">
-                        {{selectOptions config.itemRarity selected=data.rarity blank="&nbsp;"}}
-                    </select>
-                </li>
-                <li>
-                    <input type="text" name="data.source" value="{{data.source}}" placeholder="{{ localize 'TRPG.Source' }}"/>
-                </li>
-            </ul>
-        </div>
-    </header>
+	{{!-- Item Sheet Navigation --}}
+	<nav class="sheet-navigation tabs" data-group="primary">
+		<a class="item active" data-tab="description">{{ localize "TRPG.Description" }}</a>
+		<a class="item" data-tab="details">{{ localize "TRPG.Details" }}</a>
+		<a class="item" data-tab="effects">{{ localize "TRPG.Effects" }}</a>
+	</nav>
 
-    {{!-- Item Sheet Navigation --}}
-    <nav class="sheet-navigation tabs" data-group="primary">
-        <a class="item active" data-tab="description">{{ localize "TRPG.Description" }}</a>
-        <a class="item" data-tab="details">{{ localize "TRPG.Details" }}</a>
-        <a class="item" data-tab="effects">{{ localize "TRPG.Effects" }}</a>
-    </nav>
+	{{!-- Item Sheet Body --}}
+	<section class="sheet-body">
+		{{!-- Description Tab --}} {{> "systems/trpg/templates/items/parts/item-description.html"}} {{!-- Details Tab --}}
+		<div class="tab details" data-group="primary" data-tab="details">
+			<h3 class="form-header">{{ localize "TRPG.ItemEquipmentDetails" }}</h3>
 
-    {{!-- Item Sheet Body --}}
-    <section class="sheet-body">
+			{{!-- Equipment Type --}}
+			<div class="form-group">
+				<label>{{ localize "TRPG.ItemEquipmentType" }}</label>
+				<select name="system.armor.type">
+					{{selectOptions config.equipmentTypes selected=system.armor.type blank=""}}
+				</select>
+			</div>
 
-        {{!-- Description Tab --}}
-        {{> "systems/trpg/templates/items/parts/item-description.html"}}
-
-        {{!-- Details Tab --}}
-        <div class="tab details" data-group="primary" data-tab="details">
-            <h3 class="form-header">{{ localize "TRPG.ItemEquipmentDetails" }}</h3>
-
-            {{!-- Equipment Type --}}
-            <div class="form-group">
-                <label>{{ localize "TRPG.ItemEquipmentType" }}</label>
-                <select name="data.armor.type">
-                    {{selectOptions config.equipmentTypes selected=data.armor.type blank=""}}
-                </select>
-            </div>
-
-            {{#unless isMountable}}
-            <!-- <div class="form-group">
+			{{#unless isMountable}}
+			<!-- <div class="form-group">
                 <label>{{localize "TRPG.Attunement"}}</label>
-                <select name="data.attunement" data-dtype="Number">
-                    {{selectOptions config.attunements selected=data.attunement localize=true}}
+                <select name="system.attunement" data-dtype="Number">
+                    {{selectOptions config.attunements selected=system.attunement localize=true}}
                 </select>
             </div> -->
 
-            {{!-- Equipment Status --}}
-            <div class="form-group stacked">
-                <label>{{ localize "TRPG.ItemEquipmentStatus" }}</label>
-                <label class="checkbox">
-                    <input type="checkbox" name="data.proficient" {{checked data.proficient}}/> {{ localize "TRPG.Proficient" }}
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" name="data.equipped" {{checked data.equipped}}/> {{ localize "TRPG.Equipped" }}
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" name="data.identified" {{checked data.identified}}/> {{ localize "TRPG.Identified" }}
-                </label>
-            </div>
-            {{/unless}}
+			{{!-- Equipment Status --}}
+			<div class="form-group stacked">
+				<label>{{ localize "TRPG.ItemEquipmentStatus" }}</label>
+				<label class="checkbox"> <input type="checkbox" name="system.proficient" {{checked system.proficient}} /> {{ localize "TRPG.Proficient" }} </label>
+				<label class="checkbox"> <input type="checkbox" name="system.equipped" {{checked system.equipped}} /> {{ localize "TRPG.Equipped" }} </label>
+				<label class="checkbox"> <input type="checkbox" name="system.identified" {{checked system.identified}} /> {{ localize "TRPG.Identified" }} </label>
+			</div>
+			{{/unless}} {{!-- Armor Class --}} {{#if hasAC}}
+			<div class="form-group">
+				<label>{{ localize "TRPG.ArmorClass" }}</label>
+				<div class="form-fields">
+					<input type="text" name="system.armor.value" value="{{system.armor.value}}" data-dtype="Number" />
+				</div>
+			</div>
+			{{/if}} {{#if isArmor}} {{!-- Dexterity Modifier --}}
+			<div class="form-group">
+				<label>{{ localize "TRPG.ItemEquipmentDexMod" }}</label>
+				<div class="form-fields">
+					<input type="number" name="system.armor.dex" value="{{system.armor.dex}}" data-dtype="Number" placeholder="{{ localize 'TRPG.Unlimited' }}" />
+				</div>
+			</div>
 
-            {{!-- Armor Class --}}
-            {{#if hasAC}}
-            <div class="form-group">
-                <label>{{ localize "TRPG.ArmorClass" }}</label>
-                <div class="form-fields">
-                   <input type="text" name="data.armor.value" value="{{data.armor.value}}" data-dtype="Number"/>
-                </div>
-            </div>
-            {{/if}}
+			{{!-- Stealth Disadvantage --}}
+			<div class="form-group">
+				<label>Penalidade de Armadura</label>
+				<input type="number" name="system.stealth" value="{{system.stealth}}" max="0" />
+			</div>
+			{{/if}} {{#if isMountable}} {{> 'systems/trpg/templates/items/parts/item-mountable.html'}}
+			<div class="form-group">
+				<label>{{localize 'TRPG.Speed'}}</label>
+				<div class="form-fields">
+					<input type="text" name="system.speed.value" value="{{system.speed.value}}" placeholder="0" data-dtype="Number" />
+					<span class="sep">{{localize 'TRPG.FeetAbbr'}}</span>
+					<input type="text" name="system.speed.conditions" value="{{system.speed.conditions}}" />
+				</div>
+			</div>
+			{{/if}}
 
-            {{#if isArmor}}
-            {{!-- Dexterity Modifier --}}
-            <div class="form-group">
-                <label>{{ localize "TRPG.ItemEquipmentDexMod" }}</label>
-                <div class="form-fields">
-                   <input type="number" name="data.armor.dex" value="{{data.armor.dex}}" data-dtype="Number" placeholder="{{ localize 'TRPG.Unlimited' }}"/>
-                </div>
-            </div>
+			<h3 class="form-header">{{ localize "TRPG.ItemEquipmentUsage" }}</h3>
 
-            {{!-- Stealth Disadvantage --}}
-            <div class="form-group">
-                <label>Penalidade de Armadura</label>
-                <input type="number" name="data.stealth" value="{{data.stealth}}" max="0" />
-            </div>
-            {{/if}}
+			{{!-- Item Activation Template --}} {{> "systems/trpg/templates/items/parts/item-activation.html"}}
 
-            {{#if isMountable}}
-            {{> 'systems/trpg/templates/items/parts/item-mountable.html'}}
-            <div class="form-group">
-                <label>{{localize 'TRPG.Speed'}}</label>
-                <div class="form-fields">
-                    <input type="text" name="data.speed.value" value="{{data.speed.value}}"
-                           placeholder="0" data-dtype="Number">
-                    <span class="sep">{{localize 'TRPG.FeetAbbr'}}</span>
-                    <input type="text" name="data.speed.conditions"
-                           value="{{data.speed.conditions}}">
-                </div>
-            </div>
-            {{/if}}
+			<h3 class="form-header">{{ localize "TRPG.ItemEquipmentAction" }}</h3>
 
-            <h3 class="form-header">{{ localize "TRPG.ItemEquipmentUsage" }}</h3>
+			{{!-- Item Action Template --}} {{> "systems/trpg/templates/items/parts/item-action.html"}}
+		</div>
 
-            {{!-- Item Activation Template --}}
-            {{> "systems/trpg/templates/items/parts/item-activation.html"}}
-
-            <h3 class="form-header">{{ localize "TRPG.ItemEquipmentAction" }}</h3>
-
-            {{!-- Item Action Template --}}
-            {{> "systems/trpg/templates/items/parts/item-action.html"}}
-        </div>
-
-        {{!-- Effects Tab --}}
-        <div class="tab effects flexcol" data-group="primary" data-tab="effects">
-            {{> "systems/trpg/templates/actors/parts/active-effects.html"}}
-        </div>
-    </section>
+		{{!-- Effects Tab --}}
+		<div class="tab effects flexcol" data-group="primary" data-tab="effects">{{> "systems/trpg/templates/actors/parts/active-effects.html"}}</div>
+	</section>
 </form>

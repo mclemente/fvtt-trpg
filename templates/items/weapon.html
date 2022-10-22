@@ -14,14 +14,14 @@
 			</div>
 
 			<ul class="summary flexrow">
-				<li>{{lookup config.weaponTypes data.weaponType }}</li>
+				<li>{{lookup config.weaponTypes system.weaponType }}</li>
 				<li>
-					<select name="data.rarity">
-						{{selectOptions config.itemRarity selected=data.rarity blank="&nbsp;"}}
+					<select name="system.rarity">
+						{{selectOptions config.itemRarity selected=system.rarity blank="&nbsp;"}}
 					</select>
 				</li>
 				<li>
-					<input type="text" name="data.source" value="{{data.source}}" placeholder="{{ localize 'TRPG.Source' }}" />
+					<input type="text" name="system.source" value="{{system.source}}" placeholder="{{ localize 'TRPG.Source' }}" />
 				</li>
 			</ul>
 		</div>
@@ -43,16 +43,16 @@
 			{{!-- Weapon Type --}}
 			<div class="form-group">
 				<label>{{ localize "TRPG.ItemWeaponType" }}</label>
-				<select name="data.weaponType">
-					{{selectOptions config.weaponTypes selected=data.weaponType}}
+				<select name="system.weaponType">
+					{{selectOptions config.weaponTypes selected=system.weaponType}}
 				</select>
 			</div>
 
 			{{#unless isMountable}}
 			<!-- <div class="form-group">
                 <label>{{localize "TRPG.Attunement"}}</label>
-                <select name="data.attunement" data-dtype="Number">
-                    {{selectOptions config.attunements selected=data.attunement localize=true}}
+                <select name="system.attunement" data-dtype="Number">
+                    {{selectOptions config.attunements selected=system.attunement localize=true}}
                 </select>
             </div> -->
 
@@ -60,16 +60,16 @@
 			<div class="form-group stacked">
 				<label>{{ localize "TRPG.ItemWeaponStatus" }}</label>
 				<div class="form-fields">
-					<label class="checkbox"> <input type="checkbox" name="data.proficient" {{checked data.proficient}} /> {{ localize "TRPG.Proficient" }} </label>
-					<label class="checkbox"> <input type="checkbox" name="data.equipped" {{checked data.equipped}} /> {{ localize "TRPG.Equipped" }} </label>
-					<label class="checkbox"> <input type="checkbox" name="data.identified" {{checked data.identified}} /> {{ localize "TRPG.Identified" }} </label>
+					<label class="checkbox"> <input type="checkbox" name="system.proficient" {{checked system.proficient}} /> {{ localize "TRPG.Proficient" }} </label>
+					<label class="checkbox"> <input type="checkbox" name="system.equipped" {{checked system.equipped}} /> {{ localize "TRPG.Equipped" }} </label>
+					<label class="checkbox"> <input type="checkbox" name="system.identified" {{checked system.identified}} /> {{ localize "TRPG.Identified" }} </label>
 				</div>
 			</div>
 			{{/unless}} {{!-- Weapon Properties --}}
 			<div class="form-group stacked weapon-properties">
 				<label>{{ localize "TRPG.ItemWeaponProperties" }}</label>
 				{{#each config.weaponProperties as |name prop|}}
-				<label class="checkbox"> <input type="checkbox" name="data.properties.{{prop}}" {{checked (lookup ../system.properties prop)}}/> {{ name }} </label>
+				<label class="checkbox"> <input type="checkbox" name="system.properties.{{prop}}" {{checked (lookup ../system.properties prop)}}/> {{ name }} </label>
 				{{/each}}
 			</div>
 
@@ -77,7 +77,7 @@
 			<div class="form-group">
 				<label>{{localize 'TRPG.ArmorClass'}}</label>
 				<div class="form-fields">
-					<input type="text" name="data.armor.value" value="{{data.armor.value}}" data-dtype="Number" />
+					<input type="text" name="system.armor.value" value="{{system.armor.value}}" data-dtype="Number" />
 				</div>
 			</div>
 

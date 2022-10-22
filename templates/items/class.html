@@ -15,7 +15,7 @@
 
 			<ul class="summary flexrow">
 				<li>
-					<input type="text" name="data.source" value="{{data.source}}" placeholder="{{ localize 'TRPG.Source' }}" />
+					<input type="text" name="system.source" value="{{system.source}}" placeholder="{{ localize 'TRPG.Source' }}" />
 				</li>
 			</ul>
 		</div>
@@ -31,7 +31,7 @@
 	<section class="sheet-body">
 		{{!-- Description Tab --}}
 		<div class="tab flexrow active" data-group="primary" data-tab="description">
-			{{editor descriptionHTML target="data.description.value" button=true owner=owner editable=editable}}
+			{{editor descriptionHTML target="system.description.value" button=true owner=owner editable=editable}}
 		</div>
 
 		{{!-- Details Tab --}}
@@ -40,7 +40,7 @@
 			<div class="form-group">
 				<label>{{ localize "TRPG.ClassLevels" }}</label>
 				<div class="form-fields">
-					<input type="text" name="data.levels" value="{{data.levels}}" data-dtype="Number" />
+					<input type="text" name="system.levels" value="{{system.levels}}" data-dtype="Number" />
 				</div>
 			</div>
 
@@ -48,7 +48,7 @@
 			<!-- <div class="form-group"> -->
 			<!-- <label>{{ localize "TRPG.SubclassName" }}</label> -->
 			<!-- <div class="form-fields"> -->
-			<!-- <input type="text" name="data.subclass" value="{{data.subclass}}"/> -->
+			<!-- <input type="text" name="system.subclass" value="{{system.subclass}}"/> -->
 			<!-- </div> -->
 			<!-- </div> -->
 
@@ -56,8 +56,8 @@
             <div class="form-group">
                 <label>{{localize "TRPG.HitDice"}}</label>
                 <div class="form-fields">
-                    <select name="data.hitDice">
-                        {{#select data.hitDice}}
+                    <select name="system.hitDice">
+                        {{#select system.hitDice}}
                         {{#each config.hitDieTypes}}
                         <option value="{{this}}">{{this}}</option>
                         {{/each}}
@@ -69,7 +69,7 @@
 			<!-- <div class="form-group">
                 <label>{{localize "TRPG.HitDiceUsed"}}</label>
                 <div class="form-fields">
-                    <input type="text" placeholder="0" name="data.hitDiceUsed" value="{{data.hitDiceUsed}}" data-dtype="Number"/>
+                    <input type="text" placeholder="0" name="system.hitDiceUsed" value="{{system.hitDiceUsed}}" data-dtype="Number"/>
                 </div>
             </div> -->
 
@@ -77,8 +77,8 @@
 			<div class="form-group">
 				<label>BBA</label>
 				<div class="form-fields">
-					<select name="data.bab">
-						{{selectOptions config.bab selected=data.bab localize=true}}
+					<select name="system.bab">
+						{{selectOptions config.bab selected=system.bab localize=true}}
 					</select>
 				</div>
 			</div>
@@ -87,8 +87,8 @@
             <div class="form-group">
                 <label>{{localize 'TRPG.SpellProgression'}}</label>
                 <div class="form-fields">
-                    <select name="data.spellcasting.progression">
-                        {{selectOptions config.spellProgression selected=data.spellcasting.progression localize=true}}
+                    <select name="system.spellcasting.progression">
+                        {{selectOptions config.spellProgression selected=system.spellcasting.progression localize=true}}
                     </select>
                 </div>
             </div>-->
@@ -96,8 +96,8 @@
 			<div class="form-group">
 				<label>{{localize "TRPG.SpellAbility"}}</label>
 				<div class="form-fields">
-					<select name="data.spellcasting.ability">
-						{{selectOptions config.abilities selected=data.spellcasting.ability blank=""}}
+					<select name="system.spellcasting.ability">
+						{{selectOptions config.abilities selected=system.spellcasting.ability blank=""}}
 					</select>
 				</div>
 			</div>
@@ -107,7 +107,7 @@
                 <label>
                     {{ localize "TRPG.ClassSaves" }}
                     {{#if editable}}
-                    <a class="trait-selector class-saves" data-target="data.saves" data-options="saves">
+                    <a class="trait-selector class-saves" data-target="system.saves" data-options="saves">
                         <i class="fas fa-edit"></i>
                     </a>
                     {{/if}}
@@ -125,7 +125,7 @@
             <div class="form-group">
                 <label>{{localize "TRPG.ClassSkillsNumber"}}</label>
                 <div class="form-fields">
-                    <input type="text" placeholder="0" name="data.skills.number" value="{{data.skills.number}}" data-dtype="Number"/>
+                    <input type="text" placeholder="0" name="system.skills.number" value="{{system.skills.number}}" data-dtype="Number"/>
                 </div>
             </div>
 
@@ -133,7 +133,7 @@
                 <label>
                     {{localize "TRPG.ClassSkillsEligible"}}
                     {{#if editable }}
-                    <a class="trait-selector class-skills" data-target="data.skills.choices" data-options="skills.choices">
+                    <a class="trait-selector class-skills" data-target="system.skills.choices" data-options="skills.choices">
                         <i class="fas fa-edit"></i>
                     </a>
                     {{/if}}
@@ -151,7 +151,7 @@
                 <label>
                     {{localize "TRPG.ClassSkillsChosen"}}
                     {{#if editable }}
-                    <a class="trait-selector class-skills" data-target="data.skills" data-options="skills">
+                    <a class="trait-selector class-skills" data-target="system.skills" data-options="skills">
                         <i class="fas fa-edit"></i>
                     </a>
                     {{/if}}

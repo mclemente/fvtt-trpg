@@ -49,7 +49,7 @@ export default class AbilityUseDialog extends Dialog {
 			createTemplate: game.user.can("TEMPLATE_CREATE") && item.hasAreaTarget,
 			errors: [],
 		};
-		if (item.data.type === "spell") this._getSpellData(actorData, itemData, data);
+		if (item.type === "spell") this._getSpellData(actorData, itemData, data);
 
 		// Render the ability usage template
 		const html = await renderTemplate("systems/trpg/templates/apps/ability-use.html", data);
@@ -138,7 +138,7 @@ export default class AbilityUseDialog extends Dialog {
 	 */
 	static _getAbilityUseNote(item, uses, recharge) {
 		// Zero quantity
-		const quantity = item.data.quantity;
+		const quantity = item.system.quantity;
 		if (quantity <= 0) return game.i18n.localize("TRPG.AbilityUseUnavailableHint");
 
 		// Abilities which use Recharge
@@ -155,12 +155,12 @@ export default class AbilityUseDialog extends Dialog {
 		if (item.type === "consumable") {
 			let str = "TRPG.AbilityUseNormalHint";
 			if (uses.value > 1) str = "TRPG.AbilityUseConsumableChargeHint";
-			else if (item.data.quantity === 1 && uses.autoDestroy) str = "TRPG.AbilityUseConsumableDestroyHint";
-			else if (item.data.quantity > 1) str = "TRPG.AbilityUseConsumableQuantityHint";
+			else if (item.system.quantity === 1 && uses.autoDestroy) str = "TRPG.AbilityUseConsumableDestroyHint";
+			else if (item.system.quantity > 1) str = "TRPG.AbilityUseConsumableQuantityHint";
 			return game.i18n.format(str, {
 				type: game.i18n.localize(`TRPG.Consumable${item.data.consumableType.capitalize()}`),
 				value: uses.value,
-				quantity: item.data.quantity,
+				quantity: item.system.quantity,
 				max: uses.max,
 				per: CONFIG.TRPG.limitedUsePeriods[uses.per],
 			});
