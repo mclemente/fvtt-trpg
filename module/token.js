@@ -7,11 +7,13 @@ export class TokenDocument5e extends TokenDocument {
 	getBarAttribute(...args) {
 		const data = super.getBarAttribute(...args);
 		if (data && data.attribute === "attributes.hp") {
-			data.value += parseInt(getProperty(this.actor.data, "data.attributes.hp.temp") || 0);
-			data.max += parseInt(getProperty(this.actor.data, "data.attributes.hp.tempmax") || 0);
+			const hp = this.actor.system.attributes.hp || {};
+			data.value += hp.temp || 0;
+			data.max += hp.tempmax || 0;
 		} else if (data && data.attribute === "attributes.mp") {
-			data.value += parseInt(getProperty(this.actor.data, "data.attributes.mp.temp") || 0);
-			data.max += parseInt(getProperty(this.actor.data, "data.attributes.mp.tempmax") || 0);
+			const mp = this.actor.system.attributes.mp || {};
+			data.value += mp.temp || 0;
+			data.max += mp.tempmax || 0;
 		}
 		return data;
 	}

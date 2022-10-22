@@ -81,5 +81,5 @@
 	"gridDistance": 1.5,
 	"gridUnits": "m",
 	"primaryTokenAttribute": "attributes.hp",
-	"secondaryTokenAttribute": "attributes.pm"
+	"secondaryTokenAttribute": "attributes.mp"
 }
