@@ -1,8 +1,8 @@
 <div class="traits">
 	<div class="form-group">
 		<label>{{localize "TRPG.Size"}}</label>
-		<select class="actor-size" name="data.traits.size">
-			{{#select data.traits.size}} {{#each config.actorSizes as |label size|}}
+		<select class="actor-size" name="system.traits.size">
+			{{#select system.traits.size}} {{#each config.actorSizes as |label size|}}
 			<option value="{{size}}">{{label}}</option>
 			{{/each}} {{/select}}
 		</select>
@@ -21,7 +21,7 @@
 
 	<div class="form-group {{system.traits.languages.cssClass}}">
 		<label>{{localize "TRPG.Languages"}}</label>
-		<a class="trait-selector" data-options="languages" data-target="data.traits.languages">
+		<a class="trait-selector" data-options="languages" data-target="system.traits.languages">
 			<i class="fas fa-edit"></i>
 		</a>
 		<ul class="traits-list">
@@ -34,7 +34,7 @@
 
 	<div class="form-group {{system.traits.di.cssClass}}">
 		<label>{{localize "TRPG.DamImm"}}</label>
-		<a class="trait-selector" data-options="damageResistanceTypes" data-target="data.traits.di">
+		<a class="trait-selector" data-options="damageResistanceTypes" data-target="system.traits.di">
 			<i class="fas fa-edit"></i>
 		</a>
 		<ul class="traits-list">
@@ -46,7 +46,7 @@
 
 	<div class="form-group {{system.traits.dr.cssClass}}">
 		<label>{{localize "TRPG.DamRes"}}</label>
-		<a class="trait-selector" data-options="damageResistanceTypes" data-target="data.traits.dr">
+		<a class="trait-selector" data-options="damageResistanceTypes" data-target="system.traits.dr">
 			<i class="fas fa-edit"></i>
 		</a>
 		<ul class="traits-list">
@@ -58,7 +58,7 @@
 
 	<div class="form-group {{system.traits.dv.cssClass}}">
 		<label>{{localize "TRPG.DamVuln"}}</label>
-		<a class="trait-selector" data-options="damageResistanceTypes" data-target="data.traits.dv">
+		<a class="trait-selector" data-options="damageResistanceTypes" data-target="system.traits.dv">
 			<i class="fas fa-edit"></i>
 		</a>
 		<ul class="traits-list">
@@ -70,7 +70,7 @@
 
 	<div class="form-group {{system.traits.ci.cssClass}}">
 		<label>{{localize "TRPG.ConImm"}}</label>
-		<a class="trait-selector" data-options="conditionTypes" data-target="data.traits.ci">
+		<a class="trait-selector" data-options="conditionTypes" data-target="system.traits.ci">
 			<i class="fas fa-edit"></i>
 		</a>
 		<ul class="traits-list">
@@ -83,7 +83,7 @@
 	{{#if isCharacter}}
 	<div class="form-group {{system.traits.weaponProf.cssClass}}">
 		<label>{{localize "TRPG.TraitWeaponProf"}}</label>
-		<a class="proficiency-selector" data-type="weapon" data-target="data.traits.weaponProf">
+		<a class="proficiency-selector" data-type="weapon" data-target="system.traits.weaponProf">
 			<i class="fas fa-edit"></i>
 		</a>
 		<ul class="traits-list">
@@ -95,7 +95,7 @@
 
 	<div class="form-group {{system.traits.armorProf.cssClass}}">
 		<label>{{localize "TRPG.TraitArmorProf"}}</label>
-		<a class="proficiency-selector" data-type="armor" data-target="data.traits.armorProf">
+		<a class="proficiency-selector" data-type="armor" data-target="system.traits.armorProf">
 			<i class="fas fa-edit"></i>
 		</a>
 		<ul class="traits-list">
@@ -107,7 +107,7 @@
 
 	<div class="form-group {{system.traits.toolProf.cssClass}}">
 		<label>{{localize "TRPG.TraitToolProf"}}</label>
-		<a class="proficiency-selector" data-type="tool" data-target="data.traits.toolProf">
+		<a class="proficiency-selector" data-type="tool" data-target="system.traits.toolProf">
 			<i class="fas fa-edit"></i>
 		</a>
 		<ul class="traits-list">

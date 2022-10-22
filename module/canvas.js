@@ -19,6 +19,6 @@ export const measureDistances = function (segments, options = {}) {
 		let nd = Math.min(nx, ny);
 		let ns = Math.abs(ny - nx);
 		nDiagonal += nd;
-		return (ns + nd * 2) * canvas.scene.data.gridDistance;
+		return (ns + nd * 2) * canvas.scene.grid.distance;
 	});
 };

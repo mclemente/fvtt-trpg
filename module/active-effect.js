@@ -24,8 +24,8 @@ export default class ActiveEffect5e extends ActiveEffect {
 	 */
 	determineSuppression() {
 		this.isSuppressed = false;
-		if (this.data.disabled || this.parent.documentName !== "Actor") return;
-		const [parentType, parentId, documentType, documentId] = this.data.origin?.split(".") ?? [];
+		if (this.disabled || this.parent.documentName !== "Actor") return;
+		const [parentType, parentId, documentType, documentId] = this.origin?.split(".") ?? [];
 		if (parentType !== "Actor" || parentId !== this.parent.id || documentType !== "Item") return;
 		const item = this.parent.items.get(documentId);
 		if (!item) return;
@@ -63,7 +63,7 @@ export default class ActiveEffect5e extends ActiveEffect {
 			case "delete":
 				return effect.delete();
 			case "toggle":
-				return effect.update({ disabled: !effect.data.disabled });
+				return effect.update({ disabled: !effect.disabled });
 		}
 	}
 
@@ -104,7 +104,7 @@ export default class ActiveEffect5e extends ActiveEffect {
 		for (let e of effects) {
 			e._getSourceName(); // Trigger a lookup for the source name
 			if (e.isSuppressed) categories.suppressed.effects.push(e);
-			else if (e.data.disabled) categories.inactive.effects.push(e);
+			else if (e.disabled) categories.inactive.effects.push(e);
 			else if (e.isTemporary) categories.temporary.effects.push(e);
 			else categories.passive.effects.push(e);
 		}

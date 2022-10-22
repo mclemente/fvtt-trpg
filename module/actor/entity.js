@@ -1,8 +1,8 @@
-import { d20Roll, damageRoll } from "../dice.js";
+import LongRestDialog from "../apps/long-rest.js";
 import SelectItemsPrompt from "../apps/select-items-prompt.js";
 import ShortRestDialog from "../apps/short-rest.js";
-import LongRestDialog from "../apps/long-rest.js";
 import { TRPG } from "../config.js";
+import { d20Roll, damageRoll } from "../dice.js";
 import Item5e from "../item/entity.js";
 
 /**
@@ -684,12 +684,9 @@ export default class Actor5e extends Actor {
 		// Some sensible defaults for convenience
 		// Token size category
 		const s = CONFIG.TRPG.tokenSizes[this.system.traits.size || "med"];
-		this.data.token.update({ width: s, height: s });
-
-		// Player character configuration
-		if (this.type === "character") {
-			this.data.token.update({ vision: true, actorLink: true, disposition: 1 });
-		}
+		const prototypeToken = { width: s, height: s };
+		if (this.type === "character") Object.assign(prototypeToken, { sight: { enabled: true }, actorLink: true, disposition: 1 });
+		this.updateSource({ prototypeToken });
 	}
 
 	/* -------------------------------------------- */
@@ -699,13 +696,13 @@ export default class Actor5e extends Actor {
 		await super._preUpdate(changed, options, user);
 
 		// Apply changes in Actor size to Token width/height
-		const newSize = foundry.utils.getProperty(changed, "data.traits.size");
-		if (newSize && newSize !== foundry.utils.getProperty(this.data, "data.traits.size")) {
+		const newSize = foundry.utils.getProperty(changed, "system.traits.size");
+		if (newSize && newSize !== this.system.traits?.size) {
 			let size = CONFIG.TRPG.tokenSizes[newSize];
-			if (!foundry.utils.hasProperty(changed, "token.width")) {
-				changed.token = changed.token || {};
-				changed.token.height = size;
-				changed.token.width = size;
+			if (!foundry.utils.hasProperty(changed, "prototypeToken.width")) {
+				changed.prototypeToken ||= {};
+				changed.prototypeToken.height = size;
+				changed.prototypeToken.width = size;
 			}
 		}
 

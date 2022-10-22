@@ -9,31 +9,31 @@
 			</h1>
 			<ul class="summary flexrow">
 				<li>
-					<span>{{lookup config.actorSizes data.traits.size}}</span>
+					<span>{{lookup config.actorSizes system.traits.size}}</span>
 				</li>
 				<li>
-					<select name="data.vehicleType">
-						{{selectOptions config.vehicleTypes selected=data.vehicleType}}
+					<select name="system.vehicleType">
+						{{selectOptions config.vehicleTypes selected=system.vehicleType}}
 					</select>
 				</li>
 				<li>
-					<input type="text" name="data.traits.dimensions" value="{{system.traits.dimensions}}" placeholder="{{localize 'TRPG.Dimensions'}}" />
+					<input type="text" name="system.traits.dimensions" value="{{system.traits.dimensions}}" placeholder="{{localize 'TRPG.Dimensions'}}" />
 				</li>
 				<li>
-					<input type="text" name="data.details.source" value="{{system.details.source}}" placeholder="{{localize 'TRPG.Source'}}" />
+					<input type="text" name="system.details.source" value="{{system.details.source}}" placeholder="{{localize 'TRPG.Source'}}" />
 				</li>
 			</ul>
 			<ul class="attributes flexrow">
 				<li class="attribute health">
 					<h4 class="attribute-name box-title">{{localize 'TRPG.HitPoints'}}</h4>
 					<div class="attribute-value multiple">
-						<input name="data.attributes.hp.value" type="text" placeholder="&mdash;" value="{{system.attributes.hp.value}}" data-dtype="Number" />
+						<input name="system.attributes.hp.value" type="text" placeholder="&mdash;" value="{{system.attributes.hp.value}}" data-dtype="Number" />
 						<span class="sep"> &sol; </span>
-						<input name="data.attributes.hp.max" type="text" placeholder="&mdash;" value="{{system.attributes.hp.max}}" data-dtype="Number" />
+						<input name="system.attributes.hp.max" type="text" placeholder="&mdash;" value="{{system.attributes.hp.max}}" data-dtype="Number" />
 					</div>
 					<footer class="attribute-footer">
 						<input
-							name="data.attributes.hp.dt"
+							name="system.attributes.hp.dt"
 							type="text"
 							class="temphp"
 							placeholder="{{localize 'TRPG.Threshold'}}"
@@ -41,7 +41,7 @@
 							data-dtype="Number"
 						/>
 						<input
-							name="data.attributes.hp.mt"
+							name="system.attributes.hp.mt"
 							type="text"
 							class="temphp"
 							placeholder="{{localize 'TRPG.VehicleMishap'}}"
@@ -53,10 +53,10 @@
 				<li class="attribute">
 					<h4 class="attribute-name box-title">{{localize 'TRPG.ArmorClass'}}</h4>
 					<div class="attribute-value">
-						<input name="data.attributes.ac.flat" type="text" placeholder="&mdash;" value="{{system.attributes.ac.flat}}" data-dtype="Number" />
+						<input name="system.attributes.ac.flat" type="text" placeholder="&mdash;" value="{{system.attributes.ac.flat}}" data-dtype="Number" />
 					</div>
 					<footer class="attribute-footer">
-						<input type="text" name="data.attributes.ac.motionless" placeholder="&mdash;" value="{{system.attributes.ac.motionless}}" />
+						<input type="text" name="system.attributes.ac.motionless" placeholder="&mdash;" value="{{system.attributes.ac.motionless}}" />
 					</footer>
 				</li>
 				<li class="attribute movement">
@@ -88,7 +88,7 @@
 				{{#each system.abilities as |ability id|}}
 				<li class="ability" data-ability="{{id}}">
 					<h4 class="ability-name box-title rollable">{{ability.label}}</h4>
-					<input class="ability-score" name="data.abilities.{{id}}.value" type="text" value="{{ability.value}}" data-dtype="Number" placeholder="0" />
+					<input class="ability-score" name="system.abilities.{{id}}.value" type="text" value="{{ability.value}}" data-dtype="Number" placeholder="0" />
 					<div class="ability-modifiers flexrow">
 						<span class="ability-mod" title="{{localize 'TRPG.Modifier'}}"> {{numberFormat ability.mod decimals=0 sign=true}} </span>
 					</div>
@@ -100,32 +100,32 @@
 					<div class="counter flexrow creature-cap">
 						<h4>{{localize 'TRPG.VehicleCreatureCapacity'}}</h4>
 						<div class="counter-value">
-							<input type="text" placeholder="&mdash;" name="data.attributes.capacity.creature" value="{{system.attributes.capacity.creature}}" />
+							<input type="text" placeholder="&mdash;" name="system.attributes.capacity.creature" value="{{system.attributes.capacity.creature}}" />
 						</div>
 					</div>
 					<div class="counter flexrow cargo-cap">
 						<h4>{{localize 'TRPG.VehicleCargoCapacity'}}</h4>
 						<div class="counter-value">
-							<input type="text" name="data.attributes.capacity.cargo" placeholder="0" data-dtype="Number" value="{{system.attributes.capacity.cargo}}" />
+							<input type="text" name="system.attributes.capacity.cargo" placeholder="0" data-dtype="Number" value="{{system.attributes.capacity.cargo}}" />
 						</div>
 					</div>
 					<div class="counter flexrow stations">
 						<h4>{{localize 'TRPG.VehicleActionStations'}}</h4>
 						<div class="counter-value">
 							<input
-								name="data.attributes.actions.stations"
+								name="system.attributes.actions.stations"
 								type="checkbox"
 								data-dtype="Boolean"
 								value="{{system.attributes.actions.stations}}"
 								{{checked
-								data.attributes.actions.stations}}
+								system.attributes.actions.stations}}
 							/>
 						</div>
 					</div>
 					<div class="counter flexrow actions">
 						<h4>{{localize 'TRPG.ActionPl'}}</h4>
 						<div class="counter-value">
-							<input type="text" name="data.attributes.actions.value" placeholder="0" data-dtype="Number" value="{{system.attributes.actions.value}}" />
+							<input type="text" name="system.attributes.actions.value" placeholder="0" data-dtype="Number" value="{{system.attributes.actions.value}}" />
 						</div>
 					</div>
 					<div class="counter flexrow action-thresholds">
@@ -137,7 +137,7 @@
 								placeholder="&mdash;"
 								data-dtype="Number"
 								value="{{system.attributes.actions.thresholds.[2]}}"
-								name="data.attributes.actions.thresholds.2"
+								name="system.attributes.actions.thresholds.2"
 							/>
 							<span class="sep">&lt;</span>
 							<input
@@ -145,7 +145,7 @@
 								placeholder="&mdash;"
 								data-dtype="Number"
 								value="{{system.attributes.actions.thresholds.[1]}}"
-								name="data.attributes.actions.thresholds.1"
+								name="system.attributes.actions.thresholds.1"
 							/>
 							<span class="sep">&lt;</span>
 							<input
@@ -153,7 +153,7 @@
 								placeholder="&mdash;"
 								data-dtype="Number"
 								value="{{system.attributes.actions.thresholds.[0]}}"
-								name="data.attributes.actions.thresholds.0"
+								name="system.attributes.actions.thresholds.0"
 							/>
 						</div>
 					</div>
@@ -167,7 +167,7 @@
 		<div class="tab cargo flexcol" data-group="primary" data-tab="cargo">{{> 'systems/trpg/templates/actors/parts/actor-inventory.html' sections=cargo}}</div>
 		<div class="tab effects flexcol" data-group="primary" data-tab="effects">{{> "systems/trpg/templates/actors/parts/active-effects.html"}}</div>
 		<div class="tab biography flexcol" data-group="primary" data-tab="biography">
-			{{editor biographyHTML target='data.details.biography.value' button=true owner=owner editable=editable rollData=rollData}}
+			{{editor biographyHTML target='system.details.biography.value' button=true owner=owner editable=editable rollData=rollData}}
 		</div>
 	</section>
 </form>
