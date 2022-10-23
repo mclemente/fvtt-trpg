@@ -147,6 +147,34 @@ export default class Item5e extends Item {
 	 */
 	prepareDerivedData() {
 		super.prepareDerivedData();
+		this.labels = {};
+
+		// Clear out linked item cache
+		this._classLink = undefined;
+
+		// Advancement
+		this._prepareAdvancement();
+
+		// Specialized preparation per Item type
+		switch (this.type) {
+			case "equipment":
+				this._prepareEquipment();
+				break;
+			case "feat":
+				this._prepareFeat();
+				break;
+			case "spell":
+				this._prepareSpell();
+				break;
+		}
+
+		// Activated Items
+		this._prepareActivation();
+		this._prepareAction();
+
+		if (!this.isOwned) this.prepareFinalAttributes();
+
+		return;
 
 		// Get the Item's data
 		const itemData = this;
@@ -233,6 +261,152 @@ export default class Item5e extends Item {
 
 		// if this item is owned, we prepareFinalAttributes() at the end of actor init
 		if (!this.isOwned) this.prepareFinalAttributes();
+	}
+
+	/* -------------------------------------------- */
+
+	/**
+	 * Prepare derived data for an equipment-type item and define labels.
+	 * @protected
+	 */
+	_prepareEquipment() {
+		this.labels.armor = this.system.armor.value ? `${this.system.armor.value} ${game.i18n.localize("DND5E.AC")}` : "";
+	}
+
+	/* -------------------------------------------- */
+
+	/**
+	 * Prepare derived data for a feat-type item and define labels.
+	 * @protected
+	 */
+	_prepareFeat() {
+		const act = this.system.activation;
+		const types = CONFIG.TRPG.abilityActivationTypes;
+		if (act?.type) {
+			this.labels.featType = game.i18n.localize(this.system.damage.length ? "TRPG.Attack" : "TRPG.Action");
+		} else this.labels.featType = game.i18n.localize("TRPG.Passive");
+	}
+
+	/* -------------------------------------------- */
+
+	/**
+	 * Prepare derived data for a spell-type item and define labels.
+	 * @protected
+	 */
+	_prepareSpell() {
+		const attributes = { ...CONFIG.TRPG.spellComponents };
+		this.system.preparation.mode ||= "prepared";
+		this.labels.level = CONFIG.TRPG.spellLevels[this.system.level];
+		this.labels.school = CONFIG.TRPG.spellSchools[this.system.school];
+		this.labels.components = Object.entries(this.system.components).reduce(
+			(obj, [c, active]) => {
+				const config = attributes[c];
+				if (!config || active !== true) return obj;
+				obj.all.push({ abbr: config.abbr, tag: config.tag });
+				if (config.tag) obj.tags.push(config.label);
+				else obj.vsm.push(config.abbr);
+				return obj;
+			},
+			{ all: [], vsm: [], tags: [] }
+		);
+		this.labels.components.vsm = new Intl.ListFormat(game.i18n.lang, { style: "narrow", type: "conjunction" }).format(this.labels.components.vsm);
+		this.labels.materials = this.system?.materials?.value ?? null;
+	}
+
+	/* -------------------------------------------- */
+
+	/**
+	 * Prepare derived data for activated items and define labels.
+	 * @protected
+	 */
+	_prepareActivation() {
+		if (!("activation" in this.system)) return;
+		const C = CONFIG.TRPG;
+
+		// Ability Activation Label
+		const act = this.system.activation ?? {};
+		this.labels.activation = [act.cost, C.abilityActivationTypes[act.type]].filterJoin(" ");
+
+		// Target Label
+		let tgt = this.system.target ?? {};
+		if (["none", "touch", "self"].includes(tgt.units)) tgt.value = null;
+		if (["none", "self"].includes(tgt.type)) {
+			tgt.value = null;
+			tgt.units = null;
+		}
+		this.labels.target = [tgt.value, C.distanceUnits[tgt.units], C.targetTypes[tgt.type]].filterJoin(" ");
+
+		// Range Label
+		let rng = this.system.range ?? {};
+		if (["none", "touch", "self"].includes(rng.units)) {
+			rng.value = null;
+			rng.long = null;
+		}
+		this.labels.range = [rng.value, rng.long ? `/ ${rng.long}` : null, C.distanceUnits[rng.units]].filterJoin(" ");
+
+		// Duration Label
+		let dur = this.system.duration ?? {};
+		if (["inst", "perm"].includes(dur.units)) dur.value = null;
+		this.labels.duration = [dur.value, C.timePeriods[dur.units]].filterJoin(" ");
+
+		// Recharge Label
+		let chg = this.system.recharge ?? {};
+		const chgSuffix = `${chg.value}${parseInt(chg.value) < 6 ? "+" : ""}`;
+		this.labels.recharge = `${game.i18n.localize("TRPG.Recharge")} [${chgSuffix}]`;
+	}
+
+	/* -------------------------------------------- */
+
+	/**
+	 * Prepare derived data and labels for items which have an action which deals damage.
+	 * @protected
+	 */
+	_prepareAction() {
+		if (!("actionType" in this.system)) return;
+		let dmg = this.system.damage || {};
+		if (dmg.parts) {
+			const types = CONFIG.TRPG.damageTypes;
+			this.labels.damage = dmg.parts
+				.map((d) => d[0])
+				.join(" + ")
+				.replace(/\+ -/g, "- ");
+			this.labels.damageTypes = dmg.parts.map((d) => types[d[1]]).join(", ");
+		}
+	}
+
+	/* -------------------------------------------- */
+
+	/**
+	 * Prepare advancement objects from stored advancement data.
+	 * @protected
+	 */
+	_prepareAdvancement() {
+		const minAdvancementLevel = ["class", "subclass"].includes(this.type) ? 1 : 0;
+		this.advancement = {
+			byId: {},
+			byLevel: Object.fromEntries(
+				Array.fromRange(CONFIG.TRPG.maxLevel + 1)
+					.slice(minAdvancementLevel)
+					.map((l) => [l, []])
+			),
+			byType: {},
+			needingConfiguration: [],
+		};
+		for (const advancementData of this.system.advancement ?? []) {
+			const Advancement = game.trpg.advancement.types[`${advancementData.type}Advancement`];
+			if (!Advancement) continue;
+			const advancement = new Advancement(this, advancementData);
+			this.advancement.byId[advancement.id] = advancement;
+			this.advancement.byType[advancementData.type] ??= [];
+			this.advancement.byType[advancementData.type].push(advancement);
+			advancement.levels.forEach((l) => this.advancement.byLevel[l].push(advancement));
+			if (!advancement.levels.length) this.advancement.needingConfiguration.push(advancement);
+		}
+		Object.entries(this.advancement.byLevel).forEach(([lvl, data]) =>
+			data.sort((a, b) => {
+				return a.sortingValueForLevel(lvl).localeCompare(b.sortingValueForLevel(lvl));
+			})
+		);
 	}
 
 	/* -------------------------------------------- */

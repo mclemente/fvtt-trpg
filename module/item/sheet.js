@@ -1,5 +1,5 @@
-import TraitSelector from "../apps/trait-selector.js";
 import ActiveEffect5e from "../active-effect.js";
+import TraitSelector from "../apps/trait-selector.js";
 
 /**
  * Override and extend the core ItemSheet implementation to handle specific item types
@@ -249,18 +249,40 @@ export default class ItemSheet5e extends ItemSheet {
 
 	/** @inheritdoc */
 	_getSubmitData(updateData = {}) {
-		// Create the expanded update data object
-		const fd = new FormDataExtended(this.form, { editors: this.editors });
-		let data = fd.object;
-		if (updateData) data = mergeObject(data, updateData);
-		else data = expandObject(data);
+		const formData = foundry.utils.expandObject(super._getSubmitData(updateData));
 
 		// Handle Damage array
-		const damage = data.data?.damage;
+		const damage = formData.system?.damage;
 		if (damage) damage.parts = Object.values(damage?.parts || {}).map((d) => [d[0] || "", d[1] || ""]);
 
+		// Check max uses formula
+		const uses = formData.system?.uses;
+		if (uses?.max) {
+			const maxRoll = new Roll(uses.max);
+			if (!maxRoll.isDeterministic) {
+				uses.max = this.item._source.system.uses.max;
+				this.form.querySelector("input[name='system.uses.max']").value = uses.max;
+				return ui.notifications.error(
+					game.i18n.format("TRPG.FormulaCannotContainDiceError", {
+						name: game.i18n.localize("TRPG.LimitedUses"),
+					})
+				);
+			}
+		}
+
+		// Check class identifier
+		// if (formData.system?.identifier) {
+		// 	const dataRgx = new RegExp(/^([a-z0-9_-]+)$/i);
+		// 	const match = formData.system.identifier.match(dataRgx);
+		// 	if (!match) {
+		// 		formData.system.identifier = this.item._source.system.identifier;
+		// 		this.form.querySelector("input[name='system.identifier']").value = formData.system.identifier;
+		// 		return ui.notifications.error(game.i18n.localize("TRPG.IdentifierError"));
+		// 	}
+		// }
+
 		// Return the flattened submission data
-		return flattenObject(data);
+		return flattenObject(formData);
 	}
 
 	/* -------------------------------------------- */

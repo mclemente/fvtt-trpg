@@ -887,6 +887,12 @@ TRPG.languages = {
 	terran: "TRPG.LanguagesTerran",
 };
 
+/**
+ * Maximum allowed character level.
+ * @type {number}
+ */
+TRPG.maxLevel = 20;
+
 // Character Level XP Requirements
 TRPG.CHARACTER_EXP_LEVELS = [0, 1000, 3000, 6000, 10000, 15000, 21000, 28000, 36000, 45000, 55000, 66000, 78000, 91000, 105000, 120000, 136000, 153000, 171000, 190000];
 
