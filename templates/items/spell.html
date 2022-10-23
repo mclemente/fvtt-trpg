@@ -16,7 +16,7 @@
 			<ul class="summary flexrow">
 				<li>{{labels.spellList}} {{labels.level}} ({{labels.school}})</li>
 				<li>
-					<input type="text" name="data.source" value="{{data.source}}" placeholder="{{ localize 'TRPG.Source' }}" />
+					<input type="text" name="system.source" value="{{system.source}}" placeholder="{{ localize 'TRPG.Source' }}" />
 				</li>
 			</ul>
 		</div>
@@ -38,8 +38,8 @@
 			{{!-- Spell Level --}}
 			<div class="form-group">
 				<label>{{ localize "TRPG.SpellLevel" }}</label>
-				<select name="data.level" data-dtype="Number">
-					{{#select data.level}} {{#each config.spellLevels as |name lvl|}}
+				<select name="system.level" data-dtype="Number">
+					{{#select system.level}} {{#each config.spellLevels as |name lvl|}}
 					<option value="{{lvl}}">{{name}}</option>
 					{{/each}} {{/select}}
 				</select>
@@ -48,8 +48,8 @@
 			{{!-- Spell List --}}
 			<div class="form-group">
 				<label>Lista</label>
-				<select name="data.spellList">
-					{{#select data.spellList}} {{#each config.spellLists as |name list|}}
+				<select name="system.spellList">
+					{{#select system.spellList}} {{#each config.spellLists as |name list|}}
 					<option value="{{list}}">{{name}}</option>
 					{{/each}} {{/select}}
 				</select>
@@ -58,8 +58,8 @@
 			{{!-- Spell School --}}
 			<div class="form-group">
 				<label>{{ localize "TRPG.SpellSchool" }}</label>
-				<select name="data.school">
-					{{#select data.school}} {{#each config.spellSchools as |name sch|}}
+				<select name="system.school">
+					{{#select system.school}} {{#each config.spellSchools as |name sch|}}
 					<option value="{{sch}}">{{name}}</option>
 					{{/each}} {{/select}}
 				</select>
@@ -69,34 +69,34 @@
 			<div class="spell-components form-group stacked">
 				<!-- <label>{{ localize "TRPG.SpellComponents" }}</label>
                 <label class="checkbox">
-                    <input type="checkbox" name="data.components.vocal" {{checked data.components.vocal}}/> {{ localize "TRPG.ComponentVerbal" }}
+                    <input type="checkbox" name="system.components.vocal" {{checked system.components.vocal}}/> {{ localize "TRPG.ComponentVerbal" }}
                 </label>
                 <label class="checkbox">
-                    <input type="checkbox" name="data.components.somatic" {{checked data.components.somatic}}/> {{ localize "TRPG.ComponentSomatic" }}
+                    <input type="checkbox" name="system.components.somatic" {{checked system.components.somatic}}/> {{ localize "TRPG.ComponentSomatic" }}
                 </label>
                 <label class="checkbox">
-                    <input type="checkbox" name="data.components.material" {{checked data.components.material}}/> {{ localize "TRPG.ComponentMaterial" }}
+                    <input type="checkbox" name="system.components.material" {{checked system.components.material}}/> {{ localize "TRPG.ComponentMaterial" }}
                 </label> -->
 				<label class="checkbox">
-					<input type="checkbox" name="data.components.concentration" {{checked data.components.concentration}} /> {{ localize "TRPG.Concentration" }}
+					<input type="checkbox" name="system.components.concentration" {{checked system.components.concentration}} /> {{ localize "TRPG.Concentration" }}
 				</label>
 				<!-- <label class="checkbox">
-                    <input type="checkbox" name="data.components.ritual" {{checked data.components.ritual}}/> {{ localize "TRPG.Ritual" }}
+                    <input type="checkbox" name="system.components.ritual" {{checked system.components.ritual}}/> {{ localize "TRPG.Ritual" }}
                 </label> -->
 			</div>
 
 			<!-- {{!-- Material Components --}}
             <div class="form-group stacked">
                 <label>{{ localize "TRPG.SpellMaterials" }}</label>
-                <input class="materials" type="text" name="data.materials.value" value="{{data.materials.value}}"/>
-                {{#if data.materials.value}}
+                <input class="materials" type="text" name="system.materials.value" value="{{system.materials.value}}"/>
+                {{#if system.materials.value}}
                 <div class="spell-materials flexrow">
                     <label>{{ localize "TRPG.Supply" }}</label>
-                    <input type="text" name="data.materials.supply" value="{{data.materials.supply}}" data-dtype="Number" Placeholder="0"/>
+                    <input type="text" name="system.materials.supply" value="{{system.materials.supply}}" data-dtype="Number" Placeholder="0"/>
                     <label>{{ localize "TRPG.CostGP" }}</label>
-                    <input type="text" name="data.materials.cost" value="{{data.materials.cost}}" data-dtype="Number" Placeholder="-"/>
+                    <input type="text" name="system.materials.cost" value="{{system.materials.cost}}" data-dtype="Number" Placeholder="-"/>
                     <label>{{ localize "TRPG.Consumed" }}</label>
-                    <input type="checkbox" name="data.materials.consumed" {{checked data.materials.consumed}}/>
+                    <input type="checkbox" name="system.materials.consumed" {{checked system.materials.consumed}}/>
                 </div>
                 {{/if}}
             </div> -->
@@ -106,10 +106,10 @@
 				<label>{{ localize "TRPG.SpellPreparationMode" }}</label>
 				<div class="form-fields">
 					<label class="checkbox prepared">
-						{{ localize "TRPG.SpellPrepared" }} <input type="checkbox" name="data.preparation.prepared" {{checked data.preparation.prepared}} />
+						{{ localize "TRPG.SpellPrepared" }} <input type="checkbox" name="system.preparation.prepared" {{checked system.preparation.prepared}} />
 					</label>
-					<select name="data.preparation.mode">
-						{{ selectOptions config.spellPreparationModes selected=data.preparation.mode }}
+					<select name="system.preparation.mode">
+						{{ selectOptions config.spellPreparationModes selected=system.preparation.mode }}
 					</select>
 				</div>
 			</div>
@@ -124,14 +124,14 @@
 			<!-- <div class="form-group">
                 <label>{{ localize "TRPG.LevelScaling" }}</label>
                 <div class="form-fields">
-                    <select name="data.scaling.mode">
-                        {{#select data.scaling.mode}}
+                    <select name="system.scaling.mode">
+                        {{#select system.scaling.mode}}
                         {{#each config.spellScalingModes as |name key|}}
                         <option value="{{key}}">{{name}}</option>
                         {{/each}}
                         {{/select}}
                     </select>
-                    <input type="text" name="data.scaling.formula" value="{{data.scaling.formula}}" placeholder="{{ localize 'TRPG.ScalingFormula' }}"/>
+                    <input type="text" name="system.scaling.formula" value="{{system.scaling.formula}}" placeholder="{{ localize 'TRPG.ScalingFormula' }}"/>
                 </div>
             </div> -->
 		</div>

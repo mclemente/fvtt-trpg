@@ -1,82 +1,72 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
+	{{!-- Item Sheet Header --}}
+	<header class="sheet-header flexrow">
+		<img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img" />
 
-    {{!-- Item Sheet Header --}}
-    <header class="sheet-header flexrow">
-        <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+		<div class="header-details flexrow">
+			<h1 class="charname">
+				<input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'TRPG.ItemName' }}" />
+			</h1>
 
-        <div class="header-details flexrow">
-            <h1 class="charname">
-                <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'TRPG.ItemName' }}"/>
-            </h1>
+			<div class="item-subtitle">
+				<h4 class="item-type">{{itemType}}</h4>
+				<span class="item-status">{{itemStatus}}</span>
+			</div>
 
-            <div class="item-subtitle">
-                <h4 class="item-type">{{itemType}}</h4>
-                <span class="item-status">{{itemStatus}}</span>
-            </div>
-
-            <ul class="summary flexrow">
-                <li>
-                    {{labels.featType}}
-                </li>
-                <!-- <li>
-                    <input type="text" name="data.requirements" value="{{data.requirements}}" placeholder="{{ localize 'TRPG.Requirements' }}"/>
+			<ul class="summary flexrow">
+				<li>{{labels.featType}}</li>
+				<!-- <li>
+                    <input type="text" name="system.requirements" value="{{system.requirements}}" placeholder="{{ localize 'TRPG.Requirements' }}"/>
                 </li> -->
-                <li>
-                    <input type="text" name="data.type" value="{{data.type}}" placeholder="Tipo"/>
-                </li>
-                <li>
-                    <input type="text" name="data.source" value="{{data.source}}" placeholder="{{ localize 'TRPG.Source' }}"/>
-                </li>
-            </ul>
-        </div>
-    </header>
+				<li>
+					<input type="text" name="system.type" value="{{system.type}}" placeholder="Tipo" />
+				</li>
+				<li>
+					<input type="text" name="system.source" value="{{system.source}}" placeholder="{{ localize 'TRPG.Source' }}" />
+				</li>
+			</ul>
+		</div>
+	</header>
 
-    {{!-- Item Sheet Navigation --}}
-    <nav class="sheet-navigation tabs" data-group="primary">
-        <a class="item active" data-tab="description">{{ localize "TRPG.Description" }}</a>
-        <a class="item" data-tab="details">{{ localize "TRPG.Details" }}</a>
-        <a class="item" data-tab="effects">{{ localize "TRPG.Effects" }}</a>
-    </nav>
+	{{!-- Item Sheet Navigation --}}
+	<nav class="sheet-navigation tabs" data-group="primary">
+		<a class="item active" data-tab="description">{{ localize "TRPG.Description" }}</a>
+		<a class="item" data-tab="details">{{ localize "TRPG.Details" }}</a>
+		<a class="item" data-tab="effects">{{ localize "TRPG.Effects" }}</a>
+	</nav>
 
-    {{!-- Item Sheet Body --}}
-    <section class="sheet-body">
+	{{!-- Item Sheet Body --}}
+	<section class="sheet-body">
+		{{!-- Description Tab --}} {{> "systems/trpg/templates/items/parts/item-description.html"}} {{!-- Details Tab --}}
+		<div class="tab details" data-group="primary" data-tab="details">
+			<h3 class="form-header">{{ localize "TRPG.FeatureUsage" }}</h3>
 
-        {{!-- Description Tab --}}
-        {{> "systems/trpg/templates/items/parts/item-description.html"}}
+			{{!-- Item Activation Template --}} {{> "systems/trpg/templates/items/parts/item-activation.html"}} {{!-- Recharge Requirement --}} {{#if system.activation.type}}
+			<div class="form-group recharge">
+				<label>{{ localize "TRPG.FeatureActionRecharge" }}</label>
+				<div class="form-fields">
+					<span>{{ localize "TRPG.FeatureRechargeOn" }}</span>
+					<input
+						type="text"
+						name="system.recharge.value"
+						value="{{system.recharge.value}}"
+						data-dtype="Number"
+						placeholder="{{ localize 'TRPG.FeatureRechargeResult' }}"
+					/>
+					<label class="checkbox">
+						{{ localize "TRPG.Charged" }}
+						<input type="checkbox" name="system.recharge.charged" {{checked system.recharge.charged}} />
+					</label>
+				</div>
+			</div>
+			{{/if}}
 
-        {{!-- Details Tab --}}
-        <div class="tab details" data-group="primary" data-tab="details">
+			<h3 class="form-header">{{ localize "TRPG.FeatureAttack" }}</h3>
 
-            <h3 class="form-header">{{ localize "TRPG.FeatureUsage" }}</h3>
+			{{!-- Item Action Template --}} {{> "systems/trpg/templates/items/parts/item-action.html"}}
+		</div>
 
-            {{!-- Item Activation Template --}}
-            {{> "systems/trpg/templates/items/parts/item-activation.html"}}
-
-            {{!-- Recharge Requirement --}}
-            {{#if data.activation.type}}
-            <div class="form-group recharge">
-                <label>{{ localize "TRPG.FeatureActionRecharge" }}</label>
-                <div class="form-fields">
-                    <span>{{ localize "TRPG.FeatureRechargeOn" }}</span>
-                    <input type="text" name="data.recharge.value" value="{{data.recharge.value}}"
-                           data-dtype="Number" placeholder="{{ localize 'TRPG.FeatureRechargeResult' }}"/>
-                    <label class="checkbox">
-                        {{ localize "TRPG.Charged" }}
-                        <input type="checkbox" name="data.recharge.charged" {{checked data.recharge.charged}}/>
-                    </label>
-                </div>
-            </div>
-            {{/if}}
-
-            <h3 class="form-header">{{ localize "TRPG.FeatureAttack" }}</h3>
-
-            {{!-- Item Action Template --}}
-            {{> "systems/trpg/templates/items/parts/item-action.html"}}
-        </div>
-
-        {{!-- Effects Tab --}}
-        <div class="tab effects flexcol" data-group="primary" data-tab="effects">
-            {{> "systems/trpg/templates/actors/parts/active-effects.html"}}
-        </div>
-    </section>
+		{{!-- Effects Tab --}}
+		<div class="tab effects flexcol" data-group="primary" data-tab="effects">{{> "systems/trpg/templates/actors/parts/active-effects.html"}}</div>
+	</section>
 </form>

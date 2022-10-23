@@ -1,34 +1,31 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
+	{{!-- Item Sheet Header --}}
+	<header class="sheet-header loot-header flexrow">
+		<img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img" />
 
-    {{!-- Item Sheet Header --}}
-    <header class="sheet-header loot-header flexrow">
-        <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+		<div class="header-details flexrow">
+			<h1 class="charname">
+				<input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'TRPG.ItemName' }}" />
+			</h1>
 
-        <div class="header-details flexrow">
-            <h1 class="charname">
-                <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'TRPG.ItemName' }}"/>
-            </h1>
+			<div class="item-subtitle">
+				<h4 class="item-type">{{itemType}}</h4>
+				<span class="item-status">{{itemStatus}}</span>
+			</div>
 
-            <div class="item-subtitle">
-                <h4 class="item-type">{{itemType}}</h4>
-                <span class="item-status">{{itemStatus}}</span>
-            </div>
+			<ul class="summary flexrow">
+				<li>
+					<select name="system.rarity">
+						{{selectOptions config.itemRarity selected=system.rarity blank="&nbsp;"}}
+					</select>
+				</li>
+				<li>
+					<input type="text" name="system.source" value="{{system.source}}" placeholder="{{ localize 'TRPG.Source' }}" />
+				</li>
+			</ul>
+		</div>
+	</header>
 
-            <ul class="summary flexrow">
-                <li>
-                    <select name="data.rarity">
-                        {{selectOptions config.itemRarity selected=data.rarity blank="&nbsp;"}}
-                    </select>
-                </li>
-                <li>
-                    <input type="text" name="data.source" value="{{data.source}}" placeholder="{{ localize 'TRPG.Source' }}"/>
-                </li>
-            </ul>
-        </div>
-    </header>
-
-    {{!-- Item Sheet Body --}}
-    <section class="sheet-body">
-        {{> "systems/trpg/templates/items/parts/item-description.html"}}
-    </section>
+	{{!-- Item Sheet Body --}}
+	<section class="sheet-body">{{> "systems/trpg/templates/items/parts/item-description.html"}}</section>
 </form>

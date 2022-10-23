@@ -1,66 +1,59 @@
 <form class="{{cssClass}}" autocomplete="off">
-    <section class="form-body">
-	    <p class="notes">{{localize 'TRPG.FlagsInstructions'}}</p>
+	<section class="form-body">
+		<p class="notes">{{localize 'TRPG.FlagsInstructions'}}</p>
 
-        <h3 class="form-header">{{localize "TRPG.ItemTypeClass"}}</h3>
-        <div class="form-group">
-            <label>{{localize "TRPG.ClassMakeOriginal"}}</label>
-            <select name="data.details.originalClass" data-dtype="String">
-                {{selectOptions classes selected=actor.data.data.details.originalClass}}
-            </select>
-            <p class="notes">{{localize "TRPG.ClassMakeOriginalHint"}}</p>
-        </div>
+		<h3 class="form-header">{{localize "TRPG.ItemTypeClass"}}</h3>
+		<div class="form-group">
+			<label>{{localize "TRPG.ClassMakeOriginal"}}</label>
+			<select name="system.details.originalClass" data-dtype="String">
+				{{selectOptions classes selected=actor.system.details.originalClass}}
+			</select>
+			<p class="notes">{{localize "TRPG.ClassMakeOriginalHint"}}</p>
+		</div>
 
-        {{#unless hasSpells}}
-        <h3 class="form-header">Spellbook</h3>
-        <div class="form-group">
-            <label>Mostrar Pontos de Magia e Grimório</label>
-            <input type="checkbox" name="data.details.showSpells" data-dtype="Boolean" {{checked actor.data.data.details.showSpells}} />
-            <p class="notes">Mostra os Pontos de Magia e o Grimório mesmo se você não tem magias.</p>
-        </div>
-        {{/unless}}
+		{{#unless hasSpells}}
+		<h3 class="form-header">Spellbook</h3>
+		<div class="form-group">
+			<label>Mostrar Pontos de Magia e Grimório</label>
+			<input type="checkbox" name="system.details.showSpells" data-dtype="Boolean" {{checked actor.system.details.showSpells}} />
+			<p class="notes">Mostra os Pontos de Magia e o Grimório mesmo se você não tem magias.</p>
+		</div>
+		{{/unless}} {{#each flags as |fs section|}}
+		<h3 class="form-header">{{localize section}}</h3>
+		{{#each fs as |flag key|}}
 
-        {{#each flags as |fs section|}}
-        <h3 class="form-header">{{localize section}}</h3>
-        {{#each fs as |flag key|}}
+		<div class="form-group">
+			<label>{{localize flag.name}}</label>
 
-        <div class="form-group">
-            <label>{{localize flag.name}}</label>
+			{{#if flag.isCheckbox}}
+			<input type="checkbox" name="{{key}}" data-dtype="Boolean" {{checked flag.value}} />
 
-            {{#if flag.isCheckbox}}
-            <input type="checkbox" name="{{key}}" data-dtype="Boolean" {{checked flag.value}}/>
+			{{else if flag.isSelect}}
+			<select name="{{key}}" data-dtype="{{flag.type}}">
+				{{#select flag.value}} {{#each flag.choices as |v k|}}
+				<option value="{{k}}">{{localize v}}</option>
+				{{/each}} {{/select}}
+			</select>
 
-            {{else if flag.isSelect}}
-            <select name="{{key}}" data-dtype="{{flag.type}}">
-                {{#select flag.value}}
-                {{#each flag.choices as |v k|}}
-                <option value="{{k}}">{{localize v}}</option>
-                {{/each}}
-                {{/select}}
-            </select>
+			{{else}}
+			<input type="text" name="{{key}}" value="{{flag.value}}" placeholder="{{flag.placeholder}}" data-dtype="{{flag.type}}" />
+			{{/if}}
 
-            {{else}}
-            <input type="text" name="{{key}}" value="{{flag.value}}" placeholder="{{flag.placeholder}}" data-dtype="{{flag.type}}"/>
-            {{/if}}
+			<p class="notes">{{localize flag.hint}}</p>
+		</div>
+		{{/each}} {{/each}}
 
-            <p class="notes">{{localize flag.hint}}</p>
-        </div>
-        {{/each}}
-        {{/each}}
+		<h3 class="form-header">{{localize "TRPG.Bonuses"}}</h3>
+		<p class="notes">{{localize "TRPG.BonusesHint"}}</p>
+		{{#each bonuses as |b|}}
+		<div class="form-group">
+			<label>{{localize b.label}}</label>
+			<input type="text" name="{{b.name}}" value="{{b.value}}" />
+		</div>
+		{{/each}}
+	</section>
 
-        <h3 class="form-header">{{localize "TRPG.Bonuses"}}</h3>
-        <p class="notes">{{localize "TRPG.BonusesHint"}}</p>
-        {{#each bonuses as |b|}}
-        <div class="form-group">
-            <label>{{localize b.label}}</label>
-            <input type="text" name="{{b.name}}" value="{{b.value}}"/>
-        </div>
-        {{/each}}
-    </section>
-
-    <footer class="form-footer">
-        <button type="submit" name="submit">
-            <i class="far fa-save"></i> {{localize 'TRPG.FlagsSave'}}
-        </button>
-    </footer>
+	<footer class="form-footer">
+		<button type="submit" name="submit"><i class="far fa-save"></i> {{localize 'TRPG.FlagsSave'}}</button>
+	</footer>
 </form>

@@ -40,14 +40,14 @@ export default class ShortRestDialog extends Dialog {
 		// Determine Hit Dice
 		data.availableHD = this.actor.data.items.reduce((hd, item) => {
 			if (item.type === "class") {
-				const d = item.data.data;
+				const d = item.system;
 				const denom = d.hitDice || "d6";
 				const available = parseInt(d.levels || 1) - parseInt(d.hitDiceUsed || 0);
 				hd[denom] = denom in hd ? hd[denom] + available : available;
 			}
 			return hd;
 		}, {});
-		data.canRoll = this.actor.data.data.attributes.hd > 0;
+		data.canRoll = this.actor.system.attributes.hd > 0;
 		data.denomination = this._denom;
 
 		// Determine rest type

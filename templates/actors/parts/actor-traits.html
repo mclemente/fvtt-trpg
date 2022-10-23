@@ -1,129 +1,125 @@
 <div class="traits">
-    <div class="form-group">
-        <label>{{localize "TRPG.Size"}}</label>
-        <select class="actor-size" name="data.traits.size">
-            {{#select data.traits.size}}
-            {{#each config.actorSizes as |label size|}}
-                <option value="{{size}}">{{label}}</option>
-            {{/each}}
-            {{/select}}
-        </select>
-    </div>
+	<div class="form-group">
+		<label>{{localize "TRPG.Size"}}</label>
+		<select class="actor-size" name="system.traits.size">
+			{{#select system.traits.size}} {{#each config.actorSizes as |label size|}}
+			<option value="{{size}}">{{label}}</option>
+			{{/each}} {{/select}}
+		</select>
+	</div>
 
-    {{#unless isVehicle}}
-    <div class="form-group">
-        <label>{{localize "TRPG.Senses"}}</label>
-        <a class="config-button" data-action="senses" title="{{localize 'TRPG.SensesConfig'}}"><i class="fas fa-cog"></i></a>
-        <ul class="traits-list">
-        {{#each senses as |v k|}}
-            <li class="tag {{k}}">{{v}}</li>
-        {{/each}}
-        </ul>
-    </div>
+	{{#unless isVehicle}}
+	<div class="form-group">
+		<label>{{localize "TRPG.Senses"}}</label>
+		<a class="config-button" data-action="senses" title="{{localize 'TRPG.SensesConfig'}}"><i class="fas fa-cog"></i></a>
+		<ul class="traits-list">
+			{{#each senses as |v k|}}
+			<li class="tag {{k}}">{{v}}</li>
+			{{/each}}
+		</ul>
+	</div>
 
-    <div class="form-group {{data.traits.languages.cssClass}}">
-        <label>{{localize "TRPG.Languages"}}</label>
-        <a class="trait-selector" data-options="languages" data-target="data.traits.languages">
-            <i class="fas fa-edit"></i>
-        </a>
-        <ul class="traits-list">
-        {{#each data.traits.languages.selected as |v k|}}
-            <li class="tag {{k}}">{{v}}</li>
-        {{/each}}
-        </ul>
-    </div>
-    {{/unless}}
+	<div class="form-group {{system.traits.languages.cssClass}}">
+		<label>{{localize "TRPG.Languages"}}</label>
+		<a class="trait-selector" data-options="languages" data-target="system.traits.languages">
+			<i class="fas fa-edit"></i>
+		</a>
+		<ul class="traits-list">
+			{{#each system.traits.languages.selected as |v k|}}
+			<li class="tag {{k}}">{{v}}</li>
+			{{/each}}
+		</ul>
+	</div>
+	{{/unless}}
 
-    <div class="form-group {{data.traits.di.cssClass}}">
-        <label>{{localize "TRPG.DamImm"}}</label>
-        <a class="trait-selector" data-options="damageResistanceTypes" data-target="data.traits.di">
-            <i class="fas fa-edit"></i>
-        </a>
-        <ul class="traits-list">
-        {{#each data.traits.di.selected as |v k|}}
-            <li class="tag {{k}}">{{v}}</li>
-        {{/each}}
-        </ul>
-    </div>
+	<div class="form-group {{system.traits.di.cssClass}}">
+		<label>{{localize "TRPG.DamImm"}}</label>
+		<a class="trait-selector" data-options="damageResistanceTypes" data-target="system.traits.di">
+			<i class="fas fa-edit"></i>
+		</a>
+		<ul class="traits-list">
+			{{#each system.traits.di.selected as |v k|}}
+			<li class="tag {{k}}">{{v}}</li>
+			{{/each}}
+		</ul>
+	</div>
 
-    <div class="form-group {{data.traits.dr.cssClass}}">
-        <label>{{localize "TRPG.DamRes"}}</label>
-        <a class="trait-selector" data-options="damageResistanceTypes" data-target="data.traits.dr">
-            <i class="fas fa-edit"></i>
-        </a>
-        <ul class="traits-list">
-        {{#each data.traits.dr.selected as |v k|}}
-            <li class="tag {{k}}">{{v}}</li>
-        {{/each}}
-        </ul>
-    </div>
+	<div class="form-group {{system.traits.dr.cssClass}}">
+		<label>{{localize "TRPG.DamRes"}}</label>
+		<a class="trait-selector" data-options="damageResistanceTypes" data-target="system.traits.dr">
+			<i class="fas fa-edit"></i>
+		</a>
+		<ul class="traits-list">
+			{{#each system.traits.dr.selected as |v k|}}
+			<li class="tag {{k}}">{{v}}</li>
+			{{/each}}
+		</ul>
+	</div>
 
-    <div class="form-group {{data.traits.dv.cssClass}}">
-        <label>{{localize "TRPG.DamVuln"}}</label>
-        <a class="trait-selector" data-options="damageResistanceTypes" data-target="data.traits.dv">
-            <i class="fas fa-edit"></i>
-        </a>
-        <ul class="traits-list">
-        {{#each data.traits.dv.selected as |v k|}}
-            <li class="tag {{k}}">{{v}}</li>
-        {{/each}}
-        </ul>
-    </div>
+	<div class="form-group {{system.traits.dv.cssClass}}">
+		<label>{{localize "TRPG.DamVuln"}}</label>
+		<a class="trait-selector" data-options="damageResistanceTypes" data-target="system.traits.dv">
+			<i class="fas fa-edit"></i>
+		</a>
+		<ul class="traits-list">
+			{{#each system.traits.dv.selected as |v k|}}
+			<li class="tag {{k}}">{{v}}</li>
+			{{/each}}
+		</ul>
+	</div>
 
-    <div class="form-group {{data.traits.ci.cssClass}}">
-        <label>{{localize "TRPG.ConImm"}}</label>
-        <a class="trait-selector" data-options="conditionTypes" data-target="data.traits.ci">
-            <i class="fas fa-edit"></i>
-        </a>
-        <ul class="traits-list">
-        {{#each data.traits.ci.selected as |v k|}}
-            <li class="tag {{k}}">{{v}}</li>
-        {{/each}}
-        </ul>
-    </div>
+	<div class="form-group {{system.traits.ci.cssClass}}">
+		<label>{{localize "TRPG.ConImm"}}</label>
+		<a class="trait-selector" data-options="conditionTypes" data-target="system.traits.ci">
+			<i class="fas fa-edit"></i>
+		</a>
+		<ul class="traits-list">
+			{{#each system.traits.ci.selected as |v k|}}
+			<li class="tag {{k}}">{{v}}</li>
+			{{/each}}
+		</ul>
+	</div>
 
-    {{#if isCharacter}}
-    <div class="form-group {{data.traits.weaponProf.cssClass}}">
-        <label>{{localize "TRPG.TraitWeaponProf"}}</label>
-        <a class="proficiency-selector" data-type="weapon" data-target="data.traits.weaponProf">
-            <i class="fas fa-edit"></i>
-        </a>
-        <ul class="traits-list">
-        {{#each data.traits.weaponProf.selected as |v k|}}
-            <li class="tag {{k}}">{{v}}</li>
-        {{/each}}
-        </ul>
-    </div>
+	{{#if isCharacter}}
+	<div class="form-group {{system.traits.weaponProf.cssClass}}">
+		<label>{{localize "TRPG.TraitWeaponProf"}}</label>
+		<a class="proficiency-selector" data-type="weapon" data-target="system.traits.weaponProf">
+			<i class="fas fa-edit"></i>
+		</a>
+		<ul class="traits-list">
+			{{#each system.traits.weaponProf.selected as |v k|}}
+			<li class="tag {{k}}">{{v}}</li>
+			{{/each}}
+		</ul>
+	</div>
 
-    <div class="form-group {{data.traits.armorProf.cssClass}}">
-        <label>{{localize "TRPG.TraitArmorProf"}}</label>
-        <a class="proficiency-selector" data-type="armor" data-target="data.traits.armorProf">
-            <i class="fas fa-edit"></i>
-        </a>
-        <ul class="traits-list">
-        {{#each data.traits.armorProf.selected as |v k|}}
-            <li class="tag {{k}}">{{v}}</li>
-        {{/each}}
-        </ul>
-    </div>
+	<div class="form-group {{system.traits.armorProf.cssClass}}">
+		<label>{{localize "TRPG.TraitArmorProf"}}</label>
+		<a class="proficiency-selector" data-type="armor" data-target="system.traits.armorProf">
+			<i class="fas fa-edit"></i>
+		</a>
+		<ul class="traits-list">
+			{{#each system.traits.armorProf.selected as |v k|}}
+			<li class="tag {{k}}">{{v}}</li>
+			{{/each}}
+		</ul>
+	</div>
 
-    <div class="form-group {{data.traits.toolProf.cssClass}}">
-        <label>{{localize "TRPG.TraitToolProf"}}</label>
-        <a class="proficiency-selector" data-type="tool" data-target="data.traits.toolProf">
-            <i class="fas fa-edit"></i>
-        </a>
-        <ul class="traits-list">
-        {{#each data.traits.toolProf.selected as |v k|}}
-            <li class="tag {{k}}">{{v}}</li>
-        {{/each}}
-        </ul>
-    </div>
-    {{/if}}
-
-    {{#unless isVehicle}}
-    <div class="form-group ">
-        <label>{{localize "TRPG.SpecialTraits"}}</label>
-        <a class="config-button" data-action="flags" title="{{localize 'TRPG.SpecialTraits'}}"><i class="fas fa-cog"></i></a>
-    </div>
-    {{/unless}}
+	<div class="form-group {{system.traits.toolProf.cssClass}}">
+		<label>{{localize "TRPG.TraitToolProf"}}</label>
+		<a class="proficiency-selector" data-type="tool" data-target="system.traits.toolProf">
+			<i class="fas fa-edit"></i>
+		</a>
+		<ul class="traits-list">
+			{{#each system.traits.toolProf.selected as |v k|}}
+			<li class="tag {{k}}">{{v}}</li>
+			{{/each}}
+		</ul>
+	</div>
+	{{/if}} {{#unless isVehicle}}
+	<div class="form-group">
+		<label>{{localize "TRPG.SpecialTraits"}}</label>
+		<a class="config-button" data-action="flags" title="{{localize 'TRPG.SpecialTraits'}}"><i class="fas fa-cog"></i></a>
+	</div>
+	{{/unless}}
 </div>

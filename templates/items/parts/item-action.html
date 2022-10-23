@@ -1,87 +1,78 @@
 {{!-- Action Type --}}
 <div class="form-group select">
-    <label>{{ localize "TRPG.ItemActionType" }}</label>
-    <select name="data.actionType">
-        {{#select data.actionType}}
-        <option value=""></option>
-        {{#each config.itemActionTypes as |name type|}}
-        <option value="{{type}}">{{name}}</option>
-        {{/each}}
-        {{/select}}
-    </select>
+	<label>{{ localize "TRPG.ItemActionType" }}</label>
+	<select name="system.actionType">
+		{{#select system.actionType}}
+		<option value=""></option>
+		{{#each config.itemActionTypes as |name type|}}
+		<option value="{{type}}">{{name}}</option>
+		{{/each}} {{/select}}
+	</select>
 </div>
-{{#if data.actionType}}
-
-{{!-- Ability Modifier --}}
+{{#if system.actionType}} {{!-- Ability Modifier --}}
 <div class="form-group select">
-    <label>{{ localize "TRPG.AbilityModifier" }}</label>
-    <select name="data.ability">
-        {{#select data.ability}}
-        <option value="">{{ localize "TRPG.Default" }}</option>
-        {{#each config.abilities as |ability a|}}
-        <option value="{{a}}">{{ability}}</option>
-        {{/each}}
-        {{/select}}
-    </select>
+	<label>{{ localize "TRPG.AbilityModifier" }}</label>
+	<select name="system.ability">
+		{{#select system.ability}}
+		<option value="">{{ localize "TRPG.Default" }}</option>
+		{{#each config.abilities as |ability a|}}
+		<option value="{{a}}">{{ability}}</option>
+		{{/each}} {{/select}}
+	</select>
 </div>
 
-{{!-- Attack Roll Bonus --}}
-{{#if hasAttackRoll }}
+{{!-- Attack Roll Bonus --}} {{#if hasAttackRoll }}
 <div class="form-group">
-    <label>{{ localize "TRPG.ItemAttackBonus" }}</label>
-    <div class="form-fields">
-        <input type="text" name="data.attackBonus" value="{{data.attackBonus}}"/>
-    </div>
+	<label>{{ localize "TRPG.ItemAttackBonus" }}</label>
+	<div class="form-fields">
+		<input type="text" name="system.attackBonus" value="{{system.attackBonus}}" />
+	</div>
 </div>
-{{/if}}
-
-{{!-- Damage Formula --}}
+{{/if}} {{!-- Damage Formula --}}
 <h4 class="damage-header">
-    {{#unless isHealing }}{{ localize "TRPG.Damage" }}{{ else }}{{ localize "TRPG.Healing" }}{{/unless}} {{ localize "TRPG.Formula" }}
-    <a class="damage-control add-damage"><i class="fas fa-plus"></i></a>
+	{{#unless isHealing }}{{ localize "TRPG.Damage" }}{{ else }}{{ localize "TRPG.Healing" }}{{/unless}} {{ localize "TRPG.Formula" }}
+	<a class="damage-control add-damage"><i class="fas fa-plus"></i></a>
 </h4>
 <ol class="damage-parts form-group">
-    {{#each data.damage.parts as |part i| }}
-    <li class="damage-part flexrow" data-damage-part="{{i}}">
-        <input type="text" name="data.damage.parts.{{i}}.0" value="{{lookup this "0"}}"/>
-        <select name="data.damage.parts.{{i}}.1">
-            {{#select (lookup this "1") }}
-            <option value="">{{ localize "TRPG.None" }}</option>
-            {{#each ../config.damageTypes as |name type|}}
-            <option value="{{type}}">{{name}}</option>
-            {{/each}}
-            {{#each ../config.healingTypes as |name type|}}
-            <option value="{{type}}">{{name}}</option>
-            {{/each}}
-            {{/select}}
-        </select>
-        <a class="damage-control delete-damage"><i class="fas fa-minus"></i></a>
-    </li>
-    {{/each}}
+	{{#each system.damage.parts as |part i| }}
+	<li class="damage-part flexrow" data-damage-part="{{i}}">
+		<input type="text" name="system.damage.parts.{{i}}.0" value="{{lookup this "0"}}"/>
+		<select name="system.damage.parts.{{i}}.1">
+			{{#select (lookup this "1") }}
+			<option value="">{{ localize "TRPG.None" }}</option>
+			{{#each ../config.damageTypes as |name type|}}
+			<option value="{{type}}">{{name}}</option>
+			{{/each}} {{#each ../config.healingTypes as |name type|}}
+			<option value="{{type}}">{{name}}</option>
+			{{/each}} {{/select}}
+		</select>
+		<a class="damage-control delete-damage"><i class="fas fa-minus"></i></a>
+	</li>
+	{{/each}}
 </ol>
 
-{{#if data.damage.parts.length }}
+{{#if system.damage.parts.length }}
 <div class="form-group">
-    <label>Margem de Ameaça</label>
-    <div class="form-fields">
-        <input type="number" name="data.critical.threshold" value="{{data.critical.threshold}}" placeholder="20" max="20" min="2" />
-    </div>
+	<label>Margem de Ameaça</label>
+	<div class="form-fields">
+		<input type="number" name="system.critical.threshold" value="{{system.critical.threshold}}" placeholder="20" max="20" min="2" />
+	</div>
 </div>
 <div class="form-group">
-    <label>Multiplicador de Crítico</label>
-    <div class="form-fields">
-        <input type="number" name="data.critical.multiplier" value="{{data.critical.multiplier}}" placeholder="2" min="2" />
-    </div>
+	<label>Multiplicador de Crítico</label>
+	<div class="form-fields">
+		<input type="number" name="system.critical.multiplier" value="{{system.critical.multiplier}}" placeholder="2" min="2" />
+	</div>
 </div>
 {{/if}}
 
 <!--
 {{!-- Versatile Damage --}}
-{{#if data.damage.parts.length }}
+{{#if system.damage.parts.length }}
 <div class="form-group">
     <label>{{ localize "TRPG.VersatileDamage" }}</label>
     <div class="form-fields">
-        <input type="text" name="data.damage.versatile" value="{{data.damage.versatile}}" placeholder="{{ localize 'TRPG.Formula' }}"/>
+        <input type="text" name="system.damage.versatile" value="{{system.damage.versatile}}" placeholder="{{ localize 'TRPG.Formula' }}"/>
     </div>
 </div>
 {{/if}}
@@ -89,41 +80,41 @@
 
 {{!-- Other Formula --}}
 <div class="form-group">
-    <label>{{ localize "TRPG.OtherFormula" }}</label>
-    <div class="form-fields">
-        <input type="text" name="data.formula" value="{{data.formula}}" placeholder="{{ localize 'TRPG.Formula' }}"/>
-    </div>
+	<label>{{ localize "TRPG.OtherFormula" }}</label>
+	<div class="form-fields">
+		<input type="text" name="system.formula" value="{{system.formula}}" placeholder="{{ localize 'TRPG.Formula' }}" />
+	</div>
 </div>
 
 {{!-- Saving Throw --}}
 <div class="form-group input-select">
-    <label>{{ localize "TRPG.ActionSave" }}</label>
-    <div class="form-fields">
-        <select name="data.save.ability">
-            {{#select data.save.ability}}
-            <option value=""></option>
-            {{#each config.saves as |ability a|}}
-            <option value="{{a}}">{{ability}}</option>
-            {{/each}}
-            {{/select}}
-        </select>
-        <span>{{ localize "TRPG.VsDC" }}</span>
-        <input type="text" name="data.save.dc" value="{{#if data.save.dc}}{{data.save.dc}}{{/if}}" data-dtype="Number" placeholder="{{ localize 'TRPG.AbbreviationDC' }}" {{#unless isFlatDC}}disabled{{/unless}}/>
-        <select name="data.save.scaling">
-            {{#select data.save.scaling}}
-            <option value="spell">Atributo-Chave</option>
-            {{#each config.abilities as |ability a|}}
-            <option value="{{a}}">{{ability}}</option>
-            {{/each}}
-            <option value="flat">{{ localize "TRPG.Flat" }}</option>
-            {{/select}}
-        </select>
-    </div>
+	<label>{{ localize "TRPG.ActionSave" }}</label>
+	<div class="form-fields">
+		<select name="system.save.ability">
+			{{#select system.save.ability}}
+			<option value=""></option>
+			{{#each config.saves as |ability a|}}
+			<option value="{{a}}">{{ability}}</option>
+			{{/each}} {{/select}}
+		</select>
+		<span>{{ localize "TRPG.VsDC" }}</span>
+		<input type="text" name="system.save.dc" value="{{#if system.save.dc}}{{system.save.dc}}{{/if}}" data-dtype="Number" placeholder="{{ localize 'TRPG.AbbreviationDC' }}"
+		{{#unless isFlatDC}}disabled{{/unless}}/>
+		<select name="system.save.scaling">
+			{{#select system.save.scaling}}
+			<option value="spell">Atributo-Chave</option>
+			{{#each config.abilities as |ability a|}}
+			<option value="{{a}}">{{ability}}</option>
+			{{/each}}
+			<option value="flat">{{ localize "TRPG.Flat" }}</option>
+			{{/select}}
+		</select>
+	</div>
 </div>
 
 {{!-- Chat Message Flavor --}}
 <div class="form-group stacked">
-    <label>{{ localize "TRPG.ChatFlavor" }}</label>
-    <input type="text" name="data.chatFlavor" value="{{data.chatFlavor}}"/>
+	<label>{{ localize "TRPG.ChatFlavor" }}</label>
+	<input type="text" name="system.chatFlavor" value="{{system.chatFlavor}}" />
 </div>
 {{/if}}

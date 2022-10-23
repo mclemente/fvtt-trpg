@@ -1,16 +1,16 @@
-import Actor5e from "../entity.js";
-import Item5e from "../../item/entity.js";
-import ProficiencySelector from "../../apps/proficiency-selector.js";
-import PropertyAttribution from "../../apps/property-attribution.js";
-import TraitSelector from "../../apps/trait-selector.js";
+import ActiveEffect5e from "../../active-effect.js";
 import ActorArmorConfig from "../../apps/actor-armor.js";
 import ActorSheetFlags from "../../apps/actor-flags.js";
+import ActorTypeConfig from "../../apps/actor-type.js";
 import ActorHitDiceConfig from "../../apps/hit-dice-config.js";
 import ActorMovementConfig from "../../apps/movement-config.js";
+import ProficiencySelector from "../../apps/proficiency-selector.js";
+import PropertyAttribution from "../../apps/property-attribution.js";
 import ActorSensesConfig from "../../apps/senses-config.js";
-import ActorTypeConfig from "../../apps/actor-type.js";
+import TraitSelector from "../../apps/trait-selector.js";
 import { TRPG } from "../../config.js";
-import ActiveEffect5e from "../../active-effect.js";
+import Item5e from "../../item/entity.js";
+import Actor5e from "../entity.js";
 
 /**
  * Extend the basic ActorSheet class to suppose system-specific logic and functionality.
@@ -56,15 +56,16 @@ export default class ActorSheet5e extends ActorSheet {
 	/** @override */
 	get template() {
 		if (!game.user.isGM && this.actor.limited) return "systems/trpg/templates/actors/limited-sheet.html";
-		return `systems/trpg/templates/actors/${this.actor.data.type}-sheet.html`;
+		return `systems/trpg/templates/actors/${this.actor.type}-sheet.html`;
 	}
 
 	/* -------------------------------------------- */
 
 	/** @override */
-	getData(options) {
+	async getData(options) {
 		// Basic data
 		let isOwner = this.actor.isOwner;
+		const rollData = this.actor.getRollData.bind(this.actor);
 		const data = {
 			owner: isOwner,
 			limited: this.actor.limited,
@@ -77,12 +78,13 @@ export default class ActorSheet5e extends ActorSheet {
 			config: CONFIG.TRPG,
 			rollData: this.actor.getRollData.bind(this.actor),
 		};
+		const labels = (data.labels = this.actor.labels || {});
 
 		// The Actor's data
-		const actorData = this.actor.data.toObject(false);
-		const source = this.actor.data._source.data;
+		const source = this.actor.toObject();
+		const actorData = this.actor.toObject(false);
 		data.actor = actorData;
-		data.data = actorData.data;
+		data.system = actorData.system;
 
 		// Owned Items
 		data.items = actorData.items;
@@ -93,33 +95,38 @@ export default class ActorSheet5e extends ActorSheet {
 		data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
 
 		// Labels and filters
-		data.labels = this.actor.labels || {};
 		data.filters = this._filters;
 
+		// Currency Labels
+		labels.currencies = Object.entries(CONFIG.TRPG.currencies).reduce((obj, [k, c]) => {
+			obj[k] = c.label;
+			return obj;
+		}, {});
+
 		// Ability Scores
-		for (let [a, abl] of Object.entries(actorData.data.abilities)) {
+		for (let [a, abl] of Object.entries(actorData.system.abilities)) {
 			abl.icon = this._getProficiencyIcon(abl.proficient);
 			abl.hover = CONFIG.TRPG.proficiencyLevels[abl.proficient];
 			abl.label = CONFIG.TRPG.abilities[a];
-			abl.baseProf = source.abilities[a].proficient;
+			abl.baseProf = source.system.abilities[a].proficient;
 		}
 
 		// Saving Throws
-		for (let [a, save] of Object.entries(actorData.data.saves)) {
+		for (let [a, save] of Object.entries(actorData.system.saves)) {
 			save.icon = this._getProficiencyIcon(save.proficient);
 			save.hover = CONFIG.TRPG.proficiencyLevels[save.proficient];
 			save.label = CONFIG.TRPG.abilities[a];
-			save.baseProf = source.saves[a].proficient;
+			save.baseProf = source.system.saves[a].proficient;
 		}
 
 		// Skills
-		if (actorData.data.skills) {
-			for (let [s, skl] of Object.entries(actorData.data.skills)) {
+		if (actorData.system.skills) {
+			for (let [s, skl] of Object.entries(actorData.system.skills)) {
 				skl.ability = CONFIG.TRPG.abilityAbbreviations[skl.ability];
 				skl.icon = this._getProficiencyIcon(skl.value);
 				skl.hover = CONFIG.TRPG.proficiencyLevels[skl.value];
 				skl.label = CONFIG.TRPG.skills[s];
-				skl.baseValue = source.skills[s].value;
+				skl.baseValue = source.system.skills[s].value;
 			}
 		}
 
@@ -130,13 +137,20 @@ export default class ActorSheet5e extends ActorSheet {
 		data.senses = this._getSenses(actorData);
 
 		// Update traits
-		this._prepareTraits(actorData.data.traits);
+		this._prepareTraits(actorData.system.traits);
 
 		// Prepare owned items
 		this._prepareItems(data);
 
 		// Prepare active effects
 		data.effects = ActiveEffect5e.prepareActiveEffectCategories(this.actor.effects);
+
+		// Biography HTML enrichment
+		data.biographyHTML = await TextEditor.enrichHTML(data.system.details.biography.value, {
+			secrets: this.actor.isOwner,
+			rollData,
+			async: true,
+		});
 
 		// Prepare warnings
 		data.warnings = this.actor._preparationWarnings;
@@ -155,7 +169,7 @@ export default class ActorSheet5e extends ActorSheet {
 	 * @private
 	 */
 	_getMovementSpeed(actorData, largestPrimary = false) {
-		const movement = actorData.data.attributes.movement || {};
+		const movement = actorData.system.attributes.movement || {};
 
 		// Prepare an array of available movement speeds
 		let speeds = [
@@ -192,7 +206,7 @@ export default class ActorSheet5e extends ActorSheet {
 	/* -------------------------------------------- */
 
 	_getSenses(actorData) {
-		const senses = actorData.data.attributes.senses || {};
+		const senses = actorData.system.attributes.senses || {};
 		const tags = {};
 		for (let [k, label] of Object.entries(CONFIG.TRPG.senses)) {
 			const v = senses[k] ?? 0;
@@ -262,7 +276,7 @@ export default class ActorSheet5e extends ActorSheet {
 
 			// Equipment-based AC
 			case "default":
-				const halfLevel = Math.floor(this.actor.data.data.details.level / 2);
+				const halfLevel = Math.floor(this.actor.system.details.level / 2);
 				if (halfLevel) {
 					attribution.push({
 						label: game.i18n.localize("TRPG.ArmorClassHalfLevel"),
@@ -274,7 +288,7 @@ export default class ActorSheet5e extends ActorSheet {
 				attribution.push({
 					label: hasArmor ? this.actor.armor.name : game.i18n.localize("TRPG.ArmorClassUnarmored"),
 					mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-					value: hasArmor ? this.actor.armor.data.data.armor.value : 10,
+					value: hasArmor ? this.actor.system.armor.value : 10,
 				});
 				if (ac.dex !== 0) {
 					attribution.push({
@@ -363,7 +377,7 @@ export default class ActorSheet5e extends ActorSheet {
 			if (trait.custom) {
 				trait.custom.split(";").forEach((c, i) => (trait.selected[`custom${i + 1}`] = c.trim()));
 			}
-			trait.cssClass = !isObjectEmpty(trait.selected) ? "" : "inactive";
+			trait.cssClass = !isEmpty(trait.selected) ? "" : "inactive";
 		}
 
 		// Populate and localize proficiencies
@@ -371,7 +385,7 @@ export default class ActorSheet5e extends ActorSheet {
 			const trait = traits[`${t}Prof`];
 			if (!trait) continue;
 			Actor5e.prepareProficiencies(trait, t);
-			trait.cssClass = !isObjectEmpty(trait.selected) ? "" : "inactive";
+			trait.cssClass = !isEmpty(trait.selected) ? "" : "inactive";
 		}
 	}
 
@@ -385,7 +399,7 @@ export default class ActorSheet5e extends ActorSheet {
 	 */
 	_prepareSpellbook(data, spells) {
 		const owner = this.actor.isOwner;
-		const levels = data.data.spells;
+		const levels = data.system.spells;
 		const spellbook = {};
 
 		// Define some mappings
@@ -480,7 +494,7 @@ export default class ActorSheet5e extends ActorSheet {
 	 */
 	_filterItems(items, filters) {
 		return items.filter((item) => {
-			const data = item.data;
+			const data = item.system;
 
 			// Action usage
 			for (let f of ["full", "action", "bonus", "reaction"]) {
@@ -498,7 +512,7 @@ export default class ActorSheet5e extends ActorSheet {
 			}
 			if (filters.has("prepared")) {
 				if (data.level === 0 || ["innate", "always"].includes(data.preparation.mode)) return true;
-				if (this.actor.data.type === "npc") return true;
+				if (this.actor.type === "npc") return true;
 				return data.preparation.prepared;
 			}
 
@@ -682,7 +696,7 @@ export default class ActorSheet5e extends ActorSheet {
 		event.preventDefault();
 		const field = event.currentTarget.previousElementSibling;
 		const skillName = field.parentElement.dataset.skill;
-		const source = this.actor.data._source.data.skills[skillName];
+		const source = this.actor._source.system.skills[skillName];
 		if (!source) return;
 
 		// Cycle to the next or previous skill level
@@ -810,7 +824,7 @@ export default class ActorSheet5e extends ActorSheet {
 			});
 			if (similarItem) {
 				return similarItem.update({
-					"data.quantity": similarItem.data.data.quantity + Math.max(itemData.data.quantity, 1),
+					"data.quantity": similarItem.system.quantity + Math.max(itemData.data.quantity, 1),
 				});
 			}
 		}
@@ -829,7 +843,7 @@ export default class ActorSheet5e extends ActorSheet {
 	async _onSpellSlotOverride(event) {
 		const span = event.currentTarget.parentElement;
 		const level = span.dataset.level;
-		const override = this.actor.data.data.spells[level].override || span.dataset.slots;
+		const override = this.actor.system.spells[level].override || span.dataset.slots;
 		const input = document.createElement("INPUT");
 		input.type = "text";
 		input.name = `data.spells.${level}.override`;
@@ -854,7 +868,7 @@ export default class ActorSheet5e extends ActorSheet {
 		event.preventDefault();
 		const itemId = event.currentTarget.closest(".item").dataset.itemId;
 		const item = this.actor.items.get(itemId);
-		const uses = Math.clamped(0, parseInt(event.target.value), item.data.data.uses.max);
+		const uses = Math.clamped(0, parseInt(event.target.value), item.system.uses.max);
 		event.target.value = uses;
 		return item.update({ "data.uses.value": uses });
 	}
@@ -972,7 +986,7 @@ export default class ActorSheet5e extends ActorSheet {
 		const existingTooltip = event.currentTarget.querySelector("div.tooltip");
 		const property = event.currentTarget.dataset.property;
 		if (existingTooltip || !property) return;
-		const data = this.actor.data.data;
+		const data = this.actor.system;
 		let attributions;
 		switch (property) {
 			case "attributes.ac":
@@ -1114,11 +1128,11 @@ export function injectActorSheet(app, html, data) {
 		const skillElem = $(this);
 		const skillKey = $(this).attr("data-skill");
 		const bonusKey = `${skillKey}.skill-bonus`;
-		const selectedAbility = actor.data.data.skills[skillKey].ability;
+		const selectedAbility = actor.system.skills[skillKey].ability;
 
 		let selectElement = $("<select>");
 		selectElement.addClass("skill-ability-select");
-		Object.keys(actor.data.data.abilities).forEach((ability) => {
+		Object.keys(actor.system.abilities).forEach((ability) => {
 			let abilityOption = $("<option>");
 			let abilityKey = ability.charAt(0).toUpperCase() + ability.slice(1);
 			let abilityString = game.i18n.localize(`TRPG.Ability${abilityKey}`).slice(0, 3);
@@ -1177,7 +1191,7 @@ export function injectActorSheet(app, html, data) {
 		const skillElem = $(this);
 		const skillKey = $(this).attr("data-save");
 		const bonusKey = `${skillKey}.skill-bonus`;
-		const selectedAbility = actor.data.data.saves[skillKey].ability;
+		const selectedAbility = actor.system.saves[skillKey].ability;
 
 		let textBoxElement = $('<input type="text" size=2>');
 		textBoxElement.addClass("skill-cust-bonus");

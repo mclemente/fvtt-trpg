@@ -10,7 +10,7 @@
 		"TypeConsumable": "Consumível",
 		"TypeEquipment": "Equipamento",
 		"TypeFeat": "Talento",
-		"TypeLoot": "Loot",
+		"TypeLoot": "Item",
 		"TypeSpell": "Magia",
 		"TypeTool": "Ferramenta",
 		"TypeWeapon": "Arma"

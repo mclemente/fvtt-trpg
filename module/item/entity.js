@@ -16,21 +16,21 @@ export default class Item5e extends Item {
 	 * @type {string|null}
 	 */
 	get abilityMod() {
-		const itemData = this.data.data;
+		const itemData = this.system;
 		if (!("ability" in itemData)) return null;
 
 		// Case 1 - defined directly by the item
 		if (itemData.ability) return itemData.ability;
 		// Case 2 - inferred from a parent actor
 		else if (this.actor) {
-			const actorData = this.actor.data.data;
+			const actorData = this.actor.system;
 
 			// Spells - Use Actor spellcasting modifier
-			if (this.data.type === "spell") return actorData.attributes.spellcasting || "int";
+			if (this.type === "spell") return actorData.attributes.spellcasting || "int";
 			// Tools - default to Intelligence
-			else if (this.data.type === "tool") return "int";
+			else if (this.type === "tool") return "int";
 			// Weapons
-			else if (this.data.type === "weapon") {
+			else if (this.type === "weapon") {
 				const wt = itemData.weaponType;
 
 				//Weapons using the spellcasting modifier
@@ -60,7 +60,7 @@ export default class Item5e extends Item {
 	 * @type {boolean}
 	 */
 	get hasAttack() {
-		return ["mwak", "rwak", "msak", "rsak"].includes(this.data.data.actionType);
+		return ["mwak", "rwak", "msak", "rsak"].includes(this.system.actionType);
 	}
 
 	/* -------------------------------------------- */
@@ -70,7 +70,7 @@ export default class Item5e extends Item {
 	 * @type {boolean}
 	 */
 	get hasDamage() {
-		return !!(this.data.data.damage && this.data.data.damage.parts.length);
+		return !!(this.system.damage && this.system.damage.parts.length);
 	}
 
 	/* -------------------------------------------- */
@@ -80,7 +80,7 @@ export default class Item5e extends Item {
 	 * @type {boolean}
 	 */
 	get isVersatile() {
-		return !!(this.hasDamage && this.data.data.damage.versatile);
+		return !!(this.hasDamage && this.system.damage.versatile);
 	}
 
 	/* -------------------------------------------- */
@@ -90,7 +90,7 @@ export default class Item5e extends Item {
 	 * @return {boolean}
 	 */
 	get isHealing() {
-		return this.data.data.actionType === "heal" && this.data.data.damage.parts.length;
+		return this.system.actionType === "heal" && this.system.damage.parts.length;
 	}
 
 	/* -------------------------------------------- */
@@ -100,7 +100,7 @@ export default class Item5e extends Item {
 	 * @type {boolean}
 	 */
 	get hasSave() {
-		const save = this.data.data?.save || {};
+		const save = this.system?.save || {};
 		return !!(save.ability && save.scaling);
 	}
 
@@ -111,7 +111,7 @@ export default class Item5e extends Item {
 	 * @type {boolean}
 	 */
 	get hasTarget() {
-		const target = this.data.data.target;
+		const target = this.system.target;
 		return target && !["none", ""].includes(target.type);
 	}
 
@@ -122,7 +122,7 @@ export default class Item5e extends Item {
 	 * @type {boolean}
 	 */
 	get hasAreaTarget() {
-		const target = this.data.data.target;
+		const target = this.system.target;
 		return target && target.type in CONFIG.TRPG.areaTargetTypes;
 	}
 
@@ -133,8 +133,8 @@ export default class Item5e extends Item {
 	 * @type {boolean}
 	 */
 	get hasLimitedUses() {
-		let chg = this.data.data.recharge || {};
-		let uses = this.data.data.uses || {};
+		let chg = this.system.recharge || {};
+		let uses = this.system.uses || {};
 		return !!chg.value || (uses.per && uses.max > 0);
 	}
 
@@ -149,8 +149,8 @@ export default class Item5e extends Item {
 		super.prepareDerivedData();
 
 		// Get the Item's data
-		const itemData = this.data;
-		const data = itemData.data;
+		const itemData = this;
+		const data = itemData.system;
 		const C = CONFIG.TRPG;
 		const labels = (this.labels = {});
 
@@ -241,7 +241,7 @@ export default class Item5e extends Item {
 	 * Compute item attributes which might depend on prepared actor data.
 	 */
 	prepareFinalAttributes() {
-		if (this.data.data.hasOwnProperty("actionType")) {
+		if (this.system.hasOwnProperty("actionType")) {
 			// Saving throws
 			this.getSaveDC();
 
@@ -266,7 +266,7 @@ export default class Item5e extends Item {
 	 * @returns {Array} array of objects with `formula` and `damageType`
 	 */
 	getDerivedDamageLabel() {
-		const itemData = this.data.data;
+		const itemData = this.system;
 		if (!this.hasDamage || !itemData || !this.isOwned) return [];
 
 		const rollData = this.getRollData();
@@ -289,16 +289,16 @@ export default class Item5e extends Item {
 	 */
 	getSaveDC() {
 		if (!this.hasSave) return;
-		const save = this.data.data?.save;
+		const save = this.system?.save;
 
 		// Actor spell-DC based scaling
 		if (save.scaling === "spell") {
-			save.dc = this.isOwned ? getProperty(this.actor.data, "data.attributes.spelldc") + (this.data.data.level ?? 0) : null;
+			save.dc = this.isOwned ? getProperty(this.actor.data, "data.attributes.spelldc") + (this.system.level ?? 0) : null;
 		}
 
 		// Ability-score based scaling
 		else if (save.scaling !== "flat") {
-			save.dc = this.isOwned ? getProperty(this.actor.data, `data.abilities.${save.scaling}.dc`) + (this.data.data.level ?? 0) : null;
+			save.dc = this.isOwned ? getProperty(this.actor.data, `data.abilities.${save.scaling}.dc`) + (this.system.level ?? 0) : null;
 		}
 
 		// Update labels
@@ -320,7 +320,7 @@ export default class Item5e extends Item {
 	 * @returns {Object} returns `rollData` and `parts` to be used in the item's Attack roll
 	 */
 	getAttackToHit() {
-		const itemData = this.data.data;
+		const itemData = this.system;
 		if (!this.hasAttack || !itemData) return;
 		const rollData = this.getRollData();
 
@@ -348,7 +348,7 @@ export default class Item5e extends Item {
 		}
 
 		// Actor-level global bonus to attack rolls
-		const actorBonus = this.actor.data.data.bonuses?.[itemData.actionType] || {};
+		const actorBonus = this.actor.system.bonuses?.[itemData.actionType] || {};
 		if (actorBonus.attack) parts.push(actorBonus.attack);
 
 		// One-time bonus provided by consumed ammunition
@@ -385,7 +385,7 @@ export default class Item5e extends Item {
 	 * If the item is an owned item and the `max` is not numeric, calculate based on actor data.
 	 */
 	prepareMaxUses() {
-		const data = this.data.data;
+		const data = this.system;
 		if (!data.uses?.max) return;
 		let max = data.uses.max;
 
@@ -415,9 +415,9 @@ export default class Item5e extends Item {
 	 */
 	async roll({ configureDialog = true, rollMode, createMessage = true } = {}) {
 		let item = this;
-		const id = this.data.data; // Item system data
+		const id = this.system; // Item system data
 		const actor = this.actor;
-		const ad = actor.data.data; // Actor system data
+		const ad = actor.system; // Actor system data
 
 		// Reference aspects of the item data necessary for usage
 		const hasArea = this.hasAreaTarget; // Is the ability usage an AoE?
@@ -469,10 +469,10 @@ export default class Item5e extends Item {
 		const { actorUpdates, itemUpdates, resourceUpdates } = usage;
 
 		// Commit pending data updates
-		if (!foundry.utils.isObjectEmpty(itemUpdates)) await item.update(itemUpdates);
-		if (consumeQuantity && item.data.data.quantity === 0) await item.delete();
-		if (!foundry.utils.isObjectEmpty(actorUpdates)) await actor.update(actorUpdates);
-		if (!foundry.utils.isObjectEmpty(resourceUpdates)) {
+		if (!foundry.utils.isEmpty(itemUpdates)) await item.update(itemUpdates);
+		if (consumeQuantity && item.system.quantity === 0) await item.delete();
+		if (!foundry.utils.isEmpty(actorUpdates)) await actor.update(actorUpdates);
+		if (!foundry.utils.isEmpty(resourceUpdates)) {
 			const resource = actor.items.get(id.consume?.target);
 			if (resource) await resource.update(resourceUpdates);
 		}
@@ -502,7 +502,7 @@ export default class Item5e extends Item {
 	 */
 	_getUsageUpdates({ consumeQuantity, consumeRecharge, consumeResource, consumeSpellLevel, consumeUsage }) {
 		// Reference item data
-		const id = this.data.data;
+		const id = this.system;
 		const actorUpdates = {};
 		const itemUpdates = {};
 		const resourceUpdates = {};
@@ -526,7 +526,7 @@ export default class Item5e extends Item {
 		// Consume Spell Slots
 		if (consumeSpellLevel) {
 			if (Number.isNumeric(consumeSpellLevel)) consumeSpellLevel = `spell${consumeSpellLevel}`;
-			const level = this.actor?.data.data.spells[consumeSpellLevel];
+			const level = this.actor?.system.spells[consumeSpellLevel];
 			const spells = Number(level?.value ?? 0);
 			if (spells === 0) {
 				const label = game.i18n.localize(`TRPG.SpellLevel${id.level}`);
@@ -582,7 +582,7 @@ export default class Item5e extends Item {
 	 */
 	_handleConsumeResource(itemUpdates, actorUpdates, resourceUpdates) {
 		const actor = this.actor;
-		const itemData = this.data.data;
+		const itemData = this.system;
 		const consume = itemData.consume || {};
 		if (!consume.type) return;
 
@@ -599,21 +599,21 @@ export default class Item5e extends Item {
 		let quantity = 0;
 		switch (consume.type) {
 			case "attribute":
-				resource = getProperty(actor.data.data, consume.target);
+				resource = getProperty(actor.system, consume.target);
 				quantity = resource || 0;
 				break;
 			case "ammo":
 			case "material":
 				resource = actor.items.get(consume.target);
-				quantity = resource ? resource.data.data.quantity : 0;
+				quantity = resource ? resource.system.quantity : 0;
 				break;
 			case "charges":
 				resource = actor.items.get(consume.target);
 				if (!resource) break;
-				const uses = resource.data.data.uses;
+				const uses = resource.system.uses;
 				if (uses.per && uses.max) quantity = uses.value;
-				else if (resource.data.data.recharge?.value) {
-					quantity = resource.data.data.recharge.charged ? 1 : 0;
+				else if (resource.system.recharge?.value) {
+					quantity = resource.system.recharge.charged ? 1 : 0;
 					amount = 1;
 				}
 				break;
@@ -642,8 +642,8 @@ export default class Item5e extends Item {
 				resourceUpdates["data.quantity"] = remaining;
 				break;
 			case "charges":
-				const uses = resource.data.data.uses || {};
-				const recharge = resource.data.data.recharge || {};
+				const uses = resource.system.uses || {};
+				const recharge = resource.system.recharge || {};
 				if (uses.per && uses.max) resourceUpdates["data.uses.value"] = remaining;
 				else if (recharge.value) resourceUpdates["data.recharge.charged"] = false;
 				break;
@@ -672,10 +672,10 @@ export default class Item5e extends Item {
 			isHealing: this.isHealing,
 			hasDamage: this.hasDamage,
 			isVersatile: this.isVersatile,
-			isSpell: this.data.type === "spell",
+			isSpell: this.type === "spell",
 			hasSave: this.hasSave,
 			hasAreaTarget: this.hasAreaTarget,
-			isTool: this.data.type === "tool",
+			isTool: this.type === "tool",
 		};
 		const html = await renderTemplate("systems/trpg/templates/chat/item-card.html", templateData);
 
@@ -684,13 +684,13 @@ export default class Item5e extends Item {
 			user: game.user.data._id,
 			type: CONST.CHAT_MESSAGE_TYPES.OTHER,
 			content: html,
-			flavor: this.data.data.chatFlavor || this.name,
+			flavor: this.system.chatFlavor || this.name,
 			speaker: ChatMessage.getSpeaker({ actor: this.actor, token }),
 			flags: { "core.canPopout": true },
 		};
 
 		// If the Item was destroyed in the process of displaying its card - embed the item data in the chat message
-		if (this.data.type === "consumable" && !this.actor.items.has(this.id)) {
+		if (this.type === "consumable" && !this.actor.items.has(this.id)) {
 			chatData.flags["trpg.itemData"] = this.data;
 		}
 
@@ -711,7 +711,7 @@ export default class Item5e extends Item {
 	 * @return {Object}               An object of chat data to render
 	 */
 	getChatData(htmlOptions = {}) {
-		const data = foundry.utils.deepClone(this.data.data);
+		const data = foundry.utils.deepClone(this.system);
 		const labels = this.labels;
 
 		// Rich text description
@@ -719,11 +719,11 @@ export default class Item5e extends Item {
 
 		// Item type specific properties
 		const props = [];
-		const fn = this[`_${this.data.type}ChatData`];
+		const fn = this[`_${this.type}ChatData`];
 		if (fn) fn.bind(this)(data, labels, props);
 
 		// Equipment properties
-		if (data.hasOwnProperty("equipped") && !["loot", "tool"].includes(this.data.type)) {
+		if (data.hasOwnProperty("equipped") && !["loot", "tool"].includes(this.type)) {
 			if (data.attunement === CONFIG.TRPG.attunementTypes.REQUIRED) props.push(game.i18n.localize(CONFIG.TRPG.attunements[CONFIG.TRPG.attunementTypes.REQUIRED]));
 			props.push(game.i18n.localize(data.equipped ? "TRPG.Equipped" : "TRPG.Unequipped"), game.i18n.localize(data.proficient ? "TRPG.Proficient" : "TRPG.NotProficient"));
 		}
@@ -822,7 +822,7 @@ export default class Item5e extends Item {
 	 * @return {Promise<Roll|null>}   A Promise which resolves to the created Roll instance
 	 */
 	async rollAttack(options = {}) {
-		const itemData = this.data.data;
+		const itemData = this.system;
 		const flags = this.actor.data.flags.trpg || {};
 		if (!this.hasAttack) {
 			throw new Error("You may not place an Attack Roll with this Item.");
@@ -840,7 +840,7 @@ export default class Item5e extends Item {
 		if (consume?.type === "ammo") {
 			ammo = this.actor.items.get(consume.target);
 			if (ammo?.data) {
-				const q = ammo.data.data.quantity;
+				const q = ammo.system.quantity;
 				const consumeAmount = consume.amount ?? 0;
 				if (q && q - consumeAmount >= 0) {
 					this._ammo = ammo;
@@ -873,7 +873,7 @@ export default class Item5e extends Item {
 		};
 
 		// Expanded critical hit thresholds
-		if (this.data.type === "weapon" || this.data.type === "spell") {
+		if (this.type === "weapon" || this.type === "spell") {
 			rollConfig.critical = itemData.critical.threshold;
 		}
 
@@ -893,7 +893,7 @@ export default class Item5e extends Item {
 		if (roll === false) return null;
 
 		// Commit ammunition consumption on attack rolls resource consumption if the attack roll was made
-		if (ammo && !isObjectEmpty(ammoUpdate)) await ammo.update(ammoUpdate);
+		if (ammo && !isEmpty(ammoUpdate)) await ammo.update(ammoUpdate);
 		return roll;
 	}
 
@@ -911,8 +911,8 @@ export default class Item5e extends Item {
 	 */
 	rollDamage({ critical = false, event = null, spellLevel = null, versatile = false, options = {} } = {}) {
 		if (!this.hasDamage) throw new Error("You may not make a Damage Roll with this Item.");
-		const itemData = this.data.data;
-		const actorData = this.actor.data.data;
+		const itemData = this.system;
+		const actorData = this.actor.system;
 		const messageData = { "flags.trpg.roll": { type: "damage", itemId: this.id } };
 
 		// Get roll data
@@ -947,12 +947,12 @@ export default class Item5e extends Item {
 			messageData["flags.trpg.roll"].versatile = true;
 		}
 
-		if (this.data.type === "weapon" || this.data.type === "spell") {
+		if (this.type === "weapon" || this.type === "spell") {
 			rollConfig.criticalMultiplier = itemData.critical.multiplier;
 		}
 
 		// Scale damage from up-casting spells
-		if (this.data.type === "spell") {
+		if (this.type === "spell") {
 			if (itemData.scaling.mode === "cantrip") {
 				let level;
 				if (this.actor.type === "character") level = actorData.details.level;
@@ -1060,7 +1060,7 @@ export default class Item5e extends Item {
 	 * @return {Promise<Roll>}   A Promise which resolves to the created Roll instance
 	 */
 	async rollFormula({ spellLevel } = {}) {
-		if (!this.data.data.formula) {
+		if (!this.system.formula) {
 			throw new Error("This Item does not have a formula to roll!");
 		}
 
@@ -1087,7 +1087,7 @@ export default class Item5e extends Item {
 	 * @return {Promise<Roll>}   A Promise which resolves to the created Roll instance
 	 */
 	async rollRecharge() {
-		const data = this.data.data;
+		const data = this.system;
 		if (!data.recharge.value) return;
 
 		// Roll the check
@@ -1125,7 +1125,7 @@ export default class Item5e extends Item {
 		const title = `${this.name} - ${game.i18n.localize("TRPG.ToolCheck")}`;
 
 		// Add global actor bonus
-		const bonuses = getProperty(this.actor.data.data, "bonuses.abilities") || {};
+		const bonuses = getProperty(this.actor.system, "bonuses.abilities") || {};
 		if (bonuses.check) {
 			parts.push("@checkBonus");
 			rollData.checkBonus = bonuses.check;
@@ -1146,7 +1146,7 @@ export default class Item5e extends Item {
 				},
 				chooseModifier: true,
 				halflingLucky: this.actor.getFlag("trpg", "halflingLucky") || false,
-				reliableTalent: this.data.data.proficient >= 1 && this.actor.getFlag("trpg", "reliableTalent"),
+				reliableTalent: this.system.proficient >= 1 && this.actor.getFlag("trpg", "reliableTalent"),
 				messageData: { "flags.trpg.roll": { type: "tool", itemId: this.id } },
 			},
 			options
@@ -1166,7 +1166,7 @@ export default class Item5e extends Item {
 	getRollData() {
 		if (!this.actor) return null;
 		const rollData = this.actor.getRollData();
-		rollData.item = foundry.utils.deepClone(this.data.data);
+		rollData.item = foundry.utils.deepClone(this.system);
 
 		// Include an ability score modifier if one exists
 		const abl = this.abilityMod;
@@ -1353,7 +1353,7 @@ export default class Item5e extends Item {
 		if (!isCharacterClass) return;
 
 		// Assign a new primary class
-		const pc = this.parent.items.get(this.parent.data.data.details.originalClass);
+		const pc = this.parent.items.get(this.parent.system.details.originalClass);
 		if (!pc) this.parent._assignPrimaryClass();
 
 		// Prompt to add new class features
@@ -1361,8 +1361,8 @@ export default class Item5e extends Item {
 		this.parent
 			.getClassFeatures({
 				className: this.name,
-				subclassName: this.data.data.subclass,
-				level: this.data.data.levels,
+				subclassName: this.system.subclass,
+				level: this.system.levels,
 			})
 			.then((features) => {
 				return this.parent.addEmbeddedItems(features, options.promptAddFeatures);
@@ -1386,8 +1386,8 @@ export default class Item5e extends Item {
 		this.parent
 			.getClassFeatures({
 				className: changed.name || this.name,
-				subclassName: changed.data?.subclass || this.data.data.subclass,
-				level: changed.data?.levels || this.data.data.levels,
+				subclassName: changed.data?.subclass || this.system.subclass,
+				level: changed.data?.levels || this.system.levels,
 			})
 			.then((features) => {
 				return this.parent.addEmbeddedItems(features, options.promptAddFeatures);
@@ -1402,7 +1402,7 @@ export default class Item5e extends Item {
 
 		// Assign a new primary class
 		if (this.parent && this.type === "class" && userId === game.user.id) {
-			if (this.id !== this.parent.data.data.details.originalClass) return;
+			if (this.id !== this.parent.system.details.originalClass) return;
 			this.parent._assignPrimaryClass();
 		}
 	}
@@ -1423,7 +1423,7 @@ export default class Item5e extends Item {
 				updates["data.proficient"] = true; // NPCs automatically have equipment proficiency
 			} else {
 				const armorProf = CONFIG.TRPG.armorProficienciesMap[data.data?.armor?.type]; // Player characters check proficiency
-				const actorArmorProfs = actorData.data.traits?.armorProf?.value || [];
+				const actorArmorProfs = actorData.system.traits?.armorProf?.value || [];
 				updates["data.proficient"] = armorProf === true || actorArmorProfs.includes(armorProf);
 			}
 		}
@@ -1460,7 +1460,7 @@ export default class Item5e extends Item {
 				updates["data.proficient"] = true; // NPCs automatically have equipment proficiency
 			} else {
 				const weaponProf = CONFIG.TRPG.weaponProficienciesMap[data.data?.weaponType]; // Player characters check proficiency
-				const actorWeaponProfs = actorData.data.traits?.weaponProf?.value || [];
+				const actorWeaponProfs = actorData.system.traits?.weaponProf?.value || [];
 				updates["data.proficient"] = weaponProf === true || actorWeaponProfs.includes(weaponProf);
 			}
 		}
