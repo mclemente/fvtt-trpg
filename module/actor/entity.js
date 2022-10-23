@@ -1910,7 +1910,7 @@ export default class Actor5e extends Actor {
 	 */
 	async useSpell(item, { configureDialog = true } = {}) {
 		console.warn(`The Actor5e#useSpell method has been deprecated in favor of Item5e#roll`);
-		if (item.data.type !== "spell") throw new Error("Wrong Item type");
+		if (item.type !== "spell") throw new Error("Wrong Item type");
 		return item.roll();
 	}
 }

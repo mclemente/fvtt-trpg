@@ -140,7 +140,7 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
 		// Organize Spellbook and count the number of prepared spells (excluding always, at will, etc...)
 		const spellbook = this._prepareSpellbook(data, spells);
 		const nPrepared = spells.filter((s) => {
-			return s.data.level > 0 && s.data.preparation.mode === "prepared" && s.data.preparation.prepared;
+			return s.system.level > 0 && s.system.preparation.mode === "prepared" && s.system.preparation.prepared;
 		}).length;
 
 		// Organize Features
@@ -150,10 +150,10 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
 			passive: { label: "TRPG.FeaturePassive", items: [], hasActions: false, dataset: { type: "feat" } },
 		};
 		for (let f of feats) {
-			if (f.data.activation.type) features.active.items.push(f);
+			if (f.system.activation.type) features.active.items.push(f);
 			else features.passive.items.push(f);
 		}
-		classes.sort((a, b) => b.data.levels - a.data.levels);
+		classes.sort((a, b) => b.system.levels - a.system.levels);
 		features.classes.items = classes;
 
 		// Assign and return

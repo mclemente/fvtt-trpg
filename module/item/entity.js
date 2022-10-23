@@ -1,6 +1,6 @@
-import { simplifyRollFormula, d20Roll, damageRoll } from "../dice.js";
 import AbilityUseDialog from "../apps/ability-use-dialog.js";
 import { TRPG } from "../config.js";
+import { d20Roll, damageRoll, simplifyRollFormula } from "../dice.js";
 
 /**
  * Override and extend the basic Item implementation
@@ -663,10 +663,10 @@ export default class Item5e extends Item {
 		// Render the chat card template
 		const token = this.actor.token;
 		const templateData = {
-			actor: this.actor.data,
+			actor: this.actor,
 			tokenId: token?.uuid || null,
-			item: this.data,
-			data: this.getChatData(),
+			item: this,
+			system: await this.getChatData(),
 			labels: this.labels,
 			hasAttack: this.hasAttack,
 			isHealing: this.isHealing,
@@ -681,7 +681,7 @@ export default class Item5e extends Item {
 
 		// Create the ChatMessage data object
 		const chatData = {
-			user: game.user.data._id,
+			user: game.user.id,
 			type: CONST.CHAT_MESSAGE_TYPES.OTHER,
 			content: html,
 			flavor: this.system.chatFlavor || this.name,
@@ -710,12 +710,16 @@ export default class Item5e extends Item {
 	 * @param {Object} htmlOptions    Options used by the TextEditor.enrichHTML function
 	 * @return {Object}               An object of chat data to render
 	 */
-	getChatData(htmlOptions = {}) {
-		const data = foundry.utils.deepClone(this.system);
+	async getChatData(htmlOptions = {}) {
+		const data = this.toObject().system;
 		const labels = this.labels;
 
 		// Rich text description
-		data.description.value = TextEditor.enrichHTML(data.description.value, htmlOptions);
+		data.description.value = await TextEditor.enrichHTML(data.description.value, {
+			async: true,
+			relativeTo: this,
+			...htmlOptions,
+		});
 
 		// Item type specific properties
 		const props = [];
@@ -1323,22 +1327,22 @@ export default class Item5e extends Item {
 	/** @inheritdoc */
 	async _preCreate(data, options, user) {
 		await super._preCreate(data, options, user);
+
 		if (!this.isEmbedded || this.parent.type === "vehicle") return;
-		const actorData = this.parent.data;
 		const isNPC = this.parent.type === "npc";
 		let updates;
 		switch (data.type) {
 			case "equipment":
-				updates = this._onCreateOwnedEquipment(data, actorData, isNPC);
+				updates = this._onCreateOwnedEquipment(data, isNPC);
 				break;
 			case "weapon":
-				updates = this._onCreateOwnedWeapon(data, actorData, isNPC);
+				updates = this._onCreateOwnedWeapon(data, isNPC);
 				break;
 			case "spell":
-				updates = this._onCreateOwnedSpell(data, actorData, isNPC);
+				updates = this._onCreateOwnedSpell(data, isNPC);
 				break;
 		}
-		if (updates) return this.data.update(updates);
+		if (updates) return this.updateSource(updates);
 	}
 
 	/* -------------------------------------------- */
@@ -1413,18 +1417,18 @@ export default class Item5e extends Item {
 	 * Pre-creation logic for the automatic configuration of owned equipment type Items
 	 * @private
 	 */
-	_onCreateOwnedEquipment(data, actorData, isNPC) {
+	_onCreateOwnedEquipment(data, isNPC) {
 		const updates = {};
-		if (foundry.utils.getProperty(data, "data.equipped") === undefined) {
-			updates["data.equipped"] = isNPC; // NPCs automatically equip equipment
+		if (foundry.utils.getProperty(data, "system.equipped") === undefined) {
+			updates["system.equipped"] = isNPC; // NPCs automatically equip equipment
 		}
-		if (foundry.utils.getProperty(data, "data.proficient") === undefined) {
+		if (foundry.utils.getProperty(data, "system.proficient") === undefined) {
 			if (isNPC) {
-				updates["data.proficient"] = true; // NPCs automatically have equipment proficiency
+				updates["system.proficient"] = true; // NPCs automatically have equipment proficiency
 			} else {
-				const armorProf = CONFIG.TRPG.armorProficienciesMap[data.data?.armor?.type]; // Player characters check proficiency
-				const actorArmorProfs = actorData.system.traits?.armorProf?.value || [];
-				updates["data.proficient"] = armorProf === true || actorArmorProfs.includes(armorProf);
+				const armorProf = CONFIG.TRPG.armorProficienciesMap[this.system.armor?.type]; // Player characters check proficiency
+				const actorArmorProfs = this.parent.system.traits?.armorProf?.value || [];
+				updates["system.proficient"] = armorProf === true || actorArmorProfs.includes(armorProf);
 			}
 		}
 		return updates;
@@ -1436,10 +1440,10 @@ export default class Item5e extends Item {
 	 * Pre-creation logic for the automatic configuration of owned spell type Items
 	 * @private
 	 */
-	_onCreateOwnedSpell(data, actorData, isNPC) {
+	_onCreateOwnedSpell(data, isNPC) {
 		const updates = {};
-		if (foundry.utils.getProperty(data, "data.proficient") === undefined) {
-			updates["data.prepared"] = isNPC; // NPCs automatically prepare spells
+		if (foundry.utils.getProperty(data, "system.proficient") === undefined) {
+			updates["system.prepared"] = isNPC; // NPCs automatically prepare spells
 		}
 		return updates;
 	}
@@ -1450,19 +1454,23 @@ export default class Item5e extends Item {
 	 * Pre-creation logic for the automatic configuration of owned weapon type Items
 	 * @private
 	 */
-	_onCreateOwnedWeapon(data, actorData, isNPC) {
-		const updates = {};
-		if (foundry.utils.getProperty(data, "data.equipped") === undefined) {
-			updates["data.equipped"] = isNPC; // NPCs automatically equip weapons
+	_onCreateOwnedWeapon(data, isNPC) {
+		// NPCs automatically equip items and are proficient with them
+		if (isNPC) {
+			const updates = {};
+			if (!foundry.utils.hasProperty(data, "system.equipped")) updates["system.equipped"] = true;
+			if (!foundry.utils.hasProperty(data, "system.proficient")) updates["system.proficient"] = true;
+			return updates;
 		}
-		if (foundry.utils.getProperty(data, "data.proficient") === undefined) {
-			if (isNPC) {
-				updates["data.proficient"] = true; // NPCs automatically have equipment proficiency
-			} else {
-				const weaponProf = CONFIG.TRPG.weaponProficienciesMap[data.data?.weaponType]; // Player characters check proficiency
-				const actorWeaponProfs = actorData.system.traits?.weaponProf?.value || [];
-				updates["data.proficient"] = weaponProf === true || actorWeaponProfs.includes(weaponProf);
-			}
+		if (data.system?.proficient !== undefined) return {};
+
+		// Some weapon types are always proficient
+		const weaponProf = CONFIG.TRPG.weaponProficienciesMap[this.system.weaponType];
+		const updates = {};
+		if (weaponProf === true) updates["system.proficient"] = true;
+		else {
+			const actorProfs = this.parent.system.traits?.weaponProf?.value || [];
+			updates["system.proficient"] = actorProfs.includes(weaponProf) || actorProfs.includes(weaponProf);
 		}
 		return updates;
 	}

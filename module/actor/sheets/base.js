@@ -451,8 +451,8 @@ export default class ActorSheet5e extends ActorSheet {
 
 		// Iterate over every spell item, adding spells to the spellbook by section
 		spells.forEach((spell) => {
-			const mode = spell.data.preparation.mode || "prepared";
-			let s = spell.data.level || 0;
+			const mode = spell.system.preparation.mode || "prepared";
+			let s = spell.system.level || 0;
 			const sl = `spell${s}`;
 
 			// Specialized spellcasting modes (if they exist)
@@ -906,11 +906,11 @@ export default class ActorSheet5e extends ActorSheet {
 	 * Handle rolling of an item from the Actor sheet, obtaining the Item instance and dispatching to it's roll method
 	 * @private
 	 */
-	_onItemSummary(event) {
+	async _onItemSummary(event) {
 		event.preventDefault();
 		let li = $(event.currentTarget).parents(".item"),
 			item = this.actor.items.get(li.data("item-id")),
-			chatData = item.getChatData({ secrets: this.actor.isOwner });
+			chatData = await item.getChatData({ secrets: this.actor.isOwner });
 
 		// Toggle summary
 		if (li.hasClass("expanded")) {
