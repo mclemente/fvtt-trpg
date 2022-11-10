@@ -123,7 +123,7 @@ export default class ActorSheet5eNPC extends ActorSheet5e {
 	async _updateObject(event, formData) {
 		// Format NPC Challenge Rating
 		const crs = { "1/8": 0.125, "1/4": 0.25, "1/2": 0.5 };
-		let crv = "data.details.cr";
+		let crv = "system.details.cr";
 		let cr = formData[crv];
 		cr = crs[cr] || parseFloat(cr);
 		if (cr) formData[crv] = cr < 1 ? cr : parseInt(cr);
