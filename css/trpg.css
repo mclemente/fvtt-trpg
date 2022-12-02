@@ -705,9 +705,13 @@
 	height: 60px;
 	padding: 0;
 }
-.dnd5e.sheet.actor .sheet-header h1.charname input {
-	height: 40px;
+.dnd5e.sheet.actor.npc .sheet-header h1.charname input {
+	height: 64px;
 	margin: 10px 0;
+}
+.dnd5e.sheet.actor.npc .sheet-header .header-exp {
+	height: 78px;
+	margin-top: 6px;
 }
 .dnd5e.sheet.actor .sheet-header .header-exp {
 	flex: 0 0 150px;
@@ -1940,7 +1944,8 @@
 	margin-bottom: -5px;
 	font-size: 24px;
 }
-.dnd5e.sheet.actor.npc .header-exp .cr input {
+.dnd5e.sheet.actor.npc .header-exp .cr input,
+.dnd5e.sheet.actor.npc .header-exp .charlevel input {
 	width: 32px;
 	padding: 0;
 	text-align: center;

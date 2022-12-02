@@ -376,7 +376,7 @@ export default class Actor5e extends Actor {
 		// Kill Experience
 		data.details.xp.value = this.getCRExp(data.details.cr);
 
-		data.details.level = Math.clamped(data.details.level, 0, 20);
+		data.details.level = Math.max(0, data.details.level);
 		data.details.halfLevel = Math.floor(data.details.level / 2);
 
 		// Proficiency
