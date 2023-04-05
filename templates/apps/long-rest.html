@@ -1,20 +1,17 @@
 <form id="long-rest" class="dialog-content" onsubmit="event.preventDefault();">
-   <p>{{ localize "TRPG.LongRestHint" }}</p>
+	<p>{{ localize "TRPG.LongRestHint" }}</p>
 
-    {{#if promptNewDay}}
-    <div class="form-group">
-        <label>{{ localize "TRPG.NewDay" }}</label>
-        <input type="checkbox" name="newDay" {{checked newDay}}/>
-        <p class="hint">{{ localize "TRPG.NewDayHint" }}</p>
-    </div>
-    {{/if}}
+	{{#if promptNewDay}}
+	<div class="form-group">
+		<label>{{ localize "TRPG.NewDay" }}</label>
+		<input type="checkbox" name="newDay" {{checked newDay}} />
+		<p class="hint">{{ localize "TRPG.NewDayHint" }}</p>
+	</div>
+	{{/if}}
 
-    <div class="dialog-buttons">
-        {{#each buttons as |button id|}}
-        <button class="dialog-button" data-button="{{id}}">
-            {{{button.icon}}}
-            {{{button.label}}}
-        </button>
-        {{/each}}
-    </div>
+	<div class="dialog-buttons">
+		{{#each buttons as |button id|}}
+		<button class="dialog-button" data-button="{{id}}">{{{button.icon}}} {{{button.label}}}</button>
+		{{/each}}
+	</div>
 </form>

@@ -1,53 +1,35 @@
 <div class="dnd5e chat-card item-card" data-actor-id="{{actor._id}}" data-item-id="{{item._id}}"
-     {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}} {{#if isSpell}}data-spell-level="{{item.system.level}}"{{/if}}>
-    <header class="card-header flexrow">
-        <img src="{{item.img}}" title="{{item.name}}" width="36" height="36"/>
-        <h3 class="item-name">{{item.name}}</h3>
-    </header>
+    {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}} {{#if isSpell}}data-spell-level="{{item.system.level}}"{{/if}}>
+	<header class="card-header flexrow">
+		<img src="{{item.img}}" title="{{item.name}}" width="36" height="36" />
+		<h3 class="item-name">{{item.name}}</h3>
+	</header>
 
-    <div class="card-content">
-        {{{system.description.value}}}
-        {{#if system.materials.value}}
-        <p><strong>{{ localize "TRPG.RequiredMaterials" }}.</strong> {{system.materials.value}}</p>
-        {{/if}}
-    </div>
+	<div class="card-content">
+		{{{system.description.value}}} {{#if system.materials.value}}
+		<p><strong>{{ localize "TRPG.RequiredMaterials" }}.</strong> {{system.materials.value}}</p>
+		{{/if}}
+	</div>
 
-    <div class="card-buttons">
-        {{#if hasAttack}}<button data-action="attack">{{ localize "TRPG.Attack" }}</button>{{/if}}
+	<div class="card-buttons">
+		{{#if hasAttack}}<button data-action="attack">{{ localize "TRPG.Attack" }}</button>{{/if}} {{#if hasDamage}}
+		<button data-action="damage">{{#if isHealing}}{{ localize "TRPG.Healing" }} {{else}}{{localize "TRPG.Damage" }}{{/if}}</button>
+		{{/if}} {{#if isVersatile}}
+		<button data-action="versatile">{{ localize "TRPG.Versatile" }}</button>
+		{{/if}} {{#if hasSave}}
+		<button data-action="save" data-ability="{{system.save.ability}}" disabled>{{ localize "TRPG.SavingThrow" }}: {{labels.save}}</button>
+		{{/if}} {{#if system.formula}}
+		<button data-action="formula">{{ localize "TRPG.OtherFormula"}}</button>
+		{{/if}} {{#if hasAreaTarget}}
+		<button data-action="placeTemplate">{{ localize "TRPG.PlaceTemplate" }}</button>
+		{{/if}} {{#if isTool}}
+		<button data-action="toolCheck" data-ability="{{system.ability.value}}">{{ localize "TRPG.Use" }} {{item.name}}</button>
+		{{/if}}
+	</div>
 
-        {{#if hasDamage}}
-        <button data-action="damage">
-            {{#if isHealing}}{{ localize "TRPG.Healing" }}
-            {{else}}{{localize "TRPG.Damage" }}{{/if}}
-        </button>
-        {{/if}}
-
-        {{#if isVersatile}}
-        <button data-action="versatile">{{ localize "TRPG.Versatile" }}</button>
-        {{/if}}
-
-        {{#if hasSave}}
-        <button data-action="save" data-ability="{{system.save.ability}}" disabled>
-            {{ localize "TRPG.SavingThrow" }}: {{labels.save}}
-        </button>
-        {{/if}}
-
-        {{#if system.formula}}
-        <button data-action="formula">{{ localize "TRPG.OtherFormula"}}</button>
-        {{/if}}
-
-        {{#if hasAreaTarget}}
-        <button data-action="placeTemplate">{{ localize "TRPG.PlaceTemplate" }}</button>
-        {{/if}}
-
-        {{#if isTool}}
-        <button data-action="toolCheck" data-ability="{{system.ability.value}}">{{ localize "TRPG.Use" }} {{item.name}}</button>
-        {{/if}}
-    </div>
-
-    <footer class="card-footer">
-        {{#each system.properties}}
-        <span>{{this}}</span>
-        {{/each}}
-    </footer>
+	<footer class="card-footer">
+		{{#each system.properties}}
+		<span>{{this}}</span>
+		{{/each}}
+	</footer>
 </div>

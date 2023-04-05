@@ -1,24 +1,24 @@
 <form>
-    <div class="form-group">
-        <label>{{ localize "TRPG.Formula" }}</label>
-        <input type="text" name="formula" value="{{formula}}" disabled/>
-    </div>
-    {{#if chooseModifier}}
-    <div class="form-group">
-        <label>{{ localize "TRPG.AbilityModifier" }}</label>
-        <select name="ability">
-            {{selectOptions abilities selected=defaultAbility}}
-        </select>
-    </div>
-    {{/if}}
-    <div class="form-group">
-        <label>{{ localize "TRPG.RollSituationalBonus" }}</label>
-        <input type="text" name="bonus" value="" placeholder="{{ localize 'TRPG.RollExample' }}"/>
-    </div>
-    <div class="form-group">
-        <label>{{ localize "TRPG.RollMode" }}</label>
-        <select name="rollMode">
-            {{selectOptions rollModes selected=defaultRollMode localize=true}}
-        </select>
-    </div>
+	<div class="form-group">
+		<label>{{ localize "TRPG.Formula" }}</label>
+		<input type="text" name="formula" value="{{formula}}" disabled />
+	</div>
+	{{#if chooseModifier}}
+	<div class="form-group">
+		<label>{{ localize "TRPG.AbilityModifier" }}</label>
+		<select name="ability">
+			{{selectOptions abilities selected=defaultAbility}}
+		</select>
+	</div>
+	{{/if}}
+	<div class="form-group">
+		<label>{{ localize "TRPG.RollSituationalBonus" }}</label>
+		<input type="text" name="bonus" value="" placeholder="{{ localize 'TRPG.RollExample' }}" />
+	</div>
+	<div class="form-group">
+		<label>{{ localize "TRPG.RollMode" }}</label>
+		<select name="rollMode">
+			{{selectOptions rollModes selected=defaultRollMode localize=true}}
+		</select>
+	</div>
 </form>
