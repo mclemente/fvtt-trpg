@@ -209,10 +209,10 @@
 						<ul style="padding: 0; margin: 0">
 							{{#each config.saves as |label s|}} {{#with (lookup ../system.saves s) as |save|}}
 							<li class="skill flexrow {{#if save.proficient}}proficient{{/if}}" data-save="{{s}}">
-								<input type="hidden" name="system.saves.{{s}}.proficient" style="flex: 1" value="{{save.proficient}}" data-dtype="Number" />
-								<a class="proficiency-toggle save-proficiency" style="flex: 1" title="{{save.hover}}">{{{save.icon}}}</a>
+								<input type="hidden" name="system.saves.{{s}}.proficient" value="{{save.proficient}}" data-dtype="Number" />
+								<a class="proficiency-toggle save-proficiency" title="{{save.hover}}">{{{save.icon}}}</a>
 								<h4 class="save-name rollable" style="margin: 0">{{label}}</h4>
-								<span class="skill-mod" style="flex: 1">{{numberFormat save.save decimals=0 sign=true}}</span>
+								<span class="skill-mod">{{numberFormat save.save decimals=0 sign=true}}</span>
 							</li>
 							{{/with}} {{/each}}
 						</ul>

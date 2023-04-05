@@ -19,9 +19,9 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
 			height = 730;
 		}
 		return mergeObject(super.defaultOptions, {
-			classes: classes,
+			classes,
 			width: 720,
-			height: height,
+			height,
 		});
 	}
 
@@ -78,8 +78,8 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
 			weapon: { label: "TRPG.ItemTypeWeaponPl", items: [], dataset: { type: "weapon" } },
 			equipment: { label: "TRPG.ItemTypeEquipmentPl", items: [], dataset: { type: "equipment" } },
 			consumable: { label: "TRPG.ItemTypeConsumablePl", items: [], dataset: { type: "consumable" } },
-			tool: { label: "TRPG.ItemTypeToolPl", items: [], dataset: { type: "tool" } },
-			backpack: { label: "TRPG.ItemTypeContainerPl", items: [], dataset: { type: "backpack" } },
+			// tool: { label: "TRPG.ItemTypeToolPl", items: [], dataset: { type: "tool" } },
+			// backpack: { label: "TRPG.ItemTypeContainerPl", items: [], dataset: { type: "backpack" } },
 			loot: { label: "TRPG.ItemTypeLootPl", items: [], dataset: { type: "loot" } },
 		};
 
@@ -145,8 +145,19 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
 
 		// Organize Features
 		const features = {
-			classes: { label: "TRPG.ItemTypeClassPl", items: [], hasActions: false, dataset: { type: "class" }, isClass: true },
-			active: { label: "TRPG.FeatureActive", items: [], hasActions: true, dataset: { type: "feat", "activation.type": "action" } },
+			classes: {
+				label: "TRPG.ItemTypeClassPl",
+				items: [],
+				hasActions: false,
+				dataset: { type: "class" },
+				isClass: true,
+			},
+			active: {
+				label: "TRPG.FeatureActive",
+				items: [],
+				hasActions: true,
+				dataset: { type: "feat", "activation.type": "action" },
+			},
 			passive: { label: "TRPG.FeaturePassive", items: [], hasActions: false, dataset: { type: "feat" } },
 		};
 		for (let f of feats) {

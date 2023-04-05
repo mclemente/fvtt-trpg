@@ -98,8 +98,7 @@
 			{{/each}} {{/select}}
 		</select>
 		<span>{{ localize "TRPG.VsDC" }}</span>
-		<input type="text" name="system.save.dc" value="{{#if system.save.dc}}{{system.save.dc}}{{/if}}" data-dtype="Number" placeholder="{{ localize 'TRPG.AbbreviationDC' }}"
-		{{#unless isFlatDC}}disabled{{/unless}}/>
+		<input type="text" name="system.save.dc" value="{{#if system.save.dc}}{{system.save.dc}}{{/if}}" data-dtype="Number" placeholder="{{ localize 'TRPG.AbbreviationDC' }}" />
 		<select name="system.save.scaling">
 			{{#select system.save.scaling}}
 			<option value="spell">Atributo-Chave</option>

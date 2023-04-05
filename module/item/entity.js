@@ -309,7 +309,10 @@ export default class Item5e extends Item {
 			},
 			{ all: [], vsm: [], tags: [] }
 		);
-		this.labels.components.vsm = new Intl.ListFormat(game.i18n.lang, { style: "narrow", type: "conjunction" }).format(this.labels.components.vsm);
+		this.labels.components.vsm = new Intl.ListFormat(game.i18n.lang, {
+			style: "narrow",
+			type: "conjunction",
+		}).format(this.labels.components.vsm);
 		this.labels.materials = this.system?.materials?.value ?? null;
 	}
 
@@ -638,7 +641,13 @@ export default class Item5e extends Item {
 		}
 
 		// Determine whether the item can be used by testing for resource consumption
-		const usage = item._getUsageUpdates({ consumeRecharge, consumeResource, consumeSpellLevel, consumeUsage, consumeQuantity });
+		const usage = item._getUsageUpdates({
+			consumeRecharge,
+			consumeResource,
+			consumeSpellLevel,
+			consumeUsage,
+			consumeQuantity,
+		});
 		if (!usage) return;
 		const { actorUpdates, itemUpdates, resourceUpdates } = usage;
 

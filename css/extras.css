@@ -45,9 +45,11 @@
 .dnd5e.sheet.actor .ability-scores.idj {
 	height: 492px;
 }
-.dnd5e.sheet.actor.character.idj,
-.dnd5e.sheet.actor.npc.idj {
+.dnd5e.sheet.actor.character.idj {
 	min-height: 730px;
+}
+.dnd5e.sheet.actor.npc.idj {
+	min-height: 752px;
 }
 .dnd5e.sheet.actor.npc {
 	min-width: 605px;

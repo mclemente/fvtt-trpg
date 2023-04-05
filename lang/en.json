@@ -1,19 +1,21 @@
 {
-	"ACTOR": {
-		"TypeCharacter": "Personagem do Jogador",
-		"TypeNpc": "Personagem do Mestre",
-		"TypeVehicle": "Veículo"
-	},
-	"ITEM": {
-		"TypeBackpack": "Mochila",
-		"TypeClass": "Classe",
-		"TypeConsumable": "Consumível",
-		"TypeEquipment": "Equipamento",
-		"TypeFeat": "Talento",
-		"TypeLoot": "Item",
-		"TypeSpell": "Magia",
-		"TypeTool": "Ferramenta",
-		"TypeWeapon": "Arma"
+	"TYPES": {
+		"Actor": {
+			"character": "Personagem do Jogador",
+			"npc": "Personagem do Mestre",
+			"vehicle": "Veículo"
+		},
+		"Item": {
+			"backpack": "Mochila",
+			"class": "Classe",
+			"consumable": "Consumível",
+			"equipment": "Equipamento",
+			"feat": "Talento",
+			"loot": "Item",
+			"spell": "Magia",
+			"tool": "Ferramenta",
+			"weapon": "Arma"
+		}
 	},
 	"TRPG": {
 		"title": "Sistema de Jogo TRPG",
@@ -306,8 +308,8 @@
 		"ItemTypeContainerPl": "Recipientes",
 		"ItemTypeEquipment": "Equipamento",
 		"ItemTypeEquipmentPl": "Equipamentos",
-		"ItemTypeLoot": "Saque",
-		"ItemTypeLootPl": "Saques",
+		"ItemTypeLoot": "Item",
+		"ItemTypeLootPl": "Itens",
 		"ItemTypeTool": "Ferramenta",
 		"ItemTypeToolPl": "Ferramentas",
 		"ItemTypeSpell": "Magia",

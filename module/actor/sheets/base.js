@@ -568,7 +568,7 @@ export default class ActorSheet5e extends ActorSheet {
 			inputs.addBack().find('[data-dtype="Number"]').change(this._onChangeInputDelta.bind(this));
 
 			// Saving Throw Proficiency
-			html.find(".save-proficiency").click(this._onToggleSaveProficiency.bind(this));
+			html.find(".save-proficiency").on("click contextmenu", this._onToggleSaveProficiency.bind(this));
 
 			// Toggle Skill Proficiency
 			html.find(".skill-proficiency").on("click contextmenu", this._onCycleSkillProficiency.bind(this));
@@ -939,7 +939,9 @@ export default class ActorSheet5e extends ActorSheet {
 		const header = event.currentTarget;
 		const type = header.dataset.type;
 		const itemData = {
-			name: game.i18n.format("TRPG.ItemNew", { type: game.i18n.localize("ITEM.Type" + header.dataset.type.capitalize()) }),
+			name: game.i18n.format("TRPG.ItemNew", {
+				type: game.i18n.localize(`TYPES.Item.${header.dataset.type}`),
+			}),
 			type: type,
 			data: foundry.utils.deepClone(header.dataset),
 		};
@@ -1132,7 +1134,8 @@ export function injectActorSheet(app, html, data) {
 
 		let selectElement = $("<select>");
 		selectElement.addClass("skill-ability-select");
-		Object.keys(actor.system.abilities).forEach((ability) => {
+		const abilities = game.settings.get("trpg", "idjMode") ? Object.keys(actor.system.abilities) : Object.keys(actor.system.abilities).filter((e) => e !== "hon");
+		abilities.forEach((ability) => {
 			let abilityOption = $("<option>");
 			let abilityKey = ability.charAt(0).toUpperCase() + ability.slice(1);
 			let abilityString = game.i18n.localize(`TRPG.Ability${abilityKey}`).slice(0, 3);

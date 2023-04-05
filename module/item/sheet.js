@@ -47,9 +47,10 @@ export default class ItemSheet5e extends ItemSheet {
 		data.system = data.item.system;
 		data.labels = this.item.labels;
 		data.config = CONFIG.TRPG;
+		data.idj = game.settings.get("trpg", "idjMode");
 
 		// Item Type, Status, and Details
-		data.itemType = game.i18n.localize(`ITEM.Type${data.item.type.titleCase()}`);
+		data.itemType = game.i18n.localize(`TYPES.Item.${data.item.type}`);
 		data.itemStatus = this._getItemStatus(itemData);
 		data.itemProperties = this._getItemProperties(itemData);
 		data.isPhysical = itemData.system.hasOwnProperty("quantity");
