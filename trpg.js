@@ -273,6 +273,18 @@ Hooks.on("renderChatMessage", (app, html, data) => {
 Hooks.on("getChatLogEntryContext", chat.addChatMessageContextOptions);
 Hooks.on("renderChatLog", (app, html, data) => Item5e.chatListeners(html));
 Hooks.on("renderChatPopout", (app, html, data) => Item5e.chatListeners(html));
+// Render Sidebar
+Hooks.on("renderSidebarTab", (app, html) => {
+	if (app instanceof Settings) {
+		// Add Butons
+		// JamboEditora
+		let jambo = $(`<button>Jambô Editora</button>`);
+		html.find("#game-details").append(jambo);
+		jambo.click(() => {
+			window.open("https://jamboeditora.com.br/");
+		});
+	}
+});
 //Skill Bonus
 Hooks.on("renderActorSheet", (app, html, data) => injectActorSheet(app, html, data));
 Hooks.on("getActorDirectoryEntryContext", Actor5e.addDirectoryContextOptions);
