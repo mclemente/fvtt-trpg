@@ -1,6 +1,5 @@
 ![GitHub release](https://img.shields.io/github/release-date/mclemente/fvtt-trpg)
-![all versions](https://img.shields.io/github/downloads/mclemente/fvtt-trpg/total)
-![the latest version](https://img.shields.io/github/downloads/mclemente/fvtt-trpg/latest/total)
+![the latest version](https://img.shields.io/github/downloads/mclemente/fvtt-trpg/latest/trpg.zip)
 
 # Tormenta RPG e Império de Jade para FoundryVTT
 
