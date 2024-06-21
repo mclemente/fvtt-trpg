@@ -11,7 +11,7 @@ export default class ActorSheet5eVehicle extends ActorSheet5e {
 	 * @returns {Object}
 	 */
 	static get defaultOptions() {
-		return mergeObject(super.defaultOptions, {
+		return foundry.utils.mergeObject(super.defaultOptions, {
 			classes: ["dnd5e", "sheet", "actor", "vehicle"],
 			width: 720,
 			height: 680,

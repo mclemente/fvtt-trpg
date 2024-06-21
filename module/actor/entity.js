@@ -114,7 +114,7 @@ export default class Actor5e extends Actor {
 		const actorData = this;
 		const data = actorData.system;
 		const flags = actorData.flags.trpg || {};
-		const bonuses = getProperty(data, "bonuses.abilities") || {};
+		const bonuses = foundry.utils.getProperty(data, "bonuses.abilities") || {};
 
 		// Retrieve data for polymorphed actors
 		let originalSaves = null;
@@ -733,11 +733,11 @@ export default class Actor5e extends Actor {
 	/** @override */
 	async modifyTokenAttribute(attribute, value, isDelta, isBar) {
 		if (attribute === "attributes.hp") {
-			const hp = getProperty(this.system, attribute);
+			const hp = foundry.utils.getProperty(this.system, attribute);
 			const delta = isDelta ? -1 * value : hp.value + hp.temp - value;
 			return this.applyDamage(delta);
 		} else if (attribute === "attributes.mp") {
-			const hp = getProperty(this.system, attribute);
+			const hp = foundry.utils.getProperty(this.system, attribute);
 			const delta = isDelta ? -1 * value : hp.value + hp.temp - value;
 			return this.reduceMagicPoints(delta);
 		}
@@ -829,7 +829,7 @@ export default class Actor5e extends Actor {
 	 */
 	rollSkill(skillId, options = {}) {
 		const skl = this.system.skills[skillId];
-		const bonuses = getProperty(this.system, "bonuses.abilities") || {};
+		const bonuses = foundry.utils.getProperty(this.system, "bonuses.abilities") || {};
 
 		// Compose roll parts and data
 		const parts = ["@mod"];
@@ -932,7 +932,7 @@ export default class Actor5e extends Actor {
 		}
 
 		// Add global actor bonus
-		const bonuses = getProperty(this.system, "bonuses.abilities") || {};
+		const bonuses = foundry.utils.getProperty(this.system, "bonuses.abilities") || {};
 		if (bonuses.check) {
 			parts.push("@checkBonus");
 			data.checkBonus = bonuses.check;
@@ -981,7 +981,7 @@ export default class Actor5e extends Actor {
 		}
 
 		// Include a global actor ability save bonus
-		const bonuses = getProperty(this.system, "bonuses.abilities") || {};
+		const bonuses = foundry.utils.getProperty(this.system, "bonuses.abilities") || {};
 		if (bonuses.save) {
 			parts.push("@saveBonus");
 			data.saveBonus = bonuses.save;

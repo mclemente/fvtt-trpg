@@ -145,13 +145,13 @@ export const migrateActorData = function (actor) {
 
 		// Prepared, Equipped, and Proficient for NPC actors
 		if (actor.type === "npc") {
-			if (getProperty(itemData.data, "preparation.prepared") === false) itemUpdate["data.preparation.prepared"] = true;
-			if (getProperty(itemData.data, "equipped") === false) itemUpdate["data.equipped"] = true;
-			if (getProperty(itemData.data, "proficient") === false) itemUpdate["data.proficient"] = true;
+			if (foundry.utils.getProperty(itemData.data, "preparation.prepared") === false) itemUpdate["data.preparation.prepared"] = true;
+			if (foundry.utils.getProperty(itemData.data, "equipped") === false) itemUpdate["data.equipped"] = true;
+			if (foundry.utils.getProperty(itemData.data, "proficient") === false) itemUpdate["data.proficient"] = true;
 		}
 
 		// Update the Owned Item
-		if (!isEmpty(itemUpdate)) {
+		if (!foundry.utils.isEmpty(itemUpdate)) {
 			itemUpdate._id = itemData._id;
 			arr.push(expandObject(itemUpdate));
 		}
@@ -200,12 +200,12 @@ export const migrateSceneData = function (scene) {
 				const updates = new Map(update[embeddedName].map((u) => [u._id, u]));
 				t.actorData[embeddedName].forEach((original) => {
 					const update = updates.get(original._id);
-					if (update) mergeObject(original, update);
+					if (update) foundry.utils.mergeObject(original, update);
 				});
 				delete update[embeddedName];
 			});
 
-			mergeObject(t.actorData, update);
+			foundry.utils.mergeObject(t.actorData, update);
 		}
 		return t;
 	});

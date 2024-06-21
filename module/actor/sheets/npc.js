@@ -15,7 +15,7 @@ export default class ActorSheet5eNPC extends ActorSheet5e {
 			classes.push("idj");
 			height = 752;
 		}
-		return mergeObject(super.defaultOptions, {
+		return foundry.utils.mergeObject(super.defaultOptions, {
 			classes,
 			width: 605,
 			height,

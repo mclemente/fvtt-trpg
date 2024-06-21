@@ -470,12 +470,12 @@ export default class Item5e extends Item {
 
 		// Actor spell-DC based scaling
 		if (save.scaling === "spell") {
-			save.dc = this.isOwned ? getProperty(this.actor.data, "data.attributes.spelldc") + (this.system.level ?? 0) : null;
+			save.dc = this.isOwned ? foundry.utils.getProperty(this.actor.data, "data.attributes.spelldc") + (this.system.level ?? 0) : null;
 		}
 
 		// Ability-score based scaling
 		else if (save.scaling !== "flat") {
-			save.dc = this.isOwned ? getProperty(this.actor.data, `data.abilities.${save.scaling}.dc`) + (this.system.level ?? 0) : null;
+			save.dc = this.isOwned ? foundry.utils.getProperty(this.actor.data, `data.abilities.${save.scaling}.dc`) + (this.system.level ?? 0) : null;
 		}
 
 		// Update labels
@@ -782,7 +782,7 @@ export default class Item5e extends Item {
 		let quantity = 0;
 		switch (consume.type) {
 			case "attribute":
-				resource = getProperty(actor.system, consume.target);
+				resource = foundry.utils.getProperty(actor.system, consume.target);
 				quantity = resource || 0;
 				break;
 			case "ammo":
@@ -1073,14 +1073,14 @@ export default class Item5e extends Item {
 		if (flags.halflingLucky) rollConfig.halflingLucky = true;
 
 		// Compose calculated roll options with passed-in roll options
-		rollConfig = mergeObject(rollConfig, options);
+		rollConfig = foundry.utils.mergeObject(rollConfig, options);
 
 		// Invoke the d20 roll helper
 		const roll = await d20Roll(rollConfig);
 		if (roll === false) return null;
 
 		// Commit ammunition consumption on attack rolls resource consumption if the attack roll was made
-		if (ammo && !isEmpty(ammoUpdate)) await ammo.update(ammoUpdate);
+		if (ammo && !foundry.utils.isEmpty(ammoUpdate)) await ammo.update(ammoUpdate);
 		return roll;
 	}
 
@@ -1153,7 +1153,7 @@ export default class Item5e extends Item {
 		}
 
 		// Add damage bonus formula
-		const actorBonus = getProperty(actorData, `bonuses.${itemData.actionType}`) || {};
+		const actorBonus = foundry.utils.getProperty(actorData, `bonuses.${itemData.actionType}`) || {};
 		if (actorBonus.damage && parseInt(actorBonus.damage) !== 0) {
 			parts.push(actorBonus.damage);
 		}
@@ -1170,7 +1170,7 @@ export default class Item5e extends Item {
 		}
 
 		// Call the roll helper utility
-		return damageRoll(mergeObject(rollConfig, options));
+		return damageRoll(foundry.utils.mergeObject(rollConfig, options));
 	}
 
 	/* -------------------------------------------- */
@@ -1312,14 +1312,14 @@ export default class Item5e extends Item {
 		const title = `${this.name} - ${game.i18n.localize("TRPG.ToolCheck")}`;
 
 		// Add global actor bonus
-		const bonuses = getProperty(this.actor.system, "bonuses.abilities") || {};
+		const bonuses = foundry.utils.getProperty(this.actor.system, "bonuses.abilities") || {};
 		if (bonuses.check) {
 			parts.push("@checkBonus");
 			rollData.checkBonus = bonuses.check;
 		}
 
 		// Compose the roll data
-		const rollConfig = mergeObject(
+		const rollConfig = foundry.utils.mergeObject(
 			{
 				parts: parts,
 				data: rollData,

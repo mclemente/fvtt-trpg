@@ -18,7 +18,7 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
 			classes.push("idj");
 			height = 730;
 		}
-		return mergeObject(super.defaultOptions, {
+		return foundry.utils.mergeObject(super.defaultOptions, {
 			classes,
 			width: 720,
 			height,
@@ -183,15 +183,15 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
 	 */
 	_prepareItemToggleState(item) {
 		if (item.type === "spell") {
-			const isAlways = getProperty(item.system, "preparation.mode") === "always";
-			const isPrepared = getProperty(item.system, "preparation.prepared");
+			const isAlways = foundry.utils.getProperty(item.system, "preparation.mode") === "always";
+			const isPrepared = foundry.utils.getProperty(item.system, "preparation.prepared");
 			item.toggleClass = isPrepared ? "active" : "";
 			if (isAlways) item.toggleClass = "fixed";
 			if (isAlways) item.toggleTitle = CONFIG.TRPG.spellPreparationModes.always;
 			else if (isPrepared) item.toggleTitle = CONFIG.TRPG.spellPreparationModes.prepared;
 			else item.toggleTitle = game.i18n.localize("TRPG.SpellUnprepared");
 		} else {
-			const isActive = getProperty(item.system, "equipped");
+			const isActive = foundry.utils.getProperty(item.system, "equipped");
 			item.toggleClass = isActive ? "active" : "";
 			item.toggleTitle = game.i18n.localize(isActive ? "TRPG.Equipped" : "TRPG.Unequipped");
 		}
@@ -256,7 +256,7 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
 		const itemId = event.currentTarget.closest(".item").dataset.itemId;
 		const item = this.actor.items.get(itemId);
 		const attr = item.type === "spell" ? "data.preparation.prepared" : "data.equipped";
-		return item.update({ [attr]: !getProperty(item.data, attr) });
+		return item.update({ [attr]: !foundry.utils.getProperty(item.data, attr) });
 	}
 
 	/* -------------------------------------------- */

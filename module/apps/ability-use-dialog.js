@@ -93,7 +93,7 @@ export default class AbilityUseDialog extends Dialog {
 
 		// If can't upcast, return early and don't bother calculating available spell slots
 		if (!consumeSpellSlot) {
-			mergeObject(data, { isSpell: true, consumeSpellSlot });
+			foundry.utils.mergeObject(data, { isSpell: true, consumeSpellSlot });
 			return;
 		}
 

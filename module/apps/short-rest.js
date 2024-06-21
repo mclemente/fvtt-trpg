@@ -25,7 +25,7 @@ export default class ShortRestDialog extends Dialog {
 
 	/** @override */
 	static get defaultOptions() {
-		return mergeObject(super.defaultOptions, {
+		return foundry.utils.mergeObject(super.defaultOptions, {
 			template: "systems/trpg/templates/apps/short-rest.html",
 			classes: ["dnd5e", "dialog"],
 		});

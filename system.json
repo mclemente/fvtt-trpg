@@ -2,11 +2,10 @@
 	"id": "trpg",
 	"title": "Tormenta RPG e Império de Jade",
 	"description": "Um sistema para jogar Tormenta RPG e Império de Jade no FoundryVTT.",
-	"url": "https://github.com/mclemente/fvtt-trpg",
-	"version": "1.1.0",
 	"compatibility": {
-		"minimum": "10",
-		"verified": "11.294"
+		"minimum": "12",
+		"verified": "12",
+		"maximum": "12"
 	},
 	"esmodules": ["trpg.js"],
 	"styles": ["css/trpg.css", "css/extras.css"],
@@ -76,10 +75,14 @@
 		}
 	],
 	"socket": true,
-	"manifest": "https://github.com/mclemente/fvtt-trpg/releases/latest/download/system.json",
-	"download": "https://github.com/mclemente/fvtt-trpg/releases/latest/download/trpg.zip",
-	"gridDistance": 1.5,
-	"gridUnits": "m",
+	"grid": {
+		"distance": 1.5,
+		"units": "m"
+	},
 	"primaryTokenAttribute": "attributes.hp",
-	"secondaryTokenAttribute": "attributes.mp"
+	"secondaryTokenAttribute": "attributes.mp",
+	"url": "This is auto replaced",
+	"version": "This is auto replaced",
+	"manifest": "This is auto replaced",
+	"download": "This is auto replaced"
 }

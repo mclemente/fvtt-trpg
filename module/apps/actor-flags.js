@@ -72,7 +72,7 @@ export default class ActorSheetFlags extends DocumentSheet {
 			flag.type = v.type.name;
 			flag.isCheckbox = v.type === Boolean;
 			flag.isSelect = v.hasOwnProperty("choices");
-			flag.value = getProperty(baseData.flags, `trpg.${k}`);
+			flag.value = foundry.utils.getProperty(baseData.flags, `trpg.${k}`);
 			flags[v.section][`flags.trpg.${k}`] = flag;
 		}
 		return flags;
@@ -101,7 +101,7 @@ export default class ActorSheetFlags extends DocumentSheet {
 			{ name: "data.bonuses.spell.dc", label: "TRPG.BonusSpellDC" },
 		];
 		for (let b of bonuses) {
-			b.value = getProperty(this.object.data._source, b.name) || "";
+			b.value = foundry.utils.getProperty(this.object.data._source, b.name) || "";
 		}
 		return bonuses;
 	}

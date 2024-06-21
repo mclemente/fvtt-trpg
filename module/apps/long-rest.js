@@ -12,7 +12,7 @@ export default class LongRestDialog extends Dialog {
 
 	/** @override */
 	static get defaultOptions() {
-		return mergeObject(super.defaultOptions, {
+		return foundry.utils.mergeObject(super.defaultOptions, {
 			template: "systems/trpg/templates/apps/long-rest.html",
 			classes: ["dnd5e", "dialog"],
 		});

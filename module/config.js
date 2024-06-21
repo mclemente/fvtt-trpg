@@ -424,7 +424,7 @@ TRPG.damageTypes = {
 };
 
 // Damage Resistance Types
-TRPG.damageResistanceTypes = mergeObject(foundry.utils.deepClone(TRPG.damageTypes), {
+TRPG.damageResistanceTypes = foundry.utils.mergeObject(foundry.utils.deepClone(TRPG.damageTypes), {
 	physical: "TRPG.DamagePhysical",
 });
 

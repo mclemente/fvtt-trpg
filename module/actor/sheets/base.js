@@ -37,7 +37,7 @@ export default class ActorSheet5e extends ActorSheet {
 
 	/** @override */
 	static get defaultOptions() {
-		return mergeObject(super.defaultOptions, {
+		return foundry.utils.mergeObject(super.defaultOptions, {
 			scrollY: [".inventory .inventory-list", ".features .inventory-list", ".spellbook .inventory-list", ".effects .inventory-list"],
 			tabs: [{ navSelector: ".tabs", contentSelector: ".sheet-body", initial: "description" }],
 		});
@@ -377,7 +377,7 @@ export default class ActorSheet5e extends ActorSheet {
 			if (trait.custom) {
 				trait.custom.split(";").forEach((c, i) => (trait.selected[`custom${i + 1}`] = c.trim()));
 			}
-			trait.cssClass = !isEmpty(trait.selected) ? "" : "inactive";
+			trait.cssClass = !foundry.utils.isEmpty(trait.selected) ? "" : "inactive";
 		}
 
 		// Populate and localize proficiencies
@@ -385,7 +385,7 @@ export default class ActorSheet5e extends ActorSheet {
 			const trait = traits[`${t}Prof`];
 			if (!trait) continue;
 			Actor5e.prepareProficiencies(trait, t);
-			trait.cssClass = !isEmpty(trait.selected) ? "" : "inactive";
+			trait.cssClass = !foundry.utils.isEmpty(trait.selected) ? "" : "inactive";
 		}
 	}
 
@@ -645,7 +645,7 @@ export default class ActorSheet5e extends ActorSheet {
 		const value = input.value;
 		if (["+", "-"].includes(value[0])) {
 			let delta = parseFloat(value);
-			input.value = getProperty(this.actor.data, input.name) + delta;
+			input.value = foundry.utils.getProperty(this.actor.data, input.name) + delta;
 		} else if (value[0] === "=") {
 			input.value = value.slice(1);
 		}
@@ -732,7 +732,7 @@ export default class ActorSheet5e extends ActorSheet {
 			html.find("input").each((i, el) => {
 				options[el.name] = el.checked;
 			});
-			const settings = mergeObject(game.settings.get("trpg", "polymorphSettings") || {}, options);
+			const settings = foundry.utils.mergeObject(game.settings.get("trpg", "polymorphSettings") || {}, options);
 			game.settings.set("trpg", "polymorphSettings", settings);
 			return settings;
 		};

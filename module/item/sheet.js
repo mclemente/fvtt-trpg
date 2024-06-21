@@ -61,7 +61,7 @@ export default class ItemSheet5e extends ItemSheet {
 		// Action Details
 		data.hasAttackRoll = this.item.hasAttack;
 		data.isHealing = itemData.system.actionType === "heal";
-		data.isFlatDC = getProperty(itemData, "system.save.scaling") === "flat";
+		data.isFlatDC = foundry.utils.getProperty(itemData, "system.save.scaling") === "flat";
 		data.isLine = ["line", "wall"].includes(itemData.system.target?.type);
 
 		// Original maximum uses formula
@@ -213,7 +213,7 @@ export default class ItemSheet5e extends ItemSheet {
 		}
 
 		// Action usage
-		if (item.type !== "weapon" && item.system.activation && !isEmpty(item.system.activation)) {
+		if (item.type !== "weapon" && item.system.activation && !foundry.utils.isEmpty(item.system.activation)) {
 			props.push(labels.activation, labels.range, labels.target, labels.duration);
 		}
 		return props.filter((p) => !!p);

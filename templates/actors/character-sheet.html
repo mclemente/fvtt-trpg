@@ -42,9 +42,6 @@
 				<li>
 					<a class="rest long-rest">Descansar</a>
 				</li>
-				<!-- <li class="proficiency">
-                    <span>{{ localize "TRPG.Proficiency" }} {{numberFormat system.attributes.prof decimals=0 sign=true}}</span>
-                </li> -->
 			</ul>
 
 			{{!-- Header Attributes --}}
@@ -105,20 +102,6 @@
 				</li>
 				{{/if}}
 
-				<!-- <li class="attribute hit-dice">
-                    <h4 class="attribute-name box-title">
-                        {{ localize "TRPG.HitDice" }}
-                        <a class="config-button" data-action="hit-dice" title="{{localize 'TRPG.HitDiceConfig'}}"><i class="fas fa-cog"></i></a>
-                    </h4>
-                    <div class="attribute-value multiple">
-                        <label class="hit-dice">{{system.attributes.hd}} <span class="sep"> / </span> {{system.details.level}}</label>
-                    </div>
-                    <footer class="attribute-footer">
-                        <a class="rest short-rest">{{ localize "TRPG.RestS" }}</a>
-                        <a class="rest long-rest">{{ localize "TRPG.RestL" }}</a>
-                    </footer>
-                </li> -->
-
 				<li class="attribute armor">
 					<h4 class="attribute-name box-title">
 						{{ localize "TRPG.ArmorClass" }}
@@ -146,18 +129,6 @@
 						<span>{{movement.special}}</span>
 					</footer>
 				</li>
-
-				<!-- <li class="attribute initiative">
-                    <h4 class="attribute-name box-title rollable" data-action="rollInitiative">{{ localize "TRPG.Initiative" }}</h4>
-                    <div class="attribute-value">
-                        <span>{{numberFormat system.attributes.init.total decimals=0 sign=true}}</span>
-                    </div>
-                    <footer class="attribute-footer">
-                        <span>{{ localize "TRPG.Modifier" }}</span>
-                        <input name="system.attributes.init.value" type="text" data-dtype="Number" placeholder="0"
-                            value="{{numberFormat system.attributes.init.value decimals=0 sign=true}}"/>
-                    </footer>
-                </li> -->
 			</ul>
 		</section>
 	</header>
@@ -223,17 +194,10 @@
 							<input name="system.resources.{{res.name}}.label" type="text" value="{{res.label}}" placeholder="{{res.placeholder}}" />
 						</h4>
 						<div class="attribute-value">
-							<!-- <label class="recharge checkbox flexcol">
-                                <span>{{ localize "TRPG.AbbreviationSR" }}</span><input name="system.resources.{{res.name}}.sr" type="checkbox" {{checked res.sr}}/>
-                            </label> -->
 
 							<input name="system.resources.{{res.name}}.value" type="number" value="{{res.value}}" placeholder="0" />
 							<span class="sep"> / </span>
 							<input name="system.resources.{{res.name}}.max" type="number" value="{{res.max}}" placeholder="0" />
-
-							<!-- <label class="recharge checkbox flexcol">
-                                <span>{{ localize "TRPG.AbbreviationLR" }}</span><input name="system.resources.{{res.name}}.lr" type="checkbox" {{checked res.lr}}/>
-                            </label> -->
 						</div>
 					</li>
 					{{/each}}
