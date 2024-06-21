@@ -230,19 +230,12 @@ Hooks.once("ready", function () {
 
 	// Determine whether a system migration is required and feasible
 	if (!game.user.isGM) return;
-	const currentVersion = game.settings.get("trpg", "systemMigrationVersion");
-	const NEEDS_MIGRATION_VERSION = "1.0.11";
-	const COMPATIBLE_MIGRATION_VERSION = 1;
+	const cv = game.settings.get("trpg", "systemMigrationVersion");
 	const totalDocuments = game.actors.size + game.scenes.size + game.items.size;
-	if (!currentVersion && totalDocuments === 0) return game.settings.set("trpg", "systemMigrationVersion", game.system.version);
-	const needsMigration = currentVersion && foundry.utils.isNewerVersion(NEEDS_MIGRATION_VERSION, currentVersion);
-	if (!needsMigration) return;
+	if (!cv && totalDocuments === 0) return game.settings.set("trpg", "systemMigrationVersion", game.system.version);
+	if (cv && !foundry.utils.isNewerVersion(game.system.flags.needsMigrationVersion, cv)) return;
 
 	// Perform the migration
-	if (currentVersion && foundry.utils.isNewerVersion(COMPATIBLE_MIGRATION_VERSION, currentVersion)) {
-		const warning = `O seu sistema TRPG é muito antigo e talvez não seja migrado corretamente para a última versão. O processo acontecerá, mas podem ocorrer erros.`;
-		ui.notifications.error(warning, { permanent: true });
-	}
 	migrations.migrateWorld();
 });
 

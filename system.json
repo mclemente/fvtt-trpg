@@ -81,6 +81,9 @@
 	},
 	"primaryTokenAttribute": "attributes.hp",
 	"secondaryTokenAttribute": "attributes.mp",
+	"flags": {
+		"needsMigrationVersion": "1.2.0"
+	},
 	"url": "This is auto replaced",
 	"version": "This is auto replaced",
 	"manifest": "This is auto replaced",

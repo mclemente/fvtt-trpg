@@ -3,34 +3,70 @@
  * @return {Promise}      A Promise which resolves once the migration is completed
  */
 export const migrateWorld = async function () {
-	ui.notifications.info(`Migrando o sistema para a versão ${game.system.data.version}. Por favor, tenha paciência e não feche o jogo ou desligue o servidor.`, {
+	ui.notifications.info(`Migrando o sistema para a versão ${game.system.version}. Por favor, tenha paciência e não feche o jogo ou desligue o servidor.`, {
 		permanent: true,
 	});
 
+	const migrationData = await getMigrationData();
+
 	// Migrate World Actors
-	for (let a of game.actors) {
+	const actors = game.actors.map((a) => [a, true])
+		.concat(Array.from(game.actors.invalidDocumentIds).map((id) => [game.actors.getInvalid(id), false]));
+	for (const [actor, valid] of actors) {
 		try {
-			const updateData = migrateActorData(a.toObject());
+			const source = valid ? actor.toObject() : game.data.actors.find((a) => a._id === actor.id);
+			const updateData = migrateActorData(source, migrationData);
 			if (!foundry.utils.isEmpty(updateData)) {
-				console.log(`Migrating Actor entity ${a.name}`);
-				await a.update(updateData, { enforceTypes: false });
+				console.log(`Migrating Actor document ${actor.name}`);
+				await actor.update(updateData, { enforceTypes: false, diff: valid });
 			}
 		} catch (err) {
-			err.message = `Migração do ator ${a.name} falhou: ${err.message}`;
+			err.message = `Migração do ator ${actor.name} falhou: ${err.message}`;
 			console.error(err);
 		}
 	}
 
 	// Migrate World Items
-	for (let i of game.items) {
+	const items = game.items.map((i) => [i, true])
+		.concat(Array.from(game.items.invalidDocumentIds).map((id) => [game.items.getInvalid(id), false]));
+	for (const [item, valid] of items) {
 		try {
-			const updateData = migrateItemData(i.toObject());
+			const source = valid ? item.toObject() : game.data.items.find((i) => i._id === item.id);
+			const updateData = migrateItemData(source, migrationData);
 			if (!foundry.utils.isEmpty(updateData)) {
-				console.log(`Migrating Item entity ${i.name}`);
-				await i.update(updateData, { enforceTypes: false });
+				console.log(`Migrating Item document ${item.name}`);
+				await item.update(updateData, { enforceTypes: false, diff: valid });
 			}
 		} catch (err) {
-			err.message = `Migração do item ${i.name} falhou: ${err.message}`;
+			err.message = `Migração do item ${item.name} falhou: ${err.message}`;
+			console.error(err);
+		}
+	}
+
+	// Migrate World Macros
+	for (const m of game.macros) {
+		try {
+			const updateData = migrateMacroData(m.toObject(), migrationData);
+			if (!foundry.utils.isEmpty(updateData)) {
+				console.log(`Migrating Macro document ${m.name}`);
+				await m.update(updateData, { enforceTypes: false });
+			}
+		} catch(err) {
+			err.message = `Migração da Macro ${m.name} falhou: ${err.message}`;
+			console.error(err);
+		}
+	}
+
+	// Migrate World Roll Tables
+	for (const table of game.tables) {
+		try {
+			const updateData = migrateRollTableData(table.toObject(), migrationData);
+			if (!foundry.utils.isEmpty(updateData)) {
+				console.log(`Migrating RollTable document ${table.name}`);
+				await table.update(updateData, { enforceTypes: false });
+			}
+		} catch(err) {
+			err.message = `Migração da Tabela de Rolagem ${table.name} falhou: ${err.message}`;
 			console.error(err);
 		}
 	}
@@ -40,14 +76,14 @@ export const migrateWorld = async function () {
 		try {
 			const updateData = migrateSceneData(s.data);
 			if (!foundry.utils.isEmpty(updateData)) {
-				console.log(`Migrando entidade da cena ${s.name}`);
+				console.log(`Migrando documento da Cena ${s.name}`);
 				await s.update(updateData, { enforceTypes: false });
 				// If we do not do this, then synthetic token actors remain in cache
 				// with the un-updated actorData.
 				s.tokens.forEach((t) => (t._actor = null));
 			}
 		} catch (err) {
-			err.message = `Migração da cena ${s.name} falhou: ${err.message}`;
+			err.message = `Migração da Cena ${s.name} falhou: ${err.message}`;
 			console.error(err);
 		}
 	}
@@ -60,8 +96,8 @@ export const migrateWorld = async function () {
 	}
 
 	// Set the migration as complete
-	game.settings.set("trpg", "systemMigrationVersion", game.system.data.version);
-	ui.notifications.info(`Migração do sistema para a versão ${game.system.data.version} está completa!`, { permanent: true });
+	game.settings.set("trpg", "systemMigrationVersion", game.system.version);
+	ui.notifications.info(`Migração do sistema para a versão ${game.system.version} está completa!`, { permanent: true });
 };
 
 /* -------------------------------------------- */
@@ -75,6 +111,8 @@ export const migrateCompendium = async function (pack) {
 	const entity = pack.metadata.entity;
 	if (!["Actor", "Item", "Scene"].includes(entity)) return;
 
+	const migrationData = await getMigrationData();
+
 	// Unlock the pack for editing
 	const wasLocked = pack.locked;
 	await pack.configure({ locked: false });
@@ -87,15 +125,16 @@ export const migrateCompendium = async function (pack) {
 	for (let doc of documents) {
 		let updateData = {};
 		try {
+			const source = doc.toObject();
 			switch (entity) {
 				case "Actor":
-					updateData = migrateActorData(doc.toObject());
+					updateData = migrateActorData(source, migrationData);
 					break;
 				case "Item":
-					updateData = migrateItemData(doc.toObject());
+					updateData = migrateItemData(source, migrationData);
 					break;
 				case "Scene":
-					updateData = migrateSceneData(doc.data);
+					updateData = migrateSceneData(source, migrationData);
 					break;
 			}
 
@@ -125,14 +164,14 @@ export const migrateCompendium = async function (pack) {
  * @param {object} actor    The actor data object to update
  * @return {Object}         The updateData to apply
  */
-export const migrateActorData = function (actor) {
+export function migrateActorData(actor, migrationData) {
 	const updateData = {};
 
 	// Actor Data Updates
-	if (actor.data) {
-		const ep = actor.data.currency?.ep;
+	if (actor.system) {
+		const ep = actor.system.currency?.ep;
 		if (ep !== undefined) {
-			updateData["data.currency.-=ep"] = null;
+			updateData["system.currency.-=ep"] = null;
 		}
 	}
 
@@ -141,13 +180,13 @@ export const migrateActorData = function (actor) {
 	const items = actor.items.reduce((arr, i) => {
 		// Migrate the Owned Item
 		const itemData = i instanceof CONFIG.Item.documentClass ? i.toObject() : i;
-		let itemUpdate = migrateItemData(itemData);
+		let itemUpdate = migrateItemData(itemData, migrationData);
 
 		// Prepared, Equipped, and Proficient for NPC actors
 		if (actor.type === "npc") {
-			if (foundry.utils.getProperty(itemData.data, "preparation.prepared") === false) itemUpdate["data.preparation.prepared"] = true;
-			if (foundry.utils.getProperty(itemData.data, "equipped") === false) itemUpdate["data.equipped"] = true;
-			if (foundry.utils.getProperty(itemData.data, "proficient") === false) itemUpdate["data.proficient"] = true;
+			if (foundry.utils.getProperty(itemData.system, "preparation.prepared") === false) itemUpdate["system.preparation.prepared"] = true;
+			if (foundry.utils.getProperty(itemData.system, "equipped") === false) itemUpdate["system.equipped"] = true;
+			if (foundry.utils.getProperty(itemData.system, "proficient") === false) itemUpdate["system.proficient"] = true;
 		}
 
 		// Update the Owned Item
@@ -170,10 +209,39 @@ export const migrateActorData = function (actor) {
  * @param {object} item  Item data to migrate
  * @return {object}      The updateData to apply
  */
-export const migrateItemData = function (item) {
+export function migrateItemData (item, migrationData) {
 	const updateData = {};
+	_migrateDocumentIcon(item, updateData, migrationData);
 	return updateData;
 };
+
+/* -------------------------------------------- */
+
+/**
+ * Migrate a single Macro document to incorporate latest data model changes.
+ * @param {object} macro            Macro data to migrate
+ * @param {object} [migrationData]  Additional data to perform the migration
+ * @returns {object}                The updateData to apply
+ */
+export const migrateMacroData = function (macro, migrationData) {
+	const updateData = {};
+	_migrateDocumentIcon(macro, updateData, migrationData);
+	return updateData;
+};
+
+/* -------------------------------------------- */
+
+/**
+ * Migrate a single RollTable document to incorporate the latest data model changes.
+ * @param {object} table            Roll table data to migrate.
+ * @param {object} [migrationData]  Additional data to perform the migration.
+ * @returns {object}                The update delta to apply.
+ */
+export function migrateRollTableData(table, migrationData) {
+	const updateData = {};
+	_migrateDocumentIcon(table, updateData, migrationData);
+	return updateData;
+}
 
 /* -------------------------------------------- */
 
@@ -212,6 +280,38 @@ export const migrateSceneData = function (scene) {
 	return { tokens };
 };
 
-/* -------------------------------------------- */
-/*  Low level migration utilities
-/* -------------------------------------------- */
+/**
+ * Fetch bundled data for large-scale migrations.
+ * @returns {Promise<object>}  Object mapping original system icons to their core replacements.
+ */
+export const getMigrationData = async function () {
+	const data = {};
+	try {
+		const icons = await fetch("systems/trpg/json/icon-migration.json");
+		const spellIcons = await fetch("systems/trpg/json/spell-icon-migration.json");
+		data.iconMap = { ...await icons.json(), ...await spellIcons.json() };
+	} catch(err) {
+		console.warn(`Failed to retrieve icon migration data: ${err.message}`);
+	}
+	return data;
+};
+
+/**
+ * Convert system icons to use bundled core webp icons.
+ * @param {object} document                                 Document data to migrate
+ * @param {object} updateData                               Existing update to expand upon
+ * @param {object} [migrationData={}]                       Additional data to perform the migration
+ * @param {Object<string, string>} [migrationData.iconMap]  A mapping of system icons to core foundry icons
+ * @param {string} [migrationData.field]                    The document field to migrate
+ * @returns {object}                                        The updateData to apply
+ * @private
+ */
+function _migrateDocumentIcon(document, updateData, { iconMap, field="img" }={}) {
+	let path = document?.[field];
+	if (path && iconMap) {
+		if (path.startsWith("/") || path.startsWith("\\")) path = path.substring(1);
+		const rename = iconMap[path];
+		if (rename) updateData[field] = rename;
+	}
+	return updateData;
+}
