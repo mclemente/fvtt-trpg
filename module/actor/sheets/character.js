@@ -31,19 +31,19 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
 	 * Add some extra data when rendering the sheet to reduce the amount of logic required within the template.
 	 */
 	async getData() {
-		const sheetData = await super.getData();
+		const context = await super.getData();
 
 		// Temporary HP
-		let hp = sheetData.system.attributes.hp;
-		let mp = sheetData.system.attributes.mp;
+		let hp = context.system.attributes.hp;
+		let mp = context.system.attributes.mp;
 		if (hp.temp === 0) delete hp.temp;
 		if (hp.tempmax === 0) delete hp.tempmax;
 		if (mp.temp === 0) delete mp.temp;
 		if (mp.tempmax === 0) delete mp.tempmax;
 
 		// Resources
-		sheetData.resources = ["primary", "secondary"].reduce((arr, r) => {
-			const res = sheetData.system.resources[r] || {};
+		context.resources = ["primary", "secondary"].reduce((arr, r) => {
+			const res = context.system.resources[r] || {};
 			res.name = r;
 			res.placeholder = game.i18n.localize("TRPG.Resource" + r.titleCase());
 			if (res && res.value === 0) delete res.value;
@@ -51,19 +51,19 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
 			return arr.concat([res]);
 		}, []);
 
-		sheetData.idj = game.settings.get("trpg", "idjMode");
+		context.idj = game.settings.get("trpg", "idjMode");
 
 		// Experience Tracking
-		sheetData.disableExperience = game.settings.get("trpg", "disableExperienceTracking");
-		sheetData.classLabels = this.actor.itemTypes.class.map((c) => c.name).join(", ");
-		sheetData.multiclassLabels = this.actor.itemTypes.class
+		context.disableExperience = game.settings.get("trpg", "disableExperienceTracking");
+		context.classLabels = this.actor.itemTypes.class.map((c) => c.name).join(", ");
+		context.multiclassLabels = this.actor.itemTypes.class
 			.map((c) => {
 				return [c.system.subclass, c.name, c.system.levels].filterJoin(" ");
 			})
 			.join(", ");
 
 		// Return data for rendering
-		return sheetData;
+		return context;
 	}
 
 	/* -------------------------------------------- */
@@ -213,7 +213,6 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
 		html.find(".item-toggle").click(this._onToggleItem.bind(this));
 
 		// Short and Long Rest
-		html.find(".short-rest").click(this._onShortRest.bind(this));
 		html.find(".long-rest").click(this._onLongRest.bind(this));
 
 		// Rollable sheet actions

@@ -33,7 +33,7 @@ export default class ActorSheet5eNPC extends ActorSheet5e {
 	 * Organize Owned Items for rendering the NPC sheet
 	 * @private
 	 */
-	_prepareItems(data) {
+	_prepareItems(context) {
 		// Categorize Items as Features and Spells
 		const features = {
 			weapons: {
@@ -42,18 +42,18 @@ export default class ActorSheet5eNPC extends ActorSheet5e {
 				hasActions: true,
 				dataset: { type: "weapon", "weapon-type": "natural" },
 			},
-			actions: {
-				label: game.i18n.localize("TRPG.ActionPl"),
-				items: [],
-				hasActions: true,
-				dataset: { type: "feat", "activation.type": "action" },
-			},
+			// actions: {
+			// 	label: game.i18n.localize("TRPG.ActionPl"),
+			// 	items: [],
+			// 	hasActions: true,
+			// 	dataset: { type: "feat", "activation.type": "action" },
+			// },
 			passive: { label: game.i18n.localize("TRPG.Features"), items: [], dataset: { type: "feat" } },
 			equipment: { label: game.i18n.localize("TRPG.Inventory"), items: [], dataset: { type: "loot" } },
 		};
 
 		// Start by classifying items into groups for rendering
-		let [spells, other] = data.items.reduce(
+		let [spells, other] = context.items.reduce(
 			(arr, item) => {
 				item.img = item.img || CONST.DEFAULT_TOKEN;
 				item.isStack = Number.isNumeric(item.system.quantity) && item.system.quantity !== 1;
@@ -73,41 +73,41 @@ export default class ActorSheet5eNPC extends ActorSheet5e {
 		other = this._filterItems(other, this._filters.features);
 
 		// Organize Spellbook
-		const spellbook = this._prepareSpellbook(data, spells);
+		const spellbook = this._prepareSpellbook(context, spells);
 
 		// Organize Features
 		for (let item of other) {
 			if (item.type === "weapon") features.weapons.items.push(item);
 			else if (item.type === "feat") {
-				if (item.data.activation.type) features.actions.items.push(item);
+				if (item.system.activation.type) features.actions.items.push(item);
 				else features.passive.items.push(item);
 			} else features.equipment.items.push(item);
 		}
 
 		// Assign and return
-		data.features = Object.values(features);
-		data.spellbook = spellbook;
+		context.features = Object.values(features);
+		context.spellbook = spellbook;
 	}
 
 	/* -------------------------------------------- */
 
 	/** @inheritdoc */
 	async getData(options) {
-		const data = await super.getData(options);
+		const context = await super.getData(options);
 
 		// Challenge Rating
-		const cr = parseFloat(data.system.details.cr || 0);
+		const cr = parseFloat(context.system.details.cr || 0);
 		const crLabels = { 0: "0", 0.125: "1/8", 0.25: "1/4", 0.5: "1/2" };
-		data.labels["cr"] = cr >= 1 ? String(cr) : crLabels[cr] || 1;
+		context.labels["cr"] = cr >= 1 ? String(cr) : crLabels[cr] || 1;
 
 		// Creature Type
-		data.labels["type"] = this.actor.labels.creatureType;
+		context.labels["type"] = this.actor.labels.creatureType;
 
-		data["idj"] = game.settings.get("trpg", "idjMode");
+		context["idj"] = game.settings.get("trpg", "idjMode");
 		// Armor Type
-		data.labels["armorType"] = this.getArmorLabel();
+		context.labels["armorType"] = this.getArmorLabel();
 
-		return data;
+		return context;
 	}
 
 	/* -------------------------------------------- */
@@ -165,6 +165,6 @@ export default class ActorSheet5eNPC extends ActorSheet5e {
 		if (!formula) return;
 		const hp = new Roll(formula).roll({ async: false }).total;
 		AudioHelper.play({ src: CONFIG.sounds.dice });
-		this.actor.update({ "data.attributes.hp.value": hp, "data.attributes.hp.max": hp });
+		this.actor.update({ "system.attributes.hp.value": hp, "system.attributes.hp.max": hp });
 	}
 }

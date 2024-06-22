@@ -5,27 +5,29 @@
 /**
  * Create a Macro from an Item drop.
  * Get an existing item macro if one exists, otherwise create a new one.
- * @param {Object} data     The dropped data
+ * @param {Object} dropData     The dropped data
  * @param {number} slot     The hotbar slot to use
  * @returns {Promise}
  */
-export async function create5eMacro(data, slot) {
-	if (data.type !== "Item") return;
-	if (!("data" in data)) return ui.notifications.warn("You can only create macro buttons for owned Items");
-	const item = data.data;
-
-	// Create the macro command
-	const command = `game.trpg.rollItemMacro("${item.name}");`;
-	let macro = game.macros.entities.find((m) => m.name === item.name && m.command === command);
-	if (!macro) {
-		macro = await Macro.create({
-			name: item.name,
-			type: "script",
-			img: item.img,
-			command: command,
-			flags: { "trpg.itemMacro": true },
+export async function create5eMacro(dropData, slot) {
+	const macroData = { type: "script", scope: "actor" };
+	if (dropData.type !== "Item") return;
+	const itemData = await Item.implementation.fromDropData(dropData);
+		if ( !itemData ) {
+			ui.notifications.warn("MACRO.5eUnownedWarn", {localize: true});
+			return null;
+		}
+		foundry.utils.mergeObject(macroData, {
+			name: itemData.name,
+			img: itemData.img,
+			command: `game.trpg.rollItemMacro("${item.name}");`,
+			flags: {"trpg.itemMacro": true}
 		});
-	}
+
+	  // Assign the macro to the hotbar
+	const macro = game.macros.find(m => {
+		return (m.name === macroData.name) && (m.command === macroData.command) && m.isAuthor;
+	}) || await Macro.create(macroData);
 	game.user.assignHotbarMacro(macro, slot);
 	return false;
 }

@@ -75,7 +75,7 @@ export default class ActorTypeConfig extends FormApplication {
 	/** @override */
 	async _updateObject(event, formData) {
 		const typeObject = foundry.utils.expandObject(formData);
-		return this.object.update({ "data.details.type": typeObject });
+		return this.object.update({ "system.details.type": typeObject });
 	}
 
 	/* -------------------------------------------- */

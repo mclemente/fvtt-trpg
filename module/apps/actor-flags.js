@@ -101,7 +101,7 @@ export default class ActorSheetFlags extends DocumentSheet {
 			{ name: "data.bonuses.spell.dc", label: "TRPG.BonusSpellDC" },
 		];
 		for (let b of bonuses) {
-			b.value = foundry.utils.getProperty(this.object.data._source, b.name) || "";
+			b.value = foundry.utils.getProperty(this.object._source, b.name) || "";
 		}
 		return bonuses;
 	}

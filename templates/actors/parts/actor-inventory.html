@@ -14,7 +14,6 @@
     </ol>
     {{/unless}}
 
-    {{#unless isVehicle}}
     <ul class="filter-list flexrow" data-filter="inventory">
         <li class="filter-item" data-filter="full">{{localize "TRPG.FullAction"}}</li>
         <li class="filter-item" data-filter="action">{{localize "TRPG.Action"}}</li>
@@ -22,7 +21,6 @@
         <li class="filter-item" data-filter="reaction">{{localize "TRPG.Reaction"}}</li>
         <li class="filter-item" data-filter="equipped">{{localize "TRPG.Equipped"}}</li>
     </ul>
-    {{/unless}}
 </div>
 
 <ol class="items-list inventory-list">
@@ -114,9 +112,7 @@
 
             {{#if ../../owner}}
             <div class="item-controls flexrow">
-                {{#unless @root.isVehicle}}
                 <a class="item-control item-toggle {{item.toggleClass}}" title='{{item.toggleTitle}}'><i class="fas fa-shield-alt"></i></a>
-                {{/unless}}
                 {{#unless section.editableName}}
                 <a class="item-control item-edit" title='{{localize "TRPG.ItemEdit"}}'><i class="fas fa-edit"></i></a>
                 {{/unless}}

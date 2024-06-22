@@ -42,17 +42,17 @@ export default class TraitSelector extends DocumentSheet {
 
 	/** @override */
 	getData() {
-		const attr = foundry.utils.getProperty(this.object.data, this.attribute);
+		const attr = foundry.utils.getProperty(this.object, this.attribute);
 		const o = this.options;
 		const value = o.valueKey ? foundry.utils.getProperty(attr, o.valueKey) ?? [] : attr;
 		const custom = o.customKey ? foundry.utils.getProperty(attr, o.customKey) ?? "" : "";
 
 		// Populate choices
-		const choices = Object.entries(o.choices).reduce((obj, e) => {
+		const choices = o.choices ? Object.entries(o.choices).reduce((obj, e) => {
 			let [k, v] = e;
 			obj[k] = { label: v, chosen: attr ? value.includes(k) : false };
 			return obj;
-		}, {});
+		}, {}) : {};
 
 		// Return data
 		return {

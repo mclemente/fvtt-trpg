@@ -118,28 +118,6 @@ export const registerSystemSettings = function () {
 		type: Boolean,
 	});
 
-	/**
-	 * Remember last-used polymorph settings.
-	 */
-	game.settings.register("trpg", "polymorphSettings", {
-		scope: "client",
-		default: {
-			keepPhysical: false,
-			keepMental: false,
-			keepSaves: false,
-			keepSkills: false,
-			mergeSaves: false,
-			mergeSkills: false,
-			keepClass: false,
-			keepFeats: false,
-			keepSpells: false,
-			keepItems: false,
-			keepBio: false,
-			keepVision: true,
-			transformTokens: true,
-		},
-	});
-
 	//Bonus Dice
 	game.settings.register("trpg", "pontoDeAcao", {
 		type: Object,

@@ -26,13 +26,11 @@ import ActorSheet5eCharacter from "./module/actor/sheets/character.js";
 import ActorSheet5eNPC from "./module/actor/sheets/npc.js";
 import AbilityUseDialog from "./module/apps/ability-use-dialog.js";
 import ActorSheetFlags from "./module/apps/actor-flags.js";
-import AbilityTemplate from "./module/pixi/ability-template.js";
-// import ActorSheet5eVehicle from "./module/actor/sheets/vehicle.js";
 import ActorMovementConfig from "./module/apps/movement-config.js";
 import ActorSensesConfig from "./module/apps/senses-config.js";
-import ShortRestDialog from "./module/apps/short-rest.js";
 import TraitSelector from "./module/apps/trait-selector.js";
 import ItemSheet5e from "./module/item/sheet.js";
+import AbilityTemplate from "./module/pixi/ability-template.js";
 
 // Import Helpers
 import ActiveEffect5e from "./module/active-effect.js";
@@ -55,9 +53,7 @@ Hooks.once("init", function () {
 			ActorSheetFlags,
 			ActorSheet5eCharacter,
 			ActorSheet5eNPC,
-			// ActorSheet5eVehicle,
 			ItemSheet5e,
-			ShortRestDialog,
 			TraitSelector,
 			ActorMovementConfig,
 			ActorSensesConfig,
@@ -116,11 +112,6 @@ Hooks.once("init", function () {
 		makeDefault: true,
 		label: "TRPG.SheetClassNPC",
 	});
-	// Actors.registerSheet("trpg", ActorSheet5eVehicle, {
-	//   types: ['vehicle'],
-	//   makeDefault: true,
-	//   label: "TRPG.SheetClassVehicle"
-	// });
 	Items.unregisterSheet("core", ItemSheet);
 	Items.registerSheet("trpg", ItemSheet5e, {
 		makeDefault: true,
@@ -165,7 +156,6 @@ Hooks.once("setup", function () {
 		"limitedUsePeriods",
 		"movementTypes",
 		"movementUnits",
-		"polymorphSettings",
 		"proficiencyLevels",
 		"saves",
 		"senses",
@@ -177,7 +167,6 @@ Hooks.once("setup", function () {
 		"spellSchools",
 		"targetTypes",
 		"timePeriods",
-		"vehicleTypes",
 		"weaponProficiencies",
 		"weaponProperties",
 		"weaponTypes",
@@ -280,7 +269,6 @@ Hooks.on("renderSidebarTab", (app, html) => {
 });
 //Skill Bonus
 Hooks.on("renderActorSheet", (app, html, data) => injectActorSheet(app, html, data));
-Hooks.on("getActorDirectoryEntryContext", Actor5e.addDirectoryContextOptions);
 
 // FIXME: This helper is needed for the vehicle sheet. It should probably be refactored.
 Handlebars.registerHelper("getProperty", function (data, property) {

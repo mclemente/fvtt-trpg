@@ -198,14 +198,14 @@ export default class D20Roll extends Roll {
 		// Append a situational bonus term
 		if (form.bonus.value) {
 			const bonus = new Roll(form.bonus.value, this.data);
-			if (!(bonus.terms[0] instanceof OperatorTerm)) this.terms.push(new OperatorTerm({ operator: "+" }));
+			if (!(bonus.terms[0] instanceof foundry.dice.terms.OperatorTerm)) this.terms.push(new foundry.dice.terms.OperatorTerm({ operator: "+" }));
 			this.terms = this.terms.concat(bonus.terms);
 		}
 
 		// Customize the modifier
 		if (form.ability?.value) {
 			const abl = this.data.abilities[form.ability.value];
-			this.terms.findSplice((t) => t.term === "@mod", new NumericTerm({ number: abl.mod }));
+			this.terms.findSplice((t) => t.term === "@mod", new foundry.dice.terms.NumericTerm({ number: abl.mod }));
 			this.options.flavor += ` (${CONFIG.TRPG.abilities[form.ability.value]})`;
 		}
 

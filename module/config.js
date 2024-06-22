@@ -131,7 +131,6 @@ TRPG.abilityActivationTypes = {
 	free: "TRPG.FreeAction",
 	// "legendary": "TRPG.LegAct",
 	// "lair": "TRPG.LairAct",
-	// "crew": "TRPG.VehicleCrewAction"
 };
 
 /* -------------------------------------------- */
@@ -269,20 +268,7 @@ TRPG.equipmentTypes = {
 	bonus: "TRPG.EquipmentBonus",
 	clothing: "TRPG.EquipmentClothing",
 	trinket: "TRPG.EquipmentTrinket",
-	vehicle: "TRPG.EquipmentVehicle",
 	...TRPG.armorTypes,
-};
-
-/* -------------------------------------------- */
-
-/**
- * The various types of vehicles in which characters can be proficient.
- * @enum {string}
- */
-TRPG.vehicleTypes = {
-	air: "TRPG.VehicleTypeAir",
-	land: "TRPG.VehicleTypeLand",
-	water: "TRPG.VehicleTypeWater",
 };
 
 /* -------------------------------------------- */
@@ -480,7 +466,6 @@ for (let [k, v] of Object.entries(TRPG.movementUnits)) {
 TRPG.encumbrance = {
 	currencyPerWeight: 1, //10 grams
 	strMultiplier: 10, //Strength value * 10
-	vehicleWeightMultiplier: 1000, // 1000 kg in a ton
 };
 
 /* -------------------------------------------- */
@@ -788,24 +773,6 @@ TRPG.SPELL_SLOT_TABLE = [
 
 /* -------------------------------------------- */
 
-// Polymorph options.
-TRPG.polymorphSettings = {
-	keepPhysical: "TRPG.PolymorphKeepPhysical",
-	keepMental: "TRPG.PolymorphKeepMental",
-	keepSaves: "TRPG.PolymorphKeepSaves",
-	keepSkills: "TRPG.PolymorphKeepSkills",
-	mergeSaves: "TRPG.PolymorphMergeSaves",
-	mergeSkills: "TRPG.PolymorphMergeSkills",
-	keepClass: "TRPG.PolymorphKeepClass",
-	keepFeats: "TRPG.PolymorphKeepFeats",
-	keepSpells: "TRPG.PolymorphKeepSpells",
-	keepItems: "TRPG.PolymorphKeepItems",
-	keepBio: "TRPG.PolymorphKeepBio",
-	keepVision: "TRPG.PolymorphKeepVision",
-};
-
-/* -------------------------------------------- */
-
 /**
  * Skill, ability, and tool proficiency levels
  * Each level provides a proficiency multiplier
@@ -901,6 +868,3 @@ TRPG.classFeatures = ClassFeatures;
 
 // Configure Optional Character Flags
 TRPG.characterFlags = {};
-
-// Configure allowed status flags
-TRPG.allowedActorFlags = ["isPolymorphed", "originalActor"].concat(Object.keys(TRPG.characterFlags));

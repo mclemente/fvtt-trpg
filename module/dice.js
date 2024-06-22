@@ -25,10 +25,10 @@ export function simplifyRollFormula(formula, data, { constantFirst = false } = {
 
 	for (let term of terms) {
 		// For each term
-		if (term instanceof OperatorTerm) operators.push(term); // If the term is an addition/subtraction operator, push the term into the operators array
+		if (term instanceof foundry.dice.terms.OperatorTerm) operators.push(term); // If the term is an addition/subtraction operator, push the term into the operators array
 		else {
 			// Otherwise the term is not an operator
-			if (term instanceof DiceTerm) {
+			if (term instanceof foundry.dice.terms.DiceTerm) {
 				// If the term is something rollable
 				rollableTerms.push(...operators); // Place all the operators into the rollableTerms array
 				rollableTerms.push(term); // Then place this rollable term into it as well
@@ -70,9 +70,9 @@ export function simplifyRollFormula(formula, data, { constantFirst = false } = {
  * @return {Boolean} True when unsupported, false if supported
  */
 function _isUnsupportedTerm(term) {
-	const diceTerm = term instanceof DiceTerm;
-	const operator = term instanceof OperatorTerm && ["+", "-"].includes(term.operator);
-	const number = term instanceof NumericTerm;
+	const diceTerm = term instanceof foundry.dice.terms.DiceTerm;
+	const operator = term instanceof foundry.dice.terms.OperatorTerm && ["+", "-"].includes(term.operator);
+	const number = term instanceof foundry.dice.terms.NumericTerm;
 
 	return !(diceTerm || operator || number);
 }

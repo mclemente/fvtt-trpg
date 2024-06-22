@@ -1,4 +1,3 @@
-{{#unless isVehicle}}
 <div class="inventory-filters flexrow">
     <ul class="filter-list flexrow" data-filter="features">
         <li class="filter-item" data-filter="full">{{localize "TRPG.FullAction"}}</li>
@@ -7,7 +6,6 @@
         <li class="filter-item" data-filter="reaction">{{localize "TRPG.Reaction"}}</li>
     </ul>
 </div>
-{{/unless}}
 
 <ol class="items-list inventory-list">
 {{#each sections as |section sid|}}

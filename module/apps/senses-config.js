@@ -24,7 +24,7 @@ export default class ActorSensesConfig extends DocumentSheet {
 
 	/** @inheritdoc */
 	getData(options) {
-		const senses = foundry.utils.getProperty(this.document.data._source, "data.attributes.senses") || {};
+		const senses = this.document.system.attributes.senses;
 		const data = {
 			senses: {},
 			special: senses.special ?? "",

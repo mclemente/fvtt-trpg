@@ -44,7 +44,7 @@ export default class DamageRoll extends Roll {
 		let flatBonus = 0;
 		for (let [i, term] of this.terms.entries()) {
 			// Multiply dice terms
-			if (term instanceof DiceTerm) {
+			if (term instanceof foundry.dice.terms.DiceTerm) {
 				term.options.baseNumber = term.options.baseNumber ?? term.number; // Reset back
 				term.number = term.options.baseNumber;
 				if (this.isCritical) {
@@ -64,7 +64,7 @@ export default class DamageRoll extends Roll {
 			}
 
 			// Multiply numeric terms
-			else if (this.options.multiplyNumeric && term instanceof NumericTerm) {
+			else if (this.options.multiplyNumeric && term instanceof foundry.dice.terms.NumericTerm) {
 				term.options.baseNumber = term.options.baseNumber ?? term.number; // Reset back
 				term.number = term.options.baseNumber;
 				if (this.isCritical) {
@@ -76,8 +76,8 @@ export default class DamageRoll extends Roll {
 
 		// Add powerful critical bonus
 		if (this.options.powerfulCritical && flatBonus > 0) {
-			this.terms.push(new OperatorTerm({ operator: "+" }));
-			this.terms.push(new NumericTerm({ number: flatBonus }, { flavor: game.i18n.localize("TRPG.PowerfulCritical") }));
+			this.terms.push(new foundry.dice.terms.OperatorTerm({ operator: "+" }));
+			this.terms.push(new foundry.dice.terms.NumericTerm({ number: flatBonus }, { flavor: game.i18n.localize("TRPG.PowerfulCritical") }));
 		}
 
 		// Re-compile the underlying formula
@@ -159,7 +159,7 @@ export default class DamageRoll extends Roll {
 		// Append a situational bonus term
 		if (form.bonus.value) {
 			const bonus = new Roll(form.bonus.value, this.data);
-			if (!(bonus.terms[0] instanceof OperatorTerm)) this.terms.push(new OperatorTerm({ operator: "+" }));
+			if (!(bonus.terms[0] instanceof foundry.dice.terms.OperatorTerm)) this.terms.push(new foundry.dice.terms.OperatorTerm({ operator: "+" }));
 			this.terms = this.terms.concat(bonus.terms);
 		}
 

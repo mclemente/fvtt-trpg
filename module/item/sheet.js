@@ -42,52 +42,43 @@ export default class ItemSheet5e extends ItemSheet {
 
 	/** @override */
 	async getData(options) {
-		const data = super.getData(options);
-		const itemData = data.data;
-		data.system = data.item.system;
-		data.labels = this.item.labels;
-		data.config = CONFIG.TRPG;
-		data.idj = game.settings.get("trpg", "idjMode");
+		const context = super.getData(options);
+		context.system = context.item.system;
+		context.labels = this.item.labels;
+		context.config = CONFIG.TRPG;
+		context.idj = game.settings.get("trpg", "idjMode");
 
 		// Item Type, Status, and Details
-		data.itemType = game.i18n.localize(`TYPES.Item.${data.item.type}`);
-		data.itemStatus = this._getItemStatus(itemData);
-		data.itemProperties = this._getItemProperties(itemData);
-		data.isPhysical = itemData.system.hasOwnProperty("quantity");
+		context.itemType = game.i18n.localize(`TYPES.Item.${context.item.type}`);
+		context.itemStatus = this._getItemStatus(context.item);
+		context.itemProperties = this._getItemProperties(context.item);
+		context.isPhysical = context.system.hasOwnProperty("quantity");
 
 		// Potential consumption targets
-		data.abilityConsumptionTargets = this._getItemConsumptionTargets(itemData);
+		context.abilityConsumptionTargets = this._getItemConsumptionTargets(context.item);
 
 		// Action Details
-		data.hasAttackRoll = this.item.hasAttack;
-		data.isHealing = itemData.system.actionType === "heal";
-		data.isFlatDC = foundry.utils.getProperty(itemData, "system.save.scaling") === "flat";
-		data.isLine = ["line", "wall"].includes(itemData.system.target?.type);
+		context.hasAttackRoll = this.item.hasAttack;
+		context.isHealing = context.system.actionType === "heal";
+		context.isFlatDC = foundry.utils.getProperty(context.item, "system.save.scaling") === "flat";
+		context.isLine = ["line", "wall"].includes(context.system.target?.type);
 
 		// Original maximum uses formula
 		const sourceMax = foundry.utils.getProperty(this.item._source, "system.uses.max");
-		if (sourceMax) itemData.system.uses.max = sourceMax;
-
-		// Vehicles
-		data.isCrewed = itemData.system.activation?.type === "crew";
-		data.isMountable = this._isItemMountable(itemData);
+		if (sourceMax) system.system.uses.max = sourceMax;
 
 		// Armor Class
-		data.isArmor = itemData.system.armor?.type in data.config.armorTypes;
-		data.hasAC = data.isArmor || data.isMountable;
+		context.isArmor = context.system.armor?.type in context.config.armorTypes;
+		context.hasAC = context.isArmor || context.isMountable;
 
 		// Prepare Active Effects
-		data.effects = ActiveEffect5e.prepareActiveEffectCategories(this.item.effects);
+		context.effects = ActiveEffect5e.prepareActiveEffectCategories(this.item.effects);
 
-		// Re-define the template data references (backwards compatible)
-		data.item = itemData;
-		data.data = itemData.system;
-
-		data.descriptionHTML = await TextEditor.enrichHTML(data.system.description.value, {
+		context.descriptionHTML = await TextEditor.enrichHTML(context.system.description.value, {
 			secrets: this.item.isOwner,
 			async: true,
 		});
-		return data;
+		return context;
 	}
 
 	/* -------------------------------------------- */
@@ -221,21 +212,6 @@ export default class ItemSheet5e extends ItemSheet {
 
 	/* -------------------------------------------- */
 
-	/**
-	 * Is this item a separate large object like a siege engine or vehicle
-	 * component that is usually mounted on fixtures rather than equipped, and
-	 * has its own AC and HP.
-	 * @param item
-	 * @returns {boolean}
-	 * @private
-	 */
-	_isItemMountable(item) {
-		const data = item.system;
-		return (item.type === "weapon" && data.weaponType === "siege") || (item.type === "equipment" && data.armor.type === "vehicle");
-	}
-
-	/* -------------------------------------------- */
-
 	/** @inheritdoc */
 	setPosition(position = {}) {
 		if (!(this._minimized || position.height)) {
@@ -318,7 +294,7 @@ export default class ItemSheet5e extends ItemSheet {
 		if (a.classList.contains("add-damage")) {
 			await this._onSubmit(event); // Submit any unsaved changes
 			const damage = this.item.system.damage;
-			return this.item.update({ "data.damage.parts": damage.parts.concat([["", ""]]) });
+			return this.item.update({ "system.damage.parts": damage.parts.concat([["", ""]]) });
 		}
 
 		// Remove a damage component
@@ -327,7 +303,7 @@ export default class ItemSheet5e extends ItemSheet {
 			const li = a.closest(".damage-part");
 			const damage = foundry.utils.deepClone(this.item.system.damage);
 			damage.parts.splice(Number(li.dataset.damagePart), 1);
-			return this.item.update({ "data.damage.parts": damage.parts });
+			return this.item.update({ "system.damage.parts": damage.parts });
 		}
 	}
 

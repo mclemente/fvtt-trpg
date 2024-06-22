@@ -1,6 +1,5 @@
 import LongRestDialog from "../apps/long-rest.js";
 import SelectItemsPrompt from "../apps/select-items-prompt.js";
-import ShortRestDialog from "../apps/short-rest.js";
 import { TRPG } from "../config.js";
 import { d20Roll, damageRoll } from "../dice.js";
 import Item5e from "../item/entity.js";
@@ -34,16 +33,6 @@ export default class Actor5e extends Actor {
 				obj[cls.name.slugify({ strict: true })] = cls;
 				return obj;
 			}, {}));
-	}
-
-	/* -------------------------------------------- */
-
-	/**
-	 * Is this Actor currently polymorphed into some other creature?
-	 * @type {boolean}
-	 */
-	get isPolymorphed() {
-		return this.getFlag("trpg", "isPolymorphed") || false;
 	}
 
 	/* -------------------------------------------- */
@@ -92,8 +81,6 @@ export default class Actor5e extends Actor {
 				return this._prepareCharacterData(this);
 			case "npc":
 				return this._prepareNPCData(this);
-			case "vehicle":
-				return this._prepareVehicleData(this);
 		}
 	}
 
@@ -116,22 +103,6 @@ export default class Actor5e extends Actor {
 		const flags = actorData.flags.trpg || {};
 		const bonuses = foundry.utils.getProperty(data, "bonuses.abilities") || {};
 
-		// Retrieve data for polymorphed actors
-		let originalSaves = null;
-		let originalSkills = null;
-		if (this.isPolymorphed) {
-			const transformOptions = this.getFlag("trpg", "transformOptions");
-			const original = game.actors?.get(this.getFlag("trpg", "originalActor"));
-			if (original) {
-				if (transformOptions.mergeSaves) {
-					originalSaves = original.system.abilities;
-				}
-				if (transformOptions.mergeSkills) {
-					originalSkills = original.system.skills;
-				}
-			}
-		}
-
 		// Ability modifiers
 		const dcBonus = Number.isNumeric(data.bonuses?.spell?.dc) ? parseInt(data.bonuses.spell.dc) : 0;
 		const saveBonus = Number.isNumeric(bonuses.save) ? parseInt(bonuses.save) : 0;
@@ -140,11 +111,6 @@ export default class Actor5e extends Actor {
 			abl.mod = Math.floor((abl.value - 10) / 2);
 			abl.checkBonus = checkBonus;
 			abl.dc = 10 + abl.mod + dcBonus;
-
-			// If we merged saves when transforming, take the highest bonus here.
-			if (originalSaves && abl.proficient) {
-				abl.save = Math.max(abl.save, originalSaves[id].save);
-			}
 		}
 
 		// Saves
@@ -154,26 +120,16 @@ export default class Actor5e extends Actor {
 			abl.prof = abl.proficient ? 3 + data.details.level : Math.floor(data.details.level / 2);
 			abl.saveBonus = saveBonus;
 			abl.save = abl.mod + abl.prof + abl.saveBonus;
-
-			// If we merged saves when transforming, take the highest bonus here.
-			if (originalSaves && abl.proficient) {
-				abl.save = Math.max(abl.save, originalSaves[id].save);
-			}
 		}
 
 		// Inventory encumbrance
 		data.attributes.encumbrance = this._computeEncumbrance(actorData);
 
 		// Prepare skills
-		this._prepareSkills(actorData, bonuses, checkBonus, originalSkills);
+		this._prepareSkills(actorData, bonuses, checkBonus);
 
 		// Reset class store to ensure it is updated with any changes
 		this._classes = undefined;
-
-		// Determine Initiative Modifier
-		const init = data.skills.init;
-		const athlete = flags.remarkableAthlete;
-		const joat = flags.jackOfAllTrades;
 
 		// Cache labels
 		this.labels = {};
@@ -362,7 +318,7 @@ export default class Actor5e extends Actor {
 		const prior = this.getLevelExp(level - 1 || 0);
 		const required = xp.max - prior;
 		const pct = Math.round(((xp.value - prior) * 100) / required);
-		xp.pct = Math.clamped(pct, 0, 100);
+		xp.pct = Math.clamp(pct, 0, 100);
 	}
 
 	/* -------------------------------------------- */
@@ -391,25 +347,13 @@ export default class Actor5e extends Actor {
 	/* -------------------------------------------- */
 
 	/**
-	 * Prepare vehicle type-specific data
-	 * @param actorData
-	 * @private
-	 */
-	_prepareVehicleData(actorData) {}
-
-	/* -------------------------------------------- */
-
-	/**
 	 * Prepare skill checks.
 	 * @param actorData
 	 * @param bonuses Global bonus data.
 	 * @param checkBonus Ability check specific bonus.
-	 * @param originalSkills A transformed actor's original actor's skills.
 	 * @private
 	 */
-	_prepareSkills(actorData, bonuses, checkBonus, originalSkills) {
-		if (actorData.type === "vehicle") return;
-
+	_prepareSkills(actorData, bonuses, checkBonus) {
 		const data = actorData.system;
 		const flags = actorData.flags.trpg || {};
 
@@ -420,7 +364,7 @@ export default class Actor5e extends Actor {
 		const observant = flags.observantFeat;
 		const skillBonus = Number.isNumeric(bonuses.skill) ? parseInt(bonuses.skill) : 0;
 		for (let [id, skl] of Object.entries(data.skills)) {
-			skl.value = Math.clamped(Number(skl.value).toNearest(0.5), 0, 2) ?? 0;
+			skl.value = Math.clamp(Number(skl.value).toNearest(0.5), 0, 2) ?? 0;
 
 			// Remarkable
 			if (athlete && skl.value < 0.5 && feats.remarkableAthlete.abilities.includes(skl.ability)) {
@@ -430,11 +374,6 @@ export default class Actor5e extends Actor {
 			// Jack of All Trades
 			if (joat && skl.value < 0.5) {
 				skl.value = 0.5;
-			}
-
-			// Polymorph Skill Proficiencies
-			if (originalSkills) {
-				skl.value = Math.max(skl.value, originalSkills[id].value);
 			}
 
 			// Compute modifier
@@ -471,7 +410,6 @@ export default class Actor5e extends Actor {
 	 * @private
 	 */
 	_computeSpellcastingProgression(actorData) {
-		if (actorData.type === "vehicle") return;
 		const ad = actorData.system;
 		const spells = ad.spells;
 		const isNPC = actorData.type === "npc";
@@ -479,53 +417,6 @@ export default class Actor5e extends Actor {
 		// Spellcasting DC
 		const spellcastingAbility = ad.abilities[ad.attributes.spellcasting];
 		ad.attributes.spelldc = spellcastingAbility ? spellcastingAbility.dc : 10;
-
-		// Translate the list of classes into spell-casting progression
-		// const progression = {
-		//   total: 0,
-		//   slot: 0
-		// };
-
-		// Keep track of the last seen caster in case we're in a single-caster situation.
-		// let caster = null;
-
-		// Tabulate the total spell-casting progression
-		// const classes = this.data.items.filter(i => i.type === "class");
-		// for ( let cls of classes ) {
-		//   const d = cls.system;
-		//   if ( d.spellcasting.progression === "none" ) continue;
-		//   const levels = d.levels;
-		//   const prog = d.spellcasting.progression;
-
-		//   // Accumulate levels
-		//   switch (prog) {
-		//     case 'half': progression.slot += Math.floor((levels-1) / 4); break;
-		//     case 'twoThirds': break;
-		//     case 'full': progression.slot += levels; break;
-		//   }
-		// }
-
-		// EXCEPTION: single-classed non-full progression rounds up, rather than down
-		// const isSingleClass = (progression.total === 1) && (progression.slot > 0);
-		// if (!isNPC && isSingleClass && ['half'].includes(caster.spellcasting.progression) ) {
-		//   progression.slot = Math.ceil(caster.levels / 4);
-		// }
-
-		// EXCEPTION: NPC with an explicit spell-caster level
-		// if (isNPC && actorData.system.details.spellLevel) {
-		//   progression.slot = actorData.system.details.spellLevel;
-		// }
-
-		// Look up the number of slots per level from the progression table
-		// const levels = Math.clamped(progression.slot, 0, 20);
-		// const slots = TRPG.SPELL_SLOT_TABLE[levels - 1] || [];
-		// for ( let [n, lvl] of Object.entries(spells) ) {
-		//   let i = parseInt(n.slice(-1));
-		//   if ( Number.isNaN(i) ) continue;
-		//   if ( Number.isNumeric(lvl.override) ) lvl.max = Math.max(parseInt(lvl.override), 0);
-		//   else lvl.max = slots[i-1] || 0;
-		//   lvl.value = parseInt(lvl.value);
-		// }
 	}
 
 	/* -------------------------------------------- */
@@ -667,7 +558,7 @@ export default class Actor5e extends Actor {
 		// Compute Encumbrance percentage
 		weight = weight.toNearest(0.1);
 		const max = actorData.system.abilities.str.value * CONFIG.TRPG.encumbrance.strMultiplier * mod;
-		const pct = Math.clamped((weight * 100) / max, 0, 100);
+		const pct = Math.clamp((weight * 100) / max, 0, 100);
 		return { value: weight.toNearest(0.1), max, pct, encumbered: pct > 0.3 };
 	}
 
@@ -708,9 +599,9 @@ export default class Actor5e extends Actor {
 
 		// Reset death save counters
 		// const isDead = this.system.attributes.hp.value <= 0;
-		// if ( isDead && (foundry.utils.getProperty(changed, "data.attributes.hp.value") > 0) ) {
-		//   foundry.utils.setProperty(changed, "data.attributes.death.success", 0);
-		//   foundry.utils.setProperty(changed, "data.attributes.death.failure", 0);
+		// if ( isDead && (foundry.utils.getProperty(changed, "system.attributes.hp.value") > 0) ) {
+		//   foundry.utils.setProperty(changed, "system.attributes.death.success", 0);
+		//   foundry.utils.setProperty(changed, "system.attributes.death.failure", 0);
 		// }
 	}
 
@@ -723,7 +614,7 @@ export default class Actor5e extends Actor {
 	_assignPrimaryClass() {
 		const classes = this.itemTypes.class.sort((a, b) => b.system.levels - a.system.levels);
 		const newPC = classes[0]?.id || "";
-		return this.update({ "data.details.originalClass": newPC });
+		return this.update({ "system.details.originalClass": newPC });
 	}
 
 	/* -------------------------------------------- */
@@ -762,12 +653,12 @@ export default class Actor5e extends Actor {
 
 		// Remaining goes to health
 		const tmpMax = parseInt(hp.tempmax) || 0;
-		const dh = Math.clamped(hp.value - (amount - dt), 0, hp.max + tmpMax);
+		const dh = Math.clamp(hp.value - (amount - dt), 0, hp.max + tmpMax);
 
 		// Update the Actor
 		const updates = {
-			"data.attributes.hp.temp": tmp - dt,
-			"data.attributes.hp.value": dh,
+			"system.attributes.hp.temp": tmp - dt,
+			"system.attributes.hp.value": dh,
 		};
 
 		// Delegate damage application to a hook
@@ -795,12 +686,12 @@ export default class Actor5e extends Actor {
 
 		// Remaining goes to health
 		const tmpMax = parseInt(hp.tempmax) || 0;
-		const dh = Math.clamped(hp.value - (amount - dt), 0, hp.max + tmpMax);
+		const dh = Math.clamp(hp.value - (amount - dt), 0, hp.max + tmpMax);
 
 		// Update the Actor
 		const updates = {
-			"data.attributes.mp.temp": tmp - dt,
-			"data.attributes.mp.value": dh,
+			"system.attributes.mp.temp": tmp - dt,
+			"system.attributes.mp.value": dh,
 		};
 
 		// Delegate damage application to a hook
@@ -888,20 +779,6 @@ export default class Actor5e extends Actor {
 	rollAbility(abilityId, options = {}) {
 		const label = CONFIG.TRPG.abilities[abilityId];
 		this.rollAbilityTest(abilityId, options);
-		// new Dialog({
-		//   title: game.i18n.format("TRPG.AbilityPromptTitle", {ability: label}),
-		//   content: `<p>${game.i18n.format("TRPG.AbilityPromptText", {ability: label})}</p>`,
-		//   buttons: {
-		//     test: {
-		//       label: game.i18n.localize("TRPG.ActionAbil"),
-		//       callback: () => this.rollAbilityTest(abilityId, options)
-		//     },
-		//     save: {
-		//       label: game.i18n.localize("TRPG.ActionSave"),
-		//       callback: () => this.rollAbilitySave(abilityId, options)
-		//     }
-		//   }
-		// }).render(true);
 	}
 
 	/* -------------------------------------------- */
@@ -922,7 +799,7 @@ export default class Actor5e extends Actor {
 		const data = { mod: abl.mod };
 
 		// Add feat-related proficiency bonuses
-		const feats = this.data.flags.trpg || {};
+		const feats = this.flags.trpg || {};
 		if (feats.remarkableAthlete && TRPG.characterFlags.remarkableAthlete.abilities.includes(abilityId)) {
 			parts.push("@proficiency");
 			data.proficiency = Math.ceil(0.5 * this.system.attributes.prof);
@@ -1074,9 +951,9 @@ export default class Actor5e extends Actor {
 			// Critical Success = revive with 1hp
 			if (d20 === 20) {
 				await this.update({
-					"data.attributes.death.success": 0,
-					"data.attributes.death.failure": 0,
-					"data.attributes.hp.value": 1,
+					"system.attributes.death.success": 0,
+					"system.attributes.death.failure": 0,
+					"system.attributes.hp.value": 1,
 				});
 				chatString = "TRPG.DeathSaveCriticalSuccess";
 			}
@@ -1084,20 +961,20 @@ export default class Actor5e extends Actor {
 			// 3 Successes = survive and reset checks
 			else if (successes === 3) {
 				await this.update({
-					"data.attributes.death.success": 0,
-					"data.attributes.death.failure": 0,
+					"system.attributes.death.success": 0,
+					"system.attributes.death.failure": 0,
 				});
 				chatString = "TRPG.DeathSaveSuccess";
 			}
 
 			// Increment successes
-			else await this.update({ "data.attributes.death.success": Math.clamped(successes, 0, 3) });
+			else await this.update({ "system.attributes.death.success": Math.clamp(successes, 0, 3) });
 		}
 
 		// Save failure
 		else {
 			let failures = (death.failure || 0) + (d20 === 1 ? 2 : 1);
-			await this.update({ "data.attributes.death.failure": Math.clamped(failures, 0, 3) });
+			await this.update({ "system.attributes.death.failure": Math.clamp(failures, 0, 3) });
 			if (failures >= 3) {
 				// 3 Failures = death
 				chatString = "TRPG.DeathSaveFailure";
@@ -1172,7 +1049,7 @@ export default class Actor5e extends Actor {
 		await cls.update({ "data.hitDiceUsed": cls.system.hitDiceUsed + 1 });
 		const hp = this.system.attributes.hp;
 		const dhp = Math.min(hp.max + (hp.tempmax ?? 0) - hp.value, roll.total);
-		await this.update({ "data.attributes.hp.value": hp.value + dhp });
+		await this.update({ "system.attributes.hp.value": hp.value + dhp });
 		return roll;
 	}
 
@@ -1189,42 +1066,6 @@ export default class Actor5e extends Actor {
 	 * @property {boolean} longRest            Whether the rest type was a long rest.
 	 * @property {boolean} newDay              Whether a new day occurred during the rest.
 	 */
-
-	/* -------------------------------------------- */
-
-	/**
-	 * Take a short rest, possibly spending hit dice and recovering resources, item uses, and pact slots.
-	 *
-	 * @param {object} [options]
-	 * @param {boolean} [options.dialog=true]         Present a dialog window which allows for rolling hit dice as part
-	 *                                                of the Short Rest and selecting whether a new day has occurred.
-	 * @param {boolean} [options.chat=true]           Summarize the results of the rest workflow as a chat message.
-	 * @param {boolean} [options.autoHD=false]        Automatically spend Hit Dice if you are missing 3 or more hit points.
-	 * @param {boolean} [options.autoHDThreshold=3]   A number of missing hit points which would trigger an automatic HD roll.
-	 * @return {Promise.<RestResult>}                 A Promise which resolves once the short rest workflow has completed.
-	 */
-	async shortRest({ dialog = true, chat = true, autoHD = false, autoHDThreshold = 3 } = {}) {
-		// Take note of the initial hit points and number of hit dice the Actor has
-		const hd0 = this.system.attributes.hd;
-		const hp0 = this.system.attributes.hp.value;
-		let newDay = false;
-
-		// Display a Dialog for rolling hit dice
-		if (dialog) {
-			try {
-				newDay = await ShortRestDialog.shortRestDialog({ actor: this, canRoll: hd0 > 0 });
-			} catch (err) {
-				return;
-			}
-		}
-
-		// Automatically spend hit dice
-		else if (autoHD) {
-			await this.autoSpendHitDice({ threshold: autoHDThreshold });
-		}
-
-		return this._rest(chat, newDay, false, this.system.attributes.hd - hd0, this.system.attributes.hp.value - hp0);
-	}
 
 	/* -------------------------------------------- */
 
@@ -1400,13 +1241,13 @@ export default class Actor5e extends Actor {
 		let recoveredHP = Math.min(newValue, max);
 
 		if (recoverTempMax) {
-			updates["data.attributes.hp.tempmax"] = 0;
+			updates["system.attributes.hp.tempmax"] = 0;
 		} else {
 			max += data.attributes.hp.tempmax;
 		}
-		updates["data.attributes.hp.value"] = Math.min(newValue, max);
+		updates["system.attributes.hp.value"] = Math.min(newValue, max);
 		if (recoverTemp) {
-			updates["data.attributes.hp.temp"] = 0;
+			updates["system.attributes.hp.temp"] = 0;
 		}
 
 		return { updates, hitPointsRecovered: recoveredHP - current };
@@ -1421,13 +1262,13 @@ export default class Actor5e extends Actor {
 		let recoveredHP = Math.min(newValue, max);
 
 		if (recoverTempMax) {
-			updates["data.attributes.mp.tempmax"] = 0;
+			updates["system.attributes.mp.tempmax"] = 0;
 		} else {
 			max += data.attributes.mp.tempmax;
 		}
-		updates["data.attributes.mp.value"] = Math.min(newValue, max);
+		updates["system.attributes.mp.value"] = Math.min(newValue, max);
 		if (recoverTemp) {
-			updates["data.attributes.mp.temp"] = 0;
+			updates["system.attributes.mp.temp"] = 0;
 		}
 
 		return { updates, magicPointsRecovered: recoveredHP - current };
@@ -1564,267 +1405,6 @@ export default class Actor5e extends Actor {
 	/* -------------------------------------------- */
 
 	/**
-	 * Transform this Actor into another one.
-	 *
-	 * @param {Actor5e} target            The target Actor.
-	 * @param {boolean} [keepPhysical]    Keep physical abilities (str, dex, con)
-	 * @param {boolean} [keepMental]      Keep mental abilities (int, wis, cha)
-	 * @param {boolean} [keepSaves]       Keep saving throw proficiencies
-	 * @param {boolean} [keepSkills]      Keep skill proficiencies
-	 * @param {boolean} [mergeSaves]      Take the maximum of the save proficiencies
-	 * @param {boolean} [mergeSkills]     Take the maximum of the skill proficiencies
-	 * @param {boolean} [keepClass]       Keep proficiency bonus
-	 * @param {boolean} [keepFeats]       Keep features
-	 * @param {boolean} [keepSpells]      Keep spells
-	 * @param {boolean} [keepItems]       Keep items
-	 * @param {boolean} [keepBio]         Keep biography
-	 * @param {boolean} [keepVision]      Keep vision
-	 * @param {boolean} [transformTokens] Transform linked tokens too
-	 */
-	async transformInto(
-		target,
-		{
-			keepPhysical = false,
-			keepMental = false,
-			keepSaves = false,
-			keepSkills = false,
-			mergeSaves = false,
-			mergeSkills = false,
-			keepClass = false,
-			keepFeats = false,
-			keepSpells = false,
-			keepItems = false,
-			keepBio = false,
-			keepVision = false,
-			transformTokens = true,
-		} = {}
-	) {
-		// Ensure the player is allowed to polymorph
-		const allowed = game.settings.get("trpg", "allowPolymorphing");
-		if (!allowed && !game.user.isGM) {
-			return ui.notifications.warn(game.i18n.localize("TRPG.PolymorphWarn"));
-		}
-
-		// Get the original Actor data and the new source data
-		const o = this.toJSON();
-		o.flags.trpg = o.flags.trpg || {};
-		o.flags.trpg.transformOptions = { mergeSkills, mergeSaves };
-		const source = target.toJSON();
-
-		// Prepare new data to merge from the source
-		const d = {
-			type: o.type, // Remain the same actor type
-			name: `${o.name} (${source.name})`, // Append the new shape to your old name
-			data: source.data, // Get the data model of your new form
-			items: source.items, // Get the items of your new form
-			effects: o.effects.concat(source.effects), // Combine active effects from both forms
-			img: source.img, // New appearance
-			permission: o.permission, // Use the original actor permissions
-			folder: o.folder, // Be displayed in the same sidebar folder
-			flags: o.flags, // Use the original actor flags
-		};
-
-		// Specifically delete some data attributes
-		delete d.data.resources; // Don't change your resource pools
-		delete d.data.currency; // Don't lose currency
-		delete d.data.bonuses; // Don't lose global bonuses
-
-		// Specific additional adjustments
-		d.data.details.alignment = o.data.details.alignment; // Don't change alignment
-		d.data.attributes.exhaustion = o.data.attributes.exhaustion; // Keep your prior exhaustion level
-		d.data.attributes.inspiration = o.data.attributes.inspiration; // Keep inspiration
-		d.data.spells = o.data.spells; // Keep spell slots
-		d.data.attributes.ac.flat = target.system.attributes.ac.value; // Override AC
-
-		// Token appearance updates
-		d.token = { name: d.name };
-		for (let k of ["width", "height", "scale", "img", "mirrorX", "mirrorY", "tint", "alpha", "lockRotation"]) {
-			d.token[k] = source.token[k];
-		}
-		const vision = keepVision ? o.token : source.token;
-		for (let k of ["dimSight", "brightSight", "dimLight", "brightLight", "vision", "sightAngle"]) {
-			d.token[k] = vision[k];
-		}
-		if (source.token.randomImg) {
-			const images = await target.getTokenImages();
-			d.token.img = images[Math.floor(Math.random() * images.length)];
-		}
-
-		// Transfer ability scores
-		const abilities = d.data.abilities;
-		for (let k of Object.keys(abilities)) {
-			const oa = o.data.abilities[k];
-			const prof = abilities[k].proficient;
-			if (keepPhysical && ["str", "dex", "con"].includes(k)) abilities[k] = oa;
-			else if (keepMental && ["int", "wis", "cha"].includes(k)) abilities[k] = oa;
-		}
-
-		const saves = d.data.saves;
-		for (let k of Object.keys(saves)) {
-			const oa = o.data.saves[k];
-			const prof = saves[k].proficient;
-			if (keepSaves) saves[k].proficient = oa.proficient;
-			else if (mergeSaves) saves[k].proficient = Math.max(prof, oa.proficient);
-		}
-
-		// Transfer skills
-		if (keepSkills) d.data.skills = o.data.skills;
-		else if (mergeSkills) {
-			for (let [k, s] of Object.entries(d.data.skills)) {
-				s.value = Math.max(s.value, o.data.skills[k].value);
-			}
-		}
-
-		// Keep specific items from the original data
-		d.items = d.items.concat(
-			o.items.filter((i) => {
-				if (i.type === "class") return keepClass;
-				else if (i.type === "feat") return keepFeats;
-				else if (i.type === "spell") return keepSpells;
-				else return keepItems;
-			})
-		);
-
-		// Transfer classes for NPCs
-		if (!keepClass && d.data.details.cr) {
-			d.items.push({
-				type: "class",
-				name: game.i18n.localize("TRPG.PolymorphTmpClass"),
-				data: { levels: d.data.details.cr },
-			});
-		}
-
-		// Keep biography
-		if (keepBio) d.data.details.biography = o.data.details.biography;
-
-		// Keep senses
-		if (keepVision) d.data.traits.senses = o.data.traits.senses;
-
-		// Set new data flags
-		if (!this.isPolymorphed || !d.flags.trpg.originalActor) d.flags.trpg.originalActor = this.id;
-		d.flags.trpg.isPolymorphed = true;
-
-		// Update unlinked Tokens in place since they can simply be re-dropped from the base actor
-		if (this.isToken) {
-			const tokenData = d.token;
-			tokenData.actorData = d;
-			delete tokenData.actorData.token;
-			return this.token.update(tokenData);
-		}
-
-		// Update regular Actors by creating a new Actor with the Polymorphed data
-		await this.sheet.close();
-		Hooks.callAll("trpg.transformActor", this, target, d, {
-			keepPhysical,
-			keepMental,
-			keepSaves,
-			keepSkills,
-			mergeSaves,
-			mergeSkills,
-			keepClass,
-			keepFeats,
-			keepSpells,
-			keepItems,
-			keepBio,
-			keepVision,
-			transformTokens,
-		});
-		const newActor = await this.constructor.create(d, { renderSheet: true });
-
-		// Update placed Token instances
-		if (!transformTokens) return;
-		const tokens = this.getActiveTokens(true);
-		const updates = tokens.map((t) => {
-			const newTokenData = foundry.utils.deepClone(d.token);
-			newTokenData._id = t.data._id;
-			newTokenData.actorId = newActor.id;
-			newTokenData.actorLink = true;
-			return newTokenData;
-		});
-		return canvas.scene?.updateEmbeddedDocuments("Token", updates);
-	}
-
-	/* -------------------------------------------- */
-
-	/**
-	 * If this actor was transformed with transformTokens enabled, then its
-	 * active tokens need to be returned to their original state. If not, then
-	 * we can safely just delete this actor.
-	 */
-	async revertOriginalForm() {
-		if (!this.isPolymorphed) return;
-		if (!this.isOwner) {
-			return ui.notifications.warn(game.i18n.localize("TRPG.PolymorphRevertWarn"));
-		}
-
-		// If we are reverting an unlinked token, simply replace it with the base actor prototype
-		if (this.isToken) {
-			const baseActor = game.actors.get(this.token.data.actorId);
-			const prototypeTokenData = await baseActor.getTokenData();
-			const tokenUpdate = { actorData: {} };
-			for (let k of ["width", "height", "scale", "img", "mirrorX", "mirrorY", "tint", "alpha", "lockRotation", "name"]) {
-				tokenUpdate[k] = prototypeTokenData[k];
-			}
-			await this.token.update(tokenUpdate, { recursive: false });
-			await this.sheet.close();
-			const actor = this.token.getActor();
-			actor.sheet.render(true);
-			return actor;
-		}
-
-		// Obtain a reference to the original actor
-		const original = game.actors.get(this.getFlag("trpg", "originalActor"));
-		if (!original) return;
-
-		// Get the Tokens which represent this actor
-		if (canvas.ready) {
-			const tokens = this.getActiveTokens(true);
-			const tokenData = await original.getTokenData();
-			const tokenUpdates = tokens.map((t) => {
-				const update = duplicate(tokenData);
-				update._id = t.id;
-				delete update.x;
-				delete update.y;
-				return update;
-			});
-			canvas.scene.updateEmbeddedDocuments("Token", tokenUpdates);
-		}
-
-		// Delete the polymorphed version of the actor, if possible
-		const isRendered = this.sheet.rendered;
-		if (game.user.isGM) await this.delete();
-		else if (isRendered) this.sheet.close();
-		if (isRendered) original.sheet.render(isRendered);
-		return original;
-	}
-
-	/* -------------------------------------------- */
-
-	/**
-	 * Add additional system-specific sidebar directory context menu options for Actor entities
-	 * @param {jQuery} html         The sidebar HTML
-	 * @param {Array} entryOptions  The default array of context menu options
-	 */
-	static addDirectoryContextOptions(html, entryOptions) {
-		entryOptions.push({
-			name: "TRPG.PolymorphRestoreTransformation",
-			icon: '<i class="fas fa-backward"></i>',
-			callback: (li) => {
-				const actor = game.actors.get(li.data("entityId"));
-				return actor.revertOriginalForm();
-			},
-			condition: (li) => {
-				const allowed = game.settings.get("trpg", "allowPolymorphing");
-				if (!allowed && !game.user.isGM) return false;
-				const actor = game.actors.get(li.data("entityId"));
-				return actor && actor.isPolymorphed;
-			},
-		});
-	}
-
-	/* -------------------------------------------- */
-
-	/**
 	 * Format a type object into a string.
 	 * @param {object} typeData          The type data to convert to a string.
 	 * @returns {string}
@@ -1874,11 +1454,9 @@ export default class Actor5e extends Actor {
 		for (const key of values) {
 			if (profs[key]) {
 				data.selected[key] = profs[key];
-			} else if (itemTypes && itemTypes[key]) {
+			} else if (pack && itemTypes && itemTypes[key]) {
 				const item = pack.index.get(itemTypes[key]);
 				data.selected[key] = item.name;
-			} else if (type === "tool" && CONFIG.TRPG.vehicleTypes[key]) {
-				data.selected[key] = CONFIG.TRPG.vehicleTypes[key];
 			}
 		}
 

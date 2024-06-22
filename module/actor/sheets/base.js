@@ -2,13 +2,11 @@ import ActiveEffect5e from "../../active-effect.js";
 import ActorArmorConfig from "../../apps/actor-armor.js";
 import ActorSheetFlags from "../../apps/actor-flags.js";
 import ActorTypeConfig from "../../apps/actor-type.js";
-import ActorHitDiceConfig from "../../apps/hit-dice-config.js";
 import ActorMovementConfig from "../../apps/movement-config.js";
 import ProficiencySelector from "../../apps/proficiency-selector.js";
 import PropertyAttribution from "../../apps/property-attribution.js";
 import ActorSensesConfig from "../../apps/senses-config.js";
 import TraitSelector from "../../apps/trait-selector.js";
-import { TRPG } from "../../config.js";
 import Item5e from "../../item/entity.js";
 import Actor5e from "../entity.js";
 
@@ -66,7 +64,7 @@ export default class ActorSheet5e extends ActorSheet {
 		// Basic data
 		let isOwner = this.actor.isOwner;
 		const rollData = this.actor.getRollData.bind(this.actor);
-		const data = {
+		const context = {
 			owner: isOwner,
 			limited: this.actor.limited,
 			options: this.options,
@@ -74,28 +72,27 @@ export default class ActorSheet5e extends ActorSheet {
 			cssClass: isOwner ? "editable" : "locked",
 			isCharacter: this.actor.type === "character",
 			isNPC: this.actor.type === "npc",
-			isVehicle: this.actor.type === "vehicle",
 			config: CONFIG.TRPG,
 			rollData: this.actor.getRollData.bind(this.actor),
 		};
-		const labels = (data.labels = this.actor.labels || {});
+		const labels = (context.labels = this.actor.labels || {});
 
 		// The Actor's data
 		const source = this.actor.toObject();
 		const actorData = this.actor.toObject(false);
-		data.actor = actorData;
-		data.system = actorData.system;
+		context.actor = actorData;
+		context.system = actorData.system;
 
 		// Owned Items
-		data.items = actorData.items;
-		for (let i of data.items) {
+		context.items = actorData.items;
+		for (let i of context.items) {
 			const item = this.actor.items.get(i._id);
 			i.labels = item.labels;
 		}
-		data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+		context.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
 
 		// Labels and filters
-		data.filters = this._filters;
+		context.filters = this._filters;
 
 		// Currency Labels
 		labels.currencies = Object.entries(CONFIG.TRPG.currencies).reduce((obj, [k, c]) => {
@@ -131,32 +128,32 @@ export default class ActorSheet5e extends ActorSheet {
 		}
 
 		// Movement speeds
-		data.movement = this._getMovementSpeed(actorData);
+		context.movement = this._getMovementSpeed(actorData);
 
 		// Senses
-		data.senses = this._getSenses(actorData);
+		context.senses = this._getSenses(actorData);
 
 		// Update traits
 		this._prepareTraits(actorData.system.traits);
 
 		// Prepare owned items
-		this._prepareItems(data);
+		this._prepareItems(context);
 
 		// Prepare active effects
-		data.effects = ActiveEffect5e.prepareActiveEffectCategories(this.actor.effects);
+		context.effects = ActiveEffect5e.prepareActiveEffectCategories(this.actor.effects);
 
 		// Biography HTML enrichment
-		data.biographyHTML = await TextEditor.enrichHTML(data.system.details.biography.value, {
+		context.biographyHTML = await TextEditor.enrichHTML(context.system.details.biography.value, {
 			secrets: this.actor.isOwner,
 			rollData,
 			async: true,
 		});
 
 		// Prepare warnings
-		data.warnings = this.actor._preparationWarnings;
+		context.warnings = this.actor._preparationWarnings;
 
 		// Return data to the sheet
-		return data;
+		return context;
 	}
 
 	/* -------------------------------------------- */
@@ -331,7 +328,7 @@ export default class ActorSheet5e extends ActorSheet {
 			});
 
 		// Bonus
-		if (ac.bonus !== 0) attribution.push(...this._prepareActiveEffectAttributions("data.attributes.ac.bonus"));
+		if (ac.bonus !== 0) attribution.push(...this._prepareActiveEffectAttributions("system.attributes.ac.bonus"));
 
 		// Cover
 		if (ac.cover !== 0)
@@ -666,9 +663,6 @@ export default class ActorSheet5e extends ActorSheet {
 			case "armor":
 				app = new ActorArmorConfig(this.object);
 				break;
-			case "hit-dice":
-				app = new ActorHitDiceConfig(this.object);
-				break;
 			case "movement":
 				app = new ActorMovementConfig(this.object);
 				break;
@@ -712,85 +706,6 @@ export default class ActorSheet5e extends ActorSheet {
 	/* -------------------------------------------- */
 
 	/** @override */
-	async _onDropActor(event, data) {
-		const canPolymorph = game.user.isGM || (this.actor.isOwner && game.settings.get("trpg", "allowPolymorphing"));
-		if (!canPolymorph) return false;
-
-		// Get the target actor
-		let sourceActor = null;
-		if (data.pack) {
-			const pack = game.packs.find((p) => p.collection === data.pack);
-			sourceActor = await pack.getEntity(data.id);
-		} else {
-			sourceActor = game.actors.get(data.id);
-		}
-		if (!sourceActor) return;
-
-		// Define a function to record polymorph settings for future use
-		const rememberOptions = (html) => {
-			const options = {};
-			html.find("input").each((i, el) => {
-				options[el.name] = el.checked;
-			});
-			const settings = foundry.utils.mergeObject(game.settings.get("trpg", "polymorphSettings") || {}, options);
-			game.settings.set("trpg", "polymorphSettings", settings);
-			return settings;
-		};
-
-		// Create and render the Dialog
-		return new Dialog(
-			{
-				title: game.i18n.localize("TRPG.PolymorphPromptTitle"),
-				content: {
-					options: game.settings.get("trpg", "polymorphSettings"),
-					i18n: TRPG.polymorphSettings,
-					isToken: this.actor.isToken,
-				},
-				default: "accept",
-				buttons: {
-					accept: {
-						icon: '<i class="fas fa-check"></i>',
-						label: game.i18n.localize("TRPG.PolymorphAcceptSettings"),
-						callback: (html) => this.actor.transformInto(sourceActor, rememberOptions(html)),
-					},
-					wildshape: {
-						icon: '<i class="fas fa-paw"></i>',
-						label: game.i18n.localize("TRPG.PolymorphWildShape"),
-						callback: (html) =>
-							this.actor.transformInto(sourceActor, {
-								keepBio: true,
-								keepClass: true,
-								keepMental: true,
-								mergeSaves: true,
-								mergeSkills: true,
-								transformTokens: rememberOptions(html).transformTokens,
-							}),
-					},
-					polymorph: {
-						icon: '<i class="fas fa-pastafarianism"></i>',
-						label: game.i18n.localize("TRPG.Polymorph"),
-						callback: (html) =>
-							this.actor.transformInto(sourceActor, {
-								transformTokens: rememberOptions(html).transformTokens,
-							}),
-					},
-					cancel: {
-						icon: '<i class="fas fa-times"></i>',
-						label: game.i18n.localize("Cancel"),
-					},
-				},
-			},
-			{
-				classes: ["dialog", "dnd5e"],
-				width: 600,
-				template: "systems/trpg/templates/apps/polymorph-prompt.html",
-			}
-		).render(true);
-	}
-
-	/* -------------------------------------------- */
-
-	/** @override */
 	async _onDropItemCreate(itemData) {
 		// Check to make sure items of this type are allowed on this actor
 		if (this.constructor.unsupportedItemTypes.has(itemData.type)) {
@@ -824,7 +739,7 @@ export default class ActorSheet5e extends ActorSheet {
 			});
 			if (similarItem) {
 				return similarItem.update({
-					"data.quantity": similarItem.system.quantity + Math.max(itemData.data.quantity, 1),
+					"system.quantity": similarItem.system.quantity + Math.max(itemData.data.quantity, 1),
 				});
 			}
 		}
@@ -868,9 +783,9 @@ export default class ActorSheet5e extends ActorSheet {
 		event.preventDefault();
 		const itemId = event.currentTarget.closest(".item").dataset.itemId;
 		const item = this.actor.items.get(itemId);
-		const uses = Math.clamped(0, parseInt(event.target.value), item.system.uses.max);
+		const uses = Math.clamp(0, parseInt(event.target.value), item.system.uses.max);
 		event.target.value = uses;
-		return item.update({ "data.uses.value": uses });
+		return item.update({ "system.uses.value": uses });
 	}
 
 	/* -------------------------------------------- */
@@ -1099,22 +1014,6 @@ export default class ActorSheet5e extends ActorSheet {
 		const choices = CONFIG.TRPG[a.dataset.options];
 		const options = { name: a.dataset.target, title: label.innerText, choices };
 		return new TraitSelector(this.actor, options).render(true);
-	}
-
-	/* -------------------------------------------- */
-
-	/** @override */
-	_getHeaderButtons() {
-		let buttons = super._getHeaderButtons();
-		if (this.actor.isPolymorphed) {
-			buttons.unshift({
-				label: "TRPG.PolymorphRestoreTransformation",
-				class: "restore-transformation",
-				icon: "fas fa-backward",
-				onclick: () => this.actor.revertOriginalForm(),
-			});
-		}
-		return buttons;
 	}
 }
 

@@ -184,7 +184,7 @@ export default class Item5e extends Item {
 
 		// Classes
 		if (itemData.type === "class") {
-			data.levels = Math.clamped(data.levels, 1, 20);
+			data.levels = Math.clamp(data.levels, 1, 20);
 		}
 
 		// Spell Level,  School, and Components
@@ -470,7 +470,7 @@ export default class Item5e extends Item {
 
 		// Actor spell-DC based scaling
 		if (save.scaling === "spell") {
-			save.dc = this.isOwned ? foundry.utils.getProperty(this.actor.data, "data.attributes.spelldc") + (this.system.level ?? 0) : null;
+			save.dc = this.isOwned ? foundry.utils.getProperty(this.actor.data, "system.attributes.spelldc") + (this.system.level ?? 0) : null;
 		}
 
 		// Ability-score based scaling
@@ -865,7 +865,6 @@ export default class Item5e extends Item {
 		// Create the ChatMessage data object
 		const chatData = {
 			user: game.user.id,
-			type: CONST.CHAT_MESSAGE_TYPES.OTHER,
 			content: html,
 			flavor: this.system.chatFlavor || this.name,
 			speaker: ChatMessage.getSpeaker({ actor: this.actor, token }),
@@ -984,7 +983,7 @@ export default class Item5e extends Item {
 	 * @private
 	 */
 	_spellChatData(data, labels, props) {
-		props.push(labels.level, labels.components + (labels.materials ? ` (${labels.materials})` : ""));
+		props.push(labels.level);
 	}
 
 	/* -------------------------------------------- */
@@ -1010,7 +1009,7 @@ export default class Item5e extends Item {
 	 */
 	async rollAttack(options = {}) {
 		const itemData = this.system;
-		const flags = this.actor.data.flags.trpg || {};
+		const flags = this.actor.flags.trpg || {};
 		if (!this.hasAttack) {
 			throw new Error("You may not place an Attack Roll with this Item.");
 		}
@@ -1511,7 +1510,7 @@ export default class Item5e extends Item {
 	async _preCreate(data, options, user) {
 		await super._preCreate(data, options, user);
 
-		if (!this.isEmbedded || this.parent.type === "vehicle") return;
+		if (!this.isEmbedded) return;
 		const isNPC = this.parent.type === "npc";
 		let updates;
 		switch (data.type) {
@@ -1536,7 +1535,7 @@ export default class Item5e extends Item {
 
 		// The below options are only needed for character classes
 		if (userId !== game.user.id) return;
-		const isCharacterClass = this.parent && this.parent.type !== "vehicle" && this.type === "class";
+		const isCharacterClass = this.parent && this.type === "class";
 		if (!isCharacterClass) return;
 
 		// Assign a new primary class
@@ -1564,7 +1563,7 @@ export default class Item5e extends Item {
 
 		// The below options are only needed for character classes
 		if (userId !== game.user.id) return;
-		const isCharacterClass = this.parent && this.parent.type !== "vehicle" && this.type === "class";
+		const isCharacterClass = this.parent && this.type === "class";
 		if (!isCharacterClass) return;
 
 		// Prompt to add new class features

@@ -4,8 +4,8 @@
  */
 export class TokenDocument5e extends TokenDocument {
 	/** @inheritdoc */
-	getBarAttribute(...args) {
-		const data = super.getBarAttribute(...args);
+	getBarAttribute(barName, options={}) {
+		const data = super.getBarAttribute(barName, options);
 		if (data && data.attribute === "attributes.hp") {
 			const hp = this.actor.system.attributes.hp || {};
 			data.value += hp.temp || 0;
@@ -52,9 +52,9 @@ export class Token5e extends Token {
 		let displayMax = max + (tempmax > 0 ? tempmax : 0);
 
 		// Allocate percentages of the total
-		const tempPct = Math.clamped(temp, 0, displayMax) / displayMax;
-		const valuePct = Math.clamped(value, 0, effectiveMax) / displayMax;
-		const colorPct = Math.clamped(value, 0, effectiveMax) / displayMax;
+		const tempPct = Math.clamp(temp, 0, displayMax) / displayMax;
+		const valuePct = Math.clamp(value, 0, effectiveMax) / displayMax;
+		const colorPct = Math.clamp(value, 0, effectiveMax) / displayMax;
 
 		// Determine colors to use
 		const blk = 0x000000;
@@ -64,8 +64,8 @@ export class Token5e extends Token {
 		// Determine the container size (logic borrowed from core)
 		const w = this.w;
 		let h = Math.max(canvas.dimensions.size / 12, 8);
-		if (this.data.height >= 2) h *= 1.6;
-		const bs = Math.clamped(h / 8, 1, 2);
+		if (this.document.height >= 2) h *= 1.6;
+		const bs = Math.clamp(h / 8, 1, 2);
 		const bs1 = bs + 1;
 
 		// Overall bar container

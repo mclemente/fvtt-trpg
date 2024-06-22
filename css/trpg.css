@@ -1982,27 +1982,3 @@
 .dnd5e.sheet.actor.npc .summary .creature-type:hover .config-button {
 	display: block;
 }
-.dnd5e.sheet.actor.vehicle {
-	min-width: 720px;
-	min-height: 680px;
-}
-.dnd5e.sheet.actor.vehicle .features .item-controls {
-	flex: 0 0 68px;
-}
-.dnd5e.sheet.actor.vehicle .features .item-controls .item-toggle {
-	color: #b5b3a4;
-}
-.dnd5e.sheet.actor.vehicle .features .item-controls .item-toggle.active {
-	color: #4b4a44;
-}
-.dnd5e.sheet.actor.vehicle .counters .counter.creature-cap .counter-value {
-	flex: 1;
-}
-.dnd5e.sheet.actor.vehicle .counters .counter.creature-cap input {
-	max-width: none;
-	text-align: right;
-}
-.dnd5e.sheet.actor.vehicle .counters .counter.cargo-cap input {
-	max-width: 40px;
-	text-align: right;
-}
