@@ -262,6 +262,30 @@
 							"check": ""
 						}
 					},
+					"conEst": {
+						"value": 0,
+						"ability": "int",
+						"st": true,
+						"bonuses": {
+							"check": ""
+						}
+					},
+					"conPla": {
+						"value": 0,
+						"ability": "int",
+						"st": true,
+						"bonuses": {
+							"check": ""
+						}
+					},
+					"conCie": {
+						"value": 0,
+						"ability": "int",
+						"st": true,
+						"bonuses": {
+							"check": ""
+						}
+					},
 					"ide": {
 						"value": 0,
 						"ability": "int",
@@ -277,12 +301,61 @@
 							"check": ""
 						}
 					},
-					"ofi": {
+					"ofiAlq": {
 						"value": 0,
-						"ability": "int",
-						"bonuses": {
-							"check": ""
-						}
+						"ability": "int"
+					},
+					"ofiAlv": {
+						"value": 0,
+						"ability": "int"
+					},
+					"ofiCar": {
+						"value": 0,
+						"ability": "int"
+					},
+					"ofiJoa": {
+						"value": 0,
+						"ability": "int"
+					},
+					"ofiMet": {
+						"value": 0,
+						"ability": "int"
+					},
+					"ofiCul": {
+						"value": 0,
+						"ability": "int"
+					},
+					"ofiMar": {
+						"value": 0,
+						"ability": "int"
+					},
+					"ofiBal": {
+						"value": 0,
+						"ability": "int"
+					},
+					"ofiPil": {
+						"value": 0,
+						"ability": "int"
+					},
+					"ofiAdm": {
+						"value": 0,
+						"ability": "int"
+					},
+					"ofiArma": {
+						"value": 0,
+						"ability": "int"
+					},
+					"ofiArme": {
+						"value": 0,
+						"ability": "int"
+					},
+					"ofiSol": {
+						"value": 0,
+						"ability": "int"
+					},
+					"ofiEng": {
+						"value": 0,
+						"ability": "int"
 					},
 					"cav": {
 						"value": 0,
@@ -343,12 +416,27 @@
 							"check": ""
 						}
 					},
+					"jog": {
+						"value": 0,
+						"ability": "cha",
+						"bonuses": {
+							"check": ""
+						}
+					},
 					"lad": {
 						"value": 0,
 						"ability": "dex",
 						"st": true,
 						"pda": true,
 						"dishonor": true,
+						"bonuses": {
+							"check": ""
+						}
+					},
+					"mdt": {
+						"value": 0,
+						"ability": "wis",
+						"st": true,
 						"bonuses": {
 							"check": ""
 						}
