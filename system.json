@@ -82,7 +82,7 @@
 	"primaryTokenAttribute": "attributes.hp",
 	"secondaryTokenAttribute": "attributes.mp",
 	"flags": {
-		"needsMigrationVersion": "1.2.0"
+		"needsMigrationVersion": "1.2.2"
 	},
 	"url": "This is auto replaced",
 	"version": "This is auto replaced",

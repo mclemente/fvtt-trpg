@@ -90,8 +90,8 @@ export const migrateWorld = async function () {
 
 	// Migrate World Compendium Packs
 	for (let p of game.packs) {
-		if (p.metadata.package !== "world") continue;
-		if (!["Actor", "Item", "Scene"].includes(p.metadata.entity)) continue;
+		if (p.metadata.packageType !== "world") continue;
+		if (!["Actor", "Item", "Scene"].includes(p.metadata.type)) continue;
 		await migrateCompendium(p);
 	}
 
@@ -108,7 +108,7 @@ export const migrateWorld = async function () {
  * @return {Promise}
  */
 export const migrateCompendium = async function (pack) {
-	const entity = pack.metadata.entity;
+	const entity = pack.metadata.type;
 	if (!["Actor", "Item", "Scene"].includes(entity)) return;
 
 	const migrationData = await getMigrationData();
