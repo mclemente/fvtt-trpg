@@ -530,10 +530,10 @@ export default class Item5e extends Item {
 
 		// One-time bonus provided by consumed ammunition
 		if (itemData.consume?.type === "ammo" && !!this.actor.items) {
-			const ammoItemData = this.actor.items.get(itemData.consume.target)?.data;
+			const ammoItemData = this.actor.items.get(itemData.consume.target);
 
 			if (ammoItemData) {
-				const ammoItemQuantity = ammoItemData.systemquantity;
+				const ammoItemQuantity = ammoItemData.system.quantity;
 				const ammoCanBeConsumed = ammoItemQuantity && ammoItemQuantity - (itemData.consume.amount ?? 0) >= 0;
 				const ammoItemAttackBonus = ammoItemData.systemattackBonus;
 				const ammoIsTypeConsumable = ammoItemData.type === "consumable" && ammoItemData.systemconsumableType === "ammo";
