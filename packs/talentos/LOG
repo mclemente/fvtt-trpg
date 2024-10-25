@@ -1,5 +1,3 @@
-2024/10/25-16:40:57.060 25f4 Delete type=3 #1
-2024/10/25-16:51:32.743 9d8 Level-0 table #5: started
-2024/10/25-16:51:32.771 9d8 Level-0 table #5: 11362 bytes OK
-2024/10/25-16:51:32.830 9d8 Delete type=0 #3
-2024/10/25-16:51:32.950 9d8 Manual compaction at level-0 from '!items!B5xF4r6jalUx0RxJ' @ 72057594037927935 : 1 .. '!items!zE9XqDpPQsL9dvqL' @ 0 : 0; will stop at (end)
+2024/10/25-17:06:10.437 3324 Recovering log #4
+2024/10/25-17:06:10.538 3324 Delete type=0 #4
+2024/10/25-17:06:10.538 3324 Delete type=3 #2
