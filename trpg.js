@@ -235,7 +235,7 @@ Hooks.once("ready", function () {
 Hooks.on("canvasInit", function () {
 	// Extend Diagonal Measurement
 	// canvas.grid.diagonalRule = game.settings.get("trpg", "diagonalMovement");
-	SquareGrid.prototype.measureDistances = measureDistances;
+	foundry.grid.SquareGrid.prototype.measureDistances = measureDistances;
 });
 
 /* -------------------------------------------- */
