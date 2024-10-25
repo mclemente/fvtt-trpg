@@ -470,12 +470,12 @@ export default class Item5e extends Item {
 
 		// Actor spell-DC based scaling
 		if (save.scaling === "spell") {
-			save.dc = this.isOwned ? foundry.utils.getProperty(this.actor.data, "system.attributes.spelldc") + (this.system.level ?? 0) : null;
+			save.dc = this.isOwned ? foundry.utils.getProperty(this.actor, "system.attributes.spelldc") + (this.system.level ?? 0) : null;
 		}
 
 		// Ability-score based scaling
 		else if (save.scaling !== "flat") {
-			save.dc = this.isOwned ? foundry.utils.getProperty(this.actor.data, `data.abilities.${save.scaling}.dc`) + (this.system.level ?? 0) : null;
+			save.dc = this.isOwned ? foundry.utils.getProperty(this.actor, `system.abilities.${save.scaling}.dc`) + (this.system.level ?? 0) : null;
 		}
 
 		// Update labels
@@ -533,10 +533,10 @@ export default class Item5e extends Item {
 			const ammoItemData = this.actor.items.get(itemData.consume.target)?.data;
 
 			if (ammoItemData) {
-				const ammoItemQuantity = ammoItemData.data.quantity;
+				const ammoItemQuantity = ammoItemData.systemquantity;
 				const ammoCanBeConsumed = ammoItemQuantity && ammoItemQuantity - (itemData.consume.amount ?? 0) >= 0;
-				const ammoItemAttackBonus = ammoItemData.data.attackBonus;
-				const ammoIsTypeConsumable = ammoItemData.type === "consumable" && ammoItemData.data.consumableType === "ammo";
+				const ammoItemAttackBonus = ammoItemData.systemattackBonus;
+				const ammoIsTypeConsumable = ammoItemData.type === "consumable" && ammoItemData.systemconsumableType === "ammo";
 				if (ammoCanBeConsumed && ammoItemAttackBonus && ammoIsTypeConsumable) {
 					parts.push("@ammo");
 					rollData["ammo"] = ammoItemAttackBonus;
@@ -568,12 +568,12 @@ export default class Item5e extends Item {
 
 		// if this is an owned item and the max is not numeric, we need to calculate it
 		if (this.isOwned && !Number.isNumeric(max)) {
-			if (this.actor.data === undefined) return;
+			if (this.actor.system === undefined) return;
 			try {
 				max = Roll.replaceFormulaData(max, this.actor.getRollData(), { missing: 0, warn: true });
 				max = Roll.safeEval(max);
 			} catch (e) {
-				console.error("Problem preparing Max uses for", this.data.name, e);
+				console.error("Problem preparing Max uses for", this.name, e);
 				return;
 			}
 		}
@@ -634,7 +634,7 @@ export default class Item5e extends Item {
 				const upcastLevel = parseInt(configuration.level);
 				if (upcastLevel !== id.level) {
 					item = this.clone({ "data.level": upcastLevel }, { keepId: true });
-					item.data.update({ _id: this.id }); // Retain the original ID (needed until 0.8.2+)
+					item.update({ _id: this.id }); // Retain the original ID (needed until 0.8.2+)
 					item.prepareFinalAttributes(); // Spell save DC, etc...
 				}
 			}
@@ -1158,12 +1158,12 @@ export default class Item5e extends Item {
 		}
 
 		// Handle ammunition damage
-		const ammoData = this._ammo?.data;
+		const ammoData = this._ammo?.system;
 
 		// only add the ammunition damage if the ammution is a consumable with type 'ammo'
-		if (this._ammo && ammoData.type === "consumable" && ammoData.data.consumableType === "ammo") {
+		if (this._ammo && ammoData.type === "consumable" && ammoData.consumableType === "ammo") {
 			parts.push("@ammo");
-			rollData["ammo"] = ammoData.data.damage.parts.map((p) => p[0]).join("+");
+			rollData["ammo"] = ammoData.damage.parts.map((p) => p[0]).join("+");
 			rollConfig.flavor += ` [${this._ammo.name}]`;
 			delete this._ammo;
 		}
@@ -1669,16 +1669,16 @@ export default class Item5e extends Item {
 	static async createScrollFromSpell(spell) {
 		// Get spell data
 		const itemData = spell instanceof Item5e ? spell.toObject() : spell;
-		const { actionType, description, source, activation, duration, target, range, damage, save, level } = itemData.data;
+		const { actionType, description, source, activation, duration, target, range, damage, save, level } = itemData.system;
 
 		// Get scroll data
 		const scrollUuid = `Compendium.${CONFIG.TRPG.sourcePacks.ITEMS}.${CONFIG.TRPG.spellScrollIds[level]}`;
 		const scrollItem = await fromUuid(scrollUuid);
-		const scrollData = scrollItem.data;
+		const scrollData = scrollItem.system;
 		delete scrollData._id;
 
 		// Split the scroll description into an intro paragraph and the remaining details
-		const scrollDescription = scrollData.data.description.value;
+		const scrollDescription = scrollData.description.value;
 		const pdel = "</p>";
 		const scrollIntroEnd = scrollDescription.indexOf(pdel);
 		const scrollIntro = scrollDescription.slice(0, scrollIntroEnd + pdel.length);

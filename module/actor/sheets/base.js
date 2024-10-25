@@ -723,12 +723,12 @@ export default class ActorSheet5e extends ActorSheet {
 			itemData = scroll.data;
 		}
 
-		if (itemData.data) {
+		if (itemData.system) {
 			// Ignore certain statuses
-			["equipped", "proficient", "prepared"].forEach((k) => delete itemData.data[k]);
+			["equipped", "proficient", "prepared"].forEach((k) => delete itemData.system[k]);
 
 			// Downgrade ATTUNED to REQUIRED
-			itemData.data.attunement = Math.min(itemData.data.attunement, CONFIG.TRPG.attunementTypes.REQUIRED);
+			itemData.system.attunement = Math.min(itemData.system.attunement, CONFIG.TRPG.attunementTypes.REQUIRED);
 		}
 
 		// Stack identical consumables
@@ -739,7 +739,7 @@ export default class ActorSheet5e extends ActorSheet {
 			});
 			if (similarItem) {
 				return similarItem.update({
-					"system.quantity": similarItem.system.quantity + Math.max(itemData.data.quantity, 1),
+					"system.quantity": similarItem.system.quantity + Math.max(itemData.system.quantity, 1),
 				});
 			}
 		}
@@ -860,7 +860,7 @@ export default class ActorSheet5e extends ActorSheet {
 			type: type,
 			data: foundry.utils.deepClone(header.dataset),
 		};
-		delete itemData.data["type"];
+		delete itemData.system["type"];
 		return this.actor.createEmbeddedDocuments("Item", [itemData]);
 	}
 
@@ -1051,7 +1051,7 @@ export function injectActorSheet(app, html, data) {
 
 		selectElement.change(function (event) {
 			let newData = { data: { skills: {} } };
-			newData.data.skills[skillKey] = { ability: event.target.value };
+			newData.system.skills[skillKey] = { ability: event.target.value };
 			actor.update(newData);
 		});
 

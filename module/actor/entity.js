@@ -1465,30 +1465,4 @@ export default class Actor5e extends Actor {
 			data.custom.split(";").forEach((c, i) => (data.selected[`custom${i + 1}`] = c.trim()));
 		}
 	}
-
-	/* -------------------------------------------- */
-	/*  DEPRECATED METHODS                          */
-	/* -------------------------------------------- */
-
-	/**
-	 * @deprecated since dnd5e 0.97
-	 */
-	getSpellDC(ability) {
-		console.warn(`The Actor5e#getSpellDC(ability) method has been deprecated in favor of Actor5e#data.data.abilities[ability].dc`);
-		return this.system.abilities[ability]?.dc;
-	}
-
-	/* -------------------------------------------- */
-
-	/**
-	 * Cast a Spell, consuming a spell slot of a certain level
-	 * @param {Item5e} item   The spell being cast by the actor
-	 * @param {Event} event   The originating user interaction which triggered the cast
-	 * @deprecated since dnd5e 1.2.0
-	 */
-	async useSpell(item, { configureDialog = true } = {}) {
-		console.warn(`The Actor5e#useSpell method has been deprecated in favor of Item5e#roll`);
-		if (item.type !== "spell") throw new Error("Wrong Item type");
-		return item.roll();
-	}
 }

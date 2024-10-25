@@ -119,7 +119,7 @@ export default class ActorSheetFlags extends DocumentSheet {
 		for (let [k, v] of Object.entries(flags)) {
 			if ([undefined, null, "", false, 0].includes(v)) {
 				delete flags[k];
-				if (hasProperty(actor.data._source.flags, `trpg.${k}`)) {
+				if (hasProperty(actor._source.flags, `trpg.${k}`)) {
 					unset = true;
 					flags[`-=${k}`] = null;
 				}
@@ -127,7 +127,7 @@ export default class ActorSheetFlags extends DocumentSheet {
 		}
 
 		// Clear any bonuses which are whitespace only
-		for (let b of Object.values(updateData.data.bonuses)) {
+		for (let b of Object.values(updateData.system.bonuses)) {
 			for (let [k, v] of Object.entries(b)) {
 				b[k] = v.trim();
 			}

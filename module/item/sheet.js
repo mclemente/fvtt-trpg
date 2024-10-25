@@ -65,7 +65,7 @@ export default class ItemSheet5e extends ItemSheet {
 
 		// Original maximum uses formula
 		const sourceMax = foundry.utils.getProperty(this.item._source, "system.uses.max");
-		if (sourceMax) system.system.uses.max = sourceMax;
+		if (sourceMax) context.system.uses.max = sourceMax;
 
 		// Armor Class
 		context.isArmor = context.system.armor?.type in context.config.armorTypes;
