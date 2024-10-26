@@ -642,7 +642,7 @@ export default class ActorSheet5e extends ActorSheet {
 		const value = input.value;
 		if (["+", "-"].includes(value[0])) {
 			let delta = parseFloat(value);
-			input.value = foundry.utils.getProperty(this.actor.data, input.name) + delta;
+			input.value = foundry.utils.getProperty(this.actor.system, input.name) + delta;
 		} else if (value[0] === "=") {
 			input.value = value.slice(1);
 		}
@@ -720,7 +720,7 @@ export default class ActorSheet5e extends ActorSheet {
 		// Create a Consumable spell scroll on the Inventory tab
 		if (itemData.type === "spell" && this._tabs[0].active === "inventory") {
 			const scroll = await Item5e.createScrollFromSpell(itemData);
-			itemData = scroll.data;
+			itemData = scroll;
 		}
 
 		if (itemData.system) {
