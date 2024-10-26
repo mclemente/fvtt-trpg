@@ -296,7 +296,7 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
 				const next = Math.min(priorLevel + 1, CONFIG.TRPG.maxLevel + priorLevel - this.actor.system.details.level);
 				if (next > priorLevel) {
 					itemData.levels = next;
-					return cls.update({ "data.levels": next });
+					return cls.update({ "system.levels": next });
 				}
 			}
 		}

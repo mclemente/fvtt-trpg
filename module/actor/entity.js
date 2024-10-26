@@ -1046,7 +1046,7 @@ export default class Actor5e extends Actor {
 		if (!roll) return null;
 
 		// Adjust actor data
-		await cls.update({ "data.hitDiceUsed": cls.system.hitDiceUsed + 1 });
+		await cls.update({ "system.hitDiceUsed": cls.system.hitDiceUsed + 1 });
 		const hp = this.system.attributes.hp;
 		const dhp = Math.min(hp.max + (hp.tempmax ?? 0) - hp.value, roll.total);
 		await this.update({ "system.attributes.hp.value": hp.value + dhp });
@@ -1345,7 +1345,7 @@ export default class Actor5e extends Actor {
 			if (hitDiceRecovered < maxHitDice && d.hitDiceUsed > 0) {
 				let delta = Math.min(d.hitDiceUsed || 0, maxHitDice - hitDiceRecovered);
 				hitDiceRecovered += delta;
-				updates.push({ _id: item.id, "data.hitDiceUsed": d.hitDiceUsed - delta });
+				updates.push({ _id: item.id, "system.hitDiceUsed": d.hitDiceUsed - delta });
 			}
 		}
 
@@ -1374,10 +1374,10 @@ export default class Actor5e extends Actor {
 		for (let item of this.items) {
 			const d = item.system;
 			if (d.uses && recovery.includes(d.uses.per)) {
-				updates.push({ _id: item.id, "data.uses.value": d.uses.max });
+				updates.push({ _id: item.id, "system.uses.value": d.uses.max });
 			}
 			if (recoverLongRestUses && d.recharge && d.recharge.value) {
-				updates.push({ _id: item.id, "data.recharge.charged": true });
+				updates.push({ _id: item.id, "system.recharge.charged": true });
 			}
 		}
 
@@ -1399,7 +1399,7 @@ export default class Actor5e extends Actor {
 			curr[c] -= change * t.each;
 			curr[t.into] += change;
 		}
-		return this.update({ "data.currency": curr });
+		return this.update({ "system.currency": curr });
 	}
 
 	/* -------------------------------------------- */

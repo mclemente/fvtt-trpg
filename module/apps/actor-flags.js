@@ -87,18 +87,18 @@ export default class ActorSheetFlags extends DocumentSheet {
 	 */
 	_getBonuses() {
 		const bonuses = [
-			{ name: "data.bonuses.mwak.attack", label: "TRPG.BonusMWAttack" },
-			{ name: "data.bonuses.mwak.damage", label: "TRPG.BonusMWDamage" },
-			{ name: "data.bonuses.rwak.attack", label: "TRPG.BonusRWAttack" },
-			{ name: "data.bonuses.rwak.damage", label: "TRPG.BonusRWDamage" },
-			// {name: "data.bonuses.msak.attack", label: "TRPG.BonusMSAttack"},
-			// {name: "data.bonuses.msak.damage", label: "TRPG.BonusMSDamage"},
-			// {name: "data.bonuses.rsak.attack", label: "TRPG.BonusRSAttack"},
-			// {name: "data.bonuses.rsak.damage", label: "TRPG.BonusRSDamage"},
-			{ name: "data.bonuses.abilities.check", label: "TRPG.BonusAbilityCheck" },
-			{ name: "data.bonuses.abilities.save", label: "TRPG.BonusAbilitySave" },
-			{ name: "data.bonuses.abilities.skill", label: "TRPG.BonusAbilitySkill" },
-			{ name: "data.bonuses.spell.dc", label: "TRPG.BonusSpellDC" },
+			{ name: "system.bonuses.mwak.attack", label: "TRPG.BonusMWAttack" },
+			{ name: "system.bonuses.mwak.damage", label: "TRPG.BonusMWDamage" },
+			{ name: "system.bonuses.rwak.attack", label: "TRPG.BonusRWAttack" },
+			{ name: "system.bonuses.rwak.damage", label: "TRPG.BonusRWDamage" },
+			// {name: "system.bonuses.msak.attack", label: "TRPG.BonusMSAttack"},
+			// {name: "system.bonuses.msak.damage", label: "TRPG.BonusMSDamage"},
+			// {name: "system.bonuses.rsak.attack", label: "TRPG.BonusRSAttack"},
+			// {name: "system.bonuses.rsak.damage", label: "TRPG.BonusRSDamage"},
+			{ name: "system.bonuses.abilities.check", label: "TRPG.BonusAbilityCheck" },
+			{ name: "system.bonuses.abilities.save", label: "TRPG.BonusAbilitySave" },
+			{ name: "system.bonuses.abilities.skill", label: "TRPG.BonusAbilitySkill" },
+			{ name: "system.bonuses.spell.dc", label: "TRPG.BonusSpellDC" },
 		];
 		for (let b of bonuses) {
 			b.value = foundry.utils.getProperty(this.object._source, b.name) || "";

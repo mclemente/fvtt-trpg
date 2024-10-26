@@ -633,7 +633,7 @@ export default class Item5e extends Item {
 				if (consumeSpellSlot === false) consumeSpellLevel = null;
 				const upcastLevel = parseInt(configuration.level);
 				if (upcastLevel !== id.level) {
-					item = this.clone({ "data.level": upcastLevel }, { keepId: true });
+					item = this.clone({ "system.level": upcastLevel }, { keepId: true });
 					item.update({ _id: this.id }); // Retain the original ID (needed until 0.8.2+)
 					item.prepareFinalAttributes(); // Spell save DC, etc...
 				}
@@ -697,7 +697,7 @@ export default class Item5e extends Item {
 				ui.notifications.warn(game.i18n.format("TRPG.ItemNoUses", { name: this.name }));
 				return false;
 			}
-			itemUpdates["data.recharge.charged"] = false;
+			itemUpdates["system.recharge.charged"] = false;
 		}
 
 		// Consume Limited Resource
@@ -729,7 +729,7 @@ export default class Item5e extends Item {
 			const remaining = Math.max(available - 1, 0);
 			if (available >= 1) {
 				used = true;
-				itemUpdates["data.uses.value"] = remaining;
+				itemUpdates["system.uses.value"] = remaining;
 			}
 
 			// Reduce quantity if not reducing usages or if usages hit 0 and we are set to consumeQuantity
@@ -737,8 +737,8 @@ export default class Item5e extends Item {
 				const q = Number(id.quantity ?? 1);
 				if (q >= 1) {
 					used = true;
-					itemUpdates["data.quantity"] = Math.max(q - 1, 0);
-					itemUpdates["data.uses.value"] = uses.max ?? 1;
+					itemUpdates["system.quantity"] = Math.max(q - 1, 0);
+					itemUpdates["system.uses.value"] = uses.max ?? 1;
 				}
 			}
 
@@ -822,13 +822,13 @@ export default class Item5e extends Item {
 				break;
 			case "ammo":
 			case "material":
-				resourceUpdates["data.quantity"] = remaining;
+				resourceUpdates["system.quantity"] = remaining;
 				break;
 			case "charges":
 				const uses = resource.system.uses || {};
 				const recharge = resource.system.recharge || {};
-				if (uses.per && uses.max) resourceUpdates["data.uses.value"] = remaining;
-				else if (recharge.value) resourceUpdates["data.recharge.charged"] = false;
+				if (uses.per && uses.max) resourceUpdates["system.uses.value"] = remaining;
+				else if (recharge.value) resourceUpdates["system.recharge.charged"] = false;
 				break;
 		}
 	}
@@ -1291,7 +1291,7 @@ export default class Item5e extends Item {
 		];
 
 		// Update the Item data
-		if (success) promises.push(this.update({ "data.recharge.charged": true }));
+		if (success) promises.push(this.update({ "system.recharge.charged": true }));
 		return Promise.all(promises).then(() => roll);
 	}
 
