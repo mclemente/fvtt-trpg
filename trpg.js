@@ -129,7 +129,7 @@ Hooks.once("init", function () {
 /**
  * This function runs after game data has been requested and loaded from the servers, so entities exist
  */
-Hooks.once("setup", function () {
+Hooks.once("i18nInit", function () {
 	// Localize CONFIG objects once up-front
 	const toLocalize = [
 		"abilities",
