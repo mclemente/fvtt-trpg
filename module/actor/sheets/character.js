@@ -254,8 +254,8 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
 		event.preventDefault();
 		const itemId = event.currentTarget.closest(".item").dataset.itemId;
 		const item = this.actor.items.get(itemId);
-		const attr = item.type === "spell" ? "data.preparation.prepared" : "data.equipped";
-		return item.update({ [attr]: !foundry.utils.getProperty(item.data, attr) });
+		const attr = item.type === "spell" ? "system.preparation.prepared" : "system.equipped";
+		return item.update({ [attr]: !foundry.utils.getProperty(item, attr) });
 	}
 
 	/* -------------------------------------------- */
