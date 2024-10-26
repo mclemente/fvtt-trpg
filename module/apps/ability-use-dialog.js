@@ -158,7 +158,7 @@ export default class AbilityUseDialog extends Dialog {
 			else if (item.system.quantity === 1 && uses.autoDestroy) str = "TRPG.AbilityUseConsumableDestroyHint";
 			else if (item.system.quantity > 1) str = "TRPG.AbilityUseConsumableQuantityHint";
 			return game.i18n.format(str, {
-				type: game.i18n.localize(`TRPG.Consumable${item.data.consumableType.capitalize()}`),
+				type: game.i18n.localize(`TRPG.Consumable${item.system.consumableType.capitalize()}`),
 				value: uses.value,
 				quantity: item.system.quantity,
 				max: uses.max,
