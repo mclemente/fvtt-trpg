@@ -860,7 +860,7 @@ export default class ActorSheet5e extends ActorSheet {
 			type: type,
 			data: foundry.utils.deepClone(header.dataset),
 		};
-		delete itemData.system["type"];
+		delete itemData.type;
 		return this.actor.createEmbeddedDocuments("Item", [itemData]);
 	}
 
