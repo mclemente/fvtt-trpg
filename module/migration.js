@@ -14,7 +14,7 @@ export const migrateWorld = async function () {
 		.concat(Array.from(game.actors.invalidDocumentIds).map((id) => [game.actors.getInvalid(id), false]));
 	for (const [actor, valid] of actors) {
 		try {
-			const source = valid ? actor.toObject() : game.data.actors.find((a) => a._id === actor.id);
+			const source = valid ? actor.toObject() : game.actors.find((a) => a._id === actor.id);
 			const updateData = migrateActorData(source, migrationData);
 			if (!foundry.utils.isEmpty(updateData)) {
 				console.log(`Migrating Actor document ${actor.name}`);
@@ -31,7 +31,7 @@ export const migrateWorld = async function () {
 		.concat(Array.from(game.items.invalidDocumentIds).map((id) => [game.items.getInvalid(id), false]));
 	for (const [item, valid] of items) {
 		try {
-			const source = valid ? item.toObject() : game.data.items.find((i) => i._id === item.id);
+			const source = valid ? item.toObject() : game.items.find((i) => i._id === item.id);
 			const updateData = migrateItemData(source, migrationData);
 			if (!foundry.utils.isEmpty(updateData)) {
 				console.log(`Migrating Item document ${item.name}`);
