@@ -716,7 +716,7 @@ export default class Item5e extends Item {
 				ui.notifications.warn(game.i18n.format("TRPG.SpellCastNoSlots", { name: this.name, level: label }));
 				return false;
 			}
-			actorUpdates[`data.spells.${consumeSpellLevel}.value`] = Math.max(spells - 1, 0);
+			actorUpdates[`system.spells.${consumeSpellLevel}.value`] = Math.max(spells - 1, 0);
 		}
 
 		// Consume Limited Usage
@@ -818,7 +818,7 @@ export default class Item5e extends Item {
 		// Define updates to provided data objects
 		switch (consume.type) {
 			case "attribute":
-				actorUpdates[`data.${consume.target}`] = remaining;
+				actorUpdates[`system.${consume.target}`] = remaining;
 				break;
 			case "ammo":
 			case "material":

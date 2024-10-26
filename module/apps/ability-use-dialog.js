@@ -38,9 +38,9 @@ export default class AbilityUseDialog extends Dialog {
 
 		// Prepare dialog form data
 		const data = {
-			item: item.data,
+			item: item,
 			title: game.i18n.format("TRPG.AbilityUseHint", { type: game.i18n.localize(`TRPG.ItemType${item.type.capitalize()}`), name: item.name }),
-			note: this._getAbilityUseNote(item.data, uses, recharge),
+			note: this._getAbilityUseNote(item, uses, recharge),
 			consumeSpellSlot: false,
 			consumeRecharge: recharges,
 			consumeResource: !!itemData.consume.target,
@@ -67,7 +67,7 @@ export default class AbilityUseDialog extends Dialog {
 						label: label,
 						callback: (html) => {
 							const fd = new FormDataExtended(html[0].querySelector("form"));
-							resolve(fd.toObject());
+							resolve(fd.object);
 						},
 					},
 				},

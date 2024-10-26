@@ -1288,7 +1288,7 @@ export default class Actor5e extends Actor {
 		let updates = {};
 		for (let [k, r] of Object.entries(this.system.resources)) {
 			if (Number.isNumeric(r.max) && ((recoverShortRestResources && r.sr) || (recoverLongRestResources && r.lr))) {
-				updates[`data.resources.${k}.value`] = Number(r.max);
+				updates[`system.resources.${k}.value`] = Number(r.max);
 			}
 		}
 		return updates;
@@ -1310,7 +1310,7 @@ export default class Actor5e extends Actor {
 
 		if (recoverSpells) {
 			for (let [k, v] of Object.entries(this.system.spells)) {
-				updates[`data.spells.${k}.value`] = Number.isNumeric(v.override) ? v.override : v.max ?? 0;
+				updates[`system.spells.${k}.value`] = Number.isNumeric(v.override) ? v.override : v.max ?? 0;
 			}
 		}
 
