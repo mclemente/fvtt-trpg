@@ -42,12 +42,12 @@ export default class ActorSheet5eNPC extends ActorSheet5e {
 				hasActions: true,
 				dataset: { type: "weapon", "weapon-type": "natural" },
 			},
-			// actions: {
-			// 	label: game.i18n.localize("TRPG.ActionPl"),
-			// 	items: [],
-			// 	hasActions: true,
-			// 	dataset: { type: "feat", "activation.type": "action" },
-			// },
+			actions: {
+				label: game.i18n.localize("TRPG.ActionPl"),
+				items: [],
+				hasActions: true,
+				dataset: { type: "feat", "activation.type": "action" },
+			},
 			passive: { label: game.i18n.localize("TRPG.Features"), items: [], dataset: { type: "feat" } },
 			equipment: { label: game.i18n.localize("TRPG.Inventory"), items: [], dataset: { type: "loot" } },
 		};
