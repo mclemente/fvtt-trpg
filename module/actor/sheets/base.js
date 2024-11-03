@@ -851,17 +851,12 @@ export default class ActorSheet5e extends ActorSheet {
 	 */
 	_onItemCreate(event) {
 		event.preventDefault();
-		const header = event.currentTarget;
-		const type = header.dataset.type;
+		const { type } = event.currentTarget.dataset;
 		const itemData = {
-			name: game.i18n.format("TRPG.ItemNew", {
-				type: game.i18n.localize(`TYPES.Item.${header.dataset.type}`),
-			}),
-			type: type,
-			data: foundry.utils.deepClone(header.dataset),
+			name: CONFIG.Item.documentClass.defaultName({ type, parent: this.actor }),
+			type,
 		};
-		delete itemData.type;
-		return this.actor.createEmbeddedDocuments("Item", [itemData]);
+		return this.actor.createEmbeddedDocuments("Item", [itemData], { renderSheet: true });
 	}
 
 	/* -------------------------------------------- */
