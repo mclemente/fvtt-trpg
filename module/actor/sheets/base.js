@@ -1045,9 +1045,16 @@ export function injectActorSheet(app, html, data) {
 		});
 
 		selectElement.change(function (event) {
-			let newData = { data: { skills: {} } };
-			newData.system.skills[skillKey] = { ability: event.target.value };
-			actor.update(newData);
+			const changes = {
+				system: {
+					skills: {
+						[skillKey]: {
+							ability: event.target.value
+						}
+					}
+				}
+			};
+			actor.update(changes);
 		});
 
 		let textBoxElement = $('<input type="text" size=2>');
