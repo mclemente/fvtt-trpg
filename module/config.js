@@ -577,6 +577,9 @@ TRPG.skills = {
 	conNob: "TRPG.SkillNob", //Nobreza
 	conRel: "TRPG.SkillRel", //Religião
 	conTor: "TRPG.SkillTor", //Tormenta
+	conPla: "TRPG.SkillConPla", //Planos - Tormenta RPG - Mundo dos Deuses (Pag. 132)
+	conEst: "TRPG.SkillConEst", //Estrategia - Tormenta RPG - Manual do Combate (Pag. 46)
+	conCie: "TRPG.SkillConCie", //Ciência - Dragão Brasil 127 (Pag. 105)
 	cur: "TRPG.SkillCur", //Cura
 	dip: "TRPG.SkillDip", //Diplomacia
 	eng: "TRPG.SkillEng", //Enganação
@@ -585,9 +588,24 @@ TRPG.skills = {
 	init: "TRPG.SkillIni", //Iniciativa
 	inti: "TRPG.SkillInti", //Intimidação
 	intu: "TRPG.SkillIntu", //Intuição
+	jog: "TRPG.SkillJog", //Jogatina - Tormenta RPG - Manual do Malandro (Pag. 51)
 	lad: "TRPG.SkillLad", //Ladinagem
+	mdt: "TRPG.SkillMdt", //Meditação - Tormenta RPG - Mundo dos Deuses - (Pag. 132)
 	obinf: "TRPG.SkillObinf", //Obter Informação
-	ofi: "TRPG.SkillOfi", //Ofício
+	ofiAlq: "TRPG.SkillOfiAlq", //Oficio Alquimia
+	ofiAlv: "TRPG.SkillOfiAlv", //Oficio Alvenaria
+	ofiCar: "TRPG.SkillOfiCar", //Oficio Carpintaria
+	ofiJoa: "TRPG.SkillOfiJoa", //Oficio Joalheria
+	ofiMet: "TRPG.SkillOfiMet", //Oficio Metalurgia
+	ofiCul: "TRPG.SkillOfiCul", //Oficio Culinaria
+	ofiMar: "TRPG.SkillOfiMar", //Oficio Marinheiro
+	ofiBal: "TRPG.SkillOfiBal", //Oficio Baloeiro
+	ofiPil: "TRPG.SkillOfiPil", //Oficio Piloto
+	ofiAdm: "TRPG.SkillOfiAdm", //Oficio Administração
+	ofiArma: "TRPG.SkillOfiArma", //Oficio Armadilhas
+	ofiAlme: "TRPG.SkillOfiArme", //Oficio Armeiro
+	ofiSol: "TRPG.SkillOfiSol", //Oficio Soldado
+	ofiEng: "TRPG.SkillOfiEng", //Oficio Engenhoqueiro
 	prc: "TRPG.SkillPrc", //Percepção
 	sur: "TRPG.SkillSur", //Sobrevivência
 };
