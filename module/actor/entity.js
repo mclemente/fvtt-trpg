@@ -552,6 +552,7 @@ export default class Actor5e extends Actor {
 				lg: 2,
 				huge: 4,
 				grg: 8,
+				colossal: 10
 			}[actorData.system.traits.size] || 1;
 		if (this.getFlag("trpg", "powerfulBuild")) mod = Math.min(mod * 2, 8);
 
