@@ -215,7 +215,12 @@ Hooks.once("i18nInit", function () {
  */
 Hooks.once("ready", function () {
 	// Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
-	Hooks.on("hotbarDrop", (bar, data, slot) => macros.create5eMacro(data, slot));
+	Hooks.on("hotbarDrop", (bar, data, slot) => {
+		if ( ["Item", "ActiveEffect"].includes(data.type) ) {
+			macros.create5eMacro(data, slot);
+			return false;
+		}
+	});
 
 	// Determine whether a system migration is required and feasible
 	if (!game.user.isGM) return;

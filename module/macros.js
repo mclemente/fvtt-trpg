@@ -29,7 +29,6 @@ export async function create5eMacro(dropData, slot) {
 		return (m.name === macroData.name) && (m.command === macroData.command) && m.isAuthor;
 	}) || await Macro.create(macroData);
 	game.user.assignHotbarMacro(macro, slot);
-	return false;
 }
 
 /* -------------------------------------------- */
