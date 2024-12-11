@@ -13,18 +13,18 @@ export async function create5eMacro(dropData, slot) {
 	const macroData = { type: "script", scope: "actor" };
 	if (dropData.type !== "Item") return;
 	const itemData = await Item.implementation.fromDropData(dropData);
-		if ( !itemData ) {
-			ui.notifications.warn("MACRO.5eUnownedWarn", {localize: true});
-			return null;
-		}
-		foundry.utils.mergeObject(macroData, {
-			name: itemData.name,
-			img: itemData.img,
-			command: `game.trpg.rollItemMacro("${item.name}");`,
-			flags: {"trpg.itemMacro": true}
-		});
+	if ( !itemData ) {
+		ui.notifications.warn("MACRO.5eUnownedWarn", {localize: true});
+		return null;
+	}
+	foundry.utils.mergeObject(macroData, {
+		name: itemData.name,
+		img: itemData.img,
+		command: `game.trpg.rollItemMacro("${itemData.name}");`,
+		flags: {"trpg.itemMacro": true}
+	});
 
-	  // Assign the macro to the hotbar
+	// Assign the macro to the hotbar
 	const macro = game.macros.find(m => {
 		return (m.name === macroData.name) && (m.command === macroData.command) && m.isAuthor;
 	}) || await Macro.create(macroData);
