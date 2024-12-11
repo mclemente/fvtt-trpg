@@ -285,7 +285,7 @@ export default class ActorSheet5e extends ActorSheet {
 				attribution.push({
 					label: hasArmor ? this.actor.armor.name : game.i18n.localize("TRPG.ArmorClassUnarmored"),
 					mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-					value: hasArmor ? this.actor.system.armor.value : 10,
+					value: hasArmor ? this.actor.armor.system.armor.value : 10,
 				});
 				if (ac.dex !== 0) {
 					attribution.push({
