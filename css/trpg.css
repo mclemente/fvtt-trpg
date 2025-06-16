@@ -23,50 +23,6 @@
 /*  Sheet Styles                             */
 /* ----------------------------------------- */
 /* ----------------------------------------- */
-/*  Flexbox                                  */
-/* ----------------------------------------- */
-.flexrow {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: flex-start;
-}
-.flexrow > * {
-	flex: 1;
-}
-.flexrow .flex1 {
-	flex: 1;
-}
-.flexrow .flex2 {
-	flex: 2;
-}
-.flexrow .flex3 {
-	flex: 3;
-}
-.flexrow .flex4 {
-	flex: 4;
-}
-.flexcol {
-	display: flex;
-	flex-direction: column;
-	flex-wrap: nowrap;
-}
-.flexcol > * {
-	flex: 1;
-}
-.flexcol .flex1 {
-	flex: 1;
-}
-.flexcol .flex2 {
-	flex: 2;
-}
-.flexcol .flex3 {
-	flex: 3;
-}
-.flexcol .flex4 {
-	flex: 4;
-}
-/* ----------------------------------------- */
 /*  All DnD5e Apps                           */
 /* ----------------------------------------- */
 .dnd5e {
@@ -130,18 +86,6 @@
 }
 .dnd5e .form-group .form-fields > * {
 	flex: 1;
-}
-.dnd5e .form-group .form-fields .flex1 {
-	flex: 1;
-}
-.dnd5e .form-group .form-fields .flex2 {
-	flex: 2;
-}
-.dnd5e .form-group .form-fields .flex3 {
-	flex: 3;
-}
-.dnd5e .form-group .form-fields .flex4 {
-	flex: 4;
 }
 .dnd5e .form-group .form-fields > * {
 	margin: 0 3px 0 0;
